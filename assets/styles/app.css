@@ -3,6 +3,44 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
+:root {
+    ---main : #FEFEE2
+}
+
 html {
     scroll-behavior: smooth;
+    /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg); */
+    /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-radial-gradient-a5802da1.jpg); */
+    background-size: cover;
+}
+
+.title{
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.title h1{
+    padding: 2rem
+}
+
+/* .step-container{
+    margin : 1.5rem 15%;
+    border: solid 2px black;
+} */
+
+/* .step-container h2{
+    text-align: center;
+    font-size: 1.5rem
+}
+
+.step-container h3{
+    font-size: 1.5rem;
+} */
+
+.duration-step{
+
+}
+
+button{
+    @apply px-4 py-2 bg-black text-white border border-white hover:invert disabled:opacity-50 disabled:pointer-events-none;
 }

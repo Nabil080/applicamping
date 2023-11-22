@@ -1,0 +1,12 @@
+.datepicker {
+    background-color: white;
+}
+
+.datepicker .disabled {
+    opacity: 0.50;
+    cursor: default;
+}
+
+.datepicker .selected {
+    background-color: var(--main);
+}

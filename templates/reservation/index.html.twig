@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+<section class="title">
+<h1>Espace réservation</h1>
+</section>
+
+<section class="step-container my-6 mx-[15%]">
+    <section class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%]">
+        <h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
+        <div>
+            <h3 class="font-semibold text-3xl">Quand ?</h3>
+            <div {{ stimulus_controller('date_picker') }} class="space-x-6 mt-6 text-xl">
+                <label for="start">Du</label>
+                <input name="start" type class="w-[10ch] bg-transparent border-2 outline-none focus:outline-none cursor-pointer select-none">
+                <label for="end">Au</label>
+                <input name="end" type class="w-[10ch] bg-transparent border-2 outline-none focus:outline-none cursor-pointer select-none">
+            </div>
+        </div>
+        <div>
+            <h3 class="font-semibold text-3xl" >Qui ?</h3>
+            <div class="space-x-6 mt-6 text-xl">
+                <label for="">Adultes</label>
+                <input type="text" class="w-[2ch] text-center" value=2 readonly>
+                <label for="">Enfants</label>
+                <input type="text" class="w-[2ch] text-center" value=1 readonly>
+            </div>
+        </div>
+    </section>
+    <section id="nav-buttons" class="mt-12 flex justify-between">
+        <button disabled>Précédent</button>
+        <button >Suivant</button>
+    </section>
+</section>
+
+<section id="progress" class="flex">
+    <div></div>
+    <button>Réserver</button>
+
+</section>
+
+
+
+{% endblock %}
+
+
