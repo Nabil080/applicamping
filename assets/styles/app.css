@@ -36,11 +36,11 @@
 
     /* ! progress bar */
     .progress-item {
-        @apply flex items-center text-gray-500 space-x-2.5;
+        @apply flex items-center text-gray-500 space-x-2.5 [&>*]:pointer-events-none;
     }
 
     .progress-item.done {
-        @apply text-main-600;
+        @apply text-main-600 cursor-pointer;
     }
 
     .progress-item span {

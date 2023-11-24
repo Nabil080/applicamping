@@ -17,7 +17,7 @@ export default class extends Controller {
         this.steps = []
         this.stepsProgress = []
 
-        this.element.querySelectorAll('[step]').forEach((step, index) => {
+        this.element.querySelectorAll('[data-step]').forEach((step, index) => {
             this.steps[index] = step
         })
 
@@ -29,9 +29,17 @@ export default class extends Controller {
     setupClickables() {
         this.previousTarget.dataset.action = "step#previous";
         this.nextTarget.dataset.action = "step#next";
+        this.stepsProgress.forEach((progress, index) => {
+            progress.dataset.action = "click->step#goToNumber"
+            progress.dataset.number = index
+        })
     }
 
     checkProgress() {
+        // ! update shown step
+        this.steps.forEach(step => step.classList.add('hidden'))
+        this.steps[this.currentStep].classList.remove('hidden')
+
         // ! update progress bar
         this.stepsProgress.forEach((progress, index) => {
             if (index <= this.currentStep) progress.classList.add('done')
@@ -43,15 +51,22 @@ export default class extends Controller {
 
         if (this.currentStep === this.steps.length - 1) this.nextTarget.setAttribute('disabled', true)
         else this.nextTarget.removeAttribute('disabled')
+
+        console.log(this.currentStep);
     }
 
-    previous () {
+    previous() {
         this.currentStep--
         this.checkProgress()
     }
 
-    next () {
+    next() {
         this.currentStep++
+        this.checkProgress()
+    }
+
+    goToNumber(event) {
+        if(event.target.classList.contains('done')) this.currentStep = parseInt(event.target.dataset.number)
         this.checkProgress()
     }
 

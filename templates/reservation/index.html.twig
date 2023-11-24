@@ -13,7 +13,7 @@
 	<section
 		{{ stimulus_controller('step') }} id="step-container" class="my-6 [&>article]:mx-[15%]">
 		{# ! Etape 1 : Durée du séjour #}
-		<article step class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
+		<article data-step class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
 			<h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
 			{# ! Date du séjour #}
 			<div>
@@ -68,7 +68,7 @@
 			</div>
 		</article>
 		{# ! Etape 2 : Type d'hébérgement #}
-		<article step class="hidden">
+		<article data-step class="hidden">
 			salut
 		</article>
 		{# !! BOUTONS NAVIGATION #}
@@ -76,7 +76,7 @@
 			<button {{ stimulus_target('step', 'previous') }} class="button" disabled>Précédent</button>
 			<button {{ stimulus_target('step', 'next') }} class="button" >Suivant</button>
 		</section>
-		{# !!!! PROGRES BAR !!!! #}
+		{# !!!! PROGRESS BAR !!!! #}
 		<section {{ stimulus_target('step', 'progress') }} id="progress" class="flex mx-0 my-20 gap-16 justify-center">
 			<ol class="items-center space-y-4 sm:flex sm:space-x-12 sm:space-y-0 text-lg">
 				<li class="progress-item">
