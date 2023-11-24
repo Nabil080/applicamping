@@ -7,7 +7,7 @@ export default class extends Controller {
     connect() {
         this.setDates();
         this.initializeDateRangePicker();
-        // this.setDefaultValues();
+        this.setDefaultValues();
     }
 
     setDates() {
@@ -19,12 +19,12 @@ export default class extends Controller {
             date.getFullYear(),
             date.getMonth(),
             date.getDate() + 7
-        ).toLocaleDateString("fr-FR");
+        ).toLocaleDateString("fr-FR", { weekday:"long", month:"long", day:"numeric"});
         this.nextNextWeek = new Date(
             date.getFullYear(),
             date.getMonth(),
             date.getDate() + 14
-        ).toLocaleDateString("fr-FR");
+        ).toLocaleDateString("fr-FR", { weekday:"long", month:"long", day:"numeric"});
     }
 
     initializeDateRangePicker() {
@@ -33,6 +33,7 @@ export default class extends Controller {
             weekStart: 1,
             clearBtn: true,
             minDate: this.today,
+            format: "DD dd MM" ,
         };
 
         const d = new DateRangePicker(this.element, options);

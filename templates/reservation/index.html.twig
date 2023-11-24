@@ -14,19 +14,19 @@
 			<h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
 			<div>
 				<h3 class="font-semibold text-3xl">Quand ?</h3>
-				<div {{ stimulus_controller('date_picker') }} class="space-x-6 mt-6 text-xl">
+				<div {{ stimulus_controller('date_picker') }} class="space-x-6 mt-6 [&>label]:text-2xl [&>input]:text-2xl">
 					<label for="start">Du</label>
-					<input name="start" type class="w-[10ch] bg-transparent border-2 border-main-200 outline-none focus:outline-none cursor-pointer select-none">
+					<input name="start" type class="w-fit px-4 py-2 border border-black caret-transparent cursor-pointer">
 					<label for="end">Au</label>
-					<input name="end" type class="w-[10ch] bg-transparent border-2 border-main-200 outline-none focus:outline-none cursor-pointer select-none">
+					<input name="end" type class="w-fit px-4 py-2 border border-black caret-transparent cursor-pointer">
 				</div>
 			</div>
 			<div>
 				<h3 class="font-semibold text-3xl">Qui ?</h3>
 				<div class="space-x-6 mt-6 text-xl">
-					<label for="">Adultes</label>
+					<label for=""><i class="fa-solid fa-person"></i> Adultes</label>
 					<input type="text" class="w-[2ch] text-center" value="2" readonly>
-					<label for="">Enfants</label>
+					<label for=""> <i class="fa-solid fa-child"></i> Enfants</label>
 					<input type="text" class="w-[2ch] text-center" value="1" readonly>
 				</div>
 			</div>
