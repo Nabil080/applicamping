@@ -13,7 +13,7 @@ export default class extends Controller {
     }
 
     setupVariables() {
-        this.currentStep = 0;
+        this.currentStep = 1;
         this.steps = []
         this.stepsProgress = []
 

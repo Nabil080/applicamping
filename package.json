@@ -29,6 +29,8 @@
     "dependencies": {
         "datepicker": "^0.0.0",
         "flowbite": "^2.2.0",
-        "flowbite-datepicker": "^1.2.4"
+        "flowbite-datepicker": "^1.2.4",
+        "stimulus-carousel": "^5.0.1",
+        "swiper": "^11.0.5"
     }
 }
