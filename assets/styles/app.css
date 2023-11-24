@@ -3,53 +3,42 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
-:root {
-    ---main : #FEFEE2
+@layer base {
+    :root {
+        ---main : #FEFEE2
+    }
+    
+    html {
+        scroll-behavior: smooth;
+        /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg); */
+        /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-radial-gradient-a5802da1.jpg); */
+        background-size: cover;
+    }
 }
 
-html {
-    scroll-behavior: smooth;
-    /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg); */
-    /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-radial-gradient-a5802da1.jpg); */
-    background-size: cover;
+@layer components {
+    .button{
+        @apply px-4 py-2 bg-main-500 text-white;
+    }
+    .button:hover{
+        @apply bg-main-600
+    }
+    .button:active{
+        @apply bg-main-700
+    }
+    .button:disabled{
+        @apply bg-main-200 text-main-700
+    }
 }
 
-.title{
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-}
-.title h1{
-    padding: 2rem
-}
 
-/* .step-container{
-    margin : 1.5rem 15%;
-    border: solid 2px black;
-} */
-
-/* .step-container h2{
-    text-align: center;
-    font-size: 1.5rem
-}
-
-.step-container h3{
-    font-size: 1.5rem;
-} */
-
-.duration-step{
-
-}
-
-button{
-    @apply px-4 py-2 bg-main-500 text-white;
-}
-button:hover{
-    @apply bg-main-600
-}
-button:active{
-    @apply bg-main-700
-}
-button:disabled{
-    @apply bg-main-200 text-main-700
+@layer utilities {
+    .title{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    .title h1{
+        padding: 2rem
+    }
 }
