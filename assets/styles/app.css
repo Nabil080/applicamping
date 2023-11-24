@@ -42,5 +42,14 @@ html {
 }
 
 button{
-    @apply px-4 py-2 bg-black text-white border border-white hover:invert disabled:opacity-50 disabled:pointer-events-none;
+    @apply px-4 py-2 bg-main-500 text-white;
+}
+button:hover{
+    @apply bg-main-600
+}
+button:active{
+    @apply bg-main-700
+}
+button:disabled{
+    @apply bg-main-200 text-main-700
 }

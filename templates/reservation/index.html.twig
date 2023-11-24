@@ -1,49 +1,104 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReservationController!{% endblock %}
+{% block title %}Hello ReservationController!
+{% endblock %}
 
 {% block body %}
 
-<section class="title">
-<h1>Espace réservation</h1>
-</section>
+	<section class="title">
+		<h1>Espace réservation</h1>
+	</section>
 
-<section class="step-container my-6 mx-[15%]">
-    <section class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%]">
-        <h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
-        <div>
-            <h3 class="font-semibold text-3xl">Quand ?</h3>
-            <div {{ stimulus_controller('date_picker') }} class="space-x-6 mt-6 text-xl">
-                <label for="start">Du</label>
-                <input name="start" type class="w-[10ch] bg-transparent border-2 outline-none focus:outline-none cursor-pointer select-none">
-                <label for="end">Au</label>
-                <input name="end" type class="w-[10ch] bg-transparent border-2 outline-none focus:outline-none cursor-pointer select-none">
-            </div>
-        </div>
-        <div>
-            <h3 class="font-semibold text-3xl" >Qui ?</h3>
-            <div class="space-x-6 mt-6 text-xl">
-                <label for="">Adultes</label>
-                <input type="text" class="w-[2ch] text-center" value=2 readonly>
-                <label for="">Enfants</label>
-                <input type="text" class="w-[2ch] text-center" value=1 readonly>
-            </div>
-        </div>
-    </section>
-    <section id="nav-buttons" class="mt-12 flex justify-between">
-        <button disabled>Précédent</button>
-        <button >Suivant</button>
-    </section>
-</section>
+	<section class="step-container my-6 mx-[15%]">
+		<section class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
+			<h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
+			<div>
+				<h3 class="font-semibold text-3xl">Quand ?</h3>
+				<div {{ stimulus_controller('date_picker') }} class="space-x-6 mt-6 text-xl">
+					<label for="start">Du</label>
+					<input name="start" type class="w-[10ch] bg-transparent border-2 border-main-200 outline-none focus:outline-none cursor-pointer select-none">
+					<label for="end">Au</label>
+					<input name="end" type class="w-[10ch] bg-transparent border-2 border-main-200 outline-none focus:outline-none cursor-pointer select-none">
+				</div>
+			</div>
+			<div>
+				<h3 class="font-semibold text-3xl">Qui ?</h3>
+				<div class="space-x-6 mt-6 text-xl">
+					<label for="">Adultes</label>
+					<input type="text" class="w-[2ch] text-center" value="2" readonly>
+					<label for="">Enfants</label>
+					<input type="text" class="w-[2ch] text-center" value="1" readonly>
+				</div>
+			</div>
+		</section>
+		<section id="nav-buttons" class="mt-12 flex justify-between">
+			<button disabled>Précédent</button>
+			<button>Suivant</button>
+		</section>
+	</section>
 
-<section id="progress" class="flex">
-    <div></div>
-    <button>Réserver</button>
+	{# !!!! PROGRES BAR !!!! #}
 
-</section>
 
+	<section id="progress" class="flex xl:mx-32 mt-20 gap-12 justify-center">
+
+		<ol class="items-center w-fit space-y-4 sm:flex sm:space-x-8 sm:space-y-0 text-lg">
+			<li class="flex items-center text-main-600 space-x-2.5">
+				<span class="flex items-center justify-center w-8 h-8 border border-main-600 rounded-full shrink-0">
+					1
+				</span>
+				<span>
+					<h3 class="font-medium leading-tight">Durée du séjour</h3>
+					<p class="text-sm">Des bon détails</p>
+				</span>
+			</li>
+			<li class="flex items-center text-gray-500 dark space-x-2.5">
+				<span class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0">
+					2
+				</span>
+				<span>
+					<h3 class="font-medium leading-tight">Type d'hébérgement</h3>
+					<p class="text-sm"></p>
+				</span>
+			</li>
+			<li class="flex items-center text-gray-500 dark space-x-2.5">
+				<span class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0">
+					3
+				</span>
+				<span>
+					<h3 class="font-medium leading-tight">Choix de l'emplacement</h3>
+					<p class="text-sm"></p>
+				</span>
+			</li>
+			<li class="flex items-center text-gray-500 dark space-x-2.5">
+				<span class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0">
+					3
+				</span>
+				<span>
+					<h3 class="font-medium leading-tight">Options supplémentaires</h3>
+					<p class="text-sm"></p>
+				</span>
+			</li>
+			<li class="flex items-center text-gray-500 dark space-x-2.5">
+				<span class="flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0">
+					3
+				</span>
+				<span>
+					<h3 class="font-medium leading-tight">Récapitulatif</h3>
+					<p class="text-sm"></p>
+				</span>
+			</li>
+		</ol>
+
+		<div id="order-button">
+			<button>Réserver</button>
+			<div>Montant :
+				<span id="current-price">
+					0
+				</span>€</div>
+		</div>
+
+	</section>
 
 
 {% endblock %}
-
-
