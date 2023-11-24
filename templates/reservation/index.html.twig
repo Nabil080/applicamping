@@ -9,9 +9,11 @@
 		<h1>Espace réservation</h1>
 	</section>
 
-	{# ! Durée du séjour #}
-	<section class="step-container my-6 mx-[15%]">
-		<section class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
+	{# ! Conteneur d'étapes #}
+	<section
+		{{ stimulus_controller('step') }} id="step-container" class="my-6 [&>article]:mx-[15%]">
+		{# ! Etape 1 : Durée du séjour #}
+		<article step class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
 			<h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
 			{# ! Date du séjour #}
 			<div>
@@ -64,61 +66,62 @@
 					</div>
 				</div>
 			</div>
+		</article>
+		{# ! Etape 2 : Type d'hébérgement #}
+		<article step class="hidden">
+			salut
+		</article>
+		{# !! BOUTONS NAVIGATION #}
+		<section id="nav-buttons" class="mt-12 mx-[15%] flex justify-between">
+			<button {{ stimulus_target('step', 'previous') }} class="button" disabled>Précédent</button>
+			<button {{ stimulus_target('step', 'next') }} class="button" >Suivant</button>
 		</section>
-		<section id="nav-buttons" class="mt-12 flex justify-between">
-			<button class="button" disabled>Précédent</button>
-			<button class="button">Suivant</button>
+		{# !!!! PROGRES BAR !!!! #}
+		<section {{ stimulus_target('step', 'progress') }} id="progress" class="flex mx-0 my-20 gap-16 justify-center">
+			<ol class="items-center space-y-4 sm:flex sm:space-x-12 sm:space-y-0 text-lg">
+				<li class="progress-item">
+					<span>1</span>
+					<div>
+						<h3>Durée du séjour</h3>
+						<p>Des bon détails</p>
+					</div>
+				</li>
+				<li class="progress-item">
+					<span>2</span>
+					<div>
+						<h3>Type d'hébérgement</h3>
+						<p></p>
+					</div>
+				</li>
+				<li class="progress-item">
+					<span>3</span>
+					<div>
+						<h3>Choix de l'emplacement</h3>
+						<p></p>
+					</div>
+				</li>
+				<li class="progress-item">
+					<span>3</span>
+					<div>
+						<h3>Options supplémentaires</h3>
+						<p></p>
+					</div>
+				</li>
+				<li class="progress-item">
+					<span>3</span>
+					<div>
+						<h3>Récapitulatif</h3>
+						<p></p>
+					</div>
+				</li>
+			</ol>
+			<div id="order-button">
+				<button class="button" disabled>Réserver</button>
+				<div>Montant :
+					<span id="current-price">0</span>€</div>
+			</div>
+
 		</section>
-	</section>
-
-	{# !!!! PROGRES BAR !!!! #}
-
-
-	<section id="progress" class="flex xl:mx-32 my-20 gap-12 justify-center">
-		<ol class="items-center w-fit space-y-4 sm:flex sm:space-x-8 sm:space-y-0 text-lg">
-			<li class="progress-item done">
-				<span>1</span>
-				<div>
-					<h3>Durée du séjour</h3>
-					<p>Des bon détails</p>
-				</div>
-			</li>
-			<li class="progress-item">
-				<span>2</span>
-				<div>
-					<h3>Type d'hébérgement</h3>
-					<p></p>
-				</div>
-			</li>
-			<li class="progress-item">
-				<span>3</span>
-				<div>
-					<h3>Choix de l'emplacement</h3>
-					<p></p>
-				</div>
-			</li>
-			<li class="progress-item">
-				<span>3</span>
-				<div>
-					<h3>Options supplémentaires</h3>
-					<p></p>
-				</div>
-			</li>
-			<li class="progress-item">
-				<span>3</span>
-				<div>
-					<h3>Récapitulatif</h3>
-					<p></p>
-				</div>
-			</li>
-		</ol>
-
-		<div id="order-button">
-			<button class="button" disabled>Réserver</button>
-			<div>Montant :
-				<span id="current-price">0</span>€</div>
-		</div>
-
 	</section>
 
 
