@@ -5,9 +5,9 @@
 
 @layer base {
     :root {
-        ---main : #FEFEE2
+        ---main: #fefee2;
     }
-    
+
     html {
         scroll-behavior: smooth;
         /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg); */
@@ -17,28 +17,57 @@
 }
 
 @layer components {
-    .button{
+    /* ! boutons */
+    .button {
         @apply px-4 py-2 bg-main-500 text-white;
     }
-    .button:hover{
-        @apply bg-main-600
+
+    .button:hover {
+        @apply bg-main-600;
     }
-    .button:active{
-        @apply bg-main-700
+
+    .button:active {
+        @apply bg-main-700;
     }
-    .button:disabled{
-        @apply bg-main-200 text-main-700
+
+    .button:disabled {
+        @apply bg-main-200 text-main-700;
+    }
+
+    /* ! progress bar */
+    .progress-item {
+        @apply flex items-center text-gray-500 space-x-2.5;
+    }
+
+    .progress-item.done {
+        @apply text-main-600;
+    }
+
+    .progress-item span {
+        @apply flex items-center justify-center w-8 h-8 border border-gray-500 rounded-full shrink-0;
+    }
+
+    .progress-item.done span {
+        @apply border-main-600;
+    }
+
+    .progress-item div h3 {
+        @apply font-medium leading-tight;
+    }
+
+    .progress-item div p {
+        @apply text-sm;
     }
 }
 
-
 @layer utilities {
-    .title{
+    .title {
         text-align: center;
         font-size: 2rem;
         font-weight: bold;
     }
-    .title h1{
-        padding: 2rem
+
+    .title h1 {
+        padding: 2rem;
     }
 }
