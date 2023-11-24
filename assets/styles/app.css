@@ -5,7 +5,25 @@
 
 @layer base {
     :root {
-        ---main: #fefee2;
+        /* ! colors !*/
+            --50: #f2fbf4;
+            --100: #e2f6e6;
+            --200: #c6ecce;
+            --300: #9adbaa;
+            --400: #66c27c;
+            --500: #41a659;
+            --600: #35944c;
+            --700: #296c3a;
+            --800: #255632;
+            --900: #20472a;
+            --950: #0d2614;
+
+        /* ! swiper scrollbar */
+        --swiper-scrollbar-bg-color: var(--400);
+        --swiper-scrollbar-drag-bg-color: var(--800);
+        --swiper-scrollbar-size: 8px;
+        /* ! swiper navigation */
+        --swiper-navigation-color: var(--400);
     }
 
     html {
@@ -17,6 +35,7 @@
 }
 
 @layer components {
+
     /* ! boutons */
     .button {
         @apply px-4 py-2 bg-main-500 text-white;
@@ -58,6 +77,8 @@
     .progress-item div p {
         @apply text-sm;
     }
+
+    /* ! card type d'emplacement ! */
 }
 
 @layer utilities {
@@ -70,30 +91,17 @@
     .title h1 {
         padding: 2rem;
     }
+
+    /* ! slider ! */
+    .slider {
+        position: relative;
+        padding: 3rem;
+    }
+
+    .slider>div {
+        overflow: hidden;
+    }
+
 }
 
-/* .slider {
-    margin: 0 auto;
-    max-width: 1200px;
-  }
-  
-  .swiper-container {
-    padding-bottom: 20px;
-  }
-  
-  .swiper-scrollbar {
-    background: #d6d6d6;
-  }
-  
-  .swiper-container-horizontal > .swiper-scrollbar {
-    border-radius: 2px;
-    height: 5px;
-    width: 200px;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .swiper-wrapper img {
-    width: 100%;
-  } */
+
