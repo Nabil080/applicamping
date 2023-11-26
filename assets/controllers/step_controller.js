@@ -70,4 +70,8 @@ export default class extends Controller {
         this.checkProgress()
     }
 
+  // Remplir les infos preview
+  // Stocker les infos et check la progreSion
+
+
 }
