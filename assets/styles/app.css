@@ -6,17 +6,17 @@
 @layer base {
     :root {
         /* ! colors !*/
-            --50: #f2fbf4;
-            --100: #e2f6e6;
-            --200: #c6ecce;
-            --300: #9adbaa;
-            --400: #66c27c;
-            --500: #41a659;
-            --600: #35944c;
-            --700: #296c3a;
-            --800: #255632;
-            --900: #20472a;
-            --950: #0d2614;
+        --50: #f2fbf4;
+        --100: #e2f6e6;
+        --200: #c6ecce;
+        --300: #9adbaa;
+        --400: #66c27c;
+        --500: #41a659;
+        --600: #35944c;
+        --700: #296c3a;
+        --800: #255632;
+        --900: #20472a;
+        --950: #0d2614;
 
         /* ! swiper scrollbar */
         --swiper-scrollbar-bg-color: var(--400);
@@ -79,6 +79,12 @@
     }
 
     /* ! card type d'emplacement ! */
+    .hebergement-card.active {
+        border-color: var(--500);
+    }
+    .hebergement-card.active .overlay {
+        opacity : 10%
+    }
 }
 
 @layer utilities {
@@ -103,5 +109,3 @@
     }
 
 }
-
-

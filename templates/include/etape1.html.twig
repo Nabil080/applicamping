@@ -1,0 +1,55 @@
+{# ! Etape 1 : Durée du séjour #}
+<article data-step class="step-content border-2 border-black divide-y-2 divide-black [&>div]:py-10 [&>*]:px-[15%] bg-white">
+	<h2 class="text-2xl text-center font-semibold py-6">Définissez votre séjour</h2>
+	{# ! Date du séjour #}
+	<div>
+		<h3 class="font-semibold text-3xl">Quand ?</h3>
+		<div {{ stimulus_controller('date_picker') }} class="flex flex-wrap gap-6 items-center mt-6 [&_i]:text-3xl [&_label]:text-2xl [&_input]:text-2xl">
+			<div class="flex gap-6 items-center">
+				<i class="fa fa-calendar text-3xl"></i>
+				<label for="start">Du</label>
+				<input name="start" type class="w-fit px-4 py-2 border-black caret-transparent cursor-pointer ">
+			</div>
+			<div class="flex gap-6 items-center">
+				<i class="fa fa-calendar text-3xl"></i>
+
+				<label for="end">Au</label>
+				<input name="end" type class="w-fit px-4 py-2  border-black caret-transparent cursor-pointer ">
+			</div>
+		</div>
+	</div>
+	{# ! Nombre de personnes #}
+	<div>
+		<h3 class="font-semibold text-3xl">Qui ?</h3>
+		<div class="flex flex-wrap gap-12 items-center mt-6 [&_label]:text-2xl [&_input]:text-[2rem]">
+			<div class="flex gap-6 items-center">
+				<i class="fa-solid fa-person text-3xl"></i>
+				<label for="adult-counter">
+					Adultes</label>
+				<div class="relative flex items-center">
+					<button data-input-counter-decrement="adult-counter" class="">
+						<i class="fa fa-minus text-xl"></i>
+					</button>
+					<input type="text" id="adult-counter" data-input-counter class="max-w-[3ch] text-center focus:outline-none select-none cursor-default" placeholder="0" value="1" readonly required>
+					<button data-input-counter-increment="adult-counter" class="">
+						<i class="fa fa-plus text-xl"></i>
+					</button>
+				</div>
+			</div>
+			<div class="flex gap-6 items-center">
+				<i class="fa-solid fa-child text-3xl"></i>
+				<label for="child-counter">
+					Enfants</label>
+				<div class="relative flex items-center">
+					<button data-input-counter-decrement="child-counter" class="">
+						<i class="fa fa-minus text-xl"></i>
+					</button>
+					<input type="text" id="child-counter" data-input-counter class="max-w-[3ch] text-center focus:outline-none select-none cursor-default" placeholder="0" value="0" readonly required>
+					<button data-input-counter-increment="child-counter" class="">
+						<i class="fa fa-plus text-xl"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>
