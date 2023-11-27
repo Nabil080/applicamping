@@ -118,4 +118,8 @@ export default class extends Controller {
         e.target.classList.add('active')
     }
 
+  // Remplir les infos preview
+  // Stocker les infos et check la progreSion
+
+
 }
