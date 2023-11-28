@@ -12,7 +12,8 @@ export default class extends Controller {
     }
 
     next() {
-        if (this.checkStep(this.currentStep) == false) return
+        this.checkStep(this.currentStep)
+        if (!(this.steps[this.currentStep].classList.contains('valid'))) return
 
         this.currentStep++
         this.checkProgress()
@@ -83,9 +84,10 @@ export default class extends Controller {
     }
 
     checkStep(number) {
+        let step
         switch (number) {
             case 0:
-                let step = this.steps[0]
+                step = this.steps[0]
                 this.reservation.durée.début = strToDate(step.querySelector('input[name="start"]').value)
                 this.reservation.durée.fin = strToDate(step.querySelector('input[name="end"]').value)
                 this.reservation.durée.nuits = parseInt((this.reservation.durée.fin - this.reservation.durée.début) / (1000 * 60 * 60 * 24), 10) - 1;
@@ -98,13 +100,21 @@ export default class extends Controller {
                     && this.reservation.durée.nuits > 0
                     && Number.isInteger(this.reservation.nombre.adultes)
                     && Number.isInteger(this.reservation.nombre.enfants))
-                    return true
+                    
+                    step.classList.add('valid')
+                break;
+            case 1:
+                step = this.steps[1]
+
+                if (this.reservation.type.nom != ""
+                    && this.reservation.type.prix != ""
+                    && this.reservation.type.taille != "")
+
+                    step.classList.add('valid')
                 break;
             default:
-                break;
+                return false
         }
-
-        return false
     }
 
 
@@ -124,15 +134,18 @@ export default class extends Controller {
         this.steps[this.currentStep].classList.remove('hidden')
 
         // ! update progress bar
-        this.stepsProgress.forEach((progress, index) => {
-            if (index <= this.currentStep) progress.classList.add('done')
-        })
+        this.stepsProgress[this.currentStep].classList.add('done')
         // ! update boutons navigation
-        if (this.currentStep === 0) this.previousTarget.setAttribute('disabled', true)
-        else this.previousTarget.removeAttribute('disabled')
-
-        if (this.currentStep === this.steps.length - 1) this.nextTarget.setAttribute('disabled', true)
-        else this.nextTarget.removeAttribute('disabled')
+        if (this.currentStep === 0) {
+            this.previousTarget.setAttribute('disabled', true)
+        } else {
+            this.previousTarget.removeAttribute('disabled')
+        }
+        if (this.steps[this.currentStep].classList.contains('valid')) {
+            this.nextTarget.removeAttribute('disabled')
+        } else {
+            this.nextTarget.setAttribute('disabled', true)
+        }
 
         console.log(this.reservation);
     }
@@ -140,13 +153,15 @@ export default class extends Controller {
 
 
     setActiveCard(e) {
-        console.log(e)
         this.cards.forEach(card => card.classList.remove('active'))
         e.target.classList.add('active')
+
+        this.reservation.type.nom = e.target.querySelector('h5').innerText
+        this.reservation.type.taille = e.target.querySelector('span.size').innerText
+        this.reservation.type.prix = e.target.querySelector('div.price').innerText
+        this.nextTarget.removeAttribute('disabled')
     }
 
-    // Remplir les infos preview
-    // Stocker les infos et check la progreSion
 
 
 }
