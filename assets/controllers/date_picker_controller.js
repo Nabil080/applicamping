@@ -19,12 +19,12 @@ export default class extends Controller {
             date.getFullYear(),
             date.getMonth(),
             date.getDate() + 7
-        ).toLocaleDateString("fr-FR", { weekday:"long", month:"long", day:"numeric"});
+        ).toLocaleDateString("fr-FR", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
         this.nextNextWeek = new Date(
             date.getFullYear(),
             date.getMonth(),
             date.getDate() + 14
-        ).toLocaleDateString("fr-FR", { weekday:"long", month:"long", day:"numeric"});
+        ).toLocaleDateString("fr-FR", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
     }
 
     initializeDateRangePicker() {
@@ -33,7 +33,7 @@ export default class extends Controller {
             weekStart: 1,
             clearBtn: true,
             minDate: this.today,
-            format: "DD dd MM" ,
+            format: "DD dd MM yyyy",
         };
 
         const d = new DateRangePicker(this.element, options);
@@ -49,8 +49,8 @@ export default class extends Controller {
         this.start = this.element.querySelector('[name="start"]');
         this.end = this.element.querySelector('[name="end"]');
 
-        if(this.start.value === "") this.start.value = this.nextWeek
-        if(this.end.value === "") this.end.value = this.nextNextWeek
+        if (this.start.value === "") this.start.value = this.nextWeek
+        if (this.end.value === "") this.end.value = this.nextNextWeek
     }
 
     synchronizeValues() {

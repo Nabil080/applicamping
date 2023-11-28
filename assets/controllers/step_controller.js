@@ -5,14 +5,14 @@ export default class extends Controller {
     static targets = ["previous", "next", "progress"];
 
     previous() {
-        if(this.currentStep == 0) return
+        if (this.currentStep == 0) return
 
         this.currentStep--
         this.checkProgress()
     }
 
     next() {
-        // if(!this.checkStep(this.currentStep)) return
+        if (this.checkStep(this.currentStep) == false) return
 
         this.currentStep++
         this.checkProgress()
@@ -29,6 +29,7 @@ export default class extends Controller {
         this.setupClickables()
 
         this.checkProgress()
+
     }
 
     setupVariables() {
@@ -46,41 +47,57 @@ export default class extends Controller {
         this.reservation = {
             durée: {
                 début: "",
-                fin:"",
-                nuit:"",
+                fin: "",
+                nuits: "",
             },
             nombre: {
-                adultes:"",
-                enfants:"",
+                adultes: "",
+                enfants: "",
             },
             type: {
-                nom:"",
-                prix:"",
-                taille:"",
+                nom: "",
+                prix: "",
+                taille: "",
             },
             options: [
                 {
-                    nom:"",
-                    montant:"",
-                    parJour:"",
-                    parPersonne:"",
+                    nom: "",
+                    montant: "",
+                    parJour: "",
+                    parPersonne: "",
                 }
             ],
             client: {
-                nom:"",
-                prenom:"",
-                email:"",
-                telephone:"",
-                adresse:"",
-                ville:"",
-                codePostal:"",
+                nom: "",
+                prenom: "",
+                email: "",
+                telephone: "",
+                adresse: "",
+                ville: "",
+                codePostal: "",
             },
             total: 0
         }
 
-
         this.cards = this.element.querySelectorAll('.hebergement-card')
     }
+
+    checkStep(number) {
+        switch (number) {
+            case 0:
+                this.reservation.durée.début = strToDate(this.steps[0].querySelector('input[name="start"]').value)
+                this.reservation.durée.fin = strToDate(this.steps[0].querySelector('input[name="end"]').value)
+                this.reservation.durée.nuits = parseInt((this.reservation.durée.fin - this.reservation.durée.début) / (1000 * 60 * 60 * 24), 10) - 1;
+
+                if(this.reservation.durée.début instanceof Date && this.reservation.durée.fin instanceof Date && this.reservation.durée.nuits > 0) return true
+                break;
+            default:
+                break;
+        }
+
+        return false
+    }
+
 
     setupClickables() {
         this.previousTarget.dataset.action = "step#previous";
@@ -108,6 +125,7 @@ export default class extends Controller {
         if (this.currentStep === this.steps.length - 1) this.nextTarget.setAttribute('disabled', true)
         else this.nextTarget.removeAttribute('disabled')
 
+        console.log(this.reservation);
     }
 
 
@@ -118,8 +136,37 @@ export default class extends Controller {
         e.target.classList.add('active')
     }
 
-  // Remplir les infos preview
-  // Stocker les infos et check la progreSion
+    // Remplir les infos preview
+    // Stocker les infos et check la progreSion
 
+
+}
+
+
+function strToDate(str) {
+
+    var dateComponents = str.match(/(\w+) (\d+) (\S+) (\d+)/);
+
+    var jour = parseInt(dateComponents[2], 10);
+    var moisStr = dateComponents[3];
+    var annee = parseInt(dateComponents[4], 10);
+
+    // Liste des mois en français
+    var mois = {
+        "janvier": 0,
+        "février": 1,
+        "mars": 2,
+        "avril": 3,
+        "mai": 4,
+        "juin": 5,
+        "juillet": 6,
+        "août": 7,
+        "septembre": 8,
+        "octobre": 9,
+        "novembre": 10,
+        "décembre": 11
+    };
+
+    return new Date(annee, mois[moisStr], jour);
 
 }
