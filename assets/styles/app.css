@@ -75,7 +75,7 @@
     }
 
     .progress-item div p {
-        @apply text-sm;
+        @apply text-sm italic;
     }
 
     /* ! card type d'emplacement ! */

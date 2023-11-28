@@ -85,6 +85,7 @@ export default class extends Controller {
 
     checkStep(number) {
         let step
+        let progress
         switch (number) {
             case 0:
                 step = this.steps[0]
@@ -99,18 +100,35 @@ export default class extends Controller {
                     && this.reservation.durée.fin instanceof Date
                     && this.reservation.durée.nuits > 0
                     && Number.isInteger(this.reservation.nombre.adultes)
-                    && Number.isInteger(this.reservation.nombre.enfants))
-                    
-                    step.classList.add('valid')
+                    && Number.isInteger(this.reservation.nombre.enfants)){
+                        progress = this.stepsProgress[0]
+                        step.classList.add('valid')
+
+                        progress.querySelector('p.details').innerText = `
+                        ${this.reservation.durée.nuits} nuits 
+                        Du ${this.reservation.durée.début.toLocaleString().split(' ')[0]} 
+                        Au ${this.reservation.durée.fin.toLocaleString().split(' ')[0]} 
+                        ${this.reservation.nombre.adultes} adultes 
+                        ${this.reservation.nombre.enfants} enfants
+                        `
+                    }
                 break;
             case 1:
                 step = this.steps[1]
 
                 if (this.reservation.type.nom != ""
                     && this.reservation.type.prix != ""
-                    && this.reservation.type.taille != "")
+                    && this.reservation.type.taille != ""){
+                        progress = this.stepsProgress[1]
+                        step.classList.add('valid')
 
-                    step.classList.add('valid')
+                        progress.querySelector('p.details').innerText = `
+                        ${this.reservation.type.nom}
+                        ${this.reservation.type.prix}
+                        ${this.reservation.type.taille}
+                        `
+                    }
+
                 break;
             default:
                 return false
