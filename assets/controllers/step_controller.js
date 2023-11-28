@@ -85,11 +85,20 @@ export default class extends Controller {
     checkStep(number) {
         switch (number) {
             case 0:
-                this.reservation.durée.début = strToDate(this.steps[0].querySelector('input[name="start"]').value)
-                this.reservation.durée.fin = strToDate(this.steps[0].querySelector('input[name="end"]').value)
+                let step = this.steps[0]
+                this.reservation.durée.début = strToDate(step.querySelector('input[name="start"]').value)
+                this.reservation.durée.fin = strToDate(step.querySelector('input[name="end"]').value)
                 this.reservation.durée.nuits = parseInt((this.reservation.durée.fin - this.reservation.durée.début) / (1000 * 60 * 60 * 24), 10) - 1;
 
-                if(this.reservation.durée.début instanceof Date && this.reservation.durée.fin instanceof Date && this.reservation.durée.nuits > 0) return true
+                this.reservation.nombre.adultes = parseInt(step.querySelector('input#adult-counter').value)
+                this.reservation.nombre.enfants = parseInt(step.querySelector('input#child-counter').value)
+
+                if (this.reservation.durée.début instanceof Date
+                    && this.reservation.durée.fin instanceof Date
+                    && this.reservation.durée.nuits > 0
+                    && Number.isInteger(this.reservation.nombre.adultes)
+                    && Number.isInteger(this.reservation.nombre.enfants))
+                    return true
                 break;
             default:
                 break;
