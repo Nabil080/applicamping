@@ -74,8 +74,11 @@
         @apply font-medium leading-tight;
     }
 
+    .progress-item div {
+        @apply relative;
+    }
     .progress-item div p {
-        @apply text-sm italic;
+        @apply text-sm italic absolute bottom-6;
     }
 
     /* ! card type d'emplacement ! */
