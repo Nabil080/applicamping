@@ -111,4 +111,8 @@
         overflow: hidden;
     }
 
+    .custom-select2 {
+        @apply  !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+    }
+
 }

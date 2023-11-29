@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 0;
+        this.currentStep = 2;
         this.steps = []
         this.stepsProgress = []
         this.element.querySelectorAll('[data-step]').forEach((step, index) => {
@@ -178,6 +178,8 @@ export default class extends Controller {
         this.reservation.type.taille = e.target.querySelector('span.size').innerText
         this.reservation.type.prix = e.target.querySelector('div.price').innerText
         this.nextTarget.removeAttribute('disabled')
+
+        this.steps[2].querySelector('h2 span').innerText = this.reservation.type.nom
     }
 
 
