@@ -138,13 +138,12 @@ export default class extends Controller {
             case 2:
                 step = this.steps[2]
                 if (this.reservation.emplacement.numéro != "") {
-                    progress = this.stepsProgress[2]
                     step.classList.add('valid')
+                    progress = this.stepsProgress[2]
 
                     progress.querySelector('p.details').innerText = `
-                    ${this.reservation.emplacement.numéro}
-                    ${this.reservation.type.prix}
-                    ${this.reservation.type.taille}
+                    Emplacement ${this.reservation.emplacement.numéro}
+                    ${this.reservation.emplacement.tags.join(', ')}
                     `
                 }
 
@@ -204,13 +203,14 @@ export default class extends Controller {
     }
 
     chooseEmplacement() {
-        let tags = Array.from(this.steps[2].querySelectorAll('.select2-selection__choice')).map(item => item.title);
+        let step = this.steps[2]
+        let tags = Array.from(step.querySelectorAll('.select2-selection__choice')).map(item => item.title);
 
 
         // fetch l'emplacement du type avec les tags spécifiés depuis la bdd
         let fetch = new Object
-        fetch['numéro'] = 10
-        fetch['tags'] = ["A l'ombre", "Ensoleillé"]
+        fetch['numéro'] = Math.random()
+        fetch['tags'] = tags
 
 
         // attribue et affiche l'emplacement recup
@@ -218,8 +218,12 @@ export default class extends Controller {
         this.reservation.emplacement.tags = fetch['tags']
         console.log(fetch);
 
-        this.steps[2].querySelector('span.emplacement-number').innerText = this.reservation.emplacement.numéro
-        this.steps[2].querySelector('span.emplacement-tags').innerText = this.reservation.emplacement.tags.join(', ')
+        step.querySelector('span.emplacement-number').innerText = this.reservation.emplacement.numéro
+        step.querySelector('span.emplacement-tags').innerText = this.reservation.emplacement.tags.join(', ')
+
+        // go next
+        this.nextTarget.removeAttribute('disabled')
+        step.classList.add('valid')
     }
 
 
