@@ -179,7 +179,7 @@ export default class extends Controller {
         } else {
             this.previousTarget.removeAttribute('disabled')
         }
-        if (this.steps[this.currentStep].classList.contains('valid')) {
+        if (this.steps[this.currentStep].classList.contains('valid') || this.currentStep == 3) {
             this.nextTarget.removeAttribute('disabled')
         } else {
             this.nextTarget.setAttribute('disabled', true)

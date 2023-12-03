@@ -4,24 +4,70 @@
 		<span></span>
 	</h2>
 	{# ! Date du séjour #}
-	<div class=" py-10 px-[5%]">
+	<div class=" py-10 px-[5%] space-y-4">
 		<article class="flex gap-8 justify-between items-center">
 			<div>
-				<input type="checkbox" name="electricité" id="">
-				<label for="electricité">Électricité</label>
+				<input class="w-[3ch]" type="checkbox" name="electricité" id="">
+				<label class="text-lg ml-2" for="electricité">Électricité</label>
 			</div>
 			<div class=" bg-gray-500 h-0.5 grow"></div>
 			<div class="text-[0px]">
 				<p>
 					<span class="text-lg font-bold">10€</span>
-					<span class="text-sm">/personne</span>
-					<span class="text-sm">/unité</span>
-					<span class="text-sm">/jour</span>
+					{# <span class="text-base">/personne</span> #}
+					{# <span class="text-base">/unité</span> #}
+					<span class="text-base">/jour</span>
+				</p>
+			</div>
+		</article>
+
+		<article class="flex gap-8 justify-between items-center">
+			<div>
+				<input class="w-[3ch]" type="checkbox" name="electricité" id="">
+				<label class="text-lg ml-2" for="electricité">Déjeuner</label>
+			</div>
+			<div class=" bg-gray-500 h-0.5 grow"></div>
+			<div class="text-[0px]">
+				<p>
+					<span class="text-lg font-bold">10€</span>
+					<span class="text-base">/personne</span>
+					{# <span class="text-base">/unité</span> #}
+					<span class="text-base">/jour</span>
 				</p>
 			</div>
 		</article>
 
 
+		<article class="flex gap-8 justify-between items-center">
+			<div>
+				<input class="w-[3ch]" type="checkbox" name="electricité" id="">
+				<label class="text-lg ml-2" for="electricité">Garage mort</label>
+			</div>
+			<div class=" bg-gray-500 h-0.5 grow"></div>
+			<div class="text-[0px]">
+				<p>
+					<span class="text-lg font-bold">10€</span>
+					{# <span class="text-base">/personne</span> #}
+				{# <span class="text-base">/unité</span> #}
+					{# <span class="text-base">/jour</span> #}
+				</p>
+			</div>
+		</article>
+		<article class="flex gap-8 justify-between items-center">
+			<div>
+				<input type="number" min="0" max="2" name="animaux" id="" class="w-[3ch] text-center border-2 rounded" value="0" placeholder="0">
+				<label class="text-lg ml-2" for="animaux">Animaux</label>
+			</div>
+			<div class=" bg-gray-500 h-0.5 grow"></div>
+			<div class="text-[0px]">
+				<p>
+					<span class="text-lg font-bold">10€</span>
+					{# <span class="text-base">/personne</span> #}
+					<span class="text-base">/unité</span>
+					{# <span class="text-base">/jour</span> #}
+				</p>
+			</div>
+		</article>
 	</div>
 
 </article>
