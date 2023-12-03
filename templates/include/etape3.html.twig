@@ -4,24 +4,29 @@
 		<span></span>
 	</h2>
 	{# ! Date du séjour #}
-	<div class="grid grid-cols-3 place-items-center py-10 px-[5%] ">
-		<section>
-			<div>
-				<select  multiple name="tags" id="tags">
+	<div class="grid grid-cols-3 place-items-center py-10 px-[5%] gap-4">
+		<section class="w-full grid">
+			<div class="mb-4">
+				<select class="w-full" multiple name="tags" id="tags">
 					<option value="">A l'ombre</option>
 					<option value="">Ensolleilé</option>
 					<option value="">Accès handicapés</option>
 					<option value="">Proches WC</option>
 				</select>
 			</div>
-			<button class="button">Choisir par tags</button>
+			<button {{ stimulus_action('step','chooseEmplacement') }} class="button">Choisir par tags</button>
 		</section>
-		<section class="select-none uppercase text-xl">
+		<section class="w-full grid place-items-center select-none uppercase text-xl">
 			<p>Ou</p>
 		</section>
-		<section>
-			<button>Ouvrir la carte</button>
+		<section class="w-full grid">
+			<button class="button">Ouvrir la carte</button>
 		</section>
+		<div class="w-full col-span-3">
+			<p>Emplacement numéro : <span class="emplacement-number">12</span></p>
+			<p>Tags : <span class="emplacement-tags">A l'ombre</span></p>
+		
+		</div>
 	</div>
 
 </article>

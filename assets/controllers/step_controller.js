@@ -60,6 +60,10 @@ export default class extends Controller {
                 prix: "",
                 taille: "",
             },
+            emplacement: {
+                numéro: "",
+                tags : []
+            },
             options: [
                 {
                     nom: "",
@@ -127,7 +131,24 @@ export default class extends Controller {
                         ${this.reservation.type.prix}
                         ${this.reservation.type.taille}
                         `
+                        this.chooseEmplacement()
                     }
+
+                break;
+            case 2:
+                step = this.steps[2]
+                if (this.reservation.emplacement.numéro != ""){
+                    progress = this.stepsProgress[2]
+                    step.classList.add('valid')
+
+                    progress.querySelector('p.details').innerText = `
+                    ${this.reservation.emplacement.numéro}
+                    ${this.reservation.type.prix}
+                    ${this.reservation.type.taille}
+                    `
+                }
+
+
 
                 break;
             default:
@@ -182,6 +203,25 @@ export default class extends Controller {
         this.steps[2].querySelector('h2 span').innerText = this.reservation.type.nom
     }
 
+    chooseEmplacement() {
+        let tags = this.steps[2].querySelector('.select2-selection__choice')
+        console.log(tags);
+
+
+        // fetch l'emplacement du type avec les tags spécifiés depuis la bdd
+            let fetch = new Object
+            fetch['numéro'] = 10
+            fetch['tags'] = ["A l'ombre","Ensoleillé"]
+        
+        
+        // attribue et affiche l'emplacement recup
+        this.reservation.emplacement.numéro = fetch['numéro']
+        this.reservation.emplacement.tags = fetch['tags']
+        console.log(fetch);
+        
+        this.steps[2].querySelector('span.emplacement-number').innerText = this.reservation.emplacement.numéro
+        this.steps[2].querySelector('span.emplacement-tags').innerText = this.reservation.emplacement.tags.join(', ')
+    }
 
 
 }

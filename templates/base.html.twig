@@ -30,7 +30,12 @@
 
 		<script>
 			$(document).ready(function () {
-$('select[multiple]').select2({closeOnSelect: false, language: 'fr', selectionCssClass: 'custom-select2'});
+$('select[multiple]').select2(
+	{
+		closeOnSelect: false, 
+		language: 'fr', 
+		selectionCssClass: 'custom-select2'
+		});
 });
 		</script>
 
