@@ -146,9 +146,19 @@ export default class extends Controller {
                     ${this.reservation.emplacement.tags.join(', ')}
                     `
                 }
+                break;
+            case 3:
+                step = this.steps[3]
+                step.classList.add('valid')
+                progress = this.stepsProgress[3]
 
+                this.checkOptions()
 
+                console.log(this.reservation.options);
 
+                // progress.querySelector('p.details').innerText = `
+                //         ${this.reservation.options.join(', ')}
+                //     `
                 break;
             default:
                 return false
@@ -226,6 +236,16 @@ export default class extends Controller {
         step.classList.add('valid')
     }
 
+    checkOptions() {
+        let step = this.steps[3]
+
+        step.querySelectorAll('article.option').forEach(option => {
+            let input = option.querySelector('input');
+            if (input.type == "checkbox" && input.checked || input.type == "number" && input.value > 0) {
+                console.log(input)
+            }
+        })
+    }
 
 }
 
@@ -238,7 +258,6 @@ function strToDate(str) {
     var moisStr = dateComponents[3];
     var annee = parseInt(dateComponents[4], 10);
 
-    // Liste des mois en français
     var mois = {
         "janvier": 0,
         "février": 1,
