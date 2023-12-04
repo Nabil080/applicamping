@@ -238,13 +238,22 @@ export default class extends Controller {
 
     checkOptions() {
         let step = this.steps[3]
+        let options = []
 
         step.querySelectorAll('article.option').forEach(option => {
             let input = option.querySelector('input');
+            console.log(option.dataset);
             if (input.type == "checkbox" && input.checked || input.type == "number" && input.value > 0) {
-                console.log(input)
+                options.push({
+                    nom: input.name,
+                    montant: parseInt(option.dataset.price),
+                    parJour: (option.dataset.perNight == "true"),
+                    parPersonne: (option.dataset.perPerson  == "true")
+                })
             }
         })
+
+        this.reservation.options = options
     }
 
 }
