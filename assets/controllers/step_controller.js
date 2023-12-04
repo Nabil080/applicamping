@@ -154,11 +154,9 @@ export default class extends Controller {
 
                 this.checkOptions()
 
-                console.log(this.reservation.options);
-
-                // progress.querySelector('p.details').innerText = `
-                //         ${this.reservation.options.join(', ')}
-                //     `
+                progress.querySelector('p.details').innerText = `
+                        ${this.reservation.options.map(option => option.nom).join(', ')}
+                    `
                 break;
             default:
                 return false
@@ -242,13 +240,12 @@ export default class extends Controller {
 
         step.querySelectorAll('article.option').forEach(option => {
             let input = option.querySelector('input');
-            console.log(option.dataset);
             if (input.type == "checkbox" && input.checked || input.type == "number" && input.value > 0) {
                 options.push({
                     nom: input.name,
                     montant: parseInt(option.dataset.price),
                     parJour: (option.dataset.perNight == "true"),
-                    parPersonne: (option.dataset.perPerson  == "true")
+                    parPersonne: (option.dataset.perPerson == "true")
                 })
             }
         })
