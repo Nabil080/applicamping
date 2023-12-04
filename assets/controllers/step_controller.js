@@ -67,7 +67,7 @@ export default class extends Controller {
             options: [
                 {
                     nom: "",
-                    montant: "",
+                    prix: "",
                     parJour: "",
                     parPersonne: "",
                 }
@@ -243,7 +243,8 @@ export default class extends Controller {
             if (input.type == "checkbox" && input.checked || input.type == "number" && input.value > 0) {
                 options.push({
                     nom: input.name,
-                    montant: parseInt(option.dataset.price),
+                    nombre: input.value.replace("on", 1),
+                    prix: parseInt(option.dataset.price),
                     parJour: (option.dataset.perNight == "true"),
                     parPersonne: (option.dataset.perPerson == "true")
                 })
@@ -251,6 +252,7 @@ export default class extends Controller {
         })
 
         this.reservation.options = options
+        console.log(options);
     }
 
 }
