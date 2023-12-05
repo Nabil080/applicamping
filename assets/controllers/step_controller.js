@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 3;
+        this.currentStep = 0;
         this.steps = []
         this.stepsProgress = []
         this.element.querySelectorAll('[data-step]').forEach((step, index) => {
@@ -44,47 +44,40 @@ export default class extends Controller {
         this.progressTarget.querySelectorAll('.progress-item').forEach((stepProgress, index) => {
             this.stepsProgress[index] = stepProgress
         })
+        this.currentPrice = this.progressTarget.querySelector('span#current-price')
 
         this.reservation = {
-            durée: {
-                début: "",
-                fin: "",
-                nuits: "",
-            },
-            nombre: {
-                adultes: "",
-                enfants: "",
-            },
-            type: {
-                nom: "",
-                prix: "",
-                taille: "",
-            },
-            emplacement: {
-                numéro: "",
-                tags: []
-            },
-            options: [
-                {
-                    nom: "",
-                    prix: "",
-                    parJour: "",
-                    parPersonne: "",
-                }
-            ],
-            client: {
-                nom: "",
-                prenom: "",
-                email: "",
-                telephone: "",
-                adresse: "",
-                ville: "",
-                codePostal: "",
-            },
-            total: 0
+            durée: {},
+            nombre: {},
+            type: {},
+            emplacement: {},
+            options: [],
+            client: {},
+            tarif: {
+                sejour: {
+                    adultes: 0,
+                    enfants: 0,
+                },
+                emplacement: 0,
+                options: 0,
+                total: 0
+            }
         }
 
         this.cards = this.element.querySelectorAll('.hebergement-card')
+    }
+
+    // Recupere les données par rapport au séjour
+    fetchDatabase() {
+        let data = {}
+        // saison de la période
+        data.saison = "basse saison 2023"
+        // prix adulte
+        data.adulte = 4.05
+        // prix enfant
+        data.enfant = 2.30
+        // liste des hebergements avec emplacements libres
+        return data
     }
 
     checkStep(number) {
@@ -107,6 +100,12 @@ export default class extends Controller {
                     && Number.isInteger(this.reservation.nombre.enfants)) {
                     progress = this.stepsProgress[0]
                     step.classList.add('valid')
+
+                    this.database = this.fetchDatabase()
+
+                    // prix
+                    this.reservation.tarif.sejour.adultes = this.database.adulte * this.reservation.nombre.adultes * this.reservation.durée.nuits
+                    this.reservation.tarif.sejour.enfants = this.database.enfant * this.reservation.nombre.enfants * this.reservation.durée.nuits
 
                     progress.querySelector('p.details').innerText = `
                         ${this.reservation.durée.nuits} nuits 
@@ -192,6 +191,10 @@ export default class extends Controller {
         } else {
             this.nextTarget.setAttribute('disabled', true)
         }
+
+        // ! update prix affiché
+        this.reservation.tarif.total = this.reservation.tarif.sejour.adultes + this.reservation.tarif.sejour.enfants 
+        this.currentPrice.innerText = this.reservation.tarif.total.toFixed(2)
 
         console.log(this.reservation);
     }
