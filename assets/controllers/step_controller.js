@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 3;
+        this.currentStep = 0;
         this.steps = []
         this.stepsProgress = []
         this.element.querySelectorAll('[data-step]').forEach((step, index) => {
@@ -73,7 +73,7 @@ export default class extends Controller {
         // saison de la période
         data.saison = "basse saison 2023"
         // prix adulte
-        data.adulte = 4.05
+        data.adulte = 4.00
         // prix enfant
         data.enfant = 2.30
         // liste des hebergements avec emplacements libres
@@ -157,7 +157,8 @@ export default class extends Controller {
                 this.checkOptions()
 
                 // prix
-                console.log(this.reservation.options)
+                this.reservation.tarif.options = 0
+                this.reservation.options.forEach(option => { this.reservation.tarif.options += option.total })
 
                 progress.querySelector('p.details').innerText = `
                         ${this.reservation.options.map(option => option.nom).join(', ')}
@@ -203,6 +204,7 @@ export default class extends Controller {
             this.reservation.tarif.sejour.adultes
             + this.reservation.tarif.sejour.enfants
             + this.reservation.tarif.emplacement
+            + this.reservation.tarif.options
         )
         this.currentPrice.innerText = this.reservation.tarif.total.toFixed(2)
 
@@ -240,7 +242,7 @@ export default class extends Controller {
         // attribue et affiche l'emplacement recup
         this.reservation.emplacement.numéro = fetch['numéro']
         this.reservation.emplacement.tags = fetch['tags']
-        console.log(fetch);
+        // console.log(fetch);
 
         step.querySelector('span.emplacement-number').innerText = this.reservation.emplacement.numéro
         step.querySelector('span.emplacement-tags').innerText = this.reservation.emplacement.tags.join(', ')
