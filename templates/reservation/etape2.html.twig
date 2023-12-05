@@ -6,9 +6,9 @@
 			<div
 				class="swiper-wrapper">
 				{# cards #}
-				{% for in in 1..5 %}
+				{% for i in 1..5 %}
 
-					<article class="swiper-slide hebergement-card group max-w-sm border-black border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none
+					<article data-name="Camping-car" data-price="{{9 + i}}" data-min-size="2" data-max-size="3" class="swiper-slide hebergement-card group max-w-sm border-black border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none
                     hover:active">
                         <div class="overlay absolute bg-main-500 w-full h-full opacity-0"></div>
 						<img class="rounded-t-lg" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
@@ -19,7 +19,7 @@
 								<br>
 								<span class="amount">9/12 emplacements</span>
 							</p>
-							<div class="price absolute right-4 bottom-4 text-2xl">10€/nuit</div>
+							<div class="price absolute right-4 bottom-4 text-2xl">{{ 9 + i }}€/nuit</div>
 						</div>
 					</article>
 

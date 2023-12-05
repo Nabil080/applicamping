@@ -125,10 +125,13 @@ export default class extends Controller {
                     progress = this.stepsProgress[1]
                     step.classList.add('valid')
 
+                    // prix
+                    this.reservation.tarif.emplacement = this.reservation.type.prix * this.reservation.durée.nuits
+
                     progress.querySelector('p.details').innerText = `
                         ${this.reservation.type.nom}
-                        ${this.reservation.type.prix}
-                        ${this.reservation.type.taille}
+                        ${this.reservation.type.prix}€/nuit
+                        ${this.reservation.type.taille.min} à ${this.reservation.type.taille.max} personnes
                         `
                     this.chooseEmplacement()
                 }
@@ -193,7 +196,11 @@ export default class extends Controller {
         }
 
         // ! update prix affiché
-        this.reservation.tarif.total = this.reservation.tarif.sejour.adultes + this.reservation.tarif.sejour.enfants 
+        this.reservation.tarif.total = (
+            this.reservation.tarif.sejour.adultes
+            + this.reservation.tarif.sejour.enfants
+            + this.reservation.tarif.emplacement
+        )
         this.currentPrice.innerText = this.reservation.tarif.total.toFixed(2)
 
         console.log(this.reservation);
@@ -205,9 +212,12 @@ export default class extends Controller {
         this.cards.forEach(card => card.classList.remove('active'))
         e.target.classList.add('active')
 
-        this.reservation.type.nom = e.target.querySelector('h5').innerText
-        this.reservation.type.taille = e.target.querySelector('span.size').innerText
-        this.reservation.type.prix = e.target.querySelector('div.price').innerText
+        this.reservation.type.nom = e.target.dataset.name
+        this.reservation.type.taille = {
+            min: parseInt(e.target.dataset.minSize),
+            max: parseInt(e.target.dataset.maxSize)
+        }
+        this.reservation.type.prix = parseInt(e.target.dataset.price)
         this.nextTarget.removeAttribute('disabled')
 
         this.steps[2].querySelector('h2 span').innerText = this.reservation.type.nom
