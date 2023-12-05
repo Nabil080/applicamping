@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 0;
+        this.currentStep = 3;
         this.steps = []
         this.stepsProgress = []
         this.element.querySelectorAll('[data-step]').forEach((step, index) => {
@@ -156,6 +156,9 @@ export default class extends Controller {
 
                 this.checkOptions()
 
+                // prix
+                console.log(this.reservation.options)
+
                 progress.querySelector('p.details').innerText = `
                         ${this.reservation.options.map(option => option.nom).join(', ')}
                     `
@@ -254,18 +257,24 @@ export default class extends Controller {
         step.querySelectorAll('article.option').forEach(option => {
             let input = option.querySelector('input');
             if (input.type == "checkbox" && input.checked || input.type == "number" && input.value > 0) {
-                options.push({
+                let data = {
                     nom: input.name,
                     nombre: input.value.replace("on", 1),
                     prix: parseInt(option.dataset.price),
                     parJour: (option.dataset.perNight == "true"),
-                    parPersonne: (option.dataset.perPerson == "true")
-                })
+                    parPersonne: (option.dataset.perPerson == "true"),
+                }
+
+                data.total = (data.prix * data.nombre)
+                if (data.parJour) data.total = data.total * (this.reservation.durée.nuits)
+                if (data.parPersonne) data.total = data.total * (this.reservation.nombre.adultes + this.reservation.nombre.enfants)
+
+
+                options.push(data)
             }
         })
 
         this.reservation.options = options
-        console.log(options);
     }
 
 }
