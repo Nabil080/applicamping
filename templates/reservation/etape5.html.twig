@@ -1,0 +1,187 @@
+<article data-step class="step-content hidden border-2 border-black divide-y-2 divide-black">
+	<h2 class="text-2xl text-center font-semibold py-6">Récapitulatif
+		<span></span>
+	</h2>
+	{# <section class="py-10 px-[5%] space-y-4"> #}
+	<div class="relative overflow-x-auto">
+		<table class="w-full">
+			<thead class="hidden">
+				<tr class="[&>*]:px-4">
+					<td scope="col">
+						Objet
+					</td>
+					<td scope="col">
+						Calcul du prix
+					</td>
+					<td scope="col text-end">
+						Total
+					</td>
+				</tr>
+			</thead>
+			<tbody
+				class="[&_td]:px-4 [&_td]:py-1">
+				{# ! HEBERGEMENT #}
+				<tr class="bg-main-100">
+					<td scope="row" class="px-12 font-semibold text-gray-900 whitespace-nowrap text-start ">
+						Hébérgement
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end"></td>
+				</tr>
+				<tr class="">
+					<td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
+						<li class="list-inside">Camping-car, 5 nuits du xx/xx/xxxx au xx/xx/xxxx</li>
+					</td>
+					<td class="last:text-end">
+						10€/5nuits
+					</td>
+					<td class="last:text-end">
+						50€
+					</td>
+				</tr>
+				<tr class="">
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">2 adultes</li>
+					</td>
+					<td class="last:text-end">
+						4€/2adultes/5nuits
+					</td>
+					<td class="last:text-end">
+						40€
+					</td>
+				</tr>
+				<tr class="">
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">1 enfant</li>
+					</td>
+					<td class="last:text-end">
+						3€/1adultes/5nuits
+					</td>
+					<td class="last:text-end">
+						15€
+					</td>
+				</tr>
+				<tr class=" border-b border-black font-bold">
+					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+						Total hébérgement :
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end border-t border-black">
+						105€
+					</td>
+				</tr>
+				{# ! OPTIONS #}
+				<tr class="bg-main-100">
+					<td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
+						Options
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end"></td>
+				</tr>
+				<tr class="">
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
+						<li class="list-inside">Electricité</li>
+					</td>
+					<td class="last:text-end">
+						10€/5nuits
+					</td>
+					<td class="last:text-end">
+						50€
+					</td>
+				</tr>
+				<tr class="">
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">2 Animaux</li>
+					</td>
+					<td class="last:text-end">
+						10€/2animaux
+					</td>
+					<td class="last:text-end">
+						20€
+					</td>
+				</tr>
+				<tr class="">
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">Garage mort</li>
+					</td>
+					<td class="last:text-end">
+						10€
+					</td>
+					<td class="last:text-end">
+						10€
+					</td>
+				</tr>
+				<tr class=" border-b border-black font-bold">
+					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+						Total options :
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end border-t border-black">
+						80€
+					</td>
+				</tr>
+				{# ! SOUS TOTAL #}
+				<tr class=" bg-main-300 border-b border-black font-bold">
+					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+						Sous total :
+					</td>
+					<td class="last:text-end">80€ + 105€</td>
+					<td class="last:text-end border-t border-black">
+						185€
+					</td>
+				</tr>
+				{# ! Réductions #}
+				<tr class="bg-main-100">
+					<td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
+						Réductions
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end"></td>
+				</tr>
+				<tr>
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">Remise du moment</li>
+					</td>
+					<td class="last:text-end">
+						Remise d'été (5%)
+					</td>
+					<td class="last:text-end">
+						9.25€</td>
+				</tr>
+				<tr>
+					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+						<li class="list-inside">
+							Coupon de réduction
+							<input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
+							<button class="button">Tester</button>
+						</li>
+					</td>
+					<td class="last:text-end">
+						
+					</td>
+					<td class="last:text-end">
+						0€</td>
+				</tr>
+				<tr class="border-b border-black font-bold">
+					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+						Total réductions :
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end border-t border-black">
+						9.25€
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr class="[&>td]:px-4 [&>td]:py-2 bg-main-300 border-b border-black font-bold">
+					<td scope="row" class=" font-bold text-lg text-gray-900 whitespace-nowrap ">
+						Total TTC :
+					</td>
+					<td class="last:text-end">185€ - 9.25€</td>
+					<td class="last:text-end border-t border-black">
+						175.75€
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>{# </section> #}</article>
