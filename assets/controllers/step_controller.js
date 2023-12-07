@@ -310,44 +310,114 @@ export default class extends Controller {
         `
         // emplacement
         body.innerHTML += `
-        <tr>
-            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
-                <li class="list-inside">${reservation.type.nom}, ${nuits} nuits du ${reservation.durée.début.str} au ${reservation.durée.fin.str}</li>
-            </td>
-            <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ / ${nuits} nuits</td>
-            <td class="last:text-end">${(reservation.tarif.emplacement / 100).toFixed(2)}€</td>
-        </tr>
+            <tr>
+                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
+                    <li class="list-inside">${reservation.type.nom}, ${nuits} nuits du ${reservation.durée.début.str} au ${reservation.durée.fin.str}</li>
+                </td>
+                <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ / ${nuits} nuits</td>
+                <td class="last:text-end">${(reservation.tarif.emplacement / 100).toFixed(2)}€</td>
+            </tr>
         `
         // adultes/enfants
         body.innerHTML += `
-        <tr>
-            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-                <li class="list-inside">${reservation.nombre.adultes} adultes </li>
-            </td>
-            <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ / ${reservation.nombre.adultes} adultes / ${nuits} nuits</td>
-            <td class="last:text-end">${(reservation.tarif.sejour.adultes / 100).toFixed(2)}€</td>
-        </tr>
-        <tr>
-            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-                <li class="list-inside">${reservation.nombre.enfants} enfants </li>
-            </td>
-            <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ / ${reservation.nombre.enfants} enfants / ${nuits} nuits</td>
-            <td class="last:text-end">${(reservation.tarif.sejour.enfants / 100).toFixed(2)}€</td>
-        </tr>
+            <tr>
+                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                    <li class="list-inside">${reservation.nombre.adultes} adultes </li>
+                </td>
+                <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ / ${reservation.nombre.adultes} adultes / ${nuits} nuits</td>
+                <td class="last:text-end">${(reservation.tarif.sejour.adultes / 100).toFixed(2)}€</td>
+            </tr>
+            <tr>
+                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                    <li class="list-inside">${reservation.nombre.enfants} enfants </li>
+                </td>
+                <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ / ${reservation.nombre.enfants} enfants / ${nuits} nuits</td>
+                <td class="last:text-end">${(reservation.tarif.sejour.enfants / 100).toFixed(2)}€</td>
+            </tr>
         `
-        // sous total
+        // total hebergement
         body.innerHTML += `
-        <tr class=" border-b border-black font-bold">
-            <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-                Total hébérgement :
-            </td>
-            <td class="last:text-end"></td>
-            <td class="last:text-end border-t border-black">
-                ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€
-            </td>
-        </tr>
-    `
+            <tr class=" border-b border-black font-bold">
+                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+                    Total hébérgement :
+                </td>
+                <td class="last:text-end"></td>
+                <td class="last:text-end border-t border-black">
+                    ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€
+                </td>
+            </tr>
+        `
+        // options
+        body.innerHTML += `
+            <tr class="bg-main-100">
+                <td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
+                    Options
+                </td>
+                <td class="last:text-end"></td>
+                <td class="last:text-end"></td>
+            </tr>
+        `
+        // ! Options facultatives
+        this.reservation.options.forEach(option => {
+            let calculString = `${(option.prix / 100).toFixed(2)}€`
+            if (option.parJour || option.ParPersonne) {
+                if (option.parJour) calculString += ` / ${nuits} nuits`
+                if (option.parPersonne) calculString += ` / ${reservation.nombre.adultes + reservation.nombre.enfants} personnes`
+            } else {
+                if (option.nombre > 1) calculString += ` / ${option.nombre} ${option.nom}`
+            }
 
+            body.innerHTML += `
+                <tr>
+                    <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
+                        <li class="list-inside">${option.nom}</li>
+                    </td>
+                    <td class="last:text-end">
+                        10€/5nuits
+                    </td>
+                    <td class="last:text-end">
+                        ${(option.total / 100).toFixed(2)}€
+                    </td>
+                </tr>
+            `
+        })
+
+        if (this.reservation.options.length == 0) {
+            body.innerHTML += `
+                <tr>
+                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
+                    <li class="list-inside">Aucune option</li>
+                </td>
+                <td class="last:text-end"></td>
+                <td class="last:text-end">0€</td>
+                </tr>
+            `
+        }
+
+        // total options
+        body.innerHTML += `
+            <tr class=" border-b border-black font-bold">
+                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+                    Total options :
+                </td>
+                <td class="last:text-end"></td>
+                <td class="last:text-end border-t border-black">
+                    ${(reservation.tarif.options / 100).toFixed(2)}€
+                </td>
+            </tr>
+        `
+        // ! sous-total
+        body.innerHTML += `
+            <tr class=" bg-main-300 border-b border-black font-bold">
+                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+                    Sous total :
+                </td>
+                <td class="last:text-end">${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€ + ${(reservation.tarif.options / 100).toFixed(2)}€</td>
+                <td class="last:text-end border-t border-black">
+                    ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants + reservation.tarif.options) / 100).toFixed(2)}€
+                </td>
+            </tr>
+        `
 
 
     }
