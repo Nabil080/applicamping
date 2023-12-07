@@ -430,10 +430,11 @@ export default class extends Controller {
                 <td></td>
             </tr>
         `
-        // * fetch pour récupérer la réduction du moment
+        // remises
+        // * fetch pour récupérer la remise du moment
         let remise = { nom: 'test', euro: 0, pourcentage: 0, found: false }
         let text = 'Aucune remise correspondante'
-        if(remise.found == true) text = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
+        if (remise.found == true) text = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
 
         if (remise.pourcentage > 0) 'remise.euro = sousTotal * pourcentage '
         body.innerHTML += `
@@ -445,11 +446,35 @@ export default class extends Controller {
                 <td class="last:text-end">${remise.euro}€</td>
             </tr>
         `
-
-
-
+        // code coupon
+        // * fetch pour récupérer et tester les coupons
+        let coupon = { nom: 'test', euro: 0, pourcentage: 0, found: false }
+        body.innerHTML += `
+            <tr id="coupon">
+                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+                    <li class="list-inside">
+                        Coupon de réduction
+                        <input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
+                        <button class="button" data-action='step#checkCoupon'>Tester</button>
+                    </li>
+                </td>
+                <td id="coupon-div" class="last:text-end"></td>
+                <td id="coupon-montant" class="last:text-end">0€</td>
+            </tr>
+        `
         // total reduction
-        let reductionTotal = 0
+        let reductionTotal = remise.euro + coupon.euro
+        body.innerHTML += `
+            <tr class=" border-b border-black font-bold">
+                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+                    Total réductions :
+                </td>
+                <td class="last:text-end"></td>
+                <td class="last:text-end border-t border-black">
+                    ${(reductionTotal / 100).toFixed(2)}€
+                </td>
+            </tr>
+        `
         // ! TOTAL TCC
         let totalTCC = sousTotal - reductionTotal
         foot.innerHTML = `
@@ -466,6 +491,13 @@ export default class extends Controller {
 
     }
 
+
+    checkCoupon(e) {
+        let code = this.steps[4].querySelector('#coupon input').value
+        this.steps[4].querySelector('#coupon #coupon-div').innerText = code
+
+        setTimeout(() => { this.generateRecap(this.reservation) }, 2000)
+    }
 }
 
 
