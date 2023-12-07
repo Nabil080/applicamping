@@ -314,7 +314,7 @@ export default class extends Controller {
                 <td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
                     <li class="list-inside">${reservation.type.nom}, ${nuits} nuits du ${reservation.durée.début.str} au ${reservation.durée.fin.str}</li>
                 </td>
-                <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ / ${nuits} nuits</td>
+                <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ x ${nuits} nuits</td>
                 <td class="last:text-end">${(reservation.tarif.emplacement / 100).toFixed(2)}€</td>
             </tr>
         `
@@ -324,18 +324,19 @@ export default class extends Controller {
                 <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
                     <li class="list-inside">${reservation.nombre.adultes} adultes </li>
                 </td>
-                <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ / ${reservation.nombre.adultes} adultes / ${nuits} nuits</td>
+                <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ x ${reservation.nombre.adultes} adultes x ${nuits} nuits</td>
                 <td class="last:text-end">${(reservation.tarif.sejour.adultes / 100).toFixed(2)}€</td>
             </tr>
             <tr>
                 <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
                     <li class="list-inside">${reservation.nombre.enfants} enfants </li>
                 </td>
-                <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ / ${reservation.nombre.enfants} enfants / ${nuits} nuits</td>
+                <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ x ${reservation.nombre.enfants} enfants x ${nuits} nuits</td>
                 <td class="last:text-end">${(reservation.tarif.sejour.enfants / 100).toFixed(2)}€</td>
             </tr>
         `
         // total hebergement
+        let totalHebergement = (reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants)
         body.innerHTML += `
             <tr class=" border-b border-black font-bold">
                 <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
@@ -343,7 +344,7 @@ export default class extends Controller {
                 </td>
                 <td class="last:text-end"></td>
                 <td class="last:text-end border-t border-black">
-                    ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€
+                    ${(totalHebergement / 100).toFixed(2)}€
                 </td>
             </tr>
         `
@@ -359,21 +360,20 @@ export default class extends Controller {
         `
         // ! Options facultatives
         this.reservation.options.forEach(option => {
+            console.log(option);
             let calculString = `${(option.prix / 100).toFixed(2)}€`
-            if (option.parJour || option.ParPersonne) {
-                if (option.parJour) calculString += ` / ${nuits} nuits`
-                if (option.parPersonne) calculString += ` / ${reservation.nombre.adultes + reservation.nombre.enfants} personnes`
-            } else {
-                if (option.nombre > 1) calculString += ` / ${option.nombre} ${option.nom}`
-            }
+
+            if (option.parJour == true) calculString += ` x ${nuits} nuits`
+            if (option.parPersonne == true) calculString += ` x ${reservation.nombre.adultes + reservation.nombre.enfants} personnes`
+            if (option.parJour == false && option.parPersonne == false && option.nombre > 1) calculString += ` x ${option.nombre} ${option.nom}`
 
             body.innerHTML += `
                 <tr>
                     <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
-                        <li class="list-inside">${option.nom}</li>
+                        <li class="list-inside capitalize">${option.nom}</li>
                     </td>
                     <td class="last:text-end">
-                        10€/5nuits
+                        ${calculString}
                     </td>
                     <td class="last:text-end">
                         ${(option.total / 100).toFixed(2)}€
@@ -395,6 +395,7 @@ export default class extends Controller {
         }
 
         // total options
+        let totalOptions = reservation.tarif.options
         body.innerHTML += `
             <tr class=" border-b border-black font-bold">
                 <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
@@ -402,11 +403,12 @@ export default class extends Controller {
                 </td>
                 <td class="last:text-end"></td>
                 <td class="last:text-end border-t border-black">
-                    ${(reservation.tarif.options / 100).toFixed(2)}€
+                    ${(totalOptions / 100).toFixed(2)}€
                 </td>
             </tr>
         `
         // ! sous-total
+        let sousTotal = totalHebergement + totalOptions
         body.innerHTML += `
             <tr class=" bg-main-300 border-b border-black font-bold">
                 <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
@@ -414,11 +416,53 @@ export default class extends Controller {
                 </td>
                 <td class="last:text-end">${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€ + ${(reservation.tarif.options / 100).toFixed(2)}€</td>
                 <td class="last:text-end border-t border-black">
-                    ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants + reservation.tarif.options) / 100).toFixed(2)}€
+                    ${(sousTotal / 100).toFixed(2)}€
                 </td>
             </tr>
         `
+        // ! reductions
+        body.innerHTML += `
+            <tr class="bg-main-100">
+                <td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
+                    Réductions
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        `
+        // * fetch pour récupérer la réduction du moment
+        let remise = { nom: 'test', euro: 0, pourcentage: 0, found: false }
+        let text = 'Aucune remise correspondante'
+        if(remise.found == true) text = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
 
+        if (remise.pourcentage > 0) 'remise.euro = sousTotal * pourcentage '
+        body.innerHTML += `
+            <tr>
+                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+                    <li class="list-inside">Remise du moment</li>
+                </td>
+                <td class="last:text-end">${text}</td>
+                <td class="last:text-end">${remise.euro}€</td>
+            </tr>
+        `
+
+
+
+        // total reduction
+        let reductionTotal = 0
+        // ! TOTAL TCC
+        let totalTCC = sousTotal - reductionTotal
+        foot.innerHTML = `
+            <tr class="[&>td]:px-4 [&>td]:py-2 bg-main-300 border-b border-black font-bold">
+                <td scope="row" class=" font-bold text-lg text-gray-900 whitespace-nowrap ">
+                    Total TTC :
+                </td>
+                <td class="last:text-end">${(sousTotal / 100).toFixed(2)}€ - ${(reductionTotal / 100).toFixed(2)}€</td>
+                <td class="last:text-end border-t border-black">
+                    ${(totalTCC / 100).toFixed(2)}
+                </td>
+            </tr>
+        `
 
     }
 
