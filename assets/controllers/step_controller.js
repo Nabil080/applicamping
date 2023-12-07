@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 4;
+        this.currentStep = 0;
         this.steps = []
         this.stepsProgress = []
         this.element.querySelectorAll('[data-step]').forEach((step, index) => {
@@ -73,9 +73,9 @@ export default class extends Controller {
         // saison de la période
         data.saison = "basse saison 2023"
         // prix adulte
-        data.adulte = 4.00
+        data.adulte = 400
         // prix enfant
-        data.enfant = 2.30
+        data.enfant = 230
         // liste des hebergements avec emplacements libres
         return data
     }
@@ -86,15 +86,21 @@ export default class extends Controller {
         switch (number) {
             case 0:
                 step = this.steps[0]
-                this.reservation.durée.début = strToDate(step.querySelector('input[name="start"]').value)
-                this.reservation.durée.fin = strToDate(step.querySelector('input[name="end"]').value)
-                this.reservation.durée.nuits = parseInt((this.reservation.durée.fin - this.reservation.durée.début) / (1000 * 60 * 60 * 24), 10) - 1;
+                this.reservation.durée.début = {
+                    date: strToDate(step.querySelector('input[name="start"]').value),
+                    str: strToDate(step.querySelector('input[name="start"]').value).toLocaleString().split(' ')[0]
+                }
+                this.reservation.durée.fin = {
+                    date: strToDate(step.querySelector('input[name="end"]').value),
+                    str: strToDate(step.querySelector('input[name="end"]').value).toLocaleString().split(' ')[0]
+                }
+                this.reservation.durée.nuits = parseInt((this.reservation.durée.fin.date - this.reservation.durée.début.date) / (1000 * 60 * 60 * 24), 10) - 1;
 
                 this.reservation.nombre.adultes = parseInt(step.querySelector('input#adult-counter').value)
                 this.reservation.nombre.enfants = parseInt(step.querySelector('input#child-counter').value)
 
-                if (this.reservation.durée.début instanceof Date
-                    && this.reservation.durée.fin instanceof Date
+                if (this.reservation.durée.début.date instanceof Date
+                    && this.reservation.durée.fin.date instanceof Date
                     && this.reservation.durée.nuits > 0
                     && Number.isInteger(this.reservation.nombre.adultes)
                     && Number.isInteger(this.reservation.nombre.enfants)) {
@@ -102,16 +108,17 @@ export default class extends Controller {
                     step.classList.add('valid')
 
                     this.database = this.fetchDatabase()
+                    console.log(this.database);
 
                     // prix
-                    this.reservation.tarif.sejour.adultes = this.database.adulte * this.reservation.nombre.adultes * this.reservation.durée.nuits
-                    this.reservation.tarif.sejour.enfants = this.database.enfant * this.reservation.nombre.enfants * this.reservation.durée.nuits
+                    this.reservation.tarif.sejour.adultes = (this.database.adulte * this.reservation.nombre.adultes * this.reservation.durée.nuits)
+                    this.reservation.tarif.sejour.enfants = (this.database.enfant * this.reservation.nombre.enfants * this.reservation.durée.nuits)
 
                     progress.querySelector('p.details').innerText = `
                         ${this.reservation.durée.nuits} nuits 
-                        Du ${this.reservation.durée.début.toLocaleString().split(' ')[0]} 
-                        Au ${this.reservation.durée.fin.toLocaleString().split(' ')[0]} 
-                        ${this.reservation.nombre.adultes} adultes 
+                        Du ${this.reservation.durée.début.str} 
+                        Au ${this.reservation.durée.fin.str} 
+                        ${this.reservation.nombre.adultes} adultes
                         ${this.reservation.nombre.enfants} enfants
                         `
                 }
@@ -126,11 +133,11 @@ export default class extends Controller {
                     step.classList.add('valid')
 
                     // prix
-                    this.reservation.tarif.emplacement = this.reservation.type.prix * this.reservation.durée.nuits
+                    this.reservation.tarif.emplacement = (this.reservation.type.prix * this.reservation.durée.nuits)
 
                     progress.querySelector('p.details').innerText = `
                         ${this.reservation.type.nom}
-                        ${this.reservation.type.prix}€/nuit
+                        ${(this.reservation.type.prix / 100).toFixed(2)}€/nuit
                         ${this.reservation.type.taille.min} à ${this.reservation.type.taille.max} personnes
                         `
                     this.chooseEmplacement()
@@ -160,10 +167,15 @@ export default class extends Controller {
                 this.reservation.tarif.options = 0
                 this.reservation.options.forEach(option => { this.reservation.tarif.options += option.total })
 
+                // récap
+                this.generateRecap(this.reservation)
+
                 progress.querySelector('p.details').innerText = `
                         ${this.reservation.options.map(option => option.nom).join(', ')}
                     `
                 break;
+            case 4:
+                step = this.steps[4]
             default:
                 return false
         }
@@ -206,7 +218,7 @@ export default class extends Controller {
             + this.reservation.tarif.emplacement
             + this.reservation.tarif.options
         )
-        this.currentPrice.innerText = this.reservation.tarif.total.toFixed(2)
+        this.currentPrice.innerText = (this.reservation.tarif.total / 100).toFixed(2)
 
         console.log(this.reservation);
     }
@@ -277,6 +289,67 @@ export default class extends Controller {
         })
 
         this.reservation.options = options
+    }
+
+    generateRecap(reservation) {
+        let body = this.steps[4].querySelector('table tbody')
+        let foot = this.steps[4].querySelector('table tfoot')
+        let nuits = this.reservation.durée.nuits
+
+
+        // ! Champs obligatoires
+        // hébérgement
+        body.innerHTML = `
+            <tr class="bg-main-100">
+					<td scope="row" class="px-12 font-semibold text-gray-900 whitespace-nowrap text-start ">
+						Hébérgement
+					</td>
+					<td class="last:text-end"></td>
+					<td class="last:text-end"></td>
+				</tr>
+        `
+        // emplacement
+        body.innerHTML += `
+        <tr>
+            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
+                <li class="list-inside">${reservation.type.nom}, ${nuits} nuits du ${reservation.durée.début.str} au ${reservation.durée.fin.str}</li>
+            </td>
+            <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ / ${nuits} nuits</td>
+            <td class="last:text-end">${(reservation.tarif.emplacement / 100).toFixed(2)}€</td>
+        </tr>
+        `
+        // adultes/enfants
+        body.innerHTML += `
+        <tr>
+            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                <li class="list-inside">${reservation.nombre.adultes} adultes </li>
+            </td>
+            <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ / ${reservation.nombre.adultes} adultes / ${nuits} nuits</td>
+            <td class="last:text-end">${(reservation.tarif.sejour.adultes / 100).toFixed(2)}€</td>
+        </tr>
+        <tr>
+            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
+                <li class="list-inside">${reservation.nombre.enfants} enfants </li>
+            </td>
+            <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ / ${reservation.nombre.enfants} enfants / ${nuits} nuits</td>
+            <td class="last:text-end">${(reservation.tarif.sejour.enfants / 100).toFixed(2)}€</td>
+        </tr>
+        `
+        // sous total
+        body.innerHTML += `
+        <tr class=" border-b border-black font-bold">
+            <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
+                Total hébérgement :
+            </td>
+            <td class="last:text-end"></td>
+            <td class="last:text-end border-t border-black">
+                ${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€
+            </td>
+        </tr>
+    `
+
+
+
     }
 
 }
