@@ -433,8 +433,8 @@ export default class extends Controller {
         // remises
         // * fetch pour récupérer la remise du moment
         let remise = { nom: 'test', euro: 0, pourcentage: 0, found: false }
-        let text = 'Aucune remise correspondante'
-        if (remise.found == true) text = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
+        let remiseText = 'Aucune remise correspondante'
+        if (remise.found == true) remiseText = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
 
         if (remise.pourcentage > 0) 'remise.euro = sousTotal * pourcentage '
         body.innerHTML += `
@@ -442,13 +442,13 @@ export default class extends Controller {
                 <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
                     <li class="list-inside">Remise du moment</li>
                 </td>
-                <td class="last:text-end">${text}</td>
+                <td class="last:text-end">${remiseText}</td>
                 <td class="last:text-end">${remise.euro}€</td>
             </tr>
         `
         // code coupon
         // * fetch pour récupérer et tester les coupons
-        let coupon = { nom: 'test', euro: 0, pourcentage: 0, found: false }
+        if (this.coupon.found == true)  `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
         body.innerHTML += `
             <tr id="coupon">
                 <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
@@ -458,12 +458,12 @@ export default class extends Controller {
                         <button class="button" data-action='step#checkCoupon'>Tester</button>
                     </li>
                 </td>
-                <td id="coupon-div" class="last:text-end"></td>
-                <td id="coupon-montant" class="last:text-end">0€</td>
+                <td id="coupon-div" class="last:text-end">${this.coupon ? this.coupon.nom : ''}</td>
+                <td id="coupon-montant" class="last:text-end">${this.coupon ? this.coupon.euro : 0}€</td>
             </tr>
         `
         // total reduction
-        let reductionTotal = remise.euro + coupon.euro
+        let reductionTotal = remise.euro + (this.coupon ? this.coupon.euro : 0)
         body.innerHTML += `
             <tr class=" border-b border-black font-bold">
                 <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
@@ -494,9 +494,11 @@ export default class extends Controller {
 
     checkCoupon(e) {
         let code = this.steps[4].querySelector('#coupon input').value
-        this.steps[4].querySelector('#coupon #coupon-div').innerText = code
+        // * fetch pour vérifier la validité du coupon
 
-        setTimeout(() => { this.generateRecap(this.reservation) }, 2000)
+        this.coupon = { nom: `${code}`, euro: 0, pourcentage: 0, found: false }
+
+        setTimeout(() => { this.generateRecap(this.reservation) }, 0)
     }
 }
 
