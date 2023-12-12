@@ -35,15 +35,9 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 0;
-        this.steps = []
-        this.stepsProgress = []
-        this.element.querySelectorAll('[data-step]').forEach((step, index) => {
-            this.steps[index] = step
-        })
-        this.progressTarget.querySelectorAll('.progress-item').forEach((stepProgress, index) => {
-            this.stepsProgress[index] = stepProgress
-        })
+        this.currentStep = 5;
+        this.steps = Array.from(this.element.querySelectorAll('[data-step]'));
+        this.stepsProgress = Array.from(this.progressTarget.querySelectorAll('.progress-item'))
         this.currentPrice = this.progressTarget.querySelector('span#current-price')
 
         this.reservation = {
@@ -85,7 +79,7 @@ export default class extends Controller {
         let progress
         switch (number) {
             case 0:
-                step = this.steps[0]
+                [step, progress] = [this.steps[0], this.stepsProgress[0]]
                 this.reservation.durée.début = {
                     date: strToDate(step.querySelector('input[name="start"]').value),
                     str: strToDate(step.querySelector('input[name="start"]').value).toLocaleString().split(' ')[0]
@@ -104,11 +98,10 @@ export default class extends Controller {
                     && this.reservation.durée.nuits > 0
                     && Number.isInteger(this.reservation.nombre.adultes)
                     && Number.isInteger(this.reservation.nombre.enfants)) {
-                    progress = this.stepsProgress[0]
                     step.classList.add('valid')
 
                     this.database = this.fetchDatabase()
-                    console.log(this.database);
+                    // console.log(this.database);
 
                     // prix
                     this.reservation.tarif.sejour.adultes = (this.database.adulte * this.reservation.nombre.adultes * this.reservation.durée.nuits)
@@ -124,7 +117,7 @@ export default class extends Controller {
                 }
                 break;
             case 1:
-                step = this.steps[1]
+                [step, progress] = [this.steps[1], this.stepsProgress[1]]
 
                 if (this.reservation.type.nom != ""
                     && this.reservation.type.prix != ""
@@ -145,10 +138,9 @@ export default class extends Controller {
 
                 break;
             case 2:
-                step = this.steps[2]
+                [step, progress] = [this.steps[2], this.stepsProgress[2]]
                 if (this.reservation.emplacement.numéro != "") {
                     step.classList.add('valid')
-                    progress = this.stepsProgress[2]
 
                     progress.querySelector('p.details').innerText = `
                     Emplacement ${this.reservation.emplacement.numéro}
@@ -157,9 +149,8 @@ export default class extends Controller {
                 }
                 break;
             case 3:
-                step = this.steps[3]
+                [step, progress] = [this.steps[3], this.stepsProgress[3]]
                 step.classList.add('valid')
-                progress = this.stepsProgress[3]
 
                 this.checkOptions()
 
@@ -175,7 +166,8 @@ export default class extends Controller {
                     `
                 break;
             case 4:
-                step = this.steps[4]
+                [step, progress] = [this.steps[4], this.stepsProgress[4]]
+                if(this.reservation.tarif.total > 0) step.classList.add('valid')
             default:
                 return false
         }
@@ -199,13 +191,10 @@ export default class extends Controller {
 
         // ! update progress bar
         this.stepsProgress[this.currentStep].classList.add('done')
+
         // ! update boutons navigation
-        if (this.currentStep === 0) {
-            this.previousTarget.setAttribute('disabled', true)
-        } else {
-            this.previousTarget.removeAttribute('disabled')
-        }
-        if (this.steps[this.currentStep].classList.contains('valid') || this.currentStep == 3) {
+        this.previousTarget.disabled = this.currentStep === 0;
+        if (this.steps[this.currentStep].classList.contains('valid') || this.currentStep == 3 || this.currentStep == 4) {
             this.nextTarget.removeAttribute('disabled')
         } else {
             this.nextTarget.setAttribute('disabled', true)
@@ -360,7 +349,7 @@ export default class extends Controller {
         `
         // ! Options facultatives
         this.reservation.options.forEach(option => {
-            console.log(option);
+            // console.log(option);
             let calculString = `${(option.prix / 100).toFixed(2)}€`
 
             if (option.parJour == true) calculString += ` x ${nuits} nuits`
@@ -448,7 +437,7 @@ export default class extends Controller {
         `
         // code coupon
         // * fetch pour récupérer et tester les coupons
-        if (this.coupon.found == true)  `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
+        if (this.coupon?.found == true)`${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
         body.innerHTML += `
             <tr id="coupon">
                 <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
@@ -493,12 +482,10 @@ export default class extends Controller {
 
 
     checkCoupon(e) {
-        let code = this.steps[4].querySelector('#coupon input').value
         // * fetch pour vérifier la validité du coupon
-
-        this.coupon = { nom: `${code}`, euro: 0, pourcentage: 0, found: false }
-
-        setTimeout(() => { this.generateRecap(this.reservation) }, 0)
+        const code = this.steps[4].querySelector('#coupon input').value;
+        this.coupon = { nom: code, euro: 0, pourcentage: 0, found: false };
+        setTimeout(() => this.generateRecap(this.reservation), 0);
     }
 }
 

@@ -49,8 +49,20 @@
 @layer components {
 
     /* ! boutons */
+    .inactive-button {
+        @apply px-4 py-2 bg-white text-main-500 border-main-500 border
+    }
+
+    .inactive-button:hover {
+        @apply button
+    }
+
+    .inactive-button:disabled {
+        @apply border-main-200 text-main-200 pointer-events-none
+    }
+
     .button {
-        @apply px-4 py-2 bg-main-500 text-white;
+        @apply px-4 py-2 bg-main-500 text-white border border-main-500;
     }
 
     .button:hover {
@@ -64,6 +76,8 @@
     .button:disabled {
         @apply bg-main-200 text-main-700;
     }
+
+
 
     /* ! progress bar */
     .progress-item {

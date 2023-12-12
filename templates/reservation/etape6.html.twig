@@ -1,0 +1,28 @@
+{# ! Etape 1 : Durée du séjour #}
+<article data-step class="step-content hidden border-2 border-black divide-y-2 divide-black">
+	<h2 class="text-2xl text-center font-semibold py-6">Paiement</h2>
+	{# ! Date du séjour #}
+	<div {{ stimulus_controller('paiement') }} class=" py-6 px-[5%]">
+		<section class="flex flex-wrap gap-y-6 gap-x-12">
+			<div>
+				<div>
+					<h4 class="font-bold text-xl">Méthode de paiement</h4>
+				</div>
+				<div class="mt-4">
+					<button {{ stimulus_action('paiement','chooseType') }} id="carte-bancaire" class="inactive-button">Carte bancaire</button>
+					<button {{ stimulus_action('paiement','chooseType') }} id="cheque-vacance" class="inactive-button">Chèque vacance</button>
+					<button {{ stimulus_action('paiement','chooseType') }} id="sur-place" class="inactive-button">Sur placce</button>
+				</div>
+			</div>
+			<div>
+				<h4 class="font-bold text-xl">Montant de l'acompte</h4>
+			</div>
+			<div class="basis-full">
+				<h4 class="font-bold text-xl">
+					Informations personnelles
+				</h4>
+			</div>
+		</section>
+	</div>
+
+</article>
