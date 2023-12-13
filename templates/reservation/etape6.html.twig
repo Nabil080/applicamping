@@ -26,7 +26,7 @@
 					<h4 class="font-bold text-xl mb-6">Informations personnelles
 						<span class="text-base font-normal">(* champs obligatoires)</span>
 					</h4>
-					<form class="space-y-4">
+					<form {{ stimulus_controller('form') }} class="space-y-4">
 						<div class="flex flex-wrap gap-4 [&>div]:grow">
 							<div class="relative">
 								<input type="text" name="nom" class="floating-input peer" placeholder=""/>
