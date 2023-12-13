@@ -2,25 +2,65 @@
 <article data-step class="step-content hidden border-2 border-black divide-y-2 divide-black">
 	<h2 class="text-2xl text-center font-semibold py-6">Paiement</h2>
 	{# ! Date du séjour #}
-	<div {{ stimulus_controller('paiement') }} class=" py-6 px-[5%]">
+	<div {{ stimulus_controller('paiement') }} class="py-6 px-[5%]">
 		<section class="flex flex-wrap gap-y-6 gap-x-12">
 			<div>
-				<div>
-					<h4 class="font-bold text-xl">Méthode de paiement</h4>
-				</div>
-				<div class="mt-4">
-					<button {{ stimulus_action('paiement','chooseType') }} id="carte-bancaire" class="inactive-button">Carte bancaire</button>
+				<h4 class="font-bold text-xl">Méthode de paiement</h4>
+				<div class="mt-4 grid grid-cols-3 gap-4 text-lg">
+					<button {{ stimulus_action('paiement','chooseType') }} id="carte-bancaire" class="inactive-button button">Carte bancaire</button>
 					<button {{ stimulus_action('paiement','chooseType') }} id="cheque-vacance" class="inactive-button">Chèque vacance</button>
-					<button {{ stimulus_action('paiement','chooseType') }} id="sur-place" class="inactive-button">Sur placce</button>
+					<button {{ stimulus_action('paiement','chooseType') }} id="sur-place" class="inactive-button">Sur place</button>
 				</div>
 			</div>
 			<div>
 				<h4 class="font-bold text-xl">Montant de l'acompte</h4>
+				<div class="mt-5">
+					<p id="montant-acompte" class="text-xl">
+						0€
+						<span id="pourcentage-acompte" class="text-lg">(0%)</span>
+					</p>
+				</div>
 			</div>
 			<div class="basis-full">
-				<h4 class="font-bold text-xl">
-					Informations personnelles
-				</h4>
+				<div>
+					<h4 class="font-bold text-xl mb-6">Informations personnelles
+						<span class="text-base font-normal">(* champs obligatoires)</span>
+					</h4>
+					<form class="space-y-4">
+						<div class="flex flex-wrap gap-4 [&>div]:grow">
+							<div class="relative">
+								<input type="text" name="nom" class="floating-input peer" placeholder=""/>
+								<label for="nom" class="floating-label">Nom *</label>
+							</div>
+							<div class="relative">
+								<input type="text" name="prenom" class="floating-input peer" placeholder=""/>
+								<label for="prenom" class="floating-label">Prénom *</label>
+							</div>
+							<div class="relative">
+								<input type="email" name="email" class="floating-input peer" placeholder=""/>
+								<label for="email" class="floating-label">Email *</label>
+							</div>
+							<div class="relative">
+								<input type="tel" name="telephone" class="floating-input peer" placeholder=""/>
+								<label for="telephone" class="floating-label">Téléphone</label>
+							</div>
+						</div>
+						<div class="flex flex-wrap gap-4 [&>div]:grow">
+							<div class="relative">
+								<input type="text" name="adresse" class="floating-input peer" placeholder=""/>
+								<label for="adresse" class="floating-label">Adresse</label>
+							</div>
+							<div class="relative">
+								<input type="number" name="postal" class="floating-input peer" placeholder=""/>
+								<label for="postal" class="floating-label">Code postal</label>
+							</div>
+							<div class="relative">
+								<input type="text" name="ville" class="floating-input peer" placeholder=""/>
+								<label for="ville" class="floating-label">Ville</label>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</section>
 	</div>
