@@ -29,33 +29,33 @@
 					<form {{ stimulus_controller('form') }} class="space-y-4">
 						<div class="flex flex-wrap gap-4 [&>div]:grow">
 							<div class="relative">
-								<input type="text" name="nom" class="floating-input peer" placeholder=""/>
-								<label for="nom" class="floating-label">Nom *</label>
+								<input type="text" name="nom" class="floating-input peer" autocomplete="family-name" required placeholder=""/>
+								<label for="nom" class="floating-label">Nom</label>
 							</div>
 							<div class="relative">
-								<input type="text" name="prenom" class="floating-input peer" placeholder=""/>
-								<label for="prenom" class="floating-label">Prénom *</label>
+								<input type="text" name="prenom" class="floating-input peer" autocomplete="given-name" required placeholder=""/>
+								<label for="prenom" class="floating-label">Prénom</label>
 							</div>
 							<div class="relative">
-								<input type="email" name="email" class="floating-input peer" placeholder=""/>
-								<label for="email" class="floating-label">Email *</label>
+								<input type="email" name="email" class="floating-input peer" autocomplete="email"required placeholder=""/>
+								<label for="email" class="floating-label">Email</label>
 							</div>
 							<div class="relative">
-								<input type="tel" name="telephone" class="floating-input peer" placeholder=""/>
+								<input type="tel" name="telephone" class="floating-input peer" autocomplete="tel-national" placeholder=""/>
 								<label for="telephone" class="floating-label">Téléphone</label>
 							</div>
 						</div>
 						<div class="flex flex-wrap gap-4 [&>div]:grow">
 							<div class="relative">
-								<input type="text" name="adresse" class="floating-input peer" placeholder=""/>
+								<input type="text" name="adresse" class="floating-input peer" autocomplete="street-adress" placeholder=""/>
 								<label for="adresse" class="floating-label">Adresse</label>
 							</div>
 							<div class="relative">
-								<input type="number" name="postal" class="floating-input peer" placeholder=""/>
+								<input type="number" name="postal" class="floating-input peer" autocomplete="postal-code" placeholder=""/>
 								<label for="postal" class="floating-label">Code postal</label>
 							</div>
 							<div class="relative">
-								<input type="text" name="ville" class="floating-input peer" placeholder=""/>
+								<input type="text" name="ville" class="floating-input peer" autocomplete="adress-level2" placeholder=""/>
 								<label for="ville" class="floating-label">Ville</label>
 							</div>
 						</div>
