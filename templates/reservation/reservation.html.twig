@@ -4,4 +4,100 @@
 	Ma réservation
 {% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+
+	<section class="title">
+		<h1>Votre réservation</h1>
+		<p class="text-base font-normal">Statut :
+			<span>
+				confirmée
+			</span>
+		</p>
+	</section>
+
+	<main
+		id="reservation-grid" class="mx-[15%] mb-4 space-y-6 [&>section]:grid [&>section]:gap-6 [&>section]:text-center [&>section]:place-content-center [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mb-4 [&_article]:border-2 [&_article]:border-gray-300 [&_article]:p-4">
+		{# first row #}
+		<section class="grid-cols-1 md:grid-cols-2">
+			<article>
+				<h2>Reservation</h2>
+				<p>
+					5 nuits du xx/xx/xxxx au xx/xx/xxxx
+					<br>2 adultes, 1 enfant
+					<br>Type d'emplacement : Camping-car
+					<br>Emplacement 12 (Voir sur la carte)
+				</p>
+			</article>
+			<article>
+				<h2>Options</h2>
+				<p>
+					Electricité
+					<br>2 Animaux
+					<br>Garage mort
+				</p>
+			</article>
+		</section>
+		{# second row #}
+		<section class="grid-cols-1 md:grid-cols-1">
+			<article>
+				<h2>Informations personnelles</h2>
+				<p>
+					Nom : Bellila
+					<br>
+					Prénom : Nabil
+					<br>
+					Adresse email : mail@mail.com
+					<br>
+					Téléphone : xx.xx.xx.xx.xx
+					<br>
+					Adresse : inconnu
+					<br>
+					Ville : inconnu
+					<br>
+					Code postal : inconnu
+				</p>
+			</article>
+		</section>
+		{# third row #}
+		<section class="grid-cols-1 md:grid-cols-1">
+			<article>
+				<h2>Commentaire</h2>
+				<p>
+					Pas de commentaire
+				</p>
+			</article>
+		</section>
+		{# third row #}
+		<section class="grid-cols-1 md:grid-cols-3">
+			<article>
+				<h2>Prix de la réservation</h2>
+				<div class="text-[4rem]">185€</div>
+			</article>
+			<article>
+				<h2>Déjà réglé</h2>
+				<div class="text-[4rem]">85€</div>
+			</article>
+			<article>
+				<h2>Reste à payer</h2>
+				<div class="text-[4rem]">100€</div>
+			</article>
+		</section>
+		{# fourth row #}
+		<section class="grid-cols-1 md:grid-cols-1">
+			<article>
+				<h2>Liste des paiements</h2>
+			</article>
+		</section>
+
+		<div class="space-y-4">
+			<h3 class="text-2xl font-bold">Un imprévu ?</h3>
+			<div class="flex gap-6">
+				<button class="button">Annuler ma réservation</button>
+				<button class="button">Nous contacter</button>
+			</div>
+		</div>
+
+	</main>
+
+
+{% endblock %}

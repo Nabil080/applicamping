@@ -123,11 +123,9 @@
         text-align: center;
         font-size: 2rem;
         font-weight: bold;
-    }
-
-    .title h1 {
         padding: 2rem;
     }
+
 
     /* ! slider ! */
     .slider {
