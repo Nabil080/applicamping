@@ -31,9 +31,11 @@ export default class extends Controller {
 
     allowSubmit() {
         this.button.removeAttribute('disabled')
+        this.button.dataset.action = "step#validateOrder"
     }
     preventSubmit() {
         this.button.setAttribute('disabled', true)
+        delete this.button.dataset.action 
     }
 
 }

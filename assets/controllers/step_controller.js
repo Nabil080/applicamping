@@ -487,6 +487,15 @@ export default class extends Controller {
         this.coupon = { nom: code, euro: 0, pourcentage: 0, found: false };
         setTimeout(() => this.generateRecap(this.reservation), 0);
     }
+
+
+    /* 
+    Créer la réservation et redirige vers sa page
+    */
+    validateOrder() {
+        window.document.location.href = '/reservation'
+
+    }
 }
 
 

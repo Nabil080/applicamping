@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReservationController!
+{% block title %}
+	Reservation
 {% endblock %}
 
 {% block body %}
@@ -11,7 +12,8 @@
 	</section>
 
 	{# ! Conteneur d'étapes #}
-	<section {{ stimulus_controller('step') }} id="step-container" class="my-6 [&>article]:mx-[15%]">
+	<section
+		{{ stimulus_controller('step') }} id="step-container" class="my-6 [&>article]:mx-[15%]">
 		{# ! Etape 1 : Durée du séjour #}
 		{% include "reservation/etape1.html.twig" %}
 		{# ! Etape 2 : Type d'hébérgement #}
