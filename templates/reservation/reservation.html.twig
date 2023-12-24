@@ -84,8 +84,28 @@
 		</section>
 		{# fourth row #}
 		<section class="grid-cols-1 md:grid-cols-1">
-			<article>
+			<article class="">
 				<h2>Liste des paiements</h2>
+				<table class="w-full [&_tr]:border-2 [&_tr]:border-gray-300 [&_td]:border-2 [&_td]:border-gray-300">
+					<thead>
+						<tr>
+							<td>Paiement N°</td>
+							<td>Date du paiement</td>
+							<td>Mode de paiement</td>
+							<td>Montant</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in 1..3 %}
+							<tr>
+								<td>{{i}}</td>
+								<td>xx/xx/xxxx</td>
+								<td>Carte bancaire</td>
+								<td>85€</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</article>
 		</section>
 
