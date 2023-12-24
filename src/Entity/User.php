@@ -11,7 +11,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Cet e-mail est déjà utilisé')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -254,7 +255,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\PrePersist]
     public function prePersist(): void
     {
-        if ($this->getCreation() === null)
-            $this->setCreation(new DateTime('now'));
+        if ($this->getCreation() === null) $this->setCreation(new DateTime('now'));
+        if ($this->getStatut() === null) $this->setStatut("Désactivé");
     }
+
 }
