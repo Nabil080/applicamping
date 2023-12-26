@@ -21,37 +21,53 @@
 	{% endif %}
 
 
-	<main class="max-w-[600px] mx-auto my-2 mb-12">
-		<form method="post" class="space-y-4">
-			<div class="relative">
-				<label for="inputEmail" class="text-xl">Adresse email</label>
-				<input type="email" value='{{ last_username }}' name="email" id="inputEmail" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required autofocus placeholder="exemple@exemple.com"/>
+	<main class="mx-[15%] my-2 mb-12 grid grid-cols-2">
+		<article class="flex flex-col">
+			<div class="title !font-normal text-lg">
+				<h2>Se connecter</h2>
 			</div>
-			<div class="relative">
-				<label for="inputPassword" class="text-xl">Mot de passe</label>
-				<input type="password" name="password" id="inputPassword" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="current-password" required placeholder="***********"/>
+			<div class="border-r border-main-200 grow p-16">
+				<form method="post" class="space-y-4">
+					<div class="relative">
+						<label for="inputEmail" class="text-xl">Adresse email</label>
+						<input type="email" value='{{ last_username }}' name="email" id="inputEmail" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required placeholder="exemple@exemple.com"/>
+					</div>
+					<div class="relative">
+						<label for="inputPassword" class="text-xl">Mot de passe</label>
+						<div class="relative">
+							<input type="password" name="password" id="inputPassword" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="current-password" required placeholder="***********"/>
+							<div class="absolute right-4 top-4 cursor-pointer">
+								<i {{ stimulus_controller('tools') }} {{ stimulus_action('tools','showPassword','click') }} data-tools-input-value='#inputPassword'  class="fa-regular fa-eye w-6 h-6"></i>
+							</div>
+						</div>
+					</div>
+					<div class="relative flex gap-2">
+						<input type="checkbox" name="remember" id="remember" class="accent-main-600 w-5 aspect-square cursor-pointer" checked/>
+						<label for="remember" class="text-base">Se souvenir de moi</label>
+					</div>
+					<div class="relative">
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<button class="button w-full" type="submit">
+							Se connecter
+						</button>
+					</div>
+				</form>
 			</div>
-			<div class="relative flex gap-2">
-				<input type="checkbox" name="remember" id="remember" class="accent-main-600 w-5 aspect-square cursor-pointer" checked/>
-				<label for="remember" class="text-base">Se souvenir de moi</label>
+		</article>
+		<article class="flex flex-col">
+			<div class="title !font-normal text-lg">
+				<h2>S'inscrire</h2>
 			</div>
-			<div class="relative">
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-				<button class="button w-full" type="submit">
-					Se connecter
+			<div class="border-l border-main-200 grow p-16">
+				{{ form_start(registrationForm) }}
+				{{form_widget(registrationForm)}}
+				<button type="submit" class="button">
+					Valider
 				</button>
+				{{ form_end(registrationForm) }}
 			</div>
-		</form>
+		</article>
 	</main>
 
-	<div class="bg-gray-200">
 
-		{{ form_start(registrationForm) }}
-		{{form_widget(registrationForm)}}
-		<button type="submit" class="button">
-			Valider
-		</button>
-		{{ form_end(registrationForm) }}
-
-	</div>
 {% endblock %}
