@@ -1,12 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte {% endblock %}
+{% block title %}Mon compte
+{% endblock %}
 
 {% block body %}
+
 	<section class="title">
 		<h1>Votre compte</h1>
 	</section>
 
+	<main class="max-w-[800px] mx-auto border-2 border-black mb-12">
+		<section class="border-b-2 p-4 text-lg font-bold border-black">
+			<h2>Informations personnelles</h2>
+		</section>
+		<section class="py-2">
+			<table class="w-full table-container">
+				<thead class="hidden">
+					<tr class="[&>*]:px-4">
+						<td scope="col" class="w-fit">
+							Nom
+						</td>
+						<td scope="col">
+							Valeur
+						</td>
+						<td scope="col text-end">
+							Action
+						</td>
+					</tr>
+				</thead>
+				<tbody
+					class="[&_td]:px-4 [&_td]:py-1">
+					{# ! HEBERGEMENT #}
+					<tr>
+						<td scope="row" class="font-semibold text-main-600 whitespace-nowrap text-start w-min ">
+							Nom
+						</td>
+						<td class="text-start w-full">{{app.user.nom}}</td>
+						<td class="text-end w-min text-main-600">
+							<button class="hover:text-main-800">
+								Modifier
+							</button>
 
-    {{ dump(app.user) }}
+						</td>
+					</tr>
+					<tr>
+						<td scope="row" class="font-semibold text-main-600 whitespace-nowrap text-start w-min ">
+							Prénom
+						</td>
+						<td class="text-start w-full">{{app.user.prenom}}</td>
+						<td class="text-end w-min text-main-600">
+							<button class="hover:text-main-800">
+								Modifier
+							</button>
+
+						</td>
+					</tr>
+					<tr>
+						<td scope="row" class="font-semibold text-main-600 whitespace-nowrap text-start w-min ">
+							Email
+						</td>
+						<td class="text-start w-full">{{app.user.email}}</td>
+						<td class="text-end w-min text-main-600">
+							<button class="hover:text-main-800">
+								Modifier
+							</button>
+
+						</td>
+					</tr>
+					<tr>
+						<td scope="row" class="font-semibold text-main-600 whitespace-nowrap text-start w-min ">
+							Téléphone
+						</td>
+						<td class="text-start w-full">{{app.user.phone ?? 'Inconnu'}}</td>
+						<td class="text-end w-min text-main-600">
+							<button class="hover:text-main-800">
+								Modifier
+							</button>
+
+						</td>
+					</tr>
+					<tr>
+						<td scope="row" class=" font-semibold text-main-600 whitespace-nowrap text-start w-min ">
+							Mot de passe
+						</td>
+						<td class="text-start w-full">**********</td>
+						<td class="text-end w-min text-main-600 whitespace-nowrap">
+							<div class="button">
+								Modifier le mot de passe
+							</div>
+						</td>
+					</tr>
+				</tbody>
+				{# <tfoot>
+																	<tr class="[&>td]:px-4 [&>td]:py-2 bg-main-300 border-b border-black font-bold">
+																		<td scope="row" class=" font-bold text-lg text-gray-900 whitespace-nowrap ">
+																			Total TTC :
+																		</td>
+																		<td class="last:text-end">185€ - 9.25€</td>
+																		<td class="last:text-end border-t border-black">
+																			175.75€
+																		</td>
+																	</tr>
+																</tfoot> #}
+			</table>
+		</section>
+
+
+	</main>
+
+
 {% endblock %}
