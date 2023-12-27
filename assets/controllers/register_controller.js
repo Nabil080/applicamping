@@ -43,12 +43,9 @@ export default class extends Controller {
             case 0:
                 let emailInput = this.steps[0].querySelector('input')
                 if (checkEmail(emailInput)) return this.sendValidationMail(emailInput.value)
-
-                return false
             case 1:
-                let securityCode = this.steps[1].querySelector('input#securityCode').value
-                if (securityCode.toUpperCase() == this.randomCode) return true
-                else return false
+                let codeInput = this.steps[1].querySelector('input#securityCode')
+                return (checkCode(codeInput, this.randomCode))
             case 2:
                 // todo verif front des input
                 this.element.querySelector('form').submit()
@@ -57,7 +54,7 @@ export default class extends Controller {
             default:
                 break;
         }
-        return true
+        return false
     }
 
     sendValidationMail(email) {
@@ -88,6 +85,16 @@ const checkEmail = input => {
 
         return false
     }
+}
+
+const checkCode = (input, code) => {
+    if (input.value.toUpperCase() == code){
+        return true
+    }else{
+        input.setCustomValidity('Code incorrect');
+        input.reportValidity();
+    }
+
 }
 
 function generateRandomCode() {
