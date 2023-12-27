@@ -8,8 +8,10 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['stepOne', 'stepTwo', 'stepThree']
     static values = {
-        currentStep: { type: Number, default: 0 }
+        currentStep: { type: Number, default: 1 }
     }
+
+    connect() { this.showStep(this.currentStepValue) }
 
     get steps() {
         return [this.stepOneTarget, this.stepTwoTarget, this.stepThreeTarget]

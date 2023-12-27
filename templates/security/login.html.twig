@@ -30,7 +30,7 @@
 				<form method="post" class="space-y-4">
 					<div class="relative">
 						<label for="inputEmail" class="text-xl">Adresse email</label>
-						<input type="email"  value='{{ last_username }}' name="email" id="inputEmail" class="invalid:bg-black block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required placeholder="exemple@exemple.com"/>
+						<input type="email" value='{{ last_username }}' name="email" id="inputEmail" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required placeholder="exemple@exemple.com"/>
 					</div>
 					<div class="relative">
 						<label for="inputPassword" class="text-xl">Mot de passe</label>
@@ -58,27 +58,37 @@
 			<div class="title !font-normal text-lg">
 				<h2>S'inscrire</h2>
 			</div>
-			<div class="border-l border-main-200 grow p-16">
+			<section class="border-l border-main-200 grow p-16">
 				{{ form_start(registrationForm, { 'attr': {'class' : 'h-full flex flex-col gap-4' } }) }}
-				<div {{ stimulus_target('register', 'stepOne')}} class="grow flex flex-col place-content-center gap-6">
+				<article {{ stimulus_target('register', 'stepOne')}} class="grow flex flex-col place-content-center gap-6">
 					{{ form_row(registrationForm.email) }}
 					<p>Cet email servira à vous identifier sur notre site. Pour vérifier qu'il est exact, nous allons vous envoyer un code de sécurité à cette adresse.</p>
+				</article>
+				<article {{ stimulus_target('register', 'stepTwo')}} class="hidden grow flex flex-col gap-4">
+					<div class="relative">
+						<label for="validateEmail" class="text-xl">Adresse email</label>
+						<input type="email" name="email" id="validateEmail" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600 read-only:bg-gray-100 read-only:select-none read-only:pointer-events-none" readonly value='hello'/>
+					</div>
+					<div class="relative">
+						<label for="securityCode" class="text-xl">Code de sécurité</label>
+						<input type="text" name="securityCode" id="securityCode" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="current-password" required/>
+					</div>
+					<div>
+						<button>
+							Renvoyer le mail
+						</button>
+					</div>
 				</div>
-				<div {{ stimulus_target('register', 'stepTwo')}} class="hidden grow flex flex-col place-content-center gap-6">
+			</article>
+			<article {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6">
 
-					<p>Etape 2.</p>
-				</div>
-				<div {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6">
-
-					<p>Etape 3.</p>
-				</div>
-				<div>
-					<button {{ stimulus_action('register','handleNextButton') }} type="submit" class="button w-full mt-auto">
-						Continuer
-					</button>
-				</div>
+				<p>Etape 3.</p>
+			</article>
+			<div>
+				<button {{ stimulus_action('register','handleNextButton') }} type="submit" class="button w-full mt-auto">
+					Continuer
+				</button>
 			</div>
-		</article>
-	</main>
-{% endblock %}
-{# {{ form_end(registrationForm) }} #}
+		</section>
+	</article>
+</main>{% endblock %}{# {{ form_end(registrationForm) }} #}
