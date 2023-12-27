@@ -66,7 +66,7 @@ export default class extends Controller {
 // validator
 const validator = (validator, value) => validator(value)
 
-const checkIfLastStep = value => value[0] === value[1] - 1 
-const checkEmail = value => (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/).test(value)
+const checkIfLastStep = value => value[0] === value[1] - 1
+const checkEmail = value => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(value)
 
 
