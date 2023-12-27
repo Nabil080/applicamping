@@ -28,7 +28,8 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'text-xl'
-                ]
+                ],
+                'label' => "Adresse email"
             ])
             ->add('nom', TextType::class, [
                 'attr' => [

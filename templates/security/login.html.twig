@@ -60,9 +60,9 @@
 			</div>
 			<section class="border-l border-main-200 grow p-16">
 				{{ form_start(registrationForm, { 'attr': {'class' : 'h-full flex flex-col gap-4' } }) }}
-				<article {{ stimulus_target('register', 'stepOne')}} class="grow flex flex-col place-content-center gap-6">
+				<article {{ stimulus_target('register', 'stepOne')}} class="grow flex flex-col  gap-6">
 					{{ form_row(registrationForm.email) }}
-					<p>Cet email servira à vous identifier sur notre site. Pour vérifier qu'il est exact, nous allons vous envoyer un code de sécurité à cette adresse.</p>
+					<p class="text-lg">Cet email servira à vous identifier sur notre site. Pour vérifier qu'il est exact, nous allons vous envoyer un code de sécurité à cette adresse.</p>
 				</article>
 				<article {{ stimulus_target('register', 'stepTwo')}} class="hidden grow flex flex-col gap-4">
 					<div class="relative">

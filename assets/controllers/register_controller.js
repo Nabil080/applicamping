@@ -8,10 +8,10 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static targets = ['stepOne', 'stepTwo', 'stepThree']
     static values = {
-        currentStep: { type: Number, default: 1 }
+        currentStep: { type: Number, default: 0 }
     }
 
-    connect() { this.showStep(this.currentStepValue) }
+    // connect() { this.showStep(this.currentStepValue) }
 
     get steps() {
         return [this.stepOneTarget, this.stepTwoTarget, this.stepThreeTarget]
@@ -46,6 +46,12 @@ export default class extends Controller {
                 if (checkEmail(emailInput)) return this.sendValidationMail(emailInput.value)
 
                 return false
+            case 1:
+                let securityCode = this.steps[1].querySelector('input#securityCode').value
+                console.log(securityCode)
+                // fetch et comparer les codes
+                if (securityCode.toUpperCase() == "12AB") return true
+                else return false
             default:
                 break;
         }
@@ -54,7 +60,7 @@ export default class extends Controller {
 
     sendValidationMail(email) {
         let todo = 'Envoie le mail de validation'
-
+        this.steps[1].querySelector('input#validateEmail').value = email
 
         return todo ? true : false
     }
