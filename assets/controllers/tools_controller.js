@@ -13,13 +13,6 @@ export default class extends Controller {
     showPassword(){
         let input = document.querySelector(this.inputValue)
 
-        if(input.type === 'text'){
-            input.type = 'password'
-            input.classList.replace('fa-regular','fa')
-        }else{
-            input.type = 'text'
-            input.classList.replace('fa','fa-regular')
-        }
-        // input.type = input.type === 'text' ? 'password' : 'text' ;
+        input.type = input.type === 'text' ? 'password' : 'text' ;
     }
 }

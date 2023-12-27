@@ -22,7 +22,12 @@ class RegistrationFormType extends AbstractType
             // obligatoires
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'autocomplete' => 'email'
+                    'autocomplete' => 'email',
+                    'class' => 'block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600',
+                    'placeholder' => 'exemple@exemple.com'
+                ],
+                'label_attr' => [
+                    'class' => 'text-xl'
                 ]
             ])
             ->add('nom', TextType::class, [
