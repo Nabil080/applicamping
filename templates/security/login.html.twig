@@ -54,23 +54,31 @@
 				</form>
 			</div>
 		</article>
-		<article class="flex flex-col">
+		<article {{ stimulus_controller('register') }} class="flex flex-col">
 			<div class="title !font-normal text-lg">
 				<h2>S'inscrire</h2>
 			</div>
 			<div class="border-l border-main-200 grow p-16">
 				{{ form_start(registrationForm, { 'attr': {'class' : 'h-full flex flex-col gap-4' } }) }}
-				<div class="grow flex flex-col place-content-center gap-6">
+				<div {{ stimulus_target('register', 'stepOne')}} class="grow flex flex-col place-content-center gap-6">
 					{{ form_row(registrationForm.email) }}
 					<p>Cet email servira à vous identifier sur notre site. Pour vérifier qu'il est exact, nous allons vous envoyer un code de sécurité à cette adresse.</p>
 				</div>
+				<div {{ stimulus_target('register', 'stepTwo')}} class="hidden grow flex flex-col place-content-center gap-6">
+					
+					<p>Etape 2.</p>
+				</div>
+				<div {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6">
+					
+					<p>Etape 3.</p>
+				</div>
 				<div>
-					<button type="submit" class="button w-full mt-auto">
+					<button {{ stimulus_action('register','goToNextStep') }} type="submit" class="button w-full mt-auto">
 						Continuer
 					</button>
 				</div>
-				{# {{ form_end(registrationForm) }} #}
 			</div>
 		</article>
 	</main>
 {% endblock %}
+{# {{ form_end(registrationForm) }} #}
