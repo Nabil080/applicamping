@@ -24,9 +24,8 @@ export default class extends Controller {
 
     handleNextButton(e) {
         e.preventDefault()
-        let hasNoError = this.checkIfValid(this.currentStepValue)
 
-        if (hasNoError) this.goToNextStep()
+        if (this.checkIfValid(this.currentStepValue)) this.goToNextStep()
     }
 
     goToNextStep() {
@@ -36,17 +35,13 @@ export default class extends Controller {
 
     checkIfValid(stepNumber) {
         // Vérifie que c'est pas la dernière étape
-        let isLastStep = validator(checkIfLastStep, [this.currentStepValue, this.steps.length])
-        if (isLastStep) return false
+        if (checkIfLastStep([this.currentStepValue, this.steps.length])) return false
 
         // Vérifie qu'il n'y a pas d'erreur utilisateur
         switch (stepNumber) {
             case 0:
-                let email = this.steps[0].querySelector('input').value
-                let isEmailValid = validator(checkEmail, email)
-
-                if (isEmailValid) return this.sendValidationMail(email)
-
+                let emailInput = this.steps[0].querySelector('input')
+                if (checkEmail(emailInput)) return this.sendValidationMail(emailInput.value)
 
                 return false
             default:
@@ -59,7 +54,7 @@ export default class extends Controller {
         let todo = 'Envoie le mail de validation'
 
 
-        return todo ?? false
+        return todo ? true : false
     }
 }
 
@@ -67,6 +62,17 @@ export default class extends Controller {
 const validator = (validator, value) => validator(value)
 
 const checkIfLastStep = value => value[0] === value[1] - 1
-const checkEmail = value => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(value)
+
+const checkEmail = input => {
+    if ((/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(input.value)) {
+        return true
+    } else {
+        input.setCustomValidity('Adresse email invalide');
+        input.reportValidity();
+
+
+        return false
+    }
+}
 
 

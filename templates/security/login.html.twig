@@ -30,7 +30,7 @@
 				<form method="post" class="space-y-4">
 					<div class="relative">
 						<label for="inputEmail" class="text-xl">Adresse email</label>
-						<input type="email" value='{{ last_username }}' name="email" id="inputEmail" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required placeholder="exemple@exemple.com"/>
+						<input type="email"  value='{{ last_username }}' name="email" id="inputEmail" class="invalid:bg-black block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="email" required placeholder="exemple@exemple.com"/>
 					</div>
 					<div class="relative">
 						<label for="inputPassword" class="text-xl">Mot de passe</label>
@@ -65,11 +65,11 @@
 					<p>Cet email servira à vous identifier sur notre site. Pour vérifier qu'il est exact, nous allons vous envoyer un code de sécurité à cette adresse.</p>
 				</div>
 				<div {{ stimulus_target('register', 'stepTwo')}} class="hidden grow flex flex-col place-content-center gap-6">
-					
+
 					<p>Etape 2.</p>
 				</div>
 				<div {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6">
-					
+
 					<p>Etape 3.</p>
 				</div>
 				<div>
