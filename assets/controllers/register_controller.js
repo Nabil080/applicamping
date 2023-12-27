@@ -47,13 +47,12 @@ export default class extends Controller {
                 return false
             case 1:
                 let securityCode = this.steps[1].querySelector('input#securityCode').value
-                console.log(securityCode)
-                if (securityCode.toUpperCase() == "12AB") return true
+                if (securityCode.toUpperCase() == this.randomCode) return true
                 else return false
             case 2:
                 // todo verif front des input
                 this.element.querySelector('form').submit()
-                
+
                 return false
             default:
                 break;
@@ -62,6 +61,11 @@ export default class extends Controller {
     }
 
     sendValidationMail(email) {
+        // génère un token
+        this.randomCode = generateRandomCode();
+        this.steps[1].querySelector('input#securityCode').value = this.randomCode
+
+
         let todo = 'Envoie le mail de validation'
         this.steps[1].querySelector('input#validateEmail').value = email
 
@@ -85,5 +89,20 @@ const checkEmail = input => {
         return false
     }
 }
+
+function generateRandomCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const codeLength = 5;
+    let code = '';
+
+    for (let i = 0; i < codeLength; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code += characters.charAt(randomIndex);
+    }
+
+    return code;
+}
+
+
 
 
