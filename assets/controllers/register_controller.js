@@ -6,7 +6,7 @@ import { Controller } from '@hotwired/stimulus';
 */
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['stepOne', 'stepTwo', 'stepThree']
+    static targets = ['stepOne', 'stepTwo', 'stepThree', 'submit']
     static values = {
         currentStep: { type: Number, default: 0 }
     }
@@ -22,6 +22,8 @@ export default class extends Controller {
             if (index === number) step.classList.remove('hidden')
             else step.classList.add('hidden')
         })
+
+        this.submitTarget.innerText = checkIfLastStep([number, this.steps.length]) ? `S'inscrire` : `Continuer`
     }
 
     handleNextButton(e) {

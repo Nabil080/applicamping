@@ -71,7 +71,7 @@
 					</div>
 					<div class="relative">
 						<label for="securityCode" class="text-xl">Code de sécurité</label>
-						<input type="text" name="securityCode" id="securityCode" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="current-password" required/>
+						<input type="text" name="securityCode" value="12AB" id="securityCode" class="block pointer-events-auto px-2.5 pb-2.5 pt-4 mt-2 text-lg text-gray-900 border w-full appearance-none focus:outline-none focus:ring-0 focus:border-main-600" autocomplete="current-password" required/>
 					</div>
 					<div>
 						<button>
@@ -80,15 +80,17 @@
 					</div>
 				</div>
 			</article>
-			<article {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6">
-
-				<p>Etape 3.</p>
+			<article {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6 mb-4">
+				{# {{ form_row(registrationForm.nom) }}
+				{{ form_row(registrationForm.prenom) }}
+				{{ form_row(registrationForm.plainPassword) }} #}
+				{{ form_rest(registrationForm) }}
 			</article>
 			<div>
-				<button {{ stimulus_action('register','handleNextButton') }} type="submit" class="button w-full mt-auto">
+				<button {{ stimulus_action('register','handleNextButton') }} {{ stimulus_target('register','submit') }} type="submit" class="button w-full mt-auto">
 					Continuer
 				</button>
 			</div>
 		</section>
 	</article>
-</main>{% endblock %}{# {{ form_end(registrationForm) }} #}
+</main>{% endblock %}
