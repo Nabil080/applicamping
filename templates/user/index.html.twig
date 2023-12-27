@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte {% endblock %}
+
+{% block body %}
+	<section class="title">
+		<h1>Votre compte</h1>
+	</section>
+
+
+    {{ dump(app.user) }}
+{% endblock %}

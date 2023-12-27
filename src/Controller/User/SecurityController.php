@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -19,9 +19,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppCustomAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('homepage');
-        }
+        if ($this->getUser()) return $this->redirectToRoute('homepage');
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -34,7 +32,7 @@ class SecurityController extends AbstractController
         ]);
 
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'registrationForm' => $form,]);
+        return $this->render('user/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'registrationForm' => $form,]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

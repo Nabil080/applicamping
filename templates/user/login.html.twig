@@ -80,10 +80,11 @@
 					</div>
 				</div>
 			</article>
-			<article {{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6 mb-4">
+			<article
+				{{ stimulus_target('register', 'stepThree')}} class="hidden grow flex flex-col place-content-center gap-6 mb-4">
 				{# {{ form_row(registrationForm.nom) }}
-				{{ form_row(registrationForm.prenom) }}
-				{{ form_row(registrationForm.plainPassword) }} #}
+																{{ form_row(registrationForm.prenom) }}
+																{{ form_row(registrationForm.plainPassword) }} #}
 				{{ form_rest(registrationForm) }}
 			</article>
 			<div>
@@ -93,4 +94,10 @@
 			</div>
 		</section>
 	</article>
-</main>{% endblock %}
+</main>
+
+<div class="text-center mb-12 italic">
+	<a href={{ path('homepage') }} class="hover:text-main-900">
+		Continuer en tant que visiteur
+	</a>
+</div>{% endblock %}
