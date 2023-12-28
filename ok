@@ -90,7 +90,7 @@ Date:   Fri Nov 24 16:01:32 2023 +0100
 [31m-    <body class="bg-white">[m
 [32m+[m[32m    <body class="bg-white min-h-screen">[m
  [m
-     {% include "include/nav.html.twig" %}[m
+     {% include "public/include/nav.html.twig" %}[m
  [m
 [1mdiff --git a/templates/include/footer.html.twig b/templates/include/footer.html.twig[m
 [1mindex 2e1ebb7..bbd982d 100644[m
@@ -98,7 +98,8 @@ Date:   Fri Nov 24 16:01:32 2023 +0100
 [1m+++ b/templates/include/footer.html.twig[m
 [36m@@ -1,4 +1,4 @@[m
 [31m-<footer class="flex justify-center border-t-2 bg-main-50 border-main-500 items-center px-12 py-1">[m
-[32m+[m[32m<footer class="flex mt-auto justify-center border-t-2 bg-main-50 border-main-500 items-center px-12 py-1">[m[41m[m
+[32m+[m[32m<footer class="flex mt-auto justify-center border-t-2 bg-main-50 border-main-500 items-center px-12 py-1">[m[41m
+[m
  	{# <div class="p-12">[m
  		Footer[m
  	</div> #}[m
