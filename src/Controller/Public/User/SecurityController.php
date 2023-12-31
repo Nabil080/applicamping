@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\Public\User;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
         ]);
 
 
-        return $this->render('user/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'registrationForm' => $form,]);
+        return $this->render('public/user/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'registrationForm' => $form,]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

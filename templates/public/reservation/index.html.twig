@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
 {% block title %}
 	Reservation
@@ -15,17 +15,17 @@
 	<section
 		{{ stimulus_controller('step') }} id="step-container" class="my-6 [&>article]:mx-[15%]">
 		{# ! Etape 1 : Durée du séjour #}
-		{% include "reservation/etape1.html.twig" %}
+		{% include "public/reservation/etape1.html.twig" %}
 		{# ! Etape 2 : Type d'hébérgement #}
-		{% include "reservation/etape2.html.twig" %}
+		{% include "public/reservation/etape2.html.twig" %}
 		{# ! Etape 3 : Emplacement #}
-		{% include "reservation/etape3.html.twig" %}
+		{% include "public/reservation/etape3.html.twig" %}
 		{# ! Etape 4 : Options #}
-		{% include "reservation/etape4.html.twig" %}
+		{% include "public/reservation/etape4.html.twig" %}
 		{# ! Etape 5 : Recapitulatif #}
-		{% include "reservation/etape5.html.twig" %}
+		{% include "public/reservation/etape5.html.twig" %}
 		{# ! Etape 6 : Paiement #}
-		{% include "reservation/etape6.html.twig" %}
+		{% include "public/reservation/etape6.html.twig" %}
 
 		{# !! BOUTONS NAVIGATION #}
 		<section id="nav-buttons" class="mt-12 mx-[15%] flex justify-between">

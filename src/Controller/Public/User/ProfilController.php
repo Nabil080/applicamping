@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\Public\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ class ProfilController extends AbstractController
 
 
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('public/user/index.html.twig', [
             'controller_name' => 'ProfileController',
         ]);
     }

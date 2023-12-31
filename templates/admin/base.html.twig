@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}
-			{% endblock %}
+			{% block title %}{% endblock %}
 			| Camping Mont-olympe
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -20,23 +19,12 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 	</head>
-	<body class="bg-white min-h-screen">
-
-		{% include "include/nav.html.twig" %}
-
-		{% block body %}{% endblock %}
-
-		{% include "include/footer.html.twig" %}
+	<body class="bg-white min-h-screen"> {% block body %}{% endblock %}
 
 
 		<script>
 			$(document).ready(function () {
-$('select[multiple]').select2(
-	{
-		closeOnSelect: false, 
-		language: 'fr', 
-		selectionCssClass: 'custom-select2'
-		});
+$('select[multiple]').select2({closeOnSelect: false, language: 'fr', selectionCssClass: 'custom-select2'});
 });
 		</script>
 
