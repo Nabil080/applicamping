@@ -24,3 +24,26 @@
 	</div>
 	<!-- Card Item End -->
 {% endmacro %}
+
+{% macro pieChart(title, more) %}
+	<div {{ stimulus_controller('chart--pie') }} class="border-stroke pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 col-span-12 rounded-sm border bg-white px-5 pb-5 xl:col-span-6">
+		<div class="mb-3 justify-between gap-4 sm:flex">
+			<div>
+				<h4 class="text-xl font-bold text-black dark:text-white">
+					{{ title }}
+				</h4>
+			</div>
+			<div>
+				<div class="text-meta-5 relative z-20 inline-block underline-animation hover:text-opacity-80">
+					<a href={{ more.link }}>
+						{{ more.text }}
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="mb-2">
+			<div {{ stimulus_target('chart--pie','div') }} class="pieChart mx-auto flex justify-center"></div>
+		</div>
+	</div>
+
+{% endmacro %}

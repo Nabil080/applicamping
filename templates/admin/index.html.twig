@@ -56,5 +56,24 @@
 
 	</div>
 
+	<!-- ! RESTE DE LA GRILLE -->
+	<div class="2xl:mt-7.5 2xl:gap-7.5 mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6">
+		<div class="col-span-full">
+			<h2>
+				Emplacements
+			</h2>
+		</div>
+		<!-- ====== Chart Three Start -->
 
-{% endblock %}
+		{% set id = 'PieChartOne' %}
+		{% set title = '12 Emplacements libres' %}
+		{% set more = {text: 'Réservations correspondantes', link: path('app_admin') } %}
+
+		{{ cell.pieChart(title,more) }}
+		<!-- ====== Chart Three End -->
+		<!-- ====== Chart Three Start -->
+	<include
+		src="./partials/chart-003.html"/> <!-- ====== Chart Three End -->
+
+
+	{% endblock %}
