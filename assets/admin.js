@@ -10,6 +10,10 @@ import "./styles/date_picker.css";
 // stimulus
 import "./bootstrap.js";
 
+// flowbite
+import "flowbite";
+import "flowbite-datepicker";
+
 // tailamdin
 import "jsvectormap/dist/css/jsvectormap.css"
 import "flatpickr/dist/flatpickr.min.css"

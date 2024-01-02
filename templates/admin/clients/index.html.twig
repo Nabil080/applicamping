@@ -1,11 +1,13 @@
 {% extends 'admin/base.html.twig' %}
-{% import 'admin/macro/dashboard_cells.html.twig' as cell %}
+{% import 'admin/macro/crud_tables.html.twig' as crud %}
 
 
 {% block title %}
 	Clients
 {% endblock %}
 
+{% set title = 'Clients' %}
+
 {% block body %}
-slt
+    {{ crud.fullTable(title) }}
 {% endblock %}

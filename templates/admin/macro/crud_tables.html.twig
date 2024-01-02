@@ -1,0 +1,301 @@
+{% macro fullTable(title) %}
+	<section class="crud">
+		<div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+			<div class="flex-1 flex items-center space-x-2">
+				<h5>
+					<span class="text-xl text-gray-500">{{ title }}</span>
+				</h5>
+				<button type="button" class="group" data-tooltip-target="results-tooltip">
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" viewbox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+					</svg>
+					<span class="sr-only">More info</span>
+				</button>
+				<div id="results-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-sm shadow-sm opacity-0 tooltip dark:bg-gray-700">
+					Tous les utilisateurs avec le rôle client
+					<div class="tooltip-arrow" data-popper-arrow=""></div>
+				</div>
+			</div>
+			<div class="flex-shrink-0 flex flex-col items-start md:flex-row md:items-center lg:justify-end space-y-3 md:space-y-0 md:space-x-3">
+				Afficher
+				<select name="limit" class="border-none focus:ring-0 cursor-pointer bg-transparent dark:bg-boxdark-2 mx-2">
+					<option value="10" selected>10</option>
+					<option value="25">25</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select>
+				résultats
+			</div>
+		</div>
+		<div class="flex flex-col md:flex-row items-stretch md:items-center md:space-x-3 space-y-3 md:space-y-0 justify-between mx-4 py-4 border-t dark:border-gray-700">
+			<div class="w-full md:w-1/2">
+				<form class="flex items-center">
+					<div class="relative w-full">
+						<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"/>
+							</svg>
+						</div>
+						<input type="search" placeholder="Rechercher un client.." required>
+					</div>
+				</form>
+			</div>
+			<div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+				<button type="button" id="createProductButton" data-modal-toggle="createProductModal" class="btn btn-sm">
+					<svg fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+					</svg>
+					Créer un compte
+				</button>
+				<button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="btn btn-sm btn-border filter" type="button">
+					<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-4 w-4 mr-1.5 -ml-1 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"/>
+					</svg>
+					Filtres
+					<svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+					</svg>
+				</button>
+
+
+				<div id="filterDropdown" class="z-10 hidden px-3 pt-1 bg-white rounded-sm shadow w-80 dark:bg-gray-700 right-0">
+					<div class="flex items-center justify-between pt-2">
+						<h6 class="text-sm font-medium text-black dark:text-white">Filtres</h6>
+						<div class="flex items-center space-x-3">
+							<a href="#" class="clickable">Tout
+																                        effacer</a>
+						</div>
+					</div>
+					<div class="pt-3 pb-2">
+						<label for="input-group-search" class="sr-only"></label>
+						<div class="relative">
+							<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+								<svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+								</svg>
+							</div>
+							<input type="text" id="input-group-search" class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-sm bg-gray-50 focus:ring-crud-500 focus:border-crud-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500" placeholder="Rechercher...">
+						</div>
+					</div>
+					<div
+						id="accordion-flush" data-accordion="collapse" data-active-classes="text-black dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+						<!-- Statut -->
+						<h2 id="category-heading">
+							<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
+								<span>Statut</span>
+								<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+								</svg>
+							</button>
+						</h2>
+						<div id="category-body" class="hidden" aria-labelledby="category-heading">
+							<div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+								<ul class="space-y-2">
+									<li class="flex items-center">
+										<input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+										<label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Confirmé (32)</label>
+									</li>
+									<li class="flex items-center">
+										<input id="microsoft" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+										<label for="microsoft" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Annulé (12)</label>
+									</li>
+									<button class="clickable">Tous</button>
+								</ul>
+							</div>
+						</div>
+						<!-- Worldwide Shipping -->
+						<h2 id="worldwide-shipping-heading">
+							<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#worldwide-shipping-body" aria-expanded="true" aria-controls="worldwide-shipping-body">
+								<span>Type d'emplacement</span>
+								<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+								</svg>
+							</button>
+						</h2>
+						<div id="worldwide-shipping-body" class="hidden" aria-labelledby="worldwide-shipping-heading">
+							<div class="py-2 space-y-2 font-light border-b border-gray-200 dark:border-gray-600">
+								<label class="relative flex items-center cursor-pointer">
+									<input type="checkbox" value="" class="sr-only peer" name="shipping" checked="">
+									<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
+									<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Camping-car</span>
+								</label>
+								<label class="relative flex items-center cursor-pointer">
+									<input type="checkbox" value="" class="sr-only peer" name="shipping">
+									<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
+									<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Caravane</span>
+								</label>
+
+								<button class="clickable">Tous</button>
+							</div>
+						</div>
+						<!-- Sejour -->
+						<h2 id="sejour-heading">
+							<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#sejour-body" aria-expanded="true" aria-controls="sejour-body">
+								<span>Séjour</span>
+								<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+								</svg>
+							</button>
+						</h2>
+						<div id="sejour-body" class="hidden" aria-labelledby="sejour-heading">
+							<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+								<input type="date" id="sejour-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+								<div class="mx-1 p-0.5 bg-gray-400"></div>
+								<input type="date" id="sejour-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+							</div>
+						</div>
+						<!-- Price -->
+						<h2 id="price-heading">
+							<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#price-body" aria-expanded="true" aria-controls="price-body">
+								<span>Prix (€)</span>
+								<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+								</svg>
+							</button>
+						</h2>
+						<div id="price-body" class="hidden" aria-labelledby="price-heading">
+							<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+								<input type="number" id="price-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+								<div class="mx-1 p-0.5 bg-gray-400"></div>
+
+								<input type="number" id="price-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+							</div>
+						</div>
+						<!-- Date de réservation -->
+						<h2 id="date-reservation-heading">
+							<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#date-reservation-body" aria-expanded="true" aria-controls="date-reservation-body">
+								<span>Date de réservation</span>
+								<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+								</svg>
+							</button>
+						</h2>
+						<div id="date-reservation-body" class="hidden" aria-labelledby="date-reservation-heading">
+							<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+								<input type="date" id="date-reservation-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+								<div class="mx-1 p-0.5 bg-gray-400"></div>
+								<input type="date" id="date-reservation-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Nom
+							<br>
+							Prénom</th>
+						<th scope="col">Email</th>
+						<th scope="col">Téléphone</th>
+						<th scope="col">Adresse</th>
+						<th scope="col">Réservations</th>
+						<th scope="col">Création</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in 0..5 %}
+						<tr>
+							<th scope="row">
+								1430
+							</th>
+							<td>
+								BELLILA
+								<br>
+								Nabil
+								<br>
+							</td>
+							<td>
+								bellilanabil8@gmail.com
+							</td>
+							<td>
+								06.38.05.89.97
+							</td>
+							<td>
+								17 rue des tilleuls
+								<br>
+								08000, Villers-Semeuse,
+								<br>
+								France
+							</td>
+							<td>
+								<div>
+									2 réservations
+									<br>
+									<a href="" class="details">Voir les détails</a>
+								</div>
+							</td>
+							<td>
+								14/07/2003
+								<br>
+								14h57
+							</td>
+							<td class="">
+								<div class="grid gap-2">
+									<button type="button" class="btn btn-sm update">
+										<svg xmlns="http://www.w3.org/2000/svg" class="" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+											<path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/>
+											<path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"/>
+										</svg>
+										Modifier
+									</button>
+									<button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="btn btn-sm btn-border delete">
+										<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+											<path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+										</svg>
+										Supprimer
+									</button>
+								</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
+			<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+				Résultats
+				<span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+				sur
+				<span class="font-semibold text-gray-900 dark:text-white">1000</span>
+			</span>
+			<ul class="pagination">
+				<li>
+					<a href="#">
+						<svg class="fill-current" width="8" height="16" viewbox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M7.17578 15.1156C7.00703 15.1156 6.83828 15.0593 6.72578 14.9187L0.369531 8.44995C0.116406 8.19683 0.116406 7.80308 0.369531 7.54995L6.72578 1.0812C6.97891 0.828076 7.37266 0.828076 7.62578 1.0812C7.87891 1.33433 7.87891 1.72808 7.62578 1.9812L1.71953 7.99995L7.65391 14.0187C7.90703 14.2718 7.90703 14.6656 7.65391 14.9187C7.48516 15.0312 7.34453 15.1156 7.17578 15.1156Z" fill=""></path>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="#">1</a>
+				</li>
+				<li>
+					<a href="#">2</a>
+				</li>
+				<li>
+					<a href="#" aria-current="page">3</a>
+				</li>
+				<li>
+					<a href="#">...</a>
+				</li>
+				<li>
+					<a href="#">100</a>
+				</li>
+				<li>
+					<a href="#">
+						<svg class="fill-current" width="8" height="16" viewbox="0 0 8 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0.819531 15.1156C0.650781 15.1156 0.510156 15.0593 0.369531 14.9468C0.116406 14.6937 0.116406 14.3 0.369531 14.0468L6.27578 7.99995L0.369531 1.9812C0.116406 1.72808 0.116406 1.33433 0.369531 1.0812C0.622656 0.828076 1.01641 0.828076 1.26953 1.0812L7.62578 7.54995C7.87891 7.80308 7.87891 8.19683 7.62578 8.44995L1.26953 14.9187C1.15703 15.0312 0.988281 15.1156 0.819531 15.1156Z" fill=""></path>
+						</svg>
+					</a>
+
+				</li>
+			</ul>
+		</nav>
+	</section>
+{% endmacro %}

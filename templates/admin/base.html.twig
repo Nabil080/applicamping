@@ -19,7 +19,7 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 	</head>
-	<body x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+	<body x-data="{ page: 'admin', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
 
 		<!-- ===== Preloader Start ===== -->
 		{# <include src="./partials/preloader.html"></include> #}
@@ -46,6 +46,10 @@
 				<!-- ===== Content Area End ===== -->
 			</div>
 			<!-- ===== Page Wrapper End ===== -->
+
+
+			{# modals ! #}
+			{% block modals %}{% endblock %}
 
 			<script>
 				$(document).ready(function () {
