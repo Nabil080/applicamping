@@ -1,5 +1,5 @@
 <aside
-	class="z-9999 w-72.5 dark:bg-boxdark absolute left-0 top-0 flex h-screen flex-col overflow-y-hidden bg-black duration-300 ease-linear lg:static lg:translate-x-0">
+	:class="sidebarToggle ? 'translate-x-0' : '-translate-x-full'" class="z-9999 w-72.5 dark:bg-boxdark absolute left-0 top-0 flex h-screen flex-col overflow-y-hidden bg-black duration-300 ease-linear lg:static lg:translate-x-0" @click.outside="sidebarToggle = false">
 
 	<!-- SIDEBAR HEADER -->
 	<div class="py-5.5 lg:py-6.5 flex items-center justify-between gap-2 px-6">
