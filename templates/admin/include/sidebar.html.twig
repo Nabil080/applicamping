@@ -142,7 +142,7 @@
 
 					<!-- Menu CLIENTS -->
 					<li>
-						<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href="clients.html" @click="selected = (selected === 'clients' ? '':'clients')" :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'clients') || (page === 'clients') }" :class="page === 'calendar' && 'bg-graydark'">
+						<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href={{ path('app_admin_clients')}} @click="selected = (selected === 'admin/clients' ? '':'admin/clients')" :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'admin/clients') || (page === 'admin/clients') }" :class="page === 'admin/clients' && 'bg-graydark'">
 							<svg class="stroke-current" stroke-width="1.5" width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" stroke-linecap="round" stroke-linejoin="round"></path>
 							</svg>
