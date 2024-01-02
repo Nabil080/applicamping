@@ -83,6 +83,43 @@
 		{{ cell.pieChart(title,more,series,labels) }}
 		<!-- ====== Graphique emplacements libres -->
 
+		<!-- ! check in / check out / planning -->
+
+			<div class="col-span-full"> <h2>
+				Planning
+			</h2>
+		</div>
+
+		<!-- Check in -->
+		{% set text = '8 arrivés à valider' %}
+		{% set more = {text: 'Voir les check-in', link:path('app_admin') } %}
+		{% set svg = '<path d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" stroke-linecap="round" stroke-linejoin="round"></path>' %}
+
+		{{ cell.textCard(text,more,svg)}}
+		<!-- Check in -->
+
+		<!-- Check out -->
+		{% set text = '3 départs à valider' %}
+		{% set more = {text: 'Voir les check-out', link:path('app_admin') } %}
+		{% set svg = '<path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" stroke-linecap="round" stroke-linejoin="round"></path>' %}
+
+		{{ cell.textCard(text,more,svg)}}
+		<!-- Check out -->
+
+		<div class="col-span-full gap-2 xl:col-span-4 flex flex-col justify-between">
+			<div>
+				<a href="#" class="btn w-full">
+					Voir le planning
+				</a>
+			</div>
+			<div>
+				<a href="#" class="btn w-full">
+					Voir les statistiques
+				</a>
+			</div>
+
+
+		</div>
 
 
 	{% endblock %}

@@ -47,3 +47,28 @@
 	</div>
 
 {% endmacro %}
+
+{% macro textCard(text, more, svg) %}
+	<div class="border-stroke px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark col-span-full lg:col-span-6 xl:col-span-4  rounded-sm border bg-white py-6 grid place-content-center">
+		<div class="flex items-center gap-4">
+			<div class="h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
+				<svg data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" viewbox="0 0 20 22" xmlns="http://www.w3.org/2000/svg" class="stroke-primary dark:stroke-white" width="20" height="22">
+					{{ svg|raw }}
+				</svg>
+			</div>
+
+			<h4 class="text-title-md font-bold text-black dark:text-white">
+				{{ text }}
+			</h4>
+		</div>
+
+		<div class="text-center">
+
+			<span class="text-meta-5 gap-1 text-sm font-medium hover:text-opacity-80 underline-animation">
+				<a href={{ more.link }}>
+					{{ more.text }}
+				</a>
+			</span>
+		</div>
+	</div>
+{% endmacro %}
