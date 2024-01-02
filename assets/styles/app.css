@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 
 @layer base {
+    body {
+        @apply z-1 bg-whiten font-satoshi text-body relative text-base font-normal;
+    }
+
     :root {
         /* ! colors !*/
         --50: #f2fbf4;
@@ -26,27 +32,111 @@
         --swiper-navigation-color: var(--400);
     }
 
-    html {
+    /* html {
         scroll-behavior: smooth;
-        /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-triangle-369b8d2d.jpg); */
-        /* background-image: url(https://coolbackgrounds.io/images/backgrounds/white/white-radial-gradient-a5802da1.jpg); */
         background-size: cover;
     }
 
-    /* Chrome, Safari, Edge, Opera */
+    Chrome, Safari, Edge, Opera 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
 
-    /* Firefox */
+    Firefox 
     input[type=number] {
         -moz-appearance: textfield;
-    }
+    }*/
 }
 
 @layer components {
+
+    /* ? links  */
+    .clickable {
+        @apply text-meta-5 flex cursor-pointer items-center text-sm font-medium underline-offset-2 hover:underline hover:opacity-80;
+    }
+
+    /* ? buttons */
+    .btn {
+        @apply bg-primary inline-flex items-center justify-center gap-2.5 rounded-sm py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10;
+    }
+
+    /* buttons variables */
+    .btn-sm {
+        @apply gap-1.5 py-2 px-4 text-sm;
+    }
+
+    .btn-secondary {
+        @apply bg-secondary;
+    }
+
+    .btn-border {
+        @apply border-primary text-primary hover:bg-primary border bg-transparent hover:text-white;
+    }
+
+    /* ? CRUD */
+    .crud {
+        @apply dark:bg-boxdark relative overflow-hidden bg-white shadow-md sm:rounded-sm;
+    }
+
+    .crud input[type="search"] {
+        @apply block w-full rounded-sm border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400;
+    }
+
+    .crud #createProductButton svg {
+        @apply h-3.5 w-3.5;
+    }
+
+    /* * crud table */
+    .crud div:has(> table) {
+        @apply overflow-x-auto;
+    }
+
+    .crud table {
+        @apply w-full text-left text-sm text-gray-500 dark:text-gray-400;
+    }
+
+    .crud table thead {
+        @apply bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400;
+    }
+
+    .crud table thead tr>* {
+        @apply p-4 text-center;
+    }
+
+    .crud table tbody tr {
+        @apply border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700;
+    }
+
+    .crud table tbody tr>* {
+        @apply whitespace-nowrap px-4 py-3 text-center font-medium text-gray-900 dark:text-white;
+    }
+
+    /*  pagination */
+    ul.pagination {
+        @apply flex flex-wrap items-center;
+    }
+
+    .pagination>li:first-child>a {
+        @apply h-9 w-9 rounded-l-sm;
+    }
+
+    .pagination>li:last-child>a {
+        @apply h-9 w-9 rounded-r-sm;
+    }
+
+    .pagination>li:not(:last-child, :first-child)>a {
+        @apply border-l-transparent py-[5px] px-4 font-medium;
+    }
+
+    .pagination>li>a {
+        @apply border-stroke hover:border-primary hover:bg-gray-2 hover:text-primary dark:border-strokedark dark:hover:border-primary dark:hover:bg-graydark flex items-center justify-center border;
+    }
+
+    .pagination>li>a[aria-current] {
+        @apply border-primary bg-gray-2 text-primary dark:border-primary dark:bg-graydark;
+    }
 
     /* ! boutons */
     .inactive-button {
@@ -119,6 +209,72 @@
 }
 
 @layer utilities {
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    /* ? color themes ?*/
+    /* * buttons * */
+    .btn.delete {
+        @apply border-danger text-danger hover:bg-danger hover:text-white;
+    }
+
+    .btn.delete svg,
+    .btn.update svg {
+        @apply h-4 w-4;
+    }
+
+    .btn.filter {
+        @apply text-graydark hover:bg-gray-2 dark:border-graydark border-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
+    }
+
+    /* * text * */
+
+    .details {
+        @apply italic opacity-40;
+    }
+
+    a.details {
+        @apply hover:opacity-80;
+    }
+
+    /* custom css */
+    .underline-animation {
+        position: relative;
+    }
+
+    .underline-animation:hover {
+        text-decoration: none;
+    }
+
+    .underline-animation::after {
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+        content: "";
+        @apply bg-meta-5;
+    }
+
+    .underline-animation:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+    }
+
+
     .overlay {
         position: absolute;
         width: 100%;
@@ -133,24 +289,6 @@
         padding: 2rem;
     }
 
-
-    /* ! slider ! */
-    .slider {
-        position: relative;
-        padding: 3rem;
-    }
-
-    .slider>div {
-        overflow: hidden;
-    }
-
-    .custom-select2 {
-        @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50;
-    }
-    .select2 {
-        width: 100% !important
-    }
-
     /* ! input/label */
 
     .floating-input {
@@ -158,14 +296,203 @@
     }
 
     .floating-label {
-        @apply absolute pointer-events-none select-none text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 
-        peer-focus:px-2 peer-focus:text-main-600 peer-focus:dark:text-main-500 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1
-        peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2
+        @apply absolute pointer-events-none select-none text-base text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-main-600 peer-focus:dark:text-main-500 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2
     }
 
-    div:has(> .floating-input:required) .floating-label::after{
+    div:has(> .floating-input:required) .floating-label::after {
         content: "*";
     }
 
+}
 
+/* third-party libraries CSS */
+
+.tableCheckbox:checked~div span {
+    @apply opacity-100;
+}
+
+.tableCheckbox:checked~div {
+    @apply border-primary bg-primary;
+}
+
+/* .apexcharts-canvas {
+    width: 450px;
+  } */
+
+.apexcharts-legend-text {
+    @apply !text-body dark:!text-bodydark;
+}
+
+.apexcharts-text {
+    @apply !fill-white dark:!fill-white;
+}
+
+.apexcharts-xcrosshairs {
+    @apply !fill-stroke dark:!fill-strokedark;
+}
+
+.apexcharts-gridline {
+    @apply !stroke-stroke dark:!stroke-strokedark;
+}
+
+.apexcharts-series.apexcharts-pie-series path {
+    @apply dark:!stroke-transparent;
+}
+
+.apexcharts-legend-series {
+    @apply !inline-flex gap-1.5;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light {
+    @apply dark:!border-strokedark dark:!bg-boxdark;
+}
+
+.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+    @apply dark:!border-strokedark dark:!bg-meta-4;
+}
+
+.apexcharts-xaxistooltip,
+.apexcharts-yaxistooltip {
+    @apply dark:!border-meta-4 dark:!bg-meta-4 dark:!text-bodydark1;
+}
+
+.apexcharts-xaxistooltip-bottom:after {
+    @apply dark:!border-b-meta-4;
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+    @apply dark:!border-b-meta-4;
+}
+
+.flatpickr-day.selected {
+    @apply border-primary bg-primary hover:border-primary hover:bg-primary;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    @apply fill-primary;
+}
+
+.flatpickr-calendar.arrowTop:before {
+    @apply dark:!border-b-boxdark;
+}
+
+.flatpickr-calendar.arrowTop:after {
+    @apply dark:!border-b-boxdark;
+}
+
+.flatpickr-calendar {
+    @apply dark:!bg-boxdark dark:!text-bodydark dark:!shadow-8 2xsm:!w-auto !p-6;
+}
+
+.flatpickr-day {
+    @apply dark:!text-bodydark dark:hover:!bg-meta-4 dark:hover:!border-meta-4;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    @apply !top-7 dark:!fill-white dark:!text-white;
+}
+
+.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-prev-month {
+    @apply !left-7;
+}
+
+.flatpickr-months .flatpickr-prev-month.flatpickr-next-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month {
+    @apply !right-7;
+}
+
+span.flatpickr-weekday,
+.flatpickr-months .flatpickr-month {
+    @apply dark:!fill-white dark:!text-white;
+}
+
+.flatpickr-day.inRange {
+    @apply dark:!border-meta-4 dark:!bg-meta-4 dark:!shadow-7;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.selected,
+.flatpickr-day.endRange {
+    @apply dark:!text-white;
+}
+
+.map-btn .jvm-zoom-btn {
+    @apply h-7.5 w-7.5 border-stroke text-body hover:border-primary hover:bg-primary dark:border-strokedark dark:text-bodydark dark:hover:border-primary flex items-center justify-center rounded border bg-white px-0 pt-0 pb-0.5 text-2xl leading-none hover:text-white dark:hover:text-white;
+}
+
+.mapOne .jvm-zoom-btn {
+    @apply left-auto top-auto bottom-0;
+}
+
+.mapOne .jvm-zoom-btn.jvm-zoomin {
+    @apply right-10;
+}
+
+.mapOne .jvm-zoom-btn.jvm-zoomout {
+    @apply right-0;
+}
+
+.mapTwo .jvm-zoom-btn {
+    @apply top-auto bottom-0;
+}
+
+.mapTwo .jvm-zoom-btn.jvm-zoomin {
+    @apply left-0;
+}
+
+.mapTwo .jvm-zoom-btn.jvm-zoomout {
+    @apply left-10;
+}
+
+.taskCheckbox:checked~.box span {
+    @apply opacity-100;
+}
+
+.taskCheckbox:checked~p {
+    @apply line-through;
+}
+
+.taskCheckbox:checked~.box {
+    @apply border-primary bg-primary dark:border-primary;
+}
+
+.custom-input-date::-webkit-calendar-picker-indicator {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+.custom-input-date-1::-webkit-calendar-picker-indicator {
+    /* background-image: url(../images/icon/icon-calendar.svg); */
+}
+
+.custom-input-date-2::-webkit-calendar-picker-indicator {
+    /* background-image: url(../images/icon/icon-arrow-down.svg); */
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+
+/* ! slider ! */
+.slider {
+    position: relative;
+    padding: 3rem;
+}
+
+.slider>div {
+    overflow: hidden;
+}
+
+.custom-select2 {
+    @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+}
+
+.select2 {
+    width: 100% !important
 }

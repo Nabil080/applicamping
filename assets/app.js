@@ -6,8 +6,6 @@ require('@fortawesome/fontawesome-free/js/all.js');
 import "./styles/app.css";
 import "./styles/date_picker.css";
 
-// custom JS
-
 
 // stimulus
 import "./bootstrap.js";
