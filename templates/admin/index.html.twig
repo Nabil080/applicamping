@@ -68,8 +68,10 @@
 		{% set id = 'PieChartOne' %}
 		{% set title = '12 Emplacements libres' %}
 		{% set more = {text: 'Réservations correspondantes', link: path('app_admin') } %}
+		{% set series = [80, 34, 45, 12] %}
+		{% set labels = ["Camping-car", "Caravane", "Port", "Emplacement_libre"] %}
 
-		{{ cell.pieChart(title,more) }}
+		{{ cell.pieChart(title,more,series,labels) }}
 		<!-- ====== Chart Three End -->
 		<!-- ====== Chart Three Start -->
 	<include
