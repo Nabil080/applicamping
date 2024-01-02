@@ -19,17 +19,15 @@
 
 		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 	</head>
-	<body
-		x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+	<body x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
 
 		<!-- ===== Preloader Start ===== -->
-		<include src="./partials/preloader.html"></include>
+		{# <include src="./partials/preloader.html"></include> #}
 		<!-- ===== Preloader End ===== -->
 
 		<!-- ===== Page Wrapper Start ===== -->
-		<div
-			class="flex h-screen overflow-hidden">
-			<!-- ===== Sidebar Start ===== -->
+			<div
+			class="flex h-screen overflow-hidden"> <!-- ===== Sidebar Start ===== -->
 			{% include "admin/include/sidebar.html.twig" %}
 			<!-- ===== Sidebar End ===== -->
 
@@ -40,20 +38,20 @@
 				<!-- ===== Header End ===== -->
 
 				<!-- ===== Main Content Start ===== -->
-					<main>{% block body %}
-				{% endblock %}
-			</main>
-				<!-- ===== Main Content End ===== -->
+					<main>
+						<div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">{% block body %}{% endblock %} </div>
+					</main>
+					<!-- ===== Main Content End ===== -->
+				</div>
+				<!-- ===== Content Area End ===== -->
 			</div>
-			<!-- ===== Content Area End ===== -->
-		</div>
-		<!-- ===== Page Wrapper End ===== -->
+			<!-- ===== Page Wrapper End ===== -->
 
-		<script>
-			$(document).ready(function () {
+			<script>
+				$(document).ready(function () {
 $('select[multiple]').select2({closeOnSelect: false, language: 'fr', selectionCssClass: 'custom-select2'});
 });
-		</script>
-
-	</body>
-</html>
+			</script>
+		</body>
+	</html>
+</body></html>
