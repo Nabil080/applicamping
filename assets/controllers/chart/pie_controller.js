@@ -10,7 +10,7 @@ export default class extends Controller {
 
     connect() {
         let options = this.options
-        new ApexCharts(this.element, options).render()
+        new ApexCharts(this.divTarget, options).render()
     }
 
     get options() {
