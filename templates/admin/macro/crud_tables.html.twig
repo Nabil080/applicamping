@@ -195,3 +195,67 @@
 		</tbody>
 	</table>
 {% endmacro %}
+
+{% macro paiements(user = 'array des paiements') %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Réservation</th>
+				<th scope="col">Client</th>
+				<th scope="col">Montant</th>
+				<th scope="col">Méthode</th>
+				<th scope="col">Date du paiement</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 0..5 %}
+				{% set id = i %}
+				<tr>
+					<th scope="row">
+						{{ id }}
+					</th>
+					<td>
+						<div>
+							1450
+							<br>
+							<a href="" class="details">Voir la réservation</a>
+						</div>
+					</td>
+					<td>
+						BELLILA
+						<br>
+						Nabil
+						<br>
+					</td>
+					<td>
+						<div class="flex items-center justify-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-euro text-gray-400 mr-2">
+								<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M7 12h5"/><path d="M15 9.4a4 4 0 1 0 0 5.2"/>
+							</svg>
+							50,20€
+						</div>
+					</td>
+					<td>
+						<div class="flex items-center justify-center">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-gray-400 mr-2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+							Carte bancaire
+						</div>
+					</td>
+					<td>
+						14/07/2003
+						<br>
+						14h57
+					</td>
+					<td>
+						<div class="actions">
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}

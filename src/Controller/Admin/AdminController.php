@@ -30,12 +30,18 @@ class AdminController extends AbstractController
         ]);
     }
 
-    
-
     #[Route('/reservations', name: '_reservations')]
     public function reservations(): Response
     {
         return $this->render($this->getPath('reservations/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/paiements', name: '_paiements')]
+    public function paiements(): Response
+    {
+        return $this->render($this->getPath('paiements/index'), [
             'controller_name' => 'AdminController',
         ]);
     }

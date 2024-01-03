@@ -98,7 +98,7 @@
     }
 
     .crud table thead {
-        @apply bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400;
+        @apply bg-gray-100 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400;
     }
 
     .crud table thead tr>* {
@@ -106,7 +106,7 @@
     }
 
     .crud table tbody tr {
-        @apply border-b hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700;
+        @apply border-b even:bg-gray-100 hover:bg-gray-200 dark:border-gray-600 dark:even:bg-gray-800 dark:hover:bg-gray-700;
     }
 
     .crud table tbody tr>* {
