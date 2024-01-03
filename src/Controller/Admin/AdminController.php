@@ -9,10 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin', name: 'app_admin')]
 class AdminController extends AbstractController
 {
+    private function getPath($file): string
+    {
+        return sprintf('admin/%s.html.twig', $file);
+    }
+
     #[Route('/', name: '')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', [
+        return $this->render($this->getPath('index'), [
             'controller_name' => 'AdminController',
         ]);
     }
@@ -20,7 +25,7 @@ class AdminController extends AbstractController
     #[Route('/clients', name: '_clients')]
     public function clients(): Response
     {
-        return $this->render('admin/clients/index.html.twig', [
+        return $this->render($this->getPath('clients/index'), [
             'controller_name' => 'AdminController',
         ]);
     }
@@ -30,7 +35,7 @@ class AdminController extends AbstractController
     #[Route('/reservations', name: '_reservations')]
     public function reservations(): Response
     {
-        return $this->render('admin/reservations/index.html.twig', [
+        return $this->render($this->getPath('reservations/index'), [
             'controller_name' => 'AdminController',
         ]);
     }
