@@ -18,7 +18,7 @@
 			</button>
 			<!-- Hamburger Toggle BTN -->
 			<a class="block flex-shrink-0 lg:hidden" href="index.html">
-				<img src="./images/logo/logo-icon.svg" alt="Logo"/>
+				<img src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/>
 			</a>
 		</div>
 		<div class="hidden sm:block grow">
@@ -90,9 +90,9 @@
 
 	<script>
 
-		let input = document.querySelector('#searchInput')
-let results = document.querySelector('#searchResults')
-let overlay = document.querySelector('#searchOverlay')
+		input = document.querySelector('#searchInput')
+results = document.querySelector('#searchResults')
+overlay = document.querySelector('#searchOverlay')
 
 input.addEventListener('keyup', event => {
 event.preventDefault()
@@ -103,11 +103,16 @@ overlay.classList.remove('hidden')
 } else {
 overlay.classList.add('hidden')
 results.classList.add('hidden')
-} results.querySelectorAll('div').forEach(div => {
+}
+results.querySelectorAll('div').forEach(div => {
 if (div.innerText.toUpperCase().includes(input.value.toUpperCase())) 
 div.classList.remove('hidden')
  else 
 div.classList.add('hidden')
+
+
+
+
 
 })
 })
