@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% block title %}
+	Réservations
+{% endblock %}
+
+{% set title = 'Réservations' %}
+{% set tooltip = 'Toutes les réservations' %}
+{% set search_placeholder = 'Rechercher une réservation' %}
+
+
+{% block body %}
+	{{ crud.basic(title, tables.reservations('all'), filters.reservations, search_placeholder, tooltip) }}
+{% endblock %}

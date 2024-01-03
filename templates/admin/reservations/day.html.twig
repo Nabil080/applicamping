@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+
+{% block title %}
+	Pointages
+{% endblock %}
+
+{% block body %}
+	<div class="space-y-12">
+		<div class="text-center">
+			<h1 class="text-3xl font-black">Réservations du 14/07/2003</d>
+		</div>
+		<!-- ! date du jour -->
+		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
+			<form class="grid md:inline-flex gap-4">
+				<input type="date" name="day" value="2003-07-14">
+				<button type="submit" class="btn-sm btn ">
+					Changer de jour</button>
+			</form>
+
+			<div class="grow flex justify-end text-end">
+				<div class="flex justify-between w-full md:block md:w-auto">
+					<h4 class="text-lg">22 paiements</h4>
+					<a href="#" class="clickable">Voir tous les paiements</a>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ! Arrivées attendues -->
+		{{ crud.basic("Arrivés attendues", tables.reservations('check-in')) }}
+
+		<!-- ! Départs attendues -->
+		{{ crud.basic("Départs attendues", tables.reservations('check-out')) }}
+
+		<!-- ! Réservations en cours -->
+		{{ crud.basic("Réservations en cours", tables.reservations('en_cours')) }}
+	{% endblock %}
