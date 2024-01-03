@@ -26,4 +26,14 @@ class AdminController extends AbstractController
     }
 
     
+
+    #[Route('/reservations', name: '_reservations')]
+    public function reservations(): Response
+    {
+        return $this->render('admin/reservations/index.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    
 }
