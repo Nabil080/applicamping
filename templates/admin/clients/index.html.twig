@@ -1,5 +1,6 @@
 {% extends 'admin/base.html.twig' %}
-{% import 'admin/macro/crud_tables.html.twig' as crud %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
 
 
 {% block title %}
@@ -11,174 +12,108 @@
 {% set search_placeholder = 'Rechercher un client...' %}
 
 {% set filters %}
-<!-- Statut -->
-<h2 id="category-heading">
-	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
-		<span>Statut</span>
-		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-		</svg>
-	</button>
-</h2>
-<div id="category-body" class="hidden" aria-labelledby="category-heading">
-	<div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
-		<ul class="space-y-2">
-			<li class="flex items-center">
-				<input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-				<label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Confirmé (32)</label>
-			</li>
-			<li class="flex items-center">
-				<input id="microsoft" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-				<label for="microsoft" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Annulé (12)</label>
-			</li>
+	<!-- Statut -->
+	<h2 id="category-heading">
+		<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
+			<span>Statut</span>
+			<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+			</svg>
+		</button>
+	</h2>
+	<div id="category-body" class="hidden" aria-labelledby="category-heading">
+		<div class="py-2 font-light border-b border-gray-200 dark:border-gray-600">
+			<ul class="space-y-2">
+				<li class="flex items-center">
+					<input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+					<label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Confirmé (32)</label>
+				</li>
+				<li class="flex items-center">
+					<input id="microsoft" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded-sm text-crud-600 focus:ring-crud-500 dark:focus:ring-crud-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+					<label for="microsoft" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Annulé (12)</label>
+				</li>
+				<button class="clickable">Tous</button>
+			</ul>
+		</div>
+	</div>
+	<!-- Worldwide Shipping -->
+	<h2 id="worldwide-shipping-heading">
+		<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#worldwide-shipping-body" aria-expanded="true" aria-controls="worldwide-shipping-body">
+			<span>Type d'emplacement</span>
+			<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+			</svg>
+		</button>
+	</h2>
+	<div id="worldwide-shipping-body" class="hidden" aria-labelledby="worldwide-shipping-heading">
+		<div class="py-2 space-y-2 font-light border-b border-gray-200 dark:border-gray-600">
+			<label class="relative flex items-center cursor-pointer">
+				<input type="checkbox" value="" class="sr-only peer" name="shipping" checked="">
+				<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
+				<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Camping-car</span>
+			</label>
+			<label class="relative flex items-center cursor-pointer">
+				<input type="checkbox" value="" class="sr-only peer" name="shipping">
+				<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
+				<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Caravane</span>
+			</label>
+
 			<button class="clickable">Tous</button>
-		</ul>
+		</div>
 	</div>
-</div>
-<!-- Worldwide Shipping -->
-<h2 id="worldwide-shipping-heading">
-	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#worldwide-shipping-body" aria-expanded="true" aria-controls="worldwide-shipping-body">
-		<span>Type d'emplacement</span>
-		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-		</svg>
-	</button>
-</h2>
-<div id="worldwide-shipping-body" class="hidden" aria-labelledby="worldwide-shipping-heading">
-	<div class="py-2 space-y-2 font-light border-b border-gray-200 dark:border-gray-600">
-		<label class="relative flex items-center cursor-pointer">
-			<input type="checkbox" value="" class="sr-only peer" name="shipping" checked="">
-			<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
-			<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Camping-car</span>
-		</label>
-		<label class="relative flex items-center cursor-pointer">
-			<input type="checkbox" value="" class="sr-only peer" name="shipping">
-			<div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-crud-300 dark:peer-focus:ring-crud-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-crud-600"></div>
-			<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Caravane</span>
-		</label>
+	<!-- Sejour -->
+	<h2 id="sejour-heading">
+		<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#sejour-body" aria-expanded="true" aria-controls="sejour-body">
+			<span>Séjour</span>
+			<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+			</svg>
+		</button>
+	</h2>
+	<div id="sejour-body" class="hidden" aria-labelledby="sejour-heading">
+		<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+			<input type="date" id="sejour-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+			<div class="mx-1 p-0.5 bg-gray-400"></div>
+			<input type="date" id="sejour-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+		</div>
+	</div>
+	<!-- Price -->
+	<h2 id="price-heading">
+		<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#price-body" aria-expanded="true" aria-controls="price-body">
+			<span>Prix (€)</span>
+			<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+			</svg>
+		</button>
+	</h2>
+	<div id="price-body" class="hidden" aria-labelledby="price-heading">
+		<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+			<input type="number" id="price-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+			<div class="mx-1 p-0.5 bg-gray-400"></div>
 
-		<button class="clickable">Tous</button>
+			<input type="number" id="price-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+		</div>
 	</div>
-</div>
-<!-- Sejour -->
-<h2 id="sejour-heading">
-	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#sejour-body" aria-expanded="true" aria-controls="sejour-body">
-		<span>Séjour</span>
-		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-		</svg>
-	</button>
-</h2>
-<div id="sejour-body" class="hidden" aria-labelledby="sejour-heading">
-	<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
-		<input type="date" id="sejour-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
-		<div class="mx-1 p-0.5 bg-gray-400"></div>
-		<input type="date" id="sejour-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+	<!-- Date de réservation -->
+	<h2 id="date-reservation-heading">
+		<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#date-reservation-body" aria-expanded="true" aria-controls="date-reservation-body">
+			<span>Date de réservation</span>
+			<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+			</svg>
+		</button>
+	</h2>
+	<div id="date-reservation-body" class="hidden" aria-labelledby="date-reservation-heading">
+		<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
+			<input type="date" id="date-reservation-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+			<div class="mx-1 p-0.5 bg-gray-400"></div>
+			<input type="date" id="date-reservation-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
+		</div>
 	</div>
-</div>
-<!-- Price -->
-<h2 id="price-heading">
-	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#price-body" aria-expanded="true" aria-controls="price-body">
-		<span>Prix (€)</span>
-		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-		</svg>
-	</button>
-</h2>
-<div id="price-body" class="hidden" aria-labelledby="price-heading">
-	<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
-		<input type="number" id="price-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-		<div class="mx-1 p-0.5 bg-gray-400"></div>
-
-		<input type="number" id="price-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-	</div>
-</div>
-<!-- Date de réservation -->
-<h2 id="date-reservation-heading">
-	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#date-reservation-body" aria-expanded="true" aria-controls="date-reservation-body">
-		<span>Date de réservation</span>
-		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-		</svg>
-	</button>
-</h2>
-<div id="date-reservation-body" class="hidden" aria-labelledby="date-reservation-heading">
-	<div class="flex items-center py-2 space-x-3 font-light border-b border-gray-200 dark:border-gray-600">
-		<input type="date" id="date-reservation-from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
-		<div class="mx-1 p-0.5 bg-gray-400"></div>
-		<input type="date" id="date-reservation-to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-crud-500 focus:border-crud-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-crud-500 dark:focus:border-crud-500">
-	</div>
-</div>
 
 {% endset %}
 
-{% set table %}
-<table>
-	<thead>
-		<tr>
-			<th scope="col">ID</th>
-			<th scope="col">
-				Nom<br>
-				Prénom</th>
-			<th scope="col">Email</th>
-			<th scope="col">Téléphone</th>
-			<th scope="col">Adresse</th>
-			<th scope="col">Réservations</th>
-			<th scope="col">Création</th>
-			<th scope="col">Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for i in 0..5 %}
-			<tr>
-				<th scope="row">
-					1430
-				</th>
-				<td>
-					BELLILA
-					<br>
-					Nabil
-					<br>
-				</td>
-				<td>
-					bellilanabil8@gmail.com
-				</td>
-				<td>
-					06.38.05.89.97
-				</td>
-				<td>
-					17 rue des tilleuls
-					<br>
-					08000, Villers-Semeuse,
-					<br>
-					France
-				</td>
-				<td>
-					<div>
-						2 réservations
-						<br>
-						<a href="" class="details">Voir les détails</a>
-					</div>
-				</td>
-				<td>
-					14/07/2003
-					<br>
-					14h57
-				</td>
-				<td>
-					<div class="grid gap-2">
-						{% set id = i %}
-						{{ crud.updateButton(id) }}
-						{{ crud.deleteButton(id) }}
-					</div>
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-
-{% endset %}
 
 {% block body %}
-	{{ crud.fullTable(title, table, filters, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.clients('clients')|raw, filters, search_placeholder, tooltip) }}
 {% endblock %}
