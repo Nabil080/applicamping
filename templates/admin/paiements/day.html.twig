@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block body %}
-	<div class="space-y-12">
+	<div class="space-y-6">
 		<div class="text-center">
 			<h1 class="text-3xl font-black">Caisse du 14/07/2003</d>
 		</div>
-		<!-- ! date du jour -->
+
 		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
 			<form class="grid md:inline-flex gap-4">
 				<input type="date" name="day" value="2003-07-14">
@@ -36,12 +36,19 @@
 			</div>
 		</div>
 
-		<!-- ! Arrivées attendues -->
-		{{ crud.basic("Paiements en Carte bancaire", tables.paiements('CB')) }}
+		<h2 class="text-title-md font-bold">Montant du jour : 120€</h2>
+		<div
+			class="space-y-12">
 
-		<!-- ! Départs attendues -->
-		{{ crud.basic("Paiements en Espèce", tables.paiements('ESPECE')) }}
+			<!-- ! Arrivées attendues -->
+			{{ crud.basic("Paiements en Carte bancaire", tables.paiements('CB')) }}
 
-		<!-- ! Réservations en cours -->
-		{{ crud.basic("Paiements en Chèques Vacances", tables.paiements('VACANCE')) }}
-	{% endblock %}
+			<!-- ! Départs attendues -->
+			{{ crud.basic("Paiements en Espèce", tables.paiements('ESPECE')) }}
+
+			<!-- ! Réservations en cours -->
+			{{ crud.basic("Paiements en Chèques Vacances", tables.paiements('VACANCE')) }}
+
+		</div>
+	</div>
+{% endblock %}
