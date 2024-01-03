@@ -2,7 +2,6 @@
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 
-
 {% block title %}
 	Pointages
 {% endblock %}
@@ -26,11 +25,11 @@
 		</div>
 
 		<!-- ! Arrivées attendues -->
-		{{ crud.basic("Arrivés attendues", tables.reservations('check-in')|raw) }}
+		{{ crud.basic("Arrivés attendues", tables.reservations('check-in')) }}
 
 		<!-- ! Départs attendues -->
-		{{ crud.basic("Départs attendues", tables.reservations('check-out')|raw) }}
+		{{ crud.basic("Départs attendues", tables.reservations('check-out')) }}
 
 		<!-- ! Réservations en cours -->
-		{{ crud.basic("Réservations en cours", tables.reservations('en_cours')|raw) }}
+		{{ crud.basic("Réservations en cours", tables.reservations('en_cours')) }}
 	{% endblock %}
