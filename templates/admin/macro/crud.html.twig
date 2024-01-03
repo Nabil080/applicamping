@@ -25,6 +25,8 @@
 					</select>
 					résultats
 				</div>
+			{% elseif 'paiement' in title|lower %}
+				<div class="text-lg">Total : 200,40€</div>
 			{% endif %}
 		</div>
 		{% if filters %}

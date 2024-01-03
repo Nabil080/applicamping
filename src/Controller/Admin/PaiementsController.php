@@ -15,9 +15,17 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/jour', name: '_day')]
-    public function index(): Response
+    public function day(): Response
     {
         return $this->render($this->getPath("day"), [
+            'controller_name' => 'paiementsController',
+        ]);
+    }
+
+    #[Route('/mois', name: '_month')]
+    public function month(): Response
+    {
+        return $this->render($this->getPath("month"), [
             'controller_name' => 'paiementsController',
         ]);
     }

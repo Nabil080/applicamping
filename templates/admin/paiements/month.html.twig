@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+
+{% block title %}
+	Caisse du mois
+{% endblock %}
+
+{% block body %}
+	<div class="space-y-6">
+		<div class="text-center">
+			<h1 class="text-3xl font-black">Caisse de juillet 2003</d>
+		</div>
+
+		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
+			<form class="grid md:inline-flex gap-4">
+				<input type="date" name="day" value="2003-07-14">
+				<button type="submit" class="btn-sm btn ">
+					Changer de jour</button>
+			</form>
+			<form class="grid md:inline-flex gap-4">
+				<input type="date" name="month">
+				<button type="submit" class="btn-sm btn ">
+					Changer de mois</button>
+			</form>
+			<form class="grid md:inline-flex gap-4">
+				<input type="text" name="date" placeholder="Réservation">
+				<button type="submit" class="btn-sm btn ">
+					Encaisser un paiement</button>
+			</form>
+			<div class="grow flex justify-end text-end">
+				<div class="flex justify-between w-full md:block md:w-auto">
+					<h4 class="text-lg">22 réservations</h4>
+					<a href="#" class="clickable">Voir tous les paiements</a>
+				</div>
+			</div>
+		</div>
+
+		<section id="recap" class="text-title-md font-bold">Montant du jour : 120€</section>
+		<div
+			class="space-y-12">
+
+			<!-- ! Arrivées attendues -->
+			{{ crud.basic("Paiements en Carte bancaire", tables.paiements('CB')) }}
+
+			<!-- ! Départs attendues -->
+			{{ crud.basic("Paiements en Espèce", tables.paiements('ESPECE')) }}
+
+			<!-- ! Réservations en cours -->
+			{{ crud.basic("Paiements en Chèques Vacances", tables.paiements('VACANCE')) }}
+
+		</div>
+	</div>
+{% endblock %}
