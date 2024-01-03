@@ -12,7 +12,7 @@
 
 {% set filters %}
 <!-- Statut -->
-<h2 id="category-heading">
+<h2 x-data="{ page: 'reservations_toutes'}" id="category-heading">
 	<button type="button" class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
 		<span>Statut</span>
 		<svg aria-hidden="true" data-accordion-icon="" class="w-5 h-5 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
