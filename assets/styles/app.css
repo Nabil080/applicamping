@@ -167,7 +167,10 @@
         @apply bg-main-200 text-main-700;
     }
 
-
+    /* ! badges */
+    .badge {
+        @apply text-base font-medium px-2 py-0.5 rounded-sm
+    }
 
     /* ! progress bar */
     .progress-item {
@@ -240,6 +243,12 @@
     .btn.filter {
         @apply text-graydark hover:bg-gray-2 dark:border-graydark border-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
     }
+
+    /* * badges * */
+    .badge.success {
+        @apply bg-success bg-opacity-20 text-success
+    }
+
 
     /* * text * */
 
