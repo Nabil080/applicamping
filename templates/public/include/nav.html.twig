@@ -1,4 +1,4 @@
-<nav class="flex justify-between bg-black text-bodydark1 items-center px-12 py-4">
+<nav class="flex justify-between bg-black text-bodydark1 items-center px-12 py-4 shadow-xl">
 	<section id="goback">
 		<a href="" class="underline italic">
 			<i class="fa fa-arrow-left"></i>
@@ -7,7 +7,7 @@
 	</section>
 	<section id="logo" class="grid relative">
 		<a href={{ path('homepage') }} class="overlay"></a>
-		<img src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/></section>
+		<img class="max-w-64" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/></section>
 	<section id="account">
 		<div class="btn btn-sm relative">
 			<a href={{ app.user ? path('app_profil') : path('app_login') }} class="overlay"></a>
