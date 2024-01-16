@@ -1,187 +1,269 @@
-<article data-step class="step-content hidden border-2 border-black divide-y-2 divide-black">
+<article data-step class="step-content hidden border-2 border-stroke shadow-default divide-y-2 divide-stroke bg-white">
 	<h2 class="text-2xl text-center font-semibold py-6">Récapitulatif
 		<span></span>
 	</h2>
 	{# <section class="py-10 px-[5%] space-y-4"> #}
 	<div class="relative overflow-x-auto">
-		<table class="w-full">
-			<thead class="hidden">
-				<tr class="[&>*]:px-4">
-					<td scope="col">
-						Objet
-					</td>
-					<td scope="col">
-						Calcul du prix
-					</td>
-					<td scope="col text-end">
-						Total
-					</td>
-				</tr>
-			</thead>
-			<tbody
-				class="[&_td]:px-4 [&_td]:py-1">
-				{# ! HEBERGEMENT #}
-				<tr class="bg-main-100">
-					<td scope="row" class="px-12 font-semibold text-gray-900 whitespace-nowrap text-start ">
-						Hébérgement
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end"></td>
-				</tr>
-				<tr class="">
-					<td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
-						<li class="list-inside">Camping-car, 5 nuits du xx/xx/xxxx au xx/xx/xxxx</li>
-					</td>
-					<td class="last:text-end">
-						10€/5nuits
-					</td>
-					<td class="last:text-end">
-						50€
-					</td>
-				</tr>
-				<tr class="">
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">2 adultes</li>
-					</td>
-					<td class="last:text-end">
-						4€/2adultes/5nuits
-					</td>
-					<td class="last:text-end">
-						40€
-					</td>
-				</tr>
-				<tr class="">
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">1 enfant</li>
-					</td>
-					<td class="last:text-end">
-						3€/1adultes/5nuits
-					</td>
-					<td class="last:text-end">
-						15€
-					</td>
-				</tr>
-				<tr class=" border-b border-black font-bold">
-					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-						Total hébérgement :
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end border-t border-black">
-						105€
-					</td>
-				</tr>
-				{# ! OPTIONS #}
-				<tr class="bg-main-100">
-					<td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
-						Options
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end"></td>
-				</tr>
-				<tr>
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
-						<li class="list-inside">Electricité</li>
-					</td>
-					<td class="last:text-end">
-						10€/5nuits
-					</td>
-					<td class="last:text-end">
-						50€
-					</td>
-				</tr>
-				<tr class="">
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">2 Animaux</li>
-					</td>
-					<td class="last:text-end">
-						10€/2animaux
-					</td>
-					<td class="last:text-end">
-						20€
-					</td>
-				</tr>
-				<tr class="">
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">Garage mort</li>
-					</td>
-					<td class="last:text-end">
-						10€
-					</td>
-					<td class="last:text-end">
-						10€
-					</td>
-				</tr>
-				<tr class=" border-b border-black font-bold">
-					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-						Total options :
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end border-t border-black">
-						80€
-					</td>
-				</tr>
-				{# ! SOUS TOTAL #}
-				<tr class=" bg-main-300 border-b border-black font-bold">
-					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-						Sous total :
-					</td>
-					<td class="last:text-end">80€ + 105€</td>
-					<td class="last:text-end border-t border-black">
-						185€
-					</td>
-				</tr>
-				{# ! Réductions #}
-				<tr class="bg-main-100">
-					<td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
-						Réductions
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end"></td>
-				</tr>
-				<tr>
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">Remise du moment</li>
-					</td>
-					<td class="last:text-end">
-						Remise d'été (5%)
-					</td>
-					<td class="last:text-end">
-						9.25€</td>
-				</tr>
-				<tr>
-					<td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-						<li class="list-inside">
+		<div class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+			<div class="flex flex-col">
+				<div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+					<div class="p-2.5  xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Description</h5>
+					</div>
+					<div class="p-2.5 text-center xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Quantité</h5>
+					</div>
+					<div class="hidden p-2.5 text-center sm:block xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Prix unitaire</h5>
+					</div>
+					<div class="hidden p-2.5 text-center sm:block xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Prix total</h5>
+					</div>
+				</div>
+				<div class="p-2.5 xl:p-5 bg-gray-50 border-t">Hébergement</div>
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Nuits Camping-car
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">5</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">10€</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">50€</p>
+					</div>
+				</div>
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Adultes
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">2</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">4.00€ x 6 nuits</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">40.00€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Enfants
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">2</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">2.30€ x 6 nuits</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">13.80€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+				{# début total #}
+				<div class="border-t grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4 bg-gray-200">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Total hébérgement
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5 border-t border-black">
+						<p class="font-medium text-black dark:text-white">105€</p>
+					</div>
+				</div>
+				{# fin total #}
+				<div class="p-2.5 xl:p-5 bg-gray-50 border-t">Options</div>
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Électricité
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">1</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">10.00€ x 6 nuits</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">60.00€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Déjeuner
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">1</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">10.00€ x 6 nuits x 3 personnes</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">180.00€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Garage Mort
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white">1</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">10.00€</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">10.00€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+				{# début total #}
+				<div class="border-t grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4 bg-gray-200">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Total options
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5 border-t border-black">
+						<p class="font-medium text-black dark:text-white">105€</p>
+					</div>
+				</div>
+				{# fin total #}
+
+				<div class="p-2.5 xl:p-5 bg-gray-50 border-t">Réductions</div>
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Remise du moment
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">Remise d'été (5%)</p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">- 9.25€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+
+				{# début ligne #}
+				<div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
 							Coupon de réduction
-							<input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
-							<button class="button">Tester</button>
-						</li>
-					</td>
-					<td class="last:text-end">
-						
-					</td>
-					<td class="last:text-end">
-						0€</td>
-				</tr>
-				<tr class="border-b border-black font-bold">
-					<td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-						Total réductions :
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end border-t border-black">
-						9.25€
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr class="[&>td]:px-4 [&>td]:py-2 bg-main-300 border-b border-black font-bold">
-					<td scope="row" class=" font-bold text-lg text-gray-900 whitespace-nowrap ">
-						Total TTC :
-					</td>
-					<td class="last:text-end">185€ - 9.25€</td>
-					<td class="last:text-end border-t border-black">
-						175.75€
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>{# </section> #}</article>
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white">- 0.00€</p>
+					</div>
+				</div>
+				{# fin ligne #}
+
+				{# début total #}
+				<div class="border-t grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4 bg-gray-200">
+					<div class="flex items-center gap-3 p-2.5 xl:p-5">
+						<p class="hidden font-medium text-black dark:text-white sm:block">
+							Total réductions
+						</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+						<p class="font-medium text-black dark:text-white"></p>
+					</div>
+
+					<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5 border-t border-black">
+						<p class="font-medium text-black dark:text-white">- 105€</p>
+					</div>
+				</div>
+				{# fin total #}
+
+				<div class=" grid grid-cols-3 border-t border-black text-lg dark:border-strokedark sm:grid-cols-4">
+					<div class="flex items-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white">Total TTC</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white"></p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white"></p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white">175.75€</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{# </section> #}
+</article>
