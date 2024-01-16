@@ -25,8 +25,8 @@ class ReservationsController extends AbstractController
     #[Route('/create', name: '_create')]
     public function create(): Response
     {
-        return $this->render($this->getPath("day"), [
-            'controller_name' => 'ReservationsController',
+        return $this->render('public/reservation/index.html.twig', [
+            'controller_name' => 'ReservationController',
         ]);
     }
 }

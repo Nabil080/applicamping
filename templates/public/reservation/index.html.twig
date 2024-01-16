@@ -29,8 +29,8 @@
 
 		{# !! BOUTONS NAVIGATION #}
 		<section id="nav-buttons" class="mt-12 mx-[15%] flex justify-between">
-			<button {{ stimulus_target('step', 'previous') }} class="button" disabled>Précédent</button>
-			<button {{ stimulus_target('step', 'next') }} class="button">Suivant</button>
+			<button {{ stimulus_target('step', 'previous') }} class="btn" disabled>Précédent</button>
+			<button {{ stimulus_target('step', 'next') }} class="btn">Suivant</button>
 		</section>
 		{# !!!! PROGRESS BAR !!!! #}
 		<section {{ stimulus_target('step', 'progress') }} id="progress" class="flex mx-0 my-20 gap-16 justify-center">
@@ -79,7 +79,7 @@
 				</li>
 			</ol>
 			<div id="order-button" class="flex flex-col justify-center">
-				<button class="button" disabled>Réserver</button>
+				<button class="btn" disabled>Réserver</button>
 				<div>Montant :
 					<span id="current-price">0</span>€</div>
 			</div>

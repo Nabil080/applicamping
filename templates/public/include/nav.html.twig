@@ -1,4 +1,4 @@
-<nav class="flex justify-between border-b-2 bg-main-50  border-main-500 items-center px-12 py-1">
+<nav class="flex justify-between bg-black text-bodydark1 items-center px-12 py-4">
 	<section id="goback">
 		<a href="" class="underline italic">
 			<i class="fa fa-arrow-left"></i>
@@ -7,12 +7,9 @@
 	</section>
 	<section id="logo" class="grid relative">
 		<a href={{ path('homepage') }} class="overlay"></a>
-		<img
-		class="mx-auto" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/01/logo-camping.png" alt="logo">
-	{# <img class="" src="https://static.vecteezy.com/system/resources/thumbnails/024/553/676/small/skull-wearing-crown-logo-skull-king-sticker-pastel-cute-colors-generative-ai-png.png" alt="logo"> #}
-	</section>
+		<img src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/></section>
 	<section id="account">
-		<div class="button relative">
+		<div class="btn btn-sm relative">
 			<a href={{ app.user ? path('app_profil') : path('app_login') }} class="overlay"></a>
 			<p>
 				<i class="fa fa-user-circle"></i>
