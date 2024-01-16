@@ -180,11 +180,11 @@
 
     /* ! progress bar */
     .progress-item {
-        @apply flex items-center text-gray-500 space-x-2.5 [&>*]:pointer-events-none;
+        @apply flex items-center  space-x-2.5 [&>*]:pointer-events-none;
     }
 
     .progress-item.done {
-        @apply text-main-600 cursor-pointer;
+        @apply text-primary cursor-pointer;
     }
 
     .progress-item span {
@@ -192,7 +192,7 @@
     }
 
     .progress-item.done span {
-        @apply border-main-600;
+        @apply border-primary;
     }
 
     .progress-item div h3 {
