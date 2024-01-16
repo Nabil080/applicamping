@@ -35,7 +35,7 @@ export default class extends Controller {
 
     setupVariables() {
         // général
-        this.currentStep = 0
+        this.currentStep = 1
         ;
         this.steps = Array.from(this.element.querySelectorAll('[data-step]'));
         this.stepsProgress = Array.from(this.progressTarget.querySelectorAll('.progress-item'))

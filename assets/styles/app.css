@@ -12,7 +12,7 @@
 
     :root {
         /* ! colors !*/
-        --50: #f2fbf4;
+        /* --50: #f2fbf4;
         --100: #e2f6e6;
         --200: #c6ecce;
         --300: #9adbaa;
@@ -22,14 +22,25 @@
         --700: #296c3a;
         --800: #255632;
         --900: #20472a;
-        --950: #0d2614;
+        --950: #0d2614; */
+        --50: #f0f3fe;
+        --100: #dde4fc;
+        --200: #c3d0fa;
+        --300: #9ab3f6;
+        --400: #6a8cf0;
+        --500: #4766ea;
+        --600: #3c50e0;
+        --700: #2935cc;
+        --800: #272da6;
+        --900: #252b83;
+        --950: #1b1d50;
 
         /* ! swiper scrollbar */
-        --swiper-scrollbar-bg-color: var(--400);
-        --swiper-scrollbar-drag-bg-color: var(--800);
+        /* --swiper-scrollbar-bg-color: var(--400);
+        --swiper-scrollbar-drag-bg-color: var(--800); */
         --swiper-scrollbar-size: 8px;
         /* ! swiper navigation */
-        --swiper-navigation-color: var(--400);
+        --swiper-navigation-color: var(--600);
     }
 
     /* html {
