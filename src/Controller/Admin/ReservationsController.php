@@ -21,4 +21,12 @@ class ReservationsController extends AbstractController
             'controller_name' => 'ReservationsController',
         ]);
     }
+
+    #[Route('/create', name: '_create')]
+    public function create(): Response
+    {
+        return $this->render($this->getPath("day"), [
+            'controller_name' => 'ReservationsController',
+        ]);
+    }
 }
