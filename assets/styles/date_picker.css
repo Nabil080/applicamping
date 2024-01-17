@@ -8,5 +8,5 @@
 }
 
 .datepicker .selected {
-    background-color: var(--main);
+    @apply bg-primary
 }
