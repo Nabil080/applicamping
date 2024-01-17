@@ -1,6 +1,6 @@
 {% macro numberCard(name, number, more, svg) %}
 	<!-- Card Item Start -->
-	<div class="border-stroke px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white py-6">
+	<div class="basic-card px-7.5 py-6">
 		<div class="h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
 			<svg class="fill-primary dark:fill-white" width="22" height="22" viewbox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 				{{ svg|raw }}
@@ -26,7 +26,7 @@
 {% endmacro %}
 
 {% macro pieChart(title, more, series, labels) %}
-	<div {{ stimulus_controller('chart--pie') }} data-chart--pie-series-value={{ series|json_encode }} data-chart--pie-labels-value={{ labels|json_encode }} class="border-stroke pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 col-span-12 rounded-sm border bg-white px-5 pb-5 xl:col-span-6">
+	<div {{ stimulus_controller('chart--pie') }} data-chart--pie-series-value={{ series|json_encode }} data-chart--pie-labels-value={{ labels|json_encode }} class="basic-card pt-7.5  sm:px-7.5 col-span-12 px-5 pb-5 xl:col-span-6">
 		<div class="mb-3 justify-between gap-4 sm:flex">
 			<div>
 				<h4 class="text-xl font-bold text-black dark:text-white">
@@ -49,7 +49,7 @@
 {% endmacro %}
 
 {% macro textCard(text, more, svg) %}
-	<div class="border-stroke px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark col-span-full lg:col-span-6 xl:col-span-4  rounded-sm border bg-white py-6 grid place-content-center">
+	<div class="basic-card px-7.5 col-span-full lg:col-span-6 xl:col-span-4 py-6 grid place-content-center">
 		<div class="flex items-center gap-4">
 			<div class="h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
 				<svg data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" viewbox="0 0 20 22" xmlns="http://www.w3.org/2000/svg" class="stroke-primary dark:stroke-white" width="20" height="22">

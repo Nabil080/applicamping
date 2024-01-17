@@ -52,6 +52,11 @@
 
 @layer components {
 
+    /* ? Général */
+    .basic-card {
+        @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white 
+    }
+
     /* ? links  */
     .clickable {
         @apply text-meta-5 flex cursor-pointer items-center text-sm font-medium underline-offset-2 hover:underline hover:opacity-80;
