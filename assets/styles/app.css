@@ -12,7 +12,7 @@
 
     :root {
         /* ! colors !*/
-        --50: #f2fbf4;
+        /* --50: #f2fbf4;
         --100: #e2f6e6;
         --200: #c6ecce;
         --300: #9adbaa;
@@ -22,14 +22,25 @@
         --700: #296c3a;
         --800: #255632;
         --900: #20472a;
-        --950: #0d2614;
+        --950: #0d2614; */
+        --50: #f0f3fe;
+        --100: #dde4fc;
+        --200: #c3d0fa;
+        --300: #9ab3f6;
+        --400: #6a8cf0;
+        --500: #4766ea;
+        --600: #3c50e0;
+        --700: #2935cc;
+        --800: #272da6;
+        --900: #252b83;
+        --950: #1b1d50;
 
         /* ! swiper scrollbar */
-        --swiper-scrollbar-bg-color: var(--400);
-        --swiper-scrollbar-drag-bg-color: var(--800);
+        /* --swiper-scrollbar-bg-color: var(--400);
+        --swiper-scrollbar-drag-bg-color: var(--800); */
         --swiper-scrollbar-size: 8px;
         /* ! swiper navigation */
-        --swiper-navigation-color: var(--400);
+        --swiper-navigation-color: var(--600);
     }
 
     /* html {
@@ -61,7 +72,9 @@
     .btn {
         @apply bg-primary inline-flex items-center justify-center gap-2.5 rounded-sm py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10;
     }
-
+    .btn:disabled {
+        @apply opacity-60
+    }
     /* buttons variables */
     .btn-sm {
         @apply gap-1.5 py-2 px-4 text-sm;
@@ -178,11 +191,11 @@
 
     /* ! progress bar */
     .progress-item {
-        @apply flex items-center text-gray-500 space-x-2.5 [&>*]:pointer-events-none;
+        @apply flex items-center  space-x-2.5 [&>*]:pointer-events-none;
     }
 
     .progress-item.done {
-        @apply text-main-600 cursor-pointer;
+        @apply text-primary cursor-pointer;
     }
 
     .progress-item span {
@@ -190,7 +203,7 @@
     }
 
     .progress-item.done span {
-        @apply border-main-600;
+        @apply border-primary;
     }
 
     .progress-item div h3 {
