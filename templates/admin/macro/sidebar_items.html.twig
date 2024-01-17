@@ -1,0 +1,22 @@
+{% macro basic(name, routeName, svg) %}
+
+	<!-- Menu {{ name|upper }} -->
+	<li>
+		<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href={{ path( routeName ) }} @click="selected = (selected === {{ routeName }} ? '':{{ routeName }})" :class="{ 'bg-graydark dark:bg-meta-4': (selected === {{ routeName }}) || (page === '/{{app.request.get('_route')}}') }" :class="page === {{ routeName }} && 'bg-graydark'">
+			{{ svg }}
+			{{ name }}
+		</a>
+	</li>
+	<!-- FIN Menu {{ name|upper }} -->
+
+{% endmacro %}
+
+{% macro detail(name, routeName) %}
+	<!-- Menu {{ name|upper }} -->
+	<li>
+		<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href={{ path( routeName ) }} @click="selected = (selected === {{ routeName }} ? '':{{ routeName }})" :class="{ 'bg-graydark dark:bg-meta-4': (selected === {{ routeName }}) && (page === {{ routeName }}) }">
+			{{ name }}
+		</a>
+	</li>
+	<!-- FIN Menu {{ name|upper }} -->
+{% endmacro %}
