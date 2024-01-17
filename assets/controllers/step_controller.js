@@ -333,7 +333,7 @@ export default class extends Controller {
         // code coupon
         // * fetch pour récupérer et tester les coupons
         if (this.coupon?.found == true)`${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
-        recap.innerHTML += getRow('Coupon de réduction', '', this.coupon ? this.coupon.nom : '', this.coupon ? '- ' + this.coupon.euro : '- 0')
+        recap.innerHTML += getCouponRow(this.coupon ? this.coupon.nom : '', this.coupon ? '- ' + this.coupon.euro : '- 0')
 
         // total reduction
         let reductionTotal = remise.euro + (this.coupon ? this.coupon.euro : 0)
@@ -342,22 +342,6 @@ export default class extends Controller {
         // ! TOTAL TTC
         let totalTTC = (totalHebergement + totalOptions) - reductionTotal
         recap.innerHTML += getFooterRow(formatMoney(totalTTC))
-
-        return
-
-        // body.innerHTML += `
-        //     <tr id="coupon">
-        //         <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-        //             <li class="list-inside">
-        //                 Coupon de réduction
-        //                 <input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
-        //                 <button class="button" data-action='step#checkCoupon'>Tester</button>
-        //             </li>
-        //         </td>
-        //         <td id="coupon-div" class="last:text-end">${this.coupon ? this.coupon.nom : ''}</td>
-        //         <td id="coupon-montant" class="last:text-end">${this.coupon ? this.coupon.euro : 0}€</td>
-        //     </tr>
-        // `
     }
 
 
@@ -463,6 +447,31 @@ const getTotalRow = (name, total) => `
 
         <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5 border-t border-black">
             <p class="font-medium text-black dark:text-white">${total}€</p>
+        </div>
+    </div>
+`
+
+const getCouponRow = (nom, total) => `
+    <div id="coupon" class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+        <div class="flex items-center gap-3 p-2.5 xl:p-5">
+            <p class="hidden font-medium text-black dark:text-white sm:block">
+                Coupon de réduction
+            </p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-medium text-black dark:text-white">
+                <input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
+                <button class="button" data-action='step#checkCoupon'>Tester</button>
+            </p>
+
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            <p id="coupon-div" class="font-medium text-black dark:text-white">${nom}</p>
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            <p id="id=" coupon-montant"" class="font-medium text-black dark:text-white">${total}€</p>
         </div>
     </div>
 `
