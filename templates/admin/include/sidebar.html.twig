@@ -219,7 +219,7 @@
 
 					<!-- Menu Item site -->
 					<li>
-						<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href="site.html" @click="selected = (selected === 'site' ? '':'site')" :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'site') && (page === 'site') }">
+						<a class="text-bodydark1 hover:bg-graydark dark:hover:bg-meta-4 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out" href={{ path('homepage') }} @click="selected = (selected === 'site' ? '':'site')" :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'site') && (page === 'site') }">
 							Aller sur le site
 						</a>
 					</li>
