@@ -36,7 +36,7 @@ export default class extends Controller {
     setupVariables() {
         // général
         this.currentStep = 4
-        ;
+            ;
         this.steps = Array.from(this.element.querySelectorAll('[data-step]'));
         this.stepsProgress = Array.from(this.progressTarget.querySelectorAll('.progress-item'))
         this.currentPrice = this.progressTarget.querySelector('span#current-price')
@@ -168,7 +168,7 @@ export default class extends Controller {
                 break;
             case 4:
                 [step, progress] = [this.steps[4], this.stepsProgress[4]]
-                if(this.reservation.tarif.total > 0) step.classList.add('valid')
+                if (this.reservation.tarif.total > 0) step.classList.add('valid')
             default:
                 return false
         }
@@ -282,203 +282,82 @@ export default class extends Controller {
     }
 
     generateRecap(reservation) {
-        let body = this.steps[4].querySelector('table tbody')
-        let foot = this.steps[4].querySelector('table tfoot')
+        let recap = this.steps[4].querySelector('#recap')
         let nuits = this.reservation.durée.nuits
 
-
         // ! Champs obligatoires
-        // hébérgement
-        body.innerHTML = `
-            <tr class="bg-main-100">
-					<td scope="row" class="px-12 font-semibold text-gray-900 whitespace-nowrap text-start ">
-						Hébérgement
-					</td>
-					<td class="last:text-end"></td>
-					<td class="last:text-end"></td>
-				</tr>
-        `
+        recap.innerHTML = getHeader()
+        // * hébérgement
+        recap.innerHTML += getCategoryRow('Hébergement')
         // emplacement
-        body.innerHTML += `
-            <tr>
-                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap text-start ">
-                    <li class="list-inside">${reservation.type.nom}, ${nuits} nuits du ${reservation.durée.début.str} au ${reservation.durée.fin.str}</li>
-                </td>
-                <td class="last:text-end">${(reservation.type.prix / 100).toFixed(2)}€ x ${nuits} nuits</td>
-                <td class="last:text-end">${(reservation.tarif.emplacement / 100).toFixed(2)}€</td>
-            </tr>
-        `
+        recap.innerHTML += getRow(`Nuits ${reservation.type.nom}`, nuits, formatMoney(reservation.type.prix) + '€', formatMoney(reservation.tarif.emplacement))
         // adultes/enfants
-        body.innerHTML += `
-            <tr>
-                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-                    <li class="list-inside">${reservation.nombre.adultes} adultes </li>
-                </td>
-                <td class="last:text-end">${(this.database.adulte / 100).toFixed(2)}€ x ${reservation.nombre.adultes} adultes x ${nuits} nuits</td>
-                <td class="last:text-end">${(reservation.tarif.sejour.adultes / 100).toFixed(2)}€</td>
-            </tr>
-            <tr>
-                <td scope="row" class="font-medium text-gray-900 whitespace-nowrap">
-                    <li class="list-inside">${reservation.nombre.enfants} enfants </li>
-                </td>
-                <td class="last:text-end">${(this.database.enfant / 100).toFixed(2)}€ x ${reservation.nombre.enfants} enfants x ${nuits} nuits</td>
-                <td class="last:text-end">${(reservation.tarif.sejour.enfants / 100).toFixed(2)}€</td>
-            </tr>
-        `
+        if (reservation.nombre.adultes != 0)
+            recap.innerHTML += getRow('Adultes', reservation.nombre.adultes, formatMoney(this.database.adulte) + '€', formatMoney(reservation.tarif.sejour.adultes))
+        if (reservation.nombre.enfants != 0)
+            recap.innerHTML += getRow('Enfants', reservation.nombre.enfants, formatMoney(this.database.enfant) + '€', formatMoney(reservation.tarif.sejour.enfants))
         // total hebergement
         let totalHebergement = (reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants)
-        body.innerHTML += `
-            <tr class=" border-b border-black font-bold">
-                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-                    Total hébérgement :
-                </td>
-                <td class="last:text-end"></td>
-                <td class="last:text-end border-t border-black">
-                    ${(totalHebergement / 100).toFixed(2)}€
-                </td>
-            </tr>
-        `
-        // options
-        body.innerHTML += `
-            <tr class="bg-main-100">
-                <td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
-                    Options
-                </td>
-                <td class="last:text-end"></td>
-                <td class="last:text-end"></td>
-            </tr>
-        `
+        recap.innerHTML += getTotalRow('Total hébérgement', formatMoney(totalHebergement))
+        // * options
+        recap.innerHTML += getCategoryRow('Options')
+
         // ! Options facultatives
         this.reservation.options.forEach(option => {
-            // console.log(option);
             let calculString = `${(option.prix / 100).toFixed(2)}€`
-
             if (option.parJour == true) calculString += ` x ${nuits} nuits`
             if (option.parPersonne == true) calculString += ` x ${reservation.nombre.adultes + reservation.nombre.enfants} personnes`
             if (option.parJour == false && option.parPersonne == false && option.nombre > 1) calculString += ` x ${option.nombre} ${option.nom}`
 
-            body.innerHTML += `
-                <tr>
-                    <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
-                        <li class="list-inside capitalize">${option.nom}</li>
-                    </td>
-                    <td class="last:text-end">
-                        ${calculString}
-                    </td>
-                    <td class="last:text-end">
-                        ${(option.total / 100).toFixed(2)}€
-                    </td>
-                </tr>
-            `
+            recap.innerHTML += getRow(option.nom, option.nombre, calculString, formatMoney(option.total))
         })
-
         if (this.reservation.options.length == 0) {
-            body.innerHTML += `
-                <tr>
-                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap text-start ">
-                    <li class="list-inside">Aucune option</li>
-                </td>
-                <td class="last:text-end"></td>
-                <td class="last:text-end">0€</td>
-                </tr>
-            `
+            console.log('hi')
+            recap.innerHTML += getRow('Aucune option', '', '', 0)
         }
-
         // total options
         let totalOptions = reservation.tarif.options
-        body.innerHTML += `
-            <tr class=" border-b border-black font-bold">
-                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-                    Total options :
-                </td>
-                <td class="last:text-end"></td>
-                <td class="last:text-end border-t border-black">
-                    ${(totalOptions / 100).toFixed(2)}€
-                </td>
-            </tr>
-        `
-        // ! sous-total
-        let sousTotal = totalHebergement + totalOptions
-        body.innerHTML += `
-            <tr class=" bg-main-300 border-b border-black font-bold">
-                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-                    Sous total :
-                </td>
-                <td class="last:text-end">${((reservation.tarif.emplacement + reservation.tarif.sejour.adultes + reservation.tarif.sejour.enfants) / 100).toFixed(2)}€ + ${(reservation.tarif.options / 100).toFixed(2)}€</td>
-                <td class="last:text-end border-t border-black">
-                    ${(sousTotal / 100).toFixed(2)}€
-                </td>
-            </tr>
-        `
+        recap.innerHTML += getTotalRow('Total options', formatMoney(totalOptions))
+
         // ! reductions
-        body.innerHTML += `
-            <tr class="bg-main-100">
-                <td scope="row" class="font-semibold text-lg text-gray-900 whitespace-nowrap text-start ">
-                    Réductions
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-        `
+        recap.innerHTML += getCategoryRow('Réductions')
+
         // remises
         // * fetch pour récupérer la remise du moment
         let remise = { nom: 'test', euro: 0, pourcentage: 0, found: false }
         let remiseText = 'Aucune remise correspondante'
         if (remise.found == true) remiseText = `${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
-
         if (remise.pourcentage > 0) 'remise.euro = sousTotal * pourcentage '
-        body.innerHTML += `
-            <tr>
-                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-                    <li class="list-inside">Remise du moment</li>
-                </td>
-                <td class="last:text-end">${remiseText}</td>
-                <td class="last:text-end">${remise.euro}€</td>
-            </tr>
-        `
+        recap.innerHTML += getRow('Remise du moment', '', remiseText, '- ' + remise.euro)
+
         // code coupon
         // * fetch pour récupérer et tester les coupons
         if (this.coupon?.found == true)`${remise.nom} (${remise.pourcentage > 0 ? remise.pourcentage + '%' : remise.euro + '€'})`
-        body.innerHTML += `
-            <tr id="coupon">
-                <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
-                    <li class="list-inside">
-                        Coupon de réduction
-                        <input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
-                        <button class="button" data-action='step#checkCoupon'>Tester</button>
-                    </li>
-                </td>
-                <td id="coupon-div" class="last:text-end">${this.coupon ? this.coupon.nom : ''}</td>
-                <td id="coupon-montant" class="last:text-end">${this.coupon ? this.coupon.euro : 0}€</td>
-            </tr>
-        `
+        recap.innerHTML += getRow('Coupon de réduction', '', this.coupon ? this.coupon.nom : '', this.coupon ? '- ' + this.coupon.euro : '- 0')
+
         // total reduction
         let reductionTotal = remise.euro + (this.coupon ? this.coupon.euro : 0)
-        body.innerHTML += `
-            <tr class=" border-b border-black font-bold">
-                <td scope="row" class=" font-bold text-gray-900 whitespace-nowrap ">
-                    Total réductions :
-                </td>
-                <td class="last:text-end"></td>
-                <td class="last:text-end border-t border-black">
-                    ${(reductionTotal / 100).toFixed(2)}€
-                </td>
-            </tr>
-        `
-        // ! TOTAL TCC
-        let totalTCC = sousTotal - reductionTotal
-        foot.innerHTML = `
-            <tr class="[&>td]:px-4 [&>td]:py-2 bg-main-300 border-b border-black font-bold">
-                <td scope="row" class=" font-bold text-lg text-gray-900 whitespace-nowrap ">
-                    Total TTC :
-                </td>
-                <td class="last:text-end">${(sousTotal / 100).toFixed(2)}€ - ${(reductionTotal / 100).toFixed(2)}€</td>
-                <td class="last:text-end border-t border-black">
-                    ${(totalTCC / 100).toFixed(2)}
-                </td>
-            </tr>
-        `
+        recap.innerHTML += getTotalRow('Total réductions', formatMoney(reductionTotal))
 
+        // ! TOTAL TTC
+        let totalTTC = (totalHebergement + totalOptions) - reductionTotal
+        recap.innerHTML += getFooterRow(formatMoney(totalTTC))
+
+        return
+
+        // body.innerHTML += `
+        //     <tr id="coupon">
+        //         <td scope="row" class=" font-medium text-gray-900 whitespace-nowrap ">
+        //             <li class="list-inside">
+        //                 Coupon de réduction
+        //                 <input type="text" class="border ml-2 px-2 py-[0.5rem] w-[12ch] h-full" placeholder="REDUC50">
+        //                 <button class="button" data-action='step#checkCoupon'>Tester</button>
+        //             </li>
+        //         </td>
+        //         <td id="coupon-div" class="last:text-end">${this.coupon ? this.coupon.nom : ''}</td>
+        //         <td id="coupon-montant" class="last:text-end">${this.coupon ? this.coupon.euro : 0}€</td>
+        //     </tr>
+        // `
     }
 
 
@@ -526,3 +405,83 @@ function strToDate(str) {
     return new Date(annee, mois[moisStr], jour);
 
 }
+
+const getHeader = () => `
+    <div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
+        <div class="p-2.5  xl:p-5">
+            <h5 class="text-sm font-medium uppercase xsm:text-base">Description</h5>
+        </div>
+        <div class="p-2.5 text-center xl:p-5">
+            <h5 class="text-sm font-medium uppercase xsm:text-base">Quantité</h5>
+        </div>
+        <div class="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 class="text-sm font-medium uppercase xsm:text-base">Prix unitaire</h5>
+        </div>
+        <div class="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 class="text-sm font-medium uppercase xsm:text-base">Prix total</h5>
+        </div>
+    </div>
+`
+
+const getCategoryRow = name => `<div class="p-2.5 xl:p-5 bg-gray-50 border-t">${name}</div>`
+
+const getRow = (name, amount, price, total) => `
+    <div class="grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4">
+        <div class="flex items-center gap-3 p-2.5 xl:p-5">
+            <p class="hidden font-medium text-black dark:text-white sm:block">
+                ${name}
+            </p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-medium text-black dark:text-white">${amount}</p>
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            <p class="font-medium text-black dark:text-white">${price}</p>
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            <p class="font-medium text-black dark:text-white">${total}€</p>
+        </div>
+    </div>
+`
+
+const getTotalRow = (name, total) => `
+    <div class="border-t grid grid-cols-3  border-stroke dark:border-strokedark sm:grid-cols-4 bg-gray-200">
+        <div class="flex items-center gap-3 p-2.5 xl:p-5">
+            <p class="hidden font-medium text-black dark:text-white sm:block">
+                ${name}
+            </p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-medium text-black dark:text-white"></p>
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            <p class="font-medium text-black dark:text-white"></p>
+        </div>
+
+        <div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5 border-t border-black">
+            <p class="font-medium text-black dark:text-white">${total}€</p>
+        </div>
+    </div>
+`
+
+const getFooterRow = (total) => `
+    <div class="grid grid-cols-3 border-t border-black  dark:border-strokedark sm:grid-cols-4 text-xl">
+        <div class="flex items-center p-2.5 xl:p-5">
+            <p class="font-bold dark:text-white">Total TTC</p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-bold dark:text-white"></p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-bold dark:text-white"></p>
+        </div>
+        <div class="flex items-center justify-center p-2.5 xl:p-5">
+            <p class="font-bold dark:text-white">${total}€</p>
+        </div>
+    </div>
+`
+
+const formatMoney = money => (money / 100).toFixed(2)
