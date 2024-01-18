@@ -1,10 +1,8 @@
 {% macro numberCard(name, number, more, svg) %}
 	<!-- Card Item Start -->
 	<div class="basic-card px-7.5 py-6">
-		<div class="h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
-			<svg class="fill-primary dark:fill-white" width="22" height="22" viewbox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-				{{ svg|raw }}
-			</svg>
+		<div class="text-primary dark:text-white h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
+			{{ svg|raw }}
 		</div>
 
 		<div class="mt-4">
@@ -51,10 +49,8 @@
 {% macro textCard(text, more, svg) %}
 	<div class="basic-card px-7.5 col-span-full lg:col-span-6 xl:col-span-4 py-6 grid place-content-center">
 		<div class="flex items-center gap-4">
-			<div class="h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
-				<svg data-slot="icon" aria-hidden="true" fill="none" stroke-width="1.5" viewbox="0 0 20 22" xmlns="http://www.w3.org/2000/svg" class="stroke-primary dark:stroke-white" width="20" height="22">
-					{{ svg|raw }}
-				</svg>
+			<div class="text-primary dark:text-white h-11.5 w-11.5 bg-meta-2 dark:bg-meta-4 flex items-center justify-center rounded-full">
+				{{ svg|raw }}
 			</div>
 
 			<h4 class="text-title-md font-bold text-black dark:text-white">
