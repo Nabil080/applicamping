@@ -247,3 +247,54 @@
 		</tbody>
 	</table>
 {% endmacro %}
+
+{% macro logs(user = 'array des logs') %}
+	{% import 'macro/svg.html.twig' as svg %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Utilisateur</th>
+				<th scope="col">Type</th>
+				<th scope="col">Contexte</th>
+				<th scope="col">Date</th>
+				<th scope="col">Message</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 0..5 %}
+				{% set id = i %}
+				<tr>
+					<th scope="row">
+						{{ id }}
+					</th>
+					<td>
+						BELLILA
+						<br>
+						Nabil
+						<br>
+					</td>
+					<td>
+						14/07/2003
+						<br>
+						14h57
+					</td>
+					<td>
+						<div class="flex items-center justify-center gap-2">
+							<div class="text-body">
+								{{ svg.blueCard(24) }}
+							</div>
+							Paiement
+						</div>
+					</td>
+					<td>
+						<span class="text-danger">Suppression</span>
+					</td>
+					<td>
+						SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}

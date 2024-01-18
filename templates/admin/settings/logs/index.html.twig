@@ -1,12 +1,18 @@
 {% extends 'admin/settings/base.html.twig' %}
-{% import "macro/svg.html.twig" as svg %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
 
 
 {% block title %}
 	Registre
 {% endblock %}
 
+{% set title = 'Registre' %}
+{% set tooltip = 'Messages registres' %}
+{% set search_placeholder = 'Recherche...' %}
+
+
 {% block body %}
-
-
+	{{ crud.basic(title, tables.logs('array des messages'), filters.paiements, search_placeholder, tooltip) }}
 {% endblock %}
