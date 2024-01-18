@@ -373,6 +373,45 @@
 	</table>
 {% endmacro %}
 
+{% macro emplacements(emplacements = 'array des emplacements') %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">N°</th>
+				<th scope="col">Type d'hébergement (ID)</th>
+				<th scope="col">Statut</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 0..5 %}
+				<tr>
+					<th scope="row">
+						{{ i }}
+					</th>
+					<td>
+						{{ 12 + i }}
+					</td>
+					<td>
+						Camping-Car (520)
+					</td>
+					<td>
+						<span class="badge success">Disponible</span>
+					</td>
+					<td>
+						<div class="actions">
+							{% set id = i %}
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
 {% macro saisons(saisons = 'array des saisons') %}
 	<table>
 		<thead>

@@ -54,4 +54,12 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/emplacements', name: '_emplacements')]
+    public function emplacements(): Response
+    {
+        return $this->render($this->getPath('emplacements/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }
