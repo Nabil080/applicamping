@@ -326,6 +326,10 @@
         padding: 2rem;
     }
 
+    /* .no-hover:hover {
+        all: initial !important
+    } */
+
     /* ! input/label */
 
     .floating-input {

@@ -8,7 +8,7 @@
 
 {% block body %}
 	<!-- ! card items -->
-	<div class="2xl:gap-7.5 grid grid-cols-12 gap-4 md:gap-6 text-lg">
+	<div class="2xl:gap-7.5 grid grid-cols-12 gap-4 md:gap-6 text-base xl:text-lg">
 		{# <div class="2xl:gap-7.5 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"> #}
 		{# ! administration ! #}
 			<div class="col-span-full"> <h2>
@@ -18,10 +18,10 @@
 
 		<!-- Card Item Start -->
 		<article class="basic-card col-span-full xl:col-span-6">
-			<h4 class="text-title-sm font-bold text-black dark:text-white">
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
 				Infos camping
 			</h4>
-			<section class="grid mt-4 gap-2 text-black dark:text-bodydark">
+			<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
 				<div>
 					<span class="font-semibold">Nom :</span>
 					Camping mont olympe
@@ -39,7 +39,7 @@
 					camping@contact.com
 				</div>
 
-			</section>
+			</div>
 			<div class="text-end mt-2">
 				<a href="" class="clickable block">
 					Modifier
@@ -48,7 +48,7 @@
 		</article>
 
 		<article class="basic-card flex flex-col col-span-full xl:col-span-6">
-			<h4 class="text-title-sm font-bold text-black dark:text-white">
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
 				Dernières actions
 			</h4>
 
@@ -94,7 +94,7 @@
 		<!-- Card Item Start -->
 		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
 			<section class="whitespace-nowrap">
-				<h4 class="text-title-sm font-bold text-black dark:text-white">
+				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
 					120 emplacements, 5 types
 				</h4>
 				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
@@ -125,6 +125,37 @@
 				<button class="btn">Emplacements</button>
 				<button class="btn">Carte interactive</button>
 			</section>
+		</article>
+
+		<!-- Card Item Start -->
+		<article class="basic-card col-span-full xl:col-span-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-2">
+			<div class="space-y-2">
+				<div class="flex flex-wrap justify-between">
+					<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+						Saison en cours
+					</h4>
+					<a href="" class=" clickable xl:block">
+						Voir les saisons
+					</a>
+				</div>
+				<div class="grid">
+					<button class="btn max-xl:px-2 btn">Haute saison 2023</button>
+				</div>
+			</div>
+			<div class="space-y-2">
+				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+					Prochaine saison
+				</h4>
+				<div class="grid">
+					<button class="btn max-xl:px-2 btn-border pointer-events-none">Basse saison 2024</button>
+				</div>
+			</div>
+
+			{# <div class="text-end">
+																<a href="" class="clickable block">
+																	Modifier
+																</a>
+															</div> #}
 		</article>
 	</div>
 {% endblock %}
