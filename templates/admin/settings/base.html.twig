@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>
 			{% block title %}{% endblock %}
-			| Admin Camping Mont-Olympe
+			| Paramètres Camping Mont-Olympe
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{% block stylesheets %}
@@ -21,11 +21,11 @@
 	</head>
 	<body data-turbo="false" x-data="{ page: '{{app.request.get('_route')}}', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
 
-{# {{ dump(app.request.get('_route')  )  }} #}
+		{# {{ dump(app.request.get('_route')  )  }} #}
 
 
 		<!-- ===== Preloader Start ===== -->
-			{% include "admin/include/preloader.html.twig" %}
+		{% include "admin/include/preloader.html.twig" %}
 		<!-- ===== Preloader End ===== -->
 
 		<!-- ===== Page Wrapper Start ===== -->

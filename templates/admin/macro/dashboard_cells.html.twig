@@ -72,3 +72,16 @@
 		</div>
 	</div>
 {% endmacro %}
+
+
+{% macro imageCard(name,pathName,svg) %}
+	<!-- Card Item Start -->
+	<article class="basic-card col-span-full sm:col-span-6 xl:col-span-4 flex flex-col">
+		<div class="px-12">
+			{{ svg }}
+		</div>
+		<div class="grow grid place-items-center">
+			<a href={{path(pathName)}} class="btn w-full">{{name}}</a>
+		</div>
+	</article>
+{% endmacro %}
