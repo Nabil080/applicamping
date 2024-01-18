@@ -65,7 +65,7 @@
 
     /* ? Général */
     .basic-card {
-        @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white 
+        @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white px-7.5 py-4 
     }
 
     /* ? links  */

@@ -8,17 +8,123 @@
 
 {% block body %}
 	<!-- ! card items -->
-	<div class="2xl:gap-7.5 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-		<div class="col-span-full">
-			<h2>
+	<div class="2xl:gap-7.5 grid grid-cols-12 gap-4 md:gap-6 text-lg">
+		{# <div class="2xl:gap-7.5 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"> #}
+		{# ! administration ! #}
+			<div class="col-span-full"> <h2>
 				Administrations
 			</h2>
 		</div>
 
 		<!-- Card Item Start -->
-		<div class="basic-card px-7.5 py-4">
+		<article class="basic-card col-span-full xl:col-span-6">
+			<h4 class="text-title-sm font-bold text-black dark:text-white">
+				Infos camping
+			</h4>
+			<section class="grid mt-4 gap-2 text-black dark:text-bodydark">
+				<div>
+					<span class="font-semibold">Nom :</span>
+					Camping mont olympe
+				</div>
+				<div>
+					<span class="font-semibold">Adresse :</span>
+					17 rue des Paquerettes, 08000 Charleville-Mézières, France
+				</div>
+				<div>
+					<span class="font-semibold">Tel :</span>
+					06.06.06.06.06
+				</div>
+				<div>
+					<span class="font-semibold">Mail :</span>
+					camping@contact.com
+				</div>
+
+			</section>
+			<div class="text-end mt-2">
+				<a href="" class="clickable block">
+					Modifier
+				</a>
+			</div>
+		</article>
+
+		<article class="basic-card flex flex-col col-span-full xl:col-span-6">
+			<h4 class="text-title-sm font-bold text-black dark:text-white">
+				Dernières actions
+			</h4>
+
+			<div class="overflow-y-scroll grow max-h-60 xl:h-1">
+				{% for i in 1..10 %}
+					<a href="messages.html" class="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4 text-black dark:text-bodydark">
+						<div class="relative h-8 w-8 rounded-full">
+							<svg class="stroke-current" stroke-width="1.5" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+						</div>
+						<div class="flex flex-1 items-center justify-between">
+							<div>
+								<h5 class="font-medium dark:font-semibold">
+									Nabil bellila
+								</h5>
+								<p>
+									<span class="text-sm font-medium">Ajout d'un paiement (réservation)</span>
+								</p>
+							</div>
+							<div>
+								<span class="text-xs text-body">15 nov, 12h26</span>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+			<div class="text-end mt-2">
+				<a href="" class="clickable block">
+					Voir le registre
+				</a>
+			</div>
+		</article>
+
+
+		{# ! Camping ! #}
+		<div class="col-span-full">
+			<h2>
+				Camping
+			</h2>
 		</div>
 
+		<!-- Card Item Start -->
+		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
+			<section class="whitespace-nowrap">
+				<h4 class="text-title-sm font-bold text-black dark:text-white">
+					120 emplacements, 5 types
+				</h4>
+				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
+					<div>
+						<span class="font-semibold">Camping-car :</span>
+						22 emplacements
+					</div>
+					<div>
+						<span class="font-semibold">Caravane :</span>
+						30 emplacements
+					</div>
+					<div>
+						<span class="font-semibold">Roulotte :</span>
+						20 emplacements
+					</div>
+					<div>
+						<span class="font-semibold">Emplacement simple :</span>
+						12 emplacements
+					</div>
+					<div>
+						<span class="font-semibold">Port :</span>
+						12 emplacements
+					</div>
+				</div>
+			</section>
+			<section class="grid gap-2 grow">
+				<button class="btn">Types d'hébèrgements</button>
+				<button class="btn">Emplacements</button>
+				<button class="btn">Carte interactive</button>
+			</section>
+		</article>
 	</div>
-
 {% endblock %}

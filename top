@@ -1,0 +1,564 @@
+[33mcommit c14b8979a62228c6d9ebcfeb506621311fb9345b[m[33m ([m[1;36mHEAD -> [m[1;32mparametres[m[33m, [m[1;31morigin/parametres[m[33m)[m
+Merge: 586c91d 51c51d5
+Author: Nabil <104601253+Nabil080@users.noreply.github.com>
+Date:   Wed Jan 17 18:47:36 2024 +0100
+
+    Merge pull request #4 from Nabil080/master
+    
+    recup de main
+
+[33mcommit 51c51d586933b9356f16dc6ab1e88b3fa1ad623b[m[33m ([m[1;31morigin/master[m[33m)[m
+Merge: 5d29e23 586c91d
+Author: Nabil <104601253+Nabil080@users.noreply.github.com>
+Date:   Wed Jan 17 18:47:27 2024 +0100
+
+    Merge branch 'parametres' into master
+
+[33mcommit 586c91d48a21e13175b1757f7c45515596f1619d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 18:45:59 2024 +0100
+
+    basic-card css class
+
+[33mcommit 8ca1138b5a32819dbee694fec707226980541ddc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 17:56:29 2024 +0100
+
+    macro sidebar dropdown fonctionnel
+
+[33mcommit ceb847a009d36f49cde91c1d805769016383cde6[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 17:34:47 2024 +0100
+
+    macro basic sidebar + detail sidebar
+
+[33mcommit fc5fae0ffcdbfea0808e3ca2c99ff6af10789311[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 17:22:05 2024 +0100
+
+    sidebar settings, commit pour macro
+
+[33mcommit f4f02e5095c7c8e306dac892642ef276b3f7c8e7[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 17:16:20 2024 +0100
+
+    settings controller + base et index
+
+[33mcommit 5d29e23c5adb0cfa96f0d15f874ba038a095f54b[m
+Merge: 7da49c4 9bec97c
+Author: Nabil <104601253+Nabil080@users.noreply.github.com>
+Date:   Wed Jan 17 17:03:48 2024 +0100
+
+    Merge pull request #3 from Nabil080/reservation
+    
+    Reservation
+
+[33mcommit 9bec97ce00ae910af356c0ba65174b0b52ac647c[m[33m ([m[1;31morigin/reservation[m[33m, [m[1;32mreservation[m[33m)[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 16:39:48 2024 +0100
+
+    page réservation
+
+[33mcommit a665e3a12d881f462087ecd90946d59c65a8c383[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 16:25:41 2024 +0100
+
+    paiement
+
+[33mcommit f51b314ae329b76e6b0f77c588d54bf11240d53b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 15:04:39 2024 +0100
+
+    coupon row
+
+[33mcommit a5db3100a2a312b2b61c2e591f41b6bf18398d66[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 17 14:57:08 2024 +0100
+
+    recap dynamique, méthodes js getRow()
+
+[33mcommit ec9cdc91a2f237f78ff08992a256282b14c4535e[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 20:09:24 2024 +0100
+
+    front récap
+
+[33mcommit 8e14c36755a63458da15ed594f37225149f5b0ad[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 19:28:19 2024 +0100
+
+    etape 3 + 4
+
+[33mcommit 468ba2a0c6b44ec4ad0c62c7387432c8c39f7e63[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 19:21:27 2024 +0100
+
+    modif taille logo nav
+
+[33mcommit 72b5a4bc2d33a3b925f9857518a229fe813fc69b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 19:18:52 2024 +0100
+
+    etape 2
+
+[33mcommit e6cdca80f7aa9aa28b0090395601930b9bd5c664[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 19:02:27 2024 +0100
+
+    etape 1
+
+[33mcommit 1531ba95d7045c952804292cdd50be7b5926618d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 18:27:10 2024 +0100
+
+    css datepicker
+
+[33mcommit 3dbf3c78710afc6868b5d0fb7242ea7673bb5af0[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 18:20:58 2024 +0100
+
+    navbar + boutons nav
+
+[33mcommit 605576d4056a80fb7f7d4dc6958a826e023644c7[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 16 18:05:35 2024 +0100
+
+    bouton 'créer' dans crud, redirect to url + /create
+
+[33mcommit 7da49c49358e3e5395307b40e28645825eaa3a57[m[33m ([m[1;32mmaster[m[33m)[m
+Merge: a66efb9 5ca8302
+Author: Nabil <104601253+Nabil080@users.noreply.github.com>
+Date:   Wed Jan 3 16:38:09 2024 +0100
+
+    Merge pull request #2 from Nabil080/admin
+    
+    Admin
+
+[33mcommit 5ca830251642f690a92b6737dfdf11d2a2fe2915[m[33m ([m[1;31morigin/admin[m[33m, [m[1;32madmin[m[33m)[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 16:37:51 2024 +0100
+
+    récap caisse du mois + print bouton
+
+[33mcommit 37cfe2e7e8da2415299f9b177716fdf99f6c96f0[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 16:01:51 2024 +0100
+
+    affichage total dans crud paiement
+
+[33mcommit a5a93c93ccf1e2c9e62ff16e9a5a236aa919762f[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 15:47:38 2024 +0100
+
+    caisse du jour done
+
+[33mcommit 0df2b263db798bf13cef77505873966ba3d556e0[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 15:36:56 2024 +0100
+
+    header page du jour / du mois responsif
+
+[33mcommit 72e295b74072ca1065a85f1bbc0776524757e6cc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 15:13:14 2024 +0100
+
+    paiement controller + lien sidebar
+
+[33mcommit 6d7eca7d8b87c1a8d7f600f82a0a45ee4274a7e9[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 15:06:02 2024 +0100
+
+    paiement filters
+
+[33mcommit 4d9566296eef33f1eb656166373f5f9c02f8f1fc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 15:03:56 2024 +0100
+
+    paiement table
+
+[33mcommit 7b1befc807383c3ca6cf91b9fadfdf2973ed62eb[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 13:21:13 2024 +0100
+
+    reservations filter as macro
+
+[33mcommit f35316bd3251006bb98af890385f6c40a5ace1d5[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 13:19:30 2024 +0100
+
+    client filter as macro
+
+[33mcommit c1d377ade5c787151e601b721c3f0bcc2d79d2e3[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 13:14:30 2024 +0100
+
+    tables as macro
+
+[33mcommit 081d4da87e02fdee872254198a56ab0de6c9f1fe[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 12:48:43 2024 +0100
+
+    table macro small if no filter parameter
+
+[33mcommit 7893812ded48ec6a51dce4b271a5f0da6a449d98[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 12:28:06 2024 +0100
+
+    fix sidebar page = route name + reservation controller
+
+[33mcommit ed055ceea1705a7cd8bdd510bb6fc0fc8a4143b3[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 12:00:13 2024 +0100
+
+    fix current page pour sidebar
+
+[33mcommit ebd6588f5a9bb088bfded4e360e4f890d13b9384[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 11:48:53 2024 +0100
+
+    css badges
+
+[33mcommit 720ee494b8b4150ecae4a80fe9490222cc64dfa0[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 11:36:28 2024 +0100
+
+    seeMore/print button macro
+
+[33mcommit 45c01e74b361cac9b35ab9f58131fc43ca70e22c[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 11:31:12 2024 +0100
+
+    reservation controller + index
+
+[33mcommit 8d0d386f65f12c8646b79e2e6e02abcb99cf5aaf[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Jan 3 11:06:53 2024 +0100
+
+    turbo désactivé pour domcontentloaded
+
+[33mcommit 5fcb531bde3f72ad868773f91d48dea0e479d60f[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 21:33:43 2024 +0100
+
+    fix sidebar toggle burger menu
+
+[33mcommit 5fefc7c2cabe1dbcff08bc0ef1f372c93e35bd16[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 21:26:14 2024 +0100
+
+    update & delete button macro
+
+[33mcommit 2f8ff24b538ba727e0f694119b00f26831ab9c83[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 21:21:35 2024 +0100
+
+    title,tooltip,search,actions
+
+[33mcommit ca345ea1b8dc0ddaca031157f648cd5de7df1d3b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 21:01:43 2024 +0100
+
+    crud table as macro, to be done
+
+[33mcommit 7a58ae259459d4dddaf665478893dd10378dc5ab[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 20:40:33 2024 +0100
+
+    route client
+
+[33mcommit d1270b81108082528f5431c9e3f520d9dde81218[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 20:25:24 2024 +0100
+
+    dashboard admin index done
+
+[33mcommit bf8a741c3460942199e1b7d2a0fe7050dff48dfd[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 20:18:22 2024 +0100
+
+    fix chart center
+
+[33mcommit 6f694b454140913b60167855fcd682bdb2a6f8f6[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 20:09:00 2024 +0100
+
+    data-value pour les données du graph
+
+[33mcommit c94b6da382045dcc60e9f2b100f0927077e2c662[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 19:34:36 2024 +0100
+
+    pieChart controller, initialize chart
+
+[33mcommit 3210be00101f8414e7ed49eaca0596cc491cbb18[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 19:12:37 2024 +0100
+
+    macro numberCard dashboard
+
+[33mcommit ece54f643e33cb842e4a195d59e4c59d268524cc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Jan 2 16:34:56 2024 +0100
+
+    nouvelle config tailwind + dashboard sidebar et header
+
+[33mcommit a66efb98d4a9f61697d9706098d23bf1e485cda1[m
+Merge: 8e39e05 40bad93
+Author: Nabil <104601253+Nabil080@users.noreply.github.com>
+Date:   Sun Dec 31 17:07:44 2023 +0100
+
+    Merge pull request #1 from Nabil080/admin
+    
+    Admin
+
+[33mcommit 40bad9395f7386051563976e0f429ac45e1328be[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 31 16:59:26 2023 +0100
+
+    admin controller
+
+[33mcommit b39cfea57ca09d388a44da3af29d2bf03d958416[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 28 18:38:09 2023 +0100
+
+    reorga namespace controllers
+
+[33mcommit 8e39e055e23d1e1c57a6b6c41ab54189e51972be[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 28 16:06:28 2023 +0100
+
+    vos réservations
+
+[33mcommit 8cedc8121474b4dc154a96fec1157aae060f8613[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 21:33:58 2023 +0100
+
+    informations personnelles
+
+[33mcommit cfcbd8b40aa8bba25c7e69ec49b521b25b6ff05b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 20:56:35 2023 +0100
+
+    connexion/inscription/page profil, manque front page profil
+
+[33mcommit 7927cd37ad4bdec0496bc6ef0733832fb9d05689[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 20:15:32 2023 +0100
+
+    report code validity
+
+[33mcommit b1aca1677ac4b1a48d8f6236324735d6cb6e5b2d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 20:09:39 2023 +0100
+
+    generate random code
+
+[33mcommit 5db3032a51913788f90da5f16f703ac8cca5026d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 20:06:11 2023 +0100
+
+    inscription back done
+
+[33mcommit 44d91a92368431049aa9a6f99d6de6e4e8a021d6[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 19:32:50 2023 +0100
+
+    derniere etape inscription front
+
+[33mcommit 2170c3eb2f037c1e65401621bdb8283ed87051fb[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 19:10:43 2023 +0100
+
+    code de sécurité
+
+[33mcommit 1110ec7f599c3b37b9cf05eb32a44eac962586dd[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 19:00:29 2023 +0100
+
+    front etape 2
+
+[33mcommit 5420a4fdcecb399b3aa1ee6ce8e727bcef0c42a9[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 17:03:31 2023 +0100
+
+    report validity email
+
+[33mcommit 1b0236fb084fce7896e607341554361c4274c30b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 16:39:39 2023 +0100
+
+    mail regex
+
+[33mcommit f661a9e16a6b9ff6aa9e4aa81a00ec7313a236f2[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 16:36:50 2023 +0100
+
+    validator + step 0
+
+[33mcommit c45300fd41fffa66ad3e22a510a3f8493749eed1[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 16:06:26 2023 +0100
+
+    go to next step
+
+[33mcommit 05c2faeae8bbdf9c51d05c6589d0a9116b03cca5[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 14:26:00 2023 +0100
+
+    etape 1 (mail) register
+
+[33mcommit e0d781eba12393f18b36fe0e3903dec4ad980327[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 27 13:24:20 2023 +0100
+
+    navbar
+
+[33mcommit c93a511cde70df816ceaaeb234af1cc0f16f2262[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 26 19:12:44 2023 +0100
+
+    tools_controller + show password
+
+[33mcommit 69e058122c30ce43570d332c8f6f43b948a1b592[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 26 17:49:39 2023 +0100
+
+    fusion inscription et connexion avec back fonctionnel
+
+[33mcommit 2e995e2592991925e4cbdae7878445d55532a2a2[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 26 17:23:42 2023 +0100
+
+    front/back connexion
+
+[33mcommit 23a7214ebd394b2af8c76d37bac406ace5aaf7e2[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 24 19:03:46 2023 +0100
+
+    champs obligatoires inscription
+
+[33mcommit 4d253f173942cd435e8ba00bee7e50d54f4e31c3[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 24 18:20:59 2023 +0100
+
+    champs user
+
+[33mcommit cf20c78aadce04c848f4a79d79588d5514897e62[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 24 18:14:43 2023 +0100
+
+    connexion / inscription back
+
+[33mcommit dcae026961bf2aa47ab27d70fbdf422c1d85f69d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 24 17:41:29 2023 +0100
+
+    make user
+
+[33mcommit 9b8d05eff2b7288c41e7688ae38be2cfb92f3121[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sun Dec 24 17:32:40 2023 +0100
+
+    clean commit
+
+[33mcommit 14912b9aaa1ca03f4a7cd69a8dcf9b5908e2da4f[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sat Dec 16 18:39:29 2023 +0100
+
+    page reservation, manque liste paiements
+
+[33mcommit fe9951467ecc025a0ccadac2e36ec699147671a8[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sat Dec 16 18:05:35 2023 +0100
+
+    redirection js
+
+[33mcommit 5ddd51d45d1912855350fedad00b972ea45d2ba2[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Sat Dec 16 17:51:18 2023 +0100
+
+    check des inputs requis + autocomplete
+
+[33mcommit 21546b2ab3f79491e2c71b12e57f349d3de7b698[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 13 16:56:02 2023 +0100
+
+    form controller
+
+[33mcommit e2001087cf093e6f8b056892b54ce3677b193346[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 13 16:27:21 2023 +0100
+
+    input/label style
+
+[33mcommit c2b10459d78d63e89c468c9816a7529f7848d451[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 12 14:14:08 2023 +0100
+
+    boutons paiement
+
+[33mcommit c9c4057cee773f686c2dce4ec8c3c3de8f022dfd[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 12 12:22:21 2023 +0100
+
+    fix largeur select2
+
+[33mcommit 9f8d9753050bdcc0a0b739c0b7ad5fb25b20b9dc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 7 14:11:42 2023 +0100
+
+    affichage et retraitement coupon, manque fetch pour vérifier le coupon
+
+[33mcommit 6f02243b70f2b983c75fed230acf20eca2fa9a06[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 7 13:45:33 2023 +0100
+
+    check coupon manque fetch et ajustement
+
+[33mcommit fe6d73dd2bcb781458e90dbe7fbc086639a30f05[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 7 13:29:00 2023 +0100
+
+    remise du moment
+
+[33mcommit 673449ecd122e12d5bc99fcedef5f6aa36db784b[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 7 12:49:54 2023 +0100
+
+    sous total options + hebergement
+
+[33mcommit b61e9b4289b6d2979f9ef15656559887e44c1a21[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Thu Dec 7 12:24:47 2023 +0100
+
+    variable de prix en int des centimes
+
+[33mcommit 8928c41399a363c760d376a185473a791e708bc2[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Wed Dec 6 17:46:11 2023 +0100
+
+    front static table récapitulatif, manque a adapter avec contenu de la reservation
+
+[33mcommit 6e97886ecded8c2387ab130dbd4ca23f6a2f7eee[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 5 21:43:49 2023 +0100
+
+    ajout prix options au total, récapitulatif à afficher
+
+[33mcommit 0863504ff49dcb8f4265d2ed59462734475256bc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 5 21:33:47 2023 +0100
+
+    get option total price
+
+[33mcommit 1ec1e3d2ef88226f48dfd6344e67ad826f9826fc[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 5 21:14:46 2023 +0100
+
+    montant du type d'hebergement
+
+[33mcommit 1fb067203db069daed71ef1bfdc8686a89c0502d[m
+Author: Nabil080 <bellilanabil8@gmail.com>
+Date:   Tue Dec 5 15:38:39 2023 +0100
+
+    montant du séjour
