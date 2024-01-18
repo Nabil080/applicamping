@@ -76,7 +76,7 @@
 				{% endfor %}
 			</div>
 			<div class="text-end mt-2">
-				<a href="" class="clickable block">
+				<a href={{ path('app_admin_settings_logs') }} class="clickable block">
 					Voir le registre
 				</a>
 			</div>
@@ -151,10 +151,10 @@
 			</div>
 
 			{# <div class="text-end">
-																															<a href="" class="clickable block">
-																																Modifier
-																															</a>
-																														</div> #}
+																																		<a href="" class="clickable block">
+																																			Modifier
+																																		</a>
+																																	</div> #}
 		</article>
 
 
@@ -165,9 +165,9 @@
 			</h2>
 		</div>
 
-
-		{{ cell.imageCard("Règles de réservation","app_admin_settings",svg.bills()) }}
-		{{ cell.imageCard("Tarifs","app_admin_settings",svg.bills()) }}
-		{{ cell.imageCard("Options supplémentaires","app_admin_settings",svg.bills()) }}
+		{% set width, classes, stroke = '100%','', 1 %}
+		{{ cell.imageCard("Règles de réservation","app_admin_settings",svg.rules(width,classes,stroke)) }}
+		{{ cell.imageCard("Tarifs","app_admin_settings",svg.bills(width,classes,stroke)) }}
+		{{ cell.imageCard("Options supplémentaires","app_admin_settings",svg.dog(width,classes,stroke)) }}
 	</div>
 {% endblock %}

@@ -22,4 +22,12 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/logs', name: '_logs')]
+    public function logs(): Response
+    {
+        return $this->render($this->getPath('logs/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }
