@@ -38,4 +38,12 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/saisons', name: '_saisons')]
+    public function saisons(): Response
+    {
+        return $this->render($this->getPath('saisons/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }

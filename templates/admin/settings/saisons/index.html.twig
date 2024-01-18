@@ -5,14 +5,14 @@
 
 
 {% block title %}
-	Gestionnaires
+	Saisons
 {% endblock %}
 
-{% set title = 'Gestionnaires' %}
+{% set title = 'Saisons' %}
 {% set tooltip = 'Tous les utilisateurs avec le rôle administrateur' %}
-{% set search_placeholder = 'Rechercher un nom, prénom...' %}
+{% set search_placeholder = 'Recherche...' %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.admins('admins'), filters.clients, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.saisons('saisons'), filters.clients, search_placeholder, tooltip) }}
 {% endblock %}
