@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% block title %}
+	Gestionnaires
+{% endblock %}
+
+{% set title = 'Gestionnaires' %}
+{% set tooltip = 'Tous les utilisateurs avec le rôle administrateur' %}
+{% set search_placeholder = 'Rechercher un nom, prénom...' %}
+
+
+{% block body %}
+	{{ crud.basic(title, tables.admins('admins'), filters.clients, search_placeholder, tooltip) }}
+{% endblock %}

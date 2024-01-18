@@ -262,7 +262,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for i in 0..5 %}
+			{% for i in 1..10 %}
 				{% set id = i %}
 				<tr>
 					<th scope="row">
@@ -292,6 +292,72 @@
 					</td>
 					<td>
 						SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro admins(user = 'array des user') %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">
+					Nom<br>
+					Prénom</th>
+				<th scope="col">Email</th>
+				<th scope="col">Téléphone</th>
+				<th scope="col">Adresse</th>
+				<th scope="col">Registre</th>
+				<th scope="col">Création</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 0..5 %}
+				<tr>
+					<th scope="row">
+						1430
+					</th>
+					<td>
+						BELLILA
+						<br>
+						Nabil
+						<br>
+					</td>
+					<td>
+						bellilanabil8@gmail.com
+					</td>
+					<td>
+						06.38.05.89.97
+					</td>
+					<td>
+						17 rue des tilleuls
+						<br>
+						08000, Villers-Semeuse,
+						<br>
+						France
+					</td>
+					<td>
+						<div>
+							150 actions
+							<br>
+							<a href={{ path('app_admin_settings_logs') }} class="details">Voir les actions</a>
+						</div>
+					</td>
+					<td>
+						14/07/2003
+						<br>
+						14h57
+					</td>
+					<td>
+						<div class="actions">
+							{% set id = i %}
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
 					</td>
 				</tr>
 			{% endfor %}

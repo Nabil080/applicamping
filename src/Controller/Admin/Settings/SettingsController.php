@@ -30,4 +30,12 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/users', name: '_users')]
+    public function users(): Response
+    {
+        return $this->render($this->getPath('users/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }
