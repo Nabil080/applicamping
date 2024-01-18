@@ -39,8 +39,6 @@
 {% endmacro %}
 
 
-
-
 {% macro reservations(reservations = 'array des reservations') %}
 	{% import 'macro/svg.html.twig' as svg %}
 	<table>
@@ -421,6 +419,67 @@
 						</td>
 						<td>
 							Lundi, Mercredi, Jeudi
+						</td>
+						<td>
+							<div class="actions">
+								{% set id = i %}
+								{{ _self.updateButton(id) }}
+								{{ _self.deleteButton(id) }}
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro options(options = 'array des options') %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Nombre maximum</th>
+				<th scope="col">Emplacements</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 1..5 %}
+				<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+					<th scope="row">
+						{{ i }}
+					</th>
+					<td>
+						Chien
+					</td>
+					<td></td>
+					<td></td>
+					<td>
+						<div class="actions">
+							{% set id = i %}
+							{{ _self.addButton(id, "Ajouter une option") }}
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
+
+				{% for i in 1..3 %}
+					<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+						<th scope="row"></th>
+						<td></td>
+						<td>
+							{{ 4 + i }}
+						</td>
+						<td>
+							{% if i % 2 %}
+								Camping-Car
+							{% else %}
+								Tous
+							{% endif %}
 						</td>
 						<td>
 							<div class="actions">

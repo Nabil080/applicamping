@@ -46,4 +46,12 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/options', name: '_options')]
+    public function options(): Response
+    {
+        return $this->render($this->getPath('options/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }
