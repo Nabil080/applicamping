@@ -8,18 +8,19 @@
 	Tarifs
 {% endblock %}
 
-{% set title = 'Emplacements' %}
-{% set tooltip = 'Tous les utilisateurs avec le rôle administrateur' %}
-
 {% block body %}
 	<div class="mb-6 flex items-center justify-between">
 		<h2 class="text-title-md font-bold">Tarifs</h2>
-		<div {{ stimulus_controller('tabulation') }} data-tabulation-items-value='.crud' class="tabulation">
-			<button class="active">Emplacements</button>
-			<button class="">Services supplémentaires</button>
-			<button class="">Adulte/enfant</button>
-			<button class="">Offres</button>
+		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
+			<button>Emplacements</button>
+			<button>Services supplémentaires</button>
+			<button>Adulte/enfant</button>
+			<button>Offres</button>
 		</div>
 	</div>
-	{{ crud.basic(title, tables.tarifs('emplacements'), '','', tooltip) }}
+
+	{{ crud.basic('Emplacements', tables.tarifs('emplacements')) }}
+	{{ crud.basic('Options supplémentaires', tables.tarifs('options')) }}
+	{{ crud.basic('Adulte/enfant', tables.tarifs('options')) }}
+	{{ crud.basic('Offres', tables.tarifs('options')) }}
 {% endblock %}
