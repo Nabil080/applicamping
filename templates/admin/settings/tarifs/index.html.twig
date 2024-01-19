@@ -21,6 +21,6 @@
 
 	{{ crud.basic('Emplacements', tables.tarifs('emplacements')) }}
 	{{ crud.basic('Options supplémentaires', tables.tarifs('options')) }}
-	{{ crud.basic('Adulte/enfant', tables.tarifs('options')) }}
-	{{ crud.basic('Offres', tables.tarifs('options')) }}
+	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
+	{{ crud.basic('Offres', tables.offres('offres')) }}
 {% endblock %}
