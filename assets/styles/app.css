@@ -68,6 +68,9 @@
         @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white px-7.5 py-4 
     }
 
+    .tabulation {
+        @apply flex border divide-x border-stroke divide-stroke max-lg:grid max-lg:grid-cols-2 max-lg:divide-y max-md:grid-cols-1
+    }
     .tabulation button {
         @apply btn see-more
     }

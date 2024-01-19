@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="mb-6 flex items-center justify-between">
+	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
 		<h2 class="text-title-md font-bold">Tarifs</h2>
 		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
 			<button>Emplacements</button>
