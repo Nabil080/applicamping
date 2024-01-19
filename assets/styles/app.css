@@ -68,6 +68,13 @@
         @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white px-7.5 py-4 
     }
 
+    .tabulation button {
+        @apply btn see-more
+    }
+    .tabulation button:hover, .tabulation button.active {
+        @apply primary
+    }
+
     /* ? links  */
     .clickable {
         @apply text-meta-5 flex cursor-pointer items-center text-sm font-medium underline-offset-2 hover:underline hover:opacity-80;
@@ -252,8 +259,11 @@
     .btn.delete {
         @apply border-danger text-danger hover:bg-danger hover:text-white;
     }
-    .btn.see-more {
+    .btn.see-more, .see-more {
         @apply text-gray-900 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
+    }
+    .btn.primary, .primary {
+        @apply bg-primary text-white;
     }
 
     .btn.delete svg,
