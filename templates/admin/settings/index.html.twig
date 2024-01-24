@@ -171,21 +171,26 @@
 
 	{% import "macro/inputs.html.twig" as input %}
 
-	<article id="info-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-999999 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-		<div class="min-w-[500px] rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-			<div class="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-				<h3 class="font-semibold text-black dark:text-white">
-					Informations camping
-				</h3>
+	<article id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden">
+		<div class="p-6.5 min-w-[500px] crud rounded-md">
+			<div class="relative">
+				<div class="flex items-center justify-between">
+					<h3 class="text-xl font-bold text-black dark:text-white sm:text-2xl">
+						Informations camping
+					</h3>
+					<button data-modal-target="info-modal" data-modal-hide="info-modal" class="rounded-lg  hover:bg-bodydark p-1.5">
+						{{ svg.cross(26) }}</button>
+				</div>
+				<span class="mx-auto inline-block h-1 w-22.5 rounded bg-primary"></span>
 			</div>
-			<p class="px-6.5 py-4">
+			<p class="py-4">
 				Ces informations sont utilisées et affichées lors de la génération de facture.
 			</p>
 			<form action="#">
-				<div class="px-6.5 pb-6.5">
-				{% set classes = '' %}
+				<div class="">
+					{% set classes = '' %}
 
-					{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes }) }}
+					{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
 
 					{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
 
@@ -197,7 +202,7 @@
 
 					{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
 
-					<button class="btn w-full btn-md">
+					<button type="submit" class="btn w-full btn-md rounded-md">
 						Valider
 					</button>
 				</div>
