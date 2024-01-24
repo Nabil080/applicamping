@@ -1,0 +1,43 @@
+{% extends 'admin/settings/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% block title %}
+	Règles de réservation
+{% endblock %}
+
+{% block body %}
+	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
+		<h2 class="text-title-md font-bold">Tarifs</h2>
+		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
+			<button>Arrivés</button>
+			<button>Départs</button>
+			<button>Durée mini</button>
+			<button>Durée maxi</button>
+			<button>Plus</button>
+		</div>
+	</div>
+
+	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés')) }}
+	{{ crud.basic('Jours de départ', tables.jours('départs')) }}
+	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
+	{{ crud.basic('Offres', tables.offres('offres')) }}
+	<div class="crud">
+		<div>
+			<h4>Informations clients obligatoires</h4>
+		</div>
+		<div>
+			<h4>Emplacement</h4>
+		</div>
+		<div>
+			<h4>Méthodes de paiement</h4>
+		</div>
+		<div>
+			<h4>Acompte</h4>
+		</div>
+	
+	
+	</div>
+{% endblock %}
