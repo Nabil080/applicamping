@@ -41,10 +41,10 @@
 				</div>
 
 			</div>
-			<div class="text-end mt-2">
-				<a href="" class="clickable block">
+			<div class="flex justify-end mt-2">
+				<button data-modal-target="info-modal" data-modal-toggle="info-modal" class="clickable block">
 					Modifier
-				</a>
+				</button>
 			</div>
 		</article>
 
@@ -164,4 +164,46 @@
 		{{ cell.imageCard("Tarifs","app_admin_settings_tarifs",svg.bills(width,classes,stroke)) }}
 		{{ cell.imageCard("Options supplémentaires","app_admin_settings_options",svg.dog(width,classes,stroke)) }}
 	</div>
+{% endblock %}
+
+
+{% block modals %}
+
+	{% import "macro/inputs.html.twig" as input %}
+
+	<article id="info-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-999999 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+		<div class="min-w-[500px] rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+			<div class="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+				<h3 class="font-semibold text-black dark:text-white">
+					Informations camping
+				</h3>
+			</div>
+			<p class="px-6.5 py-4">
+				Ces informations sont utilisées et affichées lors de la génération de facture.
+			</p>
+			<form action="#">
+				<div class="px-6.5 pb-6.5">
+				{% set classes = '' %}
+
+					{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes }) }}
+
+					{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
+
+					{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
+
+					{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
+
+					{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
+
+					{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
+
+					<button class="btn w-full btn-md">
+						Valider
+					</button>
+				</div>
+			</form>
+		</div>
+	</article>
+
+
 {% endblock %}
