@@ -14,7 +14,7 @@ export default class extends Controller {
         this.buttons = this.element.querySelectorAll('button')
         this.tabs = document.querySelectorAll(this.selectorValue)
 
-        this.show(4)
+        this.show(0)
 
         this.buttons.forEach((button, index) => button.addEventListener('click', e => this.show(index)))
     }
