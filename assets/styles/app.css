@@ -69,10 +69,10 @@
     }
 
     .tabulation {
-        @apply flex border divide-x border-stroke divide-stroke max-lg:grid max-lg:grid-cols-2 max-lg:divide-y max-md:grid-cols-1
+        @apply flex border-collapse max-lg:grid max-lg:grid-cols-2 max-md:grid-cols-1
     }
     .tabulation button {
-        @apply btn see-more
+        @apply btn see-more border border-stroke
     }
     .tabulation button:hover, .tabulation button.active {
         @apply primary

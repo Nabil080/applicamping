@@ -3,14 +3,16 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
+{% set title = 'Règles de réservation' %}
+{% set options = { create: 'Ajouter une règle' } %}
 
 {% block title %}
-	Règles de réservation
+	{{ title }}
 {% endblock %}
 
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
-		<h2 class="text-title-md font-bold">Règles de réservation</h2>
+		<h2 class="text-title-md font-bold">{{ title }}</h2>
 		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
 			<button>Arrivés</button>
 			<button>Départs</button>
@@ -20,10 +22,10 @@
 		</div>
 	</div>
 
-	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés'), { create: 'Ajouter une règle' }) }}
-	{{ crud.basic('Jours de départ', tables.jours('départs'), { create: 'Ajouter une règle' }) }}
-	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
-	{{ crud.basic('Offres', tables.offres('offres')) }}
+	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés'), options) }}
+	{{ crud.basic('Jours de départ', tables.jours('départs'), options) }}
+	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), options) }}
+	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), options) }}
 	<div class="crud">
 		<div>
 			<h4>Informations clients obligatoires</h4>

@@ -704,7 +704,7 @@
 		<thead>
 			<tr>
 				<th scope="col">ID</th>
-				<th scope="col">Jours d'arrivées</th>
+				<th scope="col">Jours</th>
 				<th scope="col">Type d'hébergement</th>
 				<th scope="col">Saisons</th>
 				<th scope="col">Actions</th>
@@ -722,6 +722,54 @@
 						{% else %}
 							Lundi, Mercredi, Vendredi
 						{% endif %}
+					</td>
+					<td>
+						{% if i % 2 %}
+							Camping-Car
+						{% else %}
+							Tous
+						{% endif %}
+					</td>
+					<td>
+						{% if i % 3 %}
+							Saison 1
+						{% else %}
+							Tous
+						{% endif %}
+					</td>
+					<td>
+						<div class="actions">
+							{% set id = i %}
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro durée(durée = 'array des règles') %}
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Séjour</th>
+				<th scope="col">Type d'hébergement</th>
+				<th scope="col">Saisons</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for i in 1..5 %}
+				<tr>
+					<th scope="row">
+						{{ i }}
+					</th>
+					<td>
+						{{ (i + 8) * 2 }} nuits
 					</td>
 					<td>
 						{% if i % 2 %}
