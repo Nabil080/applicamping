@@ -1,0 +1,53 @@
+{% macro hebergement(i) %}
+	<article data-name="Camping-car" data-price="{{9 + i}}00" data-min-size="2" data-max-size="3" class="swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
+		<div class="overlay bg-main-500 opacity-0"></div>
+		<img class="rounded-t-lg" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
+		<div class="p-5 relative">
+			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">Camping-car</h5>
+			<p class="mb-3">
+				<span class="size">2/6 personnes</span>
+				<br>
+				<span class="amount">9/12 emplacements</span>
+			</p>
+			<div class="price absolute  right-4 bottom-4 ">{{ 9 + i }}€/nuit</div>
+		</div>
+	</article>
+{% endmacro %}
+
+{% macro hebergementAdmin(i) %}
+	{% import "macro/svg.html.twig" as svg %}
+	<article data-name="Camping-car" data-price="{{9 + i}}00" data-min-size="2" data-max-size="3" class="group crud flex relative text-black dark:text-white">
+		<button class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
+		<div class="max-w-md p-4">
+			<img class="border border-stroke" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
+		</div>
+		<div class="p-5 grow flex flex-col">
+			<h5 class="mb-2 text-title-lg font-bold">Camping-car (ID
+				{{ i }})</h5>
+			<div class="grow mb-3 text-lg">
+				<div>
+					<span class="font-semibold">Minimum :</span>
+					<span class="mini">1 personnes</span>
+				</div>
+				<div>
+					<span class="font-semibold">Maximum :</span>
+					<span class="maxi">5 personnes</span>
+				</div>
+				<div class="inline-flex gap-2 items-center">
+					<span class="font-semibold">Nombre d'emplacements :</span>
+					<span class="size">22</span>
+					<a href="#" class="text-primary">{{ svg.eye(26) }}</a>
+				</div>
+			</div>
+			<div class="flex justify-between items-end">
+				<div>
+					<span class="statut font-semibold">Statut :</span>
+					<span class="badge success">En service</span>
+				</div>
+				<div>
+					<button class="btn btn-md">Modifier</button>
+				</div>
+			</div>
+		</div>
+	</article>
+{% endmacro %}
