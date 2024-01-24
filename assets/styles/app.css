@@ -103,6 +103,10 @@
         @apply border-primary text-primary hover:bg-primary border bg-transparent hover:text-white;
     }
 
+    /* ? INPUTS */
+
+
+
     /* ? CRUD */
     .crud {
         @apply dark:bg-boxdark relative overflow-hidden bg-white shadow-md sm:rounded-sm;

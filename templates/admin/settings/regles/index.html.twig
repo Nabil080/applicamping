@@ -2,6 +2,7 @@
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
+{% import 'macro/inputs.html.twig' as inputs %}
 
 {% set title = 'Règles de réservation' %}
 {% set options = { create: 'Ajouter une règle' } %}
@@ -26,20 +27,35 @@
 	{{ crud.basic('Jours de départ', tables.jours('départs'), options) }}
 	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), options) }}
 	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), options) }}
-	<div class="crud">
+	<div class="crud p-8 flex gap-12">
 		<div>
-			<h4>Informations clients obligatoires</h4>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
+			{{ inputs.checkSlide('Nom',{ name:'name', checked: true }) }}
+			{{ inputs.checkSlide('Prénom',{ name:'name'  }) }}
+			{{ inputs.checkSlide('Email',{ name:'name'  }) }}
+			{{ inputs.checkSlide('Téléphone',{ name:'name'  }) }}
+			{{ inputs.checkSlide('Adresse',{ name:'name' }) }}
 		</div>
 		<div>
-			<h4>Emplacement</h4>
-		</div>
-		<div>
-			<h4>Méthodes de paiement</h4>
-		</div>
-		<div>
-			<h4>Acompte</h4>
-		</div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Emplacement</h4>
+			{{ inputs.checkSlide('Libre',{ name:'name' }) }}
+			{{ inputs.checkSlide('Aléatoire',{ name:'name' }) }}
+			{{ inputs.checkSlide('Défini',{ name:'name' }) }}
 
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Méthodes de paiement</h4>
+			{{ inputs.checkSlide('Carte bancaire',{ name:'name' }) }}
+			{{ inputs.checkSlide('Virement bancaire',{ name:'name' }) }}
+			{{ inputs.checkSlide('Chèque vacance',{ name:'name' }) }}
+			{{ inputs.checkSlide('Chèque',{ name:'name' }) }}
+			{{ inputs.checkSlide('Espèce',{ name:'name' }) }}
+
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Acompte</h4>
+			{{ inputs.checkSlide('Actif',{ name:'name' }) }}
+		</div>
 
 	</div>
 {% endblock %}
