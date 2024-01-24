@@ -3,16 +3,15 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
+{% set title = 'Réservations' %}
 
 {% block title %}
-	Réservations
+	{{ title }}
 {% endblock %}
 
-{% set title = 'Réservations' %}
-{% set tooltip = 'Toutes les réservations' %}
-{% set search_placeholder = 'Rechercher une réservation' %}
+{% set options = { filters: filters.reservations, pagination: true, search: true, tooltip: 'Toutes les réservations'} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.reservations('all'), filters.reservations, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.reservations('all'), options) }}
 {% endblock %}

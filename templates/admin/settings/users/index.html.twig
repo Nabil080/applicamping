@@ -3,16 +3,15 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
+{% set title = 'Gestionnaires' %}
 
 {% block title %}
-	Gestionnaires
+	{{ title }}
 {% endblock %}
 
-{% set title = 'Gestionnaires' %}
-{% set tooltip = 'Tous les utilisateurs avec le rôle administrateur' %}
-{% set search_placeholder = 'Rechercher un nom, prénom...' %}
+{% set options = {filters: filters.clients, pagination: true, search: 'Nom, prénom...', tooltip: 'Tous les administrateurs' } %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.admins('admins'), filters.clients, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.admins('admins'), options) }}
 {% endblock %}

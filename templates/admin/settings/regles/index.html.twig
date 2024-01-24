@@ -10,7 +10,7 @@
 
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
-		<h2 class="text-title-md font-bold">Tarifs</h2>
+		<h2 class="text-title-md font-bold">Règles de réservation</h2>
 		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
 			<button>Arrivés</button>
 			<button>Départs</button>
@@ -20,8 +20,8 @@
 		</div>
 	</div>
 
-	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés')) }}
-	{{ crud.basic('Jours de départ', tables.jours('départs')) }}
+	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés'), { create: 'Ajouter une règle' }) }}
+	{{ crud.basic('Jours de départ', tables.jours('départs'), { create: 'Ajouter une règle' }) }}
 	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
 	{{ crud.basic('Offres', tables.offres('offres')) }}
 	<div class="crud">
@@ -37,7 +37,7 @@
 		<div>
 			<h4>Acompte</h4>
 		</div>
-	
-	
+
+
 	</div>
 {% endblock %}

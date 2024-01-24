@@ -3,16 +3,15 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
+{% set title = 'Registre' %}
 
 {% block title %}
-	Registre
+	{{ title }}
 {% endblock %}
 
-{% set title = 'Registre' %}
-{% set tooltip = 'Messages registres' %}
-{% set search_placeholder = 'Recherche...' %}
+{% set options = {filters: filters.paiements, pagination: true, search: true, tooltip: "Messages registres"} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.logs('array des messages'), filters.paiements, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.logs('array des messages'), options) }}
 {% endblock %}
