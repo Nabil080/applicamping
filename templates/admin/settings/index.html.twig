@@ -187,8 +187,8 @@
 
 	{% import "macro/inputs.html.twig" as input %}
 
-	<article open="true" id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden">
-		<div class="p-6.5 min-w-[500px] crud rounded-md max-h-[90dvh] overflow-y-scroll text-black dark:text-white">
+	<article open="true" id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden" data-modal-backdrop="static">
+		<div class="p-6.5 min-w-[50dvw] crud rounded-md max-h-[90dvh] overflow-y-scroll lg:overflow-hidden text-black dark:text-white">
 			<div class="relative">
 				<div class="flex items-center justify-between">
 					<h3 class="text-xl font-bold sm:text-2xl">
@@ -204,33 +204,40 @@
 			</p>
 
 			{{ form_start(campingForm) }}
-			{{form_widget(campingForm, {'attr': {'class': 'grid grid-cols-2 gap-x-2.5 '}})}}
+			{{form_widget(campingForm, {'attr': {'class': 'lg:grid grid-cols-2 gap-x-2.5 '}})}}
 			<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
 			{{ form_end(campingForm) }}
 
-			{# <form action="#">
-											<div class="">
-												{% set classes = '' %}
-						
-												{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
-						
-												{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
-						
-												{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
-						
-												{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
-						
-												{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
-						
-												{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
-						
-												<button type="submit" class="btn w-full btn-md rounded-md">
-													Valider
-												</button>
-											</div>
-										</form> #}
 		</div>
 	</article>
 
 
+{% endblock %}
+
+
+
+
+{% block comment %}
+
+	<form action="#">
+		<div class="">
+			{% set classes = '' %}
+
+			{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+
+			{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
+
+			{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
+
+			{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
+
+			{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
+
+			{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
+
+			<button type="submit" class="btn w-full btn-md rounded-md">
+				Valider
+			</button>
+		</div>
+	</form>
 {% endblock %}

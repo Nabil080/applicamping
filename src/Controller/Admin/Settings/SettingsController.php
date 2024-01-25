@@ -5,7 +5,9 @@ namespace App\Controller\Admin\Settings;
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,11 +20,20 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/', name: '')]
-    public function index(CampingRepository $campingRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManagerInterface, CampingRepository $campingRepository): Response
     {
-
         $camping = $campingRepository->findOneBy([]);
+
         $campingForm = $this->createForm(CampingType::class, $camping);
+        $campingForm->handleRequest($request);
+
+
+        if ($campingForm->isSubmitted() && $campingForm->isValid()) {
+            $camping = $campingForm->getData();
+
+            $entityManagerInterface->persist($camping);
+            $entityManagerInterface->flush();
+        }
 
 
         return $this->render($this->getPath('index'), [

@@ -5,6 +5,8 @@ namespace App\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomEmailType extends AbstractType
 {
@@ -20,6 +22,10 @@ class CustomEmailType extends AbstractType
                 'class' => 'text-xl'
             ],
             'label' => "Adresse email",
+            'constraints' => [
+                new NotBlank,
+                new Length(['min' => 7, 'max' => 10])
+            ]
         ]);
     }
 

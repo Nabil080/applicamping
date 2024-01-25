@@ -5,18 +5,26 @@ namespace App\Form;
 use App\Entity\Camping;
 use App\Form\Type\CustomEmailType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class CampingType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('nom', TextType::class, [
+                'constraints' => []
+            ])
             ->add('adresse')
             ->add('telephone')
-            ->add('email', CustomEmailType::class) // Use the custom email form type
+            ->add('email', CustomEmailType::class, [
+                'constraints' => [
+                    new Length(['min' => 7, 'max' => 10])
+                ]
+            ])
             ->add('site')
             ->add('code_naf')
             ->add('capital')
