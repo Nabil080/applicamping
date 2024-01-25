@@ -22,4 +22,68 @@ class SettingsController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/logs', name: '_logs')]
+    public function logs(): Response
+    {
+        return $this->render($this->getPath('logs/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/users', name: '_users')]
+    public function users(): Response
+    {
+        return $this->render($this->getPath('users/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/saisons', name: '_saisons')]
+    public function saisons(): Response
+    {
+        return $this->render($this->getPath('saisons/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/options', name: '_options')]
+    public function options(): Response
+    {
+        return $this->render($this->getPath('options/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/emplacements', name: '_emplacements')]
+    public function emplacements(): Response
+    {
+        return $this->render($this->getPath('emplacements/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/tarifs', name: '_tarifs')]
+    public function tarifs(): Response
+    {
+        return $this->render($this->getPath('tarifs/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/rules', name: '_regles')]
+    public function regles(): Response
+    {
+        return $this->render($this->getPath('regles/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/hebergements', name: '_hebergements')]
+    public function hebergements(): Response
+    {
+        return $this->render($this->getPath('hebergements/index'), [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }

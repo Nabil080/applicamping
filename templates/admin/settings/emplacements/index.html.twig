@@ -1,0 +1,17 @@
+{% extends 'admin/settings/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+{% set title = 'Emplacements' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% set options = { filters: filters.clients, pagination: true, search: "Rechercher un ID, un N°, un emplacement...", tooltip: 'Tous les emplacements'} %}
+
+
+{% block body %}
+	{{ crud.basic(title, tables.emplacements('emplacements'), options) }}
+{% endblock %}

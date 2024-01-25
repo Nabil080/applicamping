@@ -65,7 +65,17 @@
 
     /* ? Général */
     .basic-card {
-        @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white 
+        @apply border-stroke shadow-default dark:border-strokedark dark:bg-boxdark rounded-sm border bg-white px-7.5 py-4 
+    }
+
+    .tabulation {
+        @apply flex border-collapse max-lg:grid max-lg:grid-cols-2 max-md:grid-cols-1
+    }
+    .tabulation button {
+        @apply btn see-more border border-stroke
+    }
+    .tabulation button:hover, .tabulation button.active {
+        @apply primary
     }
 
     /* ? links  */
@@ -84,6 +94,9 @@
     .btn-sm {
         @apply gap-1.5 py-2 px-4 text-sm;
     }
+    .btn-md {
+        @apply gap-1.5 px-6 py-3 text-base;
+    }
 
     .btn-secondary {
         @apply bg-secondary;
@@ -92,6 +105,10 @@
     .btn-border {
         @apply border-primary text-primary hover:bg-primary border bg-transparent hover:text-white;
     }
+
+    /* ? INPUTS */
+
+
 
     /* ? CRUD */
     .crud {
@@ -252,8 +269,11 @@
     .btn.delete {
         @apply border-danger text-danger hover:bg-danger hover:text-white;
     }
-    .btn.see-more {
+    .btn.see-more, .see-more {
         @apply text-gray-900 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
+    }
+    .btn.primary, .primary {
+        @apply bg-primary text-white;
     }
 
     .btn.delete svg,
@@ -326,6 +346,10 @@
         padding: 2rem;
     }
 
+    /* .no-hover:hover {
+        all: initial !important
+    } */
+
     /* ! input/label */
 
     .floating-input {
@@ -339,10 +363,17 @@
     div:has(> .floating-input:required) .floating-label::after {
         content: "*";
     }
-
 }
 
 /* third-party libraries CSS */
+
+/* ! modal */
+[modal-backdrop] {
+    @apply z-99999
+}
+.modal {
+    @apply overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-999999 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full
+}
 
 .tableCheckbox:checked~div span {
     @apply opacity-100;

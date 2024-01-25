@@ -1,0 +1,31 @@
+{% macro checkSlide(text, option = {})  %}
+
+	{% set checked = option.checked is defined ? 'checked' : '' %}
+	{% set name = option.name is defined ? "name='" ~ option.name ~ "'"  : '' %}
+	{% set value = option.value is defined ? "value='" ~ option.value ~ "'" : '' %}
+
+	{% set color = option.color|default('main-600') %}
+	{% set inputClasses = option.inputClasses|default('') %}
+	{% set textClasses = option.textClasses|default('') %}
+
+	<label class="relative flex items-center cursor-pointer">
+		<input type="checkbox" class="sr-only peer" {{ checked }} {{ value }} {{ name }}>
+		<div class="{{ inputClasses }} w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-main-300 dark:peer-focus:ring-main-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-{{color}}"></div>
+		<span class="{{ textClasses }} ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ text }}</span>
+	</label>
+{% endmacro %}
+
+{% macro text(text, option = {}) %}
+
+	{% set placeholder = option.placeholder|default('') %}
+	{% set name = option.name|default('') %}
+	{% set inputClasses = option.inputClasses|default('') %}
+	{% set attributes = option.attributes|default('') %}
+
+	<div class="mb-4.5">
+		<label class="mb-2.5 block text-black dark:text-white">
+			{{ text }}
+		</label>
+		<input type="text" {{ attributes }} placeholder="{{ placeholder }}" name="{{ name }}" class="{{ inputClasses }} w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+	</div>
+{% endmacro %}

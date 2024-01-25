@@ -1,0 +1,18 @@
+{% extends 'admin/settings/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% block title %}
+	Saisons
+{% endblock %}
+
+{% set title = 'Saisons' %}
+{% set tooltip = 'Tous les utilisateurs avec le rôle administrateur' %}
+{% set search_placeholder = 'Recherche...' %}
+
+
+{% block body %}
+	{{ crud.basic(title, tables.saisons('saisons'), filters.clients, search_placeholder, tooltip) }}
+{% endblock %}

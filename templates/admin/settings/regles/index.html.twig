@@ -1,0 +1,84 @@
+{% extends 'admin/settings/base.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+{% import 'macro/inputs.html.twig' as inputs %}
+{% import 'macro/svg.html.twig' as svg %}
+
+{% set title = 'Règles de réservation' %}
+{% set options = { create: 'Ajouter une règle' } %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
+		<h2 class="text-title-md font-bold">{{ title }}</h2>
+		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
+			<button>Arrivés</button>
+			<button>Départs</button>
+			<button>Durée mini</button>
+			<button>Durée maxi</button>
+			<button>Plus</button>
+		</div>
+	</div>
+
+	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés'), options) }}
+	{{ crud.basic('Jours de départ', tables.jours('départs'), options) }}
+	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), options) }}
+	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), options) }}
+	<div class="crud px-12 py-8 flex gap-16">
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
+			<div class="grid gap-2 mt-4">
+				{{ inputs.checkSlide('Nom',{ name:'name', checked: true }) }}
+				{{ inputs.checkSlide('Prénom',{ name:'name', inputClasses:'peer-checked:bg-black', checked:true  }) }}
+				{{ inputs.checkSlide('Email',{ name:'name'  }) }}
+				{{ inputs.checkSlide('Téléphone',{ name:'name'  }) }}
+				{{ inputs.checkSlide('Adresse',{ name:'name' }) }}
+			</div>
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Emplacement</h4>
+			<div class="grid gap-4 mt-6">
+				{{ inputs.checkSlide('Libre',{ name:'name' }) }}
+				{{ inputs.checkSlide('Aléatoire',{ name:'name' }) }}
+				<div>
+					{{ inputs.checkSlide('Défini',{ name:'name' }) }}
+					<a href="#" class="mt-4 text-sm font-semibold details">
+						Définir l'ordre de prio
+					</a>
+				</div>
+			</div>
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Méthodes de paiement</h4>
+			<div class="grid gap-4 mt-6">
+				{{ inputs.checkSlide('Carte bancaire',{ name:'name' }) }}
+				{{ inputs.checkSlide('Virement bancaire',{ name:'name' }) }}
+				{{ inputs.checkSlide('Chèque vacance',{ name:'name' }) }}
+				{{ inputs.checkSlide('Chèque',{ name:'name' }) }}
+				{{ inputs.checkSlide('Espèce',{ name:'name' }) }}
+			</div>
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Acompte</h4>
+			<div class="grid gap-4 mt-6">
+				{{ inputs.checkSlide('Actif',{ name:'name' }) }}
+				<div class="inline-flex gap-2 items-center text-black dark:text-white">
+					Montant :
+					<span>
+						20%</span>
+					<a href="">
+						{{ svg.edit(20)}}
+					</a>
+				</div>
+				<div class="-translate-y-2">
+					{{ inputs.checkSlide('Acompte seul à la réservation') }}
+				</div>
+			</div>
+		</div>
+
+	</div>
+{% endblock %}
