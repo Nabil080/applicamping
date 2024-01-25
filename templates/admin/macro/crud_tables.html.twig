@@ -256,30 +256,29 @@
 	</table>
 {% endmacro %}
 
-{% macro logs(user = 'array des logs') %}
+{% macro logs(logs) %}
 	{% import 'macro/svg.html.twig' as svg %}
 	<table>
 		<thead>
 			<tr>
 				<th scope="col">ID</th>
 				<th scope="col">Utilisateur</th>
-				<th scope="col">Type</th>
-				<th scope="col">Contexte</th>
 				<th scope="col">Date</th>
+				<th scope="col">Contexte</th>
+				<th scope="col">Type</th>
 				<th scope="col">Message</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for i in 1..10 %}
-				{% set id = i %}
+			{% for log in logs %}
 				<tr>
 					<th scope="row">
-						{{ id }}
+						{{ log.id }}
 					</th>
 					<td>
-						BELLILA
+						{{ log.user.nom|upper }}
 						<br>
-						Nabil
+						{{ log.user.prenom }}
 						<br>
 					</td>
 					<td>
@@ -292,14 +291,16 @@
 							<div class="text-body">
 								{{ svg.blueCard(24) }}
 							</div>
-							Paiement
+							{{ log.contexte }}
 						</div>
 					</td>
 					<td>
-						<span class="text-danger">Suppression</span>
+						<span class="text-danger">
+							{{ log.type }}
+						</span>
 					</td>
 					<td>
-						SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE SUPER MESSAGE DE LA MORT QUI TUE
+						{{ log.message }}
 					</td>
 				</tr>
 			{% endfor %}
@@ -769,7 +770,8 @@
 						{{ i }}
 					</th>
 					<td>
-						{{ (i + 8) * 2 }} nuits
+						{{ (i + 8) * 2 }}
+						nuits
 					</td>
 					<td>
 						{% if i % 2 %}

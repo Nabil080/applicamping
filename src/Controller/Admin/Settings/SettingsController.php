@@ -51,10 +51,12 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/logs', name: '_logs')]
-    public function logs(): Response
+    public function logs(LogRepository $logRepository): Response
     {
+        $logs = $logRepository->findAll();
+
         return $this->render($this->getPath('logs/index'), [
-            'controller_name' => 'AdminController',
+            'logs' => $logs,
         ]);
     }
 
