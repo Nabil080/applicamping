@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Settings;
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
 use App\Repository\UserRepository;
+use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/', name: '')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface, CampingRepository $campingRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository): Response
     {
         $camping = $campingRepository->findOneBy([]);
 
@@ -32,7 +33,11 @@ class SettingsController extends AbstractController
             $camping = $campingForm->getData();
 
             $entityManagerInterface->persist($camping);
-            $entityManagerInterface->flush();
+
+            $message = "Les informations du camping ont été modifiés";
+            $context = "Camping";
+            $type = "Modification";
+            $logService->write($message, $context, $type);
         }
 
 

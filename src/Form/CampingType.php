@@ -21,9 +21,7 @@ class CampingType extends AbstractType
             ->add('adresse')
             ->add('telephone')
             ->add('email', CustomEmailType::class, [
-                'constraints' => [
-                    new Length(['min' => 7, 'max' => 10])
-                ]
+                'constraints' => []
             ])
             ->add('site')
             ->add('code_naf')

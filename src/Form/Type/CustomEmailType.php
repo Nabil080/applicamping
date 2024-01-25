@@ -22,10 +22,10 @@ class CustomEmailType extends AbstractType
                 'class' => 'text-xl'
             ],
             'label' => "Adresse email",
-            'constraints' => [
-                new NotBlank,
-                new Length(['min' => 7, 'max' => 10])
-            ]
+            // 'constraints' => [
+            //     new NotBlank,
+            //     new Length(['min' => 7, 'max' => 10])
+            // ]
         ]);
     }
 
