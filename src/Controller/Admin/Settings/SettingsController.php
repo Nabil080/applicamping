@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Settings;
 
+use App\Form\CampingType;
 use App\Repository\CampingRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +22,12 @@ class SettingsController extends AbstractController
     {
 
         $camping = $campingRepository->findOneBy([]);
+        $campingForm = $this->createForm(CampingType::class, $camping);
+
 
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
+            'campingForm' => $campingForm,
         ]);
     }
 

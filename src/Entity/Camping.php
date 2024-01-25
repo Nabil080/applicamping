@@ -20,7 +20,7 @@ class Camping
     private ?string $adresse = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $téléphone = null;
+    private ?string $telephone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -66,14 +66,14 @@ class Camping
         return $this;
     }
 
-    public function getTéléphone(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->téléphone;
+        return $this->telephone;
     }
 
-    public function setTéléphone(string $téléphone): static
+    public function setTelephone(string $telephone): static
     {
-        $this->téléphone = $téléphone;
+        $this->telephone = $telephone;
 
         return $this;
     }

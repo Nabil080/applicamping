@@ -33,11 +33,27 @@
 				</div>
 				<div>
 					<span class="font-semibold">Tel :</span>
-					{{ camping.téléphone}}
+					{{ camping.telephone}}
 				</div>
 				<div>
 					<span class="font-semibold">Mail :</span>
 					{{ camping.email }}
+				</div>
+				<div>
+					<span class="font-semibold">Site :</span>
+					{{ camping.site }}
+				</div>
+				<div>
+					<span class="font-semibold">Code NAF :</span>
+					{{ camping.codeNaf }}
+				</div>
+				<div>
+					<span class="font-semibold">Capital :</span>
+					{{ camping.capital }}
+				</div>
+				<div>
+					<span class="font-semibold">Forme juridique :</span>
+					{{ camping.formeJuridique }}
 				</div>
 
 			</div>
@@ -53,7 +69,7 @@
 				Dernières actions
 			</h4>
 
-			<div class="overflow-y-scroll grow max-h-60 xl:h-1">
+			<div class="overflow-y-scroll grow max-h-60 xl:max-h-none xl:h-1">
 				{% for i in 1..10 %}
 					<a href="messages.html" class="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4 text-black dark:text-bodydark">
 						<div class="relative h-8 w-8 rounded-full">
@@ -171,42 +187,48 @@
 
 	{% import "macro/inputs.html.twig" as input %}
 
-	<article id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden">
-		<div class="p-6.5 min-w-[500px] crud rounded-md">
+	<article open="true" id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden">
+		<div class="p-6.5 min-w-[500px] crud rounded-md max-h-[90dvh] overflow-y-scroll text-black dark:text-white">
 			<div class="relative">
 				<div class="flex items-center justify-between">
-					<h3 class="text-xl font-bold text-black dark:text-white sm:text-2xl">
+					<h3 class="text-xl font-bold sm:text-2xl">
 						Informations camping
 					</h3>
-					<button data-modal-target="info-modal" data-modal-hide="info-modal" class="rounded-lg  hover:bg-bodydark p-1.5">
+					<button data-modal-target="info-modal" data-modal-hide="info-modal" class="rounded-lg hover:bg-bodydark p-1.5">
 						{{ svg.cross(26) }}</button>
 				</div>
 				<span class="mx-auto inline-block h-1 w-22.5 rounded bg-primary"></span>
 			</div>
-			<p class="py-4">
+			<p class="py-4 text-body dark:text-bodydark">
 				Ces informations sont utilisées et affichées lors de la génération de facture.
 			</p>
-			<form action="#">
-				<div class="">
-					{% set classes = '' %}
 
-					{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+			{{ form_start(campingForm) }}
+			{{form_widget(campingForm, {'attr': {'class': 'grid grid-cols-2 gap-x-2.5 '}})}}
+			<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
+			{{ form_end(campingForm) }}
 
-					{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
-
-					{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
-
-					{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
-
-					{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
-
-					{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
-
-					<button type="submit" class="btn w-full btn-md rounded-md">
-						Valider
-					</button>
-				</div>
-			</form>
+			{# <form action="#">
+											<div class="">
+												{% set classes = '' %}
+						
+												{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+						
+												{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
+						
+												{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
+						
+												{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
+						
+												{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
+						
+												{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
+						
+												<button type="submit" class="btn w-full btn-md rounded-md">
+													Valider
+												</button>
+											</div>
+										</form> #}
 		</div>
 	</article>
 
