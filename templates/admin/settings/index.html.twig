@@ -70,22 +70,30 @@
 			</h4>
 
 			<div class="overflow-y-scroll grow max-h-60 xl:max-h-none xl:h-1">
-				{% for i in 1..10 %}
+				{% for log in logs %}
 					<a href="messages.html" class="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4 text-black dark:text-bodydark">
 						<div class="relative h-8 w-8 rounded-full">
-							{{ svg.blueCard }}
+							{% if log.contexte is same as 'camping' %}
+								{{ svg.blueCard }}
+							{% elseif log.contexte is same as 'paiement' %}
+								{{ svg.blueCard }}
+							{% else %}
+								{{ svg.blueCard }}
+							{% endif %}
 						</div>
-						<div class="flex flex-1 items-center justify-between">
+						<div class="flex flex-1 items-end justify-between">
 							<div>
 								<h5 class="font-medium dark:font-semibold">
-									Nabil bellila
+									{{ log.user.prenom }}
+									{{ log.user.nom }}
 								</h5>
 								<p>
-									<span class="text-sm font-medium">Ajout d'un paiement (réservation)</span>
+									<span class="text-sm font-medium">{{ log.message }}</span>
 								</p>
 							</div>
 							<div>
-								<span class="text-xs text-body">15 nov, 12h26</span>
+								{# <span class="text-xs text-body">15 nov, 12h26</span> #}
+								<span class="text-xs text-body">{{ log.date|format_datetime() }}</span>
 							</div>
 						</div>
 					</a>
@@ -213,8 +221,6 @@
 
 
 {% endblock %}
-
-
 
 
 {% block comment %}

@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Settings;
 
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
+use App\Repository\LogRepository;
 use App\Repository\UserRepository;
 use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +22,7 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/', name: '')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
     {
         $camping = $campingRepository->findOneBy([]);
 
@@ -35,15 +36,17 @@ class SettingsController extends AbstractController
             $entityManagerInterface->persist($camping);
 
             $message = "Les informations du camping ont été modifiés";
-            $context = "Camping";
+            $context = "camping";
             $type = "Modification";
             $logService->write($message, $context, $type);
         }
 
+        $logs = $logRepository->findBy([],[], 10);
 
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
             'campingForm' => $campingForm,
+            'logs' => $logs
         ]);
     }
 
