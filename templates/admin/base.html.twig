@@ -21,12 +21,7 @@
 	</head>
 	<body data-turbo="true" x-data="{ page: '{{app.request.get('_route')}}', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
 
-{# {{ dump(app.request.get('_route')  )  }} #}
-
-
-		<!-- ===== Preloader Start ===== -->
-			{% include "admin/include/preloader.html.twig" %}
-		<!-- ===== Preloader End ===== -->
+		{# {{ dump(app.request.get('_route')  )  }} #}
 
 		<!-- ===== Page Wrapper Start ===== -->
 			<div
@@ -41,7 +36,8 @@
 				<!-- ===== Header End ===== -->
 
 				<!-- ===== Main Content Start ===== -->
-					<main>
+					<main class="relative">
+					{% include "admin/include/preloader.html.twig" %}
 						<div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">{% block body %}{% endblock %} </div>
 					</main>
 					<!-- ===== Main Content End ===== -->

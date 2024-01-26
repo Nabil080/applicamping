@@ -7,25 +7,24 @@ import { Controller } from '@hotwired/stimulus';
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     connect() {
-        window.addEventListener("load", this.element.remove());
+        this.hide();
+        // this.setupTurboEventListeners()
+    }
+
+    setupTurboEventListeners() {
+        document.addEventListener('turbo:before-fetch-response', () => this.show());
+
+        document.addEventListener('turbo:load', () => this.hide());
     }
 
     show() {
-        this.element.innerHTML = this.html
         this.element.classList.remove('hidden')
     }
 
     hide() {
-        this.element.innerHTML = ""
         this.element.classList.add('hidden')
     }
-
-    get html() {
-        return `
-            <div {{ stimulus_controller('preloader') }} class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white">
-                <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
-            </div>
-        `
-    }
+    
 
 }
+
