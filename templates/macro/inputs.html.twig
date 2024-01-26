@@ -4,7 +4,7 @@
 	{% set name = option.name is defined ? "name='" ~ option.name ~ "'"  : '' %}
 	{% set value = option.value is defined ? "value='" ~ option.value ~ "'" : '' %}
 
-	{% set color = option.color|default('main-600') %}
+	{% set color = option.color|default('primary') %}
 	{% set inputClasses = option.inputClasses|default('') %}
 	{% set textClasses = option.textClasses|default('') %}
 

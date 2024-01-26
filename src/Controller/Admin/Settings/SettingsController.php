@@ -39,9 +39,11 @@ class SettingsController extends AbstractController
             $context = "camping";
             $type = "Modification";
             $logService->write($message, $context, $type);
+
+            // return $this->redirectToRoute('app_admin_settings');
         }
 
-        $logs = $logRepository->findBy([],[], 10);
+        $logs = $logRepository->findBy([],["id" => "DESC"], 10);
 
         return $this->render($this->getPath('index'), [
             'camping' => $camping,

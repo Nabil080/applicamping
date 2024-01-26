@@ -58,7 +58,7 @@
 
 			</div>
 			<div class="flex justify-end mt-2">
-				<button data-modal-target="info-modal" data-modal-toggle="info-modal" class="clickable block">
+				<button data-modal-open="info-modal" class="clickable block">
 					Modifier
 				</button>
 			</div>
@@ -195,14 +195,14 @@
 
 	{% import "macro/inputs.html.twig" as input %}
 
-	<article open="true" id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden" data-modal-backdrop="static">
+	<article {{ stimulus_controller('modal') }} id="info-modal" class="modal hidden">
 		<div class="p-6.5 min-w-[50dvw] crud rounded-md max-h-[90dvh] overflow-y-scroll lg:overflow-hidden text-black dark:text-white">
 			<div class="relative">
 				<div class="flex items-center justify-between">
 					<h3 class="text-xl font-bold sm:text-2xl">
 						Informations camping
 					</h3>
-					<button data-modal-target="info-modal" data-modal-hide="info-modal" class="rounded-lg hover:bg-bodydark p-1.5">
+					<button {{ stimulus_action('modal','hide') }} class="rounded-lg hover:bg-bodydark p-1.5">
 						{{ svg.cross(26) }}</button>
 				</div>
 				<span class="mx-auto inline-block h-1 w-22.5 rounded bg-primary"></span>
