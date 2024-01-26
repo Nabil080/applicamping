@@ -9,8 +9,17 @@ export default class extends Controller {
     }
 
     connect() {
-        let options = this.options
-        new ApexCharts(this.divTarget, options).render()
+        // document.addEventListener("DOMContentLoaded", this.render());  
+        this.render()      
+    }
+
+    render() {
+        this.divTarget.innerHTML = ""
+        new ApexCharts(this.divTarget, this.options).render()
+    }
+
+    disconnect() {
+        console.log('bye to pie');
     }
 
     get options() {
