@@ -33,8 +33,7 @@
 			<button {{ stimulus_target('step', 'next') }} class="btn">Suivant</button>
 		</section>
 		{# !!!! PROGRESS BAR !!!! #}
-		<section
-			{{ stimulus_target('step', 'progress') }} id="progress" class="flex mx-0 my-20 gap-16 justify-center">
+		<section {{ stimulus_target('step', 'progress') }} id="progress" class="flex mx-0 my-20 gap-16 justify-center">
 			<ol class="items-center space-y-4 sm:flex sm:space-x-12 sm:space-y-0 text-lg">
 				<li class="progress-item before">
 					<span>1</span>
@@ -87,4 +86,14 @@
 
 		</section>
 	</section>
+{% endblock %}
+
+
+{% block scripts %}
+
+	<script>
+		document.addEventListener('turbo:load', () => {
+$('select[multiple]').select2({closeOnSelect: false, language: 'fr', selectionCssClass: 'custom-select2'});
+});
+	</script>
 {% endblock %}
