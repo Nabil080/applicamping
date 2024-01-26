@@ -293,6 +293,9 @@
     .badge.warning {
         @apply bg-warning bg-opacity-20 text-warning 
     }
+    .badge.danger {
+        @apply bg-danger bg-opacity-20 text-danger 
+    }
 
 
     /* * text * */
