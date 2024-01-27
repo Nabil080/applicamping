@@ -9,13 +9,17 @@ export default class extends Controller {
     }
 
     connect() {
-        // document.addEventListener("DOMContentLoaded", this.render());  
-        this.render()      
+        document.addEventListener('turbo:before-fetch-request', () => this.hide());
+        document.addEventListener("turbo:load", this.render());  
     }
 
     render() {
-        this.divTarget.innerHTML = ""
+        this.hide()
         new ApexCharts(this.divTarget, this.options).render()
+    }
+
+    hide() {
+        this.divTarget.innerHTML = ""
     }
 
     disconnect() {

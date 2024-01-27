@@ -1,0 +1,11 @@
+{
+    "log": {
+        "type": [
+            "ajout",
+            "modification"
+        ],
+        "contexte": [
+            "camping"
+        ]
+    }
+}

@@ -37,7 +37,7 @@ class SettingsController extends AbstractController
 
             $message = "Les informations du camping ont été modifiés";
             $context = "camping";
-            $type = "Modification";
+            $type = "modification";
             $logService->write($message, $context, $type);
 
             // return $this->redirectToRoute('app_admin_settings');
