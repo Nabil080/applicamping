@@ -25,9 +25,13 @@
 		</div>
 	</div>
 
+	<pre>
+		{{ dump(hebergements) }}
+	</pre>
+
 	<section class="grid gap-12 mt-6">
-		{% for i in 1..10 %}
-			{{ cards.hebergementAdmin(i) }}
+		{% for hebergement in hebergements %}
+			{{ cards.hebergementAdmin(hebergement) }}
 		{% endfor %}
 	</section>
 

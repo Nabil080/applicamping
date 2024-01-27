@@ -144,7 +144,7 @@
 				</div>
 			</section>
 			<section class="grid gap-2  grow">
-				<button class="btn">Types d'hébèrgements</button>
+				<a href={{ path('app_admin_settings_hebergements') }} class="btn">Hébèrgements</a>
 				<a href={{ path('app_admin_settings_emplacements') }} class="btn">Emplacements</a>
 				<button class="btn">Carte interactive</button>
 			</section>
@@ -157,12 +157,12 @@
 					<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
 						Saison en cours
 					</h4>
-					<a href={{ path('app_admin_settings_saisons') }} class=" clickable xl:block">
+					<a href={{ path('app_admin_settings_saisons') }} class="clickable xl:block">
 						Voir les saisons
 					</a>
 				</div>
 				<div class="grid">
-					<button class="btn max-xl:px-2 btn">Haute saison 2023</button>
+					<button class="btn max-xl:px-2 btn pointer-events-none">Haute saison 2023</button>
 				</div>
 			</div>
 			<div class="space-y-2">

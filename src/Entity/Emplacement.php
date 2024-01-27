@@ -6,8 +6,10 @@ use App\Repository\EmplacementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: EmplacementRepository::class)]
+#[UniqueEntity('numero')]
 class Emplacement
 {
     #[ORM\Id]
@@ -23,7 +25,7 @@ class Emplacement
 
     #[ORM\ManyToOne(inversedBy: 'emplacements')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Hebergement $Hebergement = null;
+    private ?Hebergement $hebergement = null;
 
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: reservation::class)]
     private Collection $reservation;
@@ -68,12 +70,12 @@ class Emplacement
 
     public function getHebergement(): ?Hebergement
     {
-        return $this->Hebergement;
+        return $this->hebergement;
     }
 
-    public function setHebergement(?Hebergement $Hebergement): static
+    public function setHebergement(?Hebergement $hebergement): static
     {
-        $this->Hebergement = $Hebergement;
+        $this->hebergement = $hebergement;
 
         return $this;
     }

@@ -2,8 +2,10 @@
 
 namespace App\Controller\Admin\Settings;
 
+use App\Entity\Hebergement;
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
+use App\Repository\HebergementRepository;
 use App\Repository\LogRepository;
 use App\Repository\UserRepository;
 use App\Service\LogService;
@@ -111,10 +113,16 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/hebergements', name: '_hebergements')]
-    public function hebergements(): Response
+    public function hebergements(HebergementRepository $hebergementRepository): Response
     {
+        $hebergements = $hebergementRepository->findAll() ;
+        foreach($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
+
+        
+        dd($hebergements);
+
         return $this->render($this->getPath('hebergements/index'), [
-            'controller_name' => 'AdminController',
+            'hebergements' => $hebergements,
         ]);
     }
 }
