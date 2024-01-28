@@ -33,18 +33,18 @@
 				</div>
 			</form>
 		</div>
-		<!-- Card Item End -->
+
 		{% set size = 22 %}
 
 		{% set more = {text: 'Ouvrir la caisse', link:path('app_admin') } %}
-		{{ cell.numberCard('Caisse du jour','1520€',more,svg.shoppingCart(size))}}
+		{{ cell.numberCard('Caisse du jour',total.paiements.day,more,svg.shoppingCart(size))}}
 
 
 		{% set more = {text: 'Voir plus', link:path('app_admin') } %}
-		{{ cell.numberCard('Réservations','36.562',more,svg.shoppingBag(size))}}
+		{{ cell.numberCard('Réservations',total.reservations,more,svg.shoppingBag(size))}}
 
 		{% set more = {text: 'Voir les clients', link:path('app_admin') } %}
-		{{ cell.numberCard('Utilisateurs','3.456',more,svg.users(size))}}
+		{{ cell.numberCard('Utilisateurs','3.456',total.users.clients,svg.users(size))}}
 
 	</div>
 
@@ -57,6 +57,7 @@
 		</div>
 		<!-- ====== Graphique emplacements occupés -->
 
+{# TODO : intégration back #}
 		{% set title = '12 Emplacements occupés' %}
 		{% set more = {text: 'Réservations correspondantes', link: path('app_admin') } %}
 		{% set series = [80, 34, 45, 12] %}
@@ -74,6 +75,7 @@
 
 		{{ cell.pieChart(title,more,series,labels) }}
 		<!-- ====== Graphique emplacements libres -->
+{# TODO : intégration back #}
 
 		<!-- ! check in / check out / planning -->
 

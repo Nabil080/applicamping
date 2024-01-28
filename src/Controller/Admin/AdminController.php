@@ -51,6 +51,7 @@ class AdminController extends AbstractController
     public function createRedirect(Request $rq): Response
     {
 
+
         return $this->redirect($rq->headers->get('referer') . "/create");
     }
 }

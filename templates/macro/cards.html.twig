@@ -16,10 +16,11 @@
 
 {% macro hebergementAdmin(hebergement) %}
 	{% import "macro/svg.html.twig" as svg %}
+	{% import "macro/badges.html.twig" as badge %}
 	<article class="group crud flex relative text-black dark:text-white">
 		<button class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
 		<div class="max-w-md p-4">
-			<img class="border border-stroke" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
+			<img class="border border-stroke" src={{ hebergement.image }} alt=""/>
 		</div>
 		<div class="p-5 grow flex flex-col">
 			<h5 class="mb-2 text-title-lg font-bold">{{ hebergement.nom }}
@@ -38,18 +39,14 @@
 				</div>
 				<div class="inline-flex gap-2 items-center">
 					<span class="font-semibold">Nombre d'emplacements :</span>
-					<span class="size">{{ dump(hebergement.emplacements) }}</span>
+					<span class="size">{{ hebergement.emplacements|length() }}</span>
 					<a href="#" class="text-primary">{{ svg.eye(26) }}</a>
 				</div>
 			</div>
 			<div class="flex justify-between items-end">
 				<div>
 					<span class="statut font-semibold">Statut :</span>
-					{% if hebergement.statut is same as "En service" %}
-						<span class="badge success">En service</span>
-					{% else %}
-						<span class="badge warning">Aucun</span>
-					{% endif %}
+					{{ badge.basic( hebergement.statut )}}
 				</div>
 				<div>
 					<button class="btn btn-md">Modifier</button>

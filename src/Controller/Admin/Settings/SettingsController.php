@@ -118,9 +118,6 @@ class SettingsController extends AbstractController
         $hebergements = $hebergementRepository->findAll() ;
         foreach($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
 
-        
-        dd($hebergements);
-
         return $this->render($this->getPath('hebergements/index'), [
             'hebergements' => $hebergements,
         ]);
