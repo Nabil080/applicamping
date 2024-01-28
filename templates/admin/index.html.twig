@@ -36,14 +36,14 @@
 
 		{% set size = 22 %}
 
-		{% set more = {text: 'Ouvrir la caisse', link:path('app_admin') } %}
+		{% set more = {text: 'Ouvrir la caisse', link:path('app_admin_paiements_day') } %}
 		{{ cell.numberCard('Caisse du jour',total.paiements.day,more,svg.shoppingCart(size))}}
 
 
-		{% set more = {text: 'Voir plus', link:path('app_admin') } %}
+		{% set more = {text: 'Voir plus', link:path('app_admin_reservations') } %}
 		{{ cell.numberCard('Réservations',total.reservations,more,svg.shoppingBag(size))}}
 
-		{% set more = {text: 'Voir les clients', link:path('app_admin') } %}
+		{% set more = {text: 'Voir les clients', link:path('app_admin_users', {clients: true}) } %}
 		{{ cell.numberCard('Utilisateurs','3.456',total.users.clients,svg.users(size))}}
 
 	</div>
