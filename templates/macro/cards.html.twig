@@ -18,7 +18,7 @@
 	{% import "macro/svg.html.twig" as svg %}
 	{% import "macro/badges.html.twig" as badge %}
 	<article class="group crud flex relative text-black dark:text-white">
-		<button {{ stimulus_controller('test') }} {{ stimulus_action('test','test')}} class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
+		<button data-path={{ path('app_admin_settings_hebergements_delete',{id: hebergement.id})}} data-type="Hébergement" data-name={{ hebergement.nom }} data-id={{ hebergement.id }} {{ stimulus_controller('delete') }} {{ stimulus_action('delete','show')}} class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
 		<div class="max-w-md p-4">
 			<img class="border border-stroke" src={{ asset("uploads/hebergements/" ~ hebergement.image) }} alt=""/>
 		</div>
