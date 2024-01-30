@@ -47,7 +47,7 @@ class HebergementController extends AbstractController
             $entityManagerInterface->persist($hebergement);
             $entityManagerInterface->flush();
 
-            $message = "Un hébérgement (ID " . $hebergement->getId() . ") a été crée";
+            $message = "Un hébérgement " . $hebergement->getNom() . " a été crée (N°" . $hebergement->getId() . ")";
             $context = "hebergement";
             $type = "creation";
             $logService->write($message, $context, $type);
@@ -75,7 +75,7 @@ class HebergementController extends AbstractController
 
             $entityManagerInterface->persist($hebergement);
 
-            $message = "Un hébérgement (ID " . $hebergement->getId() . ") a été modifié";
+            $message = "L'hébérgement " . $hebergement->getNom() . " a été modifié (N°" . $hebergement->getId() . ")";
             $context = "hebergement";
             $type = "modification";
             $logService->write($message, $context, $type);
@@ -84,5 +84,21 @@ class HebergementController extends AbstractController
         }
 
         return $this->render($this->getPath('create'), ["form" => $form]);
+    }
+
+    #[Route('/delete/{id}', name: '_delete')]
+    public function delete(Hebergement $hebergement, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+
+        $message = "L'hébérgement " . $hebergement->getNom() . " a été supprimé (N°" . $hebergement->getId() . ")";
+        $context = "hebergement";
+        $type = "suppression";
+        $logService->write($message, $context, $type);
+
+        $entityManagerInterface->remove($hebergement);
+        $entityManagerInterface->flush();
+
+
+        return $this->redirectToRoute('app_admin_settings_hebergements');
     }
 }
