@@ -20,7 +20,7 @@
 	<article class="group crud flex relative text-black dark:text-white">
 		<button class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
 		<div class="max-w-md p-4">
-			<img class="border border-stroke" src={{ hebergement.image }} alt=""/>
+			<img class="border border-stroke" src={{ asset("uploads/hebergements/" ~ hebergement.image) }} alt=""/>
 		</div>
 		<div class="p-5 grow flex flex-col">
 			<h5 class="mb-2 text-title-lg font-bold">{{ hebergement.nom }}

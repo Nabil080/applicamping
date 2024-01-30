@@ -115,7 +115,7 @@ class SettingsController extends AbstractController
     #[Route('/hebergements', name: '_hebergements')]
     public function hebergements(HebergementRepository $hebergementRepository): Response
     {
-        $hebergements = $hebergementRepository->findAll() ;
+        $hebergements = $hebergementRepository->findBy([],["id" => "desc"]) ;
         foreach($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
 
         return $this->render($this->getPath('hebergements/index'), [
