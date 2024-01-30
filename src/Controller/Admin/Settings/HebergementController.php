@@ -28,11 +28,16 @@ class HebergementController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
+
+
+dd();
             $hebergement = $form->getData();
 
             $entityManagerInterface->persist($hebergement);
+            $entityManagerInterface->flush();
 
-            $message = "Un hébérgement (ID". $hebergement->getId() ." a été crée";
+            $message = "Un hébérgement (ID ". $hebergement->getId() .") a été crée";
             $context = "hebergement";
             $type = "creation";
             $logService->write($message, $context, $type);
