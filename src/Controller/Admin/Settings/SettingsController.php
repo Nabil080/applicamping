@@ -25,7 +25,7 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/', name: '')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
+    public function index(HebergementRepository $hebergementRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
     {
         $camping = $campingRepository->findOneBy([]);
 
@@ -48,10 +48,18 @@ class SettingsController extends AbstractController
 
         $logs = $logRepository->findBy([],["id" => "DESC"], 10);
 
+        $hebergements = $hebergementRepository->findAll();
+        $totalEmplacements = count(array_merge(...array_map(fn($hebergement) => $hebergement->getEmplacements()->getValues(), $hebergements)));
+
+
+        $total = ["emplacements" => $totalEmplacements];
+
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
             'campingForm' => $campingForm,
-            'logs' => $logs
+            'logs' => $logs,
+            'hebergements' => $hebergements,
+            'total' => $total,
         ]);
     }
 

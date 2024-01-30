@@ -118,10 +118,16 @@
 		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
 			<section class="">
 				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
-					120 emplacements, 5 types
+					{{ total.emplacements }} emplacements, {{ hebergements|length }} types
 				</h4>
 				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
+					{% for hebergement in hebergements %}
 					<div>
+						<span class="font-semibold">{{ hebergement.nom }} :</span>
+						{{ hebergement.emplacements|length }} emplacements
+					</div>
+					{% endfor %}
+					{# <div>
 						<span class="font-semibold">Camping-car :</span>
 						22 emplacements
 					</div>
@@ -140,7 +146,7 @@
 					<div>
 						<span class="font-semibold">Port :</span>
 						12 emplacements
-					</div>
+					</div> #}
 				</div>
 			</section>
 			<section class="grid gap-2  grow">
