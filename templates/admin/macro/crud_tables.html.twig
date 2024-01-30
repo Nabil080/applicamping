@@ -1,6 +1,6 @@
-{% macro deleteButton(id) %}
+{% macro deleteButton(id = 0, path = 'homepage', type = 'Hébergement', title = "Caravane") %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button type="button" data-id-value={{ id }} class="btn btn-sm btn-border delete">
+	<button type="button" data-id={{ id }} data-path={{ path }} data-type={{ type }} data-name={{ title }} {{ stimulus_controller('delete') }} {{ stimulus_action('delete','show')}} class="btn btn-sm btn-border delete">
 		{{ svg.trash }}
 		Supprimer
 	</button>
@@ -8,10 +8,10 @@
 
 {% macro updateButton(id) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button type="button" data-id-value={{ id }} class="btn btn-sm update">
+	<a href={{ path('app_admin_update_redirect', {id: id}) }} class="btn btn-sm update">
 		{{ svg.edit }}
 		Modifier
-	</button>
+	</a>
 {% endmacro %}
 
 {% macro seeMoreButton(id) %}
@@ -364,7 +364,7 @@
 		<td>
 			<div class="actions">
 				{{ _self.updateButton(emplacement.id) }}
-				{{ _self.deleteButton(emplacement.id) }}
+				{{ _self.deleteButton(emplacement.id, path('app_admin_settings_emplacements_delete', {id: emplacement.id}), "Emplacement", emplacement.numero) }}
 			</div>
 		</td>
 	</tr>

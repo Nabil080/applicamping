@@ -49,7 +49,7 @@ export default class extends Controller {
 		  </svg>
 		</span>
 		<h3 class="mt-5.5 pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
-		  Suppression ${data.name} ID°${data.id}
+		  Suppression ${data.type} : ${data.name} ID°${data.id}
 		</h3>
 		<p class="mb-10 font-medium">
 		  Vous êtes sur le point de supprimer un(e) ${data.type}, cette suppression est irréversible soyez sûr de vous.

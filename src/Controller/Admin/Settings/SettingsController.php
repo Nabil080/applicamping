@@ -46,13 +46,13 @@ class SettingsController extends AbstractController
             // return $this->redirectToRoute('app_admin_settings');
         }
 
-        $logs = $logRepository->findBy([],["id" => "DESC"], 10);
+        $logs = $logRepository->findBy([], ["id" => "DESC"], 10);
 
         $hebergements = $hebergementRepository->findAll();
-        $totalEmplacements = count(array_merge(...array_map(fn($hebergement) => $hebergement->getEmplacements()->getValues(), $hebergements)));
+        $totalEmplacements = count(array_merge(...array_map(fn ($hebergement) => $hebergement->getEmplacements()->getValues(), $hebergements)));
 
 
-        $total = ["emplacements" => $totalEmplacements];
+        $total = ["emplacements" => $totalEmplacements, "hebergements" => count($hebergements)];
 
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
@@ -66,7 +66,7 @@ class SettingsController extends AbstractController
     #[Route('/logs', name: '_logs')]
     public function logs(LogRepository $logRepository): Response
     {
-        $logs = $logRepository->findBy([],["id" => "DESC"], 10);
+        $logs = $logRepository->findBy([], ["id" => "DESC"], 10);
 
         return $this->render($this->getPath('logs/index'), [
             'logs' => $logs,
@@ -100,8 +100,8 @@ class SettingsController extends AbstractController
     #[Route('/emplacements', name: '_emplacements')]
     public function emplacements(EmplacementRepository $emplacementRepository): Response
     {
-            $emplacements = $emplacementRepository->findBy([],["id" => "desc"]) ;
-            // foreach($emplacements as $emplacement) $emplacement->getEmplacements()->getValues();
+        $emplacements = $emplacementRepository->findBy([], ["id" => "desc"]);
+        // foreach($emplacements as $emplacement) $emplacement->getEmplacements()->getValues();
 
         return $this->render($this->getPath('emplacements/index'), [
             'emplacements' => $emplacements
@@ -127,8 +127,8 @@ class SettingsController extends AbstractController
     #[Route('/hebergements', name: '_hebergements')]
     public function hebergements(HebergementRepository $hebergementRepository): Response
     {
-        $hebergements = $hebergementRepository->findBy([],["id" => "desc"]) ;
-        foreach($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
+        $hebergements = $hebergementRepository->findBy([], ["id" => "desc"]);
+        foreach ($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
 
         return $this->render($this->getPath('hebergements/index'), [
             'hebergements' => $hebergements,
