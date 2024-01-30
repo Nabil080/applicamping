@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin\Settings;
 
+use App\Entity\Hebergement;
 use App\Form\HebergementType;
 use App\Repository\HebergementRepository;
 use App\Service\LogService;
@@ -9,12 +10,13 @@ use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/admin/settings/hebergements', name: 'app_admin_settings')]
+#[Route('/admin/settings/hebergements', name: 'app_admin_settings_hebergements')]
 class HebergementController extends AbstractController
 {
     private function getPath($file): string
@@ -48,6 +50,34 @@ class HebergementController extends AbstractController
             $message = "Un hébérgement (ID " . $hebergement->getId() . ") a été crée";
             $context = "hebergement";
             $type = "creation";
+            $logService->write($message, $context, $type);
+
+            return $this->redirectToRoute('app_admin_settings_hebergements');
+        }
+
+        return $this->render($this->getPath('create'), ["form" => $form]);
+    }
+
+    #[Route('/update/{id}', name: '_update')]
+    public function update(Hebergement $hebergement, Request $request, UploadService $uploadService, HebergementRepository $hebergementRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(HebergementType::class, $hebergement);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hebergement = $form->getData();
+            $image = $form->get('image')->getData();
+
+            if ($image) {
+                $hebergement->setImage($uploadService->upload($image, $this->getParameter('hebergements_directory')));
+            }
+
+            $entityManagerInterface->persist($hebergement);
+
+            $message = "Un hébérgement (ID " . $hebergement->getId() . ") a été modifié";
+            $context = "hebergement";
+            $type = "modification";
             $logService->write($message, $context, $type);
 
             return $this->redirectToRoute('app_admin_settings_hebergements');

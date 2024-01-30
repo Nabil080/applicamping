@@ -49,7 +49,7 @@
 					{{ badge.basic( hebergement.statut )}}
 				</div>
 				<div>
-					<button class="btn btn-md">Modifier</button>
+					<a href={{ path('app_admin_settings_hebergements_update',{id: hebergement.id})}} class="btn btn-md">Modifier</a>
 				</div>
 			</div>
 		</div>

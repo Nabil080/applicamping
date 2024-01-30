@@ -28,7 +28,6 @@ class CustomImageType extends AbstractType
             // unmapped fields can't define their validation using attributes
             // in the associated entity, so you can use the PHP constraint classes
             'constraints' => [
-                new NotBlank,
                 new Image([
                     // 'maxSize' => '10024k',
                 ])
