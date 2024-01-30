@@ -1,7 +1,9 @@
 {% extends "admin/settings/base.html.twig" %}
+{% set isAddForm = create is defined ? create : true %}
 
 {% block pretitle %}
-	{{ create ? "Ajout" : "Modification" }} |
+	{{ isAddForm ? "Ajout" : "Modification" }}
+	|
 {% endblock %}
 
 
@@ -9,18 +11,28 @@
 
 	<div class="text-center">
 		<h1 class="text-3xl font-black">
-			{{ create ? "Ajout" : "Modification" }} {{ title }}
+			{{ isAddForm ? "Ajout" : "Modification" }}
+			{{ title }}
 		</h1>
 	</div>
 
 	<section class="crud grid mt-8">
 		<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
 
-		{% block form %}{% endblock %}
+			{% block form %}{% endblock %}
 
 
 		</div>
 	</section>
 
 
+{% endblock %}
+
+{% block scripts %}
+
+	<script>
+		document.addEventListener('turbo:load', () => {
+$('select').select2({closeOnSelect: true, language: 'fr', });
+});
+	</script>
 {% endblock %}

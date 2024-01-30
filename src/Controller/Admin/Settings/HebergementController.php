@@ -83,7 +83,7 @@ class HebergementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_hebergements');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form]);
+        return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
     }
 
     #[Route('/delete/{id}', name: '_delete')]

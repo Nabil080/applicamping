@@ -70,58 +70,59 @@
 							<span class="badge danger">Annulé</span>
 						{% endif %}
 					</td>
-				<td>
-					14/07/2003
-					<br>
-					19/08/2022
-					<br>
-					<span class="details">5 nuits</span>
-				</td>
-				<td>
-					<div class="flex justify-center">
-						{{ svg.adult(24) }}
-						2
-					</div>
-					<div class="flex justify-center">
-						{{ svg.child(24) }}
-						1
-					</div>
-				</td>
-				<td>
-					Camping-car
-					<br>
-					Emplacement 12</td>
-				<td>
-					Tarif : 100 €
-					<br>
-					Réglé :
-					<span>90 €</span>
-					<br>
-					<span class="details">3 options</span>
-				</td>
-				<td>
-					<div>
-						BERTRAND
+					<td>
+						14/07/2003
 						<br>
-						Sylvain
+						19/08/2022
 						<br>
-						<span class="details">Pas de commentaire</span>
-					</div>
-				</td>
-				<td>
-					14/07/2003
-					<br>
-					14h57
-				</td>
-				<td>
-					<div class="actions grid-cols-2">
-						{% set id = i %}
-						{{ _self.seeMoreButton(id) }}
-						{{ _self.updateButton(id) }}
-						{{ _self.printButton(id,"Facture") }}
-						{{ _self.deleteButton(id) }}
-					</div>
-				</td>
+						<span class="details">5 nuits</span>
+					</td>
+					<td>
+						<div class="flex justify-center">
+							{{ svg.adult(24) }}
+							2
+						</div>
+						<div class="flex justify-center">
+							{{ svg.child(24) }}
+							1
+						</div>
+					</td>
+					<td>
+						Camping-car
+						<br>
+						Emplacement 12</td>
+					<td>
+						Tarif : 100 €
+						<br>
+						Réglé :
+						<span>90 €</span>
+						<br>
+						<span class="details">3 options</span>
+					</td>
+					<td>
+						<div>
+							BERTRAND
+							<br>
+							Sylvain
+							<br>
+							<span class="details">Pas de commentaire</span>
+						</div>
+					</td>
+					<td>
+						14/07/2003
+						<br>
+						14h57
+					</td>
+					<td>
+						<div class="actions grid-cols-2">
+							{% set id = i %}
+							{{ _self.seeMoreButton(id) }}
+							{{ _self.updateButton(id) }}
+							{{ _self.printButton(id,"Facture") }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
 			</tbody>
 		</tbody>
 	</tr>
@@ -260,9 +261,7 @@
 			<br>
 		</td>
 		<td>
-			14/07/2003
-			<br>
-			14h57
+			{{log.date|format_datetime()}}
 		</td>
 		<td>
 			<div class="flex items-center justify-center gap-2">
@@ -346,25 +345,26 @@
 	<th scope="col">Statut</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for i in 0..5 %}
+{% for emplacement in emplacements %}
 	<tr>
 		<th scope="row">
-			{{ i }}
+			{{ emplacement.id }}
 		</th>
 		<td>
-			{{ 12 + i }}
+			{{ emplacement.numero }}
 		</td>
 		<td>
-			Camping-Car (520)
+			{{ emplacement.hebergement.nom }}
+			({{emplacement.hebergement.id}})
 		</td>
 		<td>
-			<span class="badge success">Disponible</span>
+			{% import "macro/badges.html.twig" as badge %}
+			{{ badge.basic(emplacement.statut) }}
 		</td>
 		<td>
 			<div class="actions">
-				{% set id = i %}
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
+				{{ _self.updateButton(emplacement.id) }}
+				{{ _self.deleteButton(emplacement.id) }}
 			</div>
 		</td>
 	</tr>

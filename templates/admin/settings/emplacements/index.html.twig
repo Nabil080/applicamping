@@ -9,9 +9,9 @@
 	{{ title }}
 {% endblock %}
 
-{% set options = { filters: filters.clients, pagination: true, search: "Rechercher un ID, un N°, un emplacement...", tooltip: 'Tous les emplacements'} %}
+{% set options = { filters: filters.clients, pagination: true, create: true, search: "Rechercher un ID, un N°, un emplacement...", tooltip: 'Tous les emplacements'} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.emplacements('emplacements'), options) }}
+	{{ crud.basic(title, tables.emplacements(emplacements), options) }}
 {% endblock %}

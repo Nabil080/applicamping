@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Settings;
 use App\Entity\Hebergement;
 use App\Form\CampingType;
 use App\Repository\CampingRepository;
+use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
 use App\Repository\LogRepository;
 use App\Repository\UserRepository;
@@ -89,10 +90,13 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/emplacements', name: '_emplacements')]
-    public function emplacements(): Response
+    public function emplacements(EmplacementRepository $emplacementRepository): Response
     {
+            $emplacements = $emplacementRepository->findBy([],["id" => "desc"]) ;
+            // foreach($emplacements as $emplacement) $emplacement->getEmplacements()->getValues();
+
         return $this->render($this->getPath('emplacements/index'), [
-            'controller_name' => 'AdminController',
+            'emplacements' => $emplacements
         ]);
     }
 

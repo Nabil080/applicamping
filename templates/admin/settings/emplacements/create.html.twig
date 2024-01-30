@@ -1,6 +1,7 @@
 {% extends 'admin/settings/form.html.twig' %}
 
-{% set title = "Hébergement" %}
+{% set title = "Emplacement" %}
+{% set create = true %}
 
 {% block title %}
 	{{ title }}
@@ -8,6 +9,7 @@
 
 
 {% block form %}
+
 			{{ form_start(form) }}
 			{{form_widget(form) }}
 			<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
