@@ -1,28 +1,18 @@
 {% extends 'admin/settings/form.html.twig' %}
 
-{% set title = "Ajout Hébergement" %}
+{% set title = "Hébergement" %}
+{% set create = true %}
 
 {% block title %}
 	{{ title }}
 {% endblock %}
 
 
-{% block body %}
-
-	<div class="text-center">
-		<h1 class="text-3xl font-black">
-			{{ title }}
-		</h1>
-	</div>
-
-	<section class="crud grid my-4">
-		<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
+{% block form %}
 
 			{{ form_start(form) }}
 			{{form_widget(form) }}
 			<button formnovalidate type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
 			{{ form_end(form) }}
-			</div>
-	</section>
 
 {% endblock %}
