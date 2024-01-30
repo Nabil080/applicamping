@@ -57,7 +57,7 @@
 		</div>
 		<!-- ====== Graphique emplacements occupés -->
 
-{# TODO : intégration back #}
+		{# TODO : intégration back #}
 		{% set title = '12 Emplacements occupés' %}
 		{% set more = {text: 'Réservations correspondantes', link: path('app_admin') } %}
 		{% set series = [80, 34, 45, 12] %}
@@ -75,11 +75,9 @@
 
 		{{ cell.pieChart(title,more,series,labels) }}
 		<!-- ====== Graphique emplacements libres -->
-{# TODO : intégration back #}
+		{# TODO : intégration back #}
 
-		<!-- ! check in / check out / planning -->
-
-			<div class="col-span-full"> <h2>
+			<!-- ! check in / check out / planning --> <div class="col-span-full"><h2>
 				Planning
 			</h2>
 		</div>
@@ -98,8 +96,7 @@
 		{{ cell.textCard(text,more,svg.logout(20))}}
 		<!-- Check out -->
 
-			<div class="col-span-full gap-4 sm:gap-6 xl:gap-2 xl:col-span-4 flex flex-col sm:flex-row xl:flex-col xl:justify-between"> 
-			<div class="w-full">
+			<div class="col-span-full gap-4 sm:gap-6 xl:gap-2 xl:col-span-4 flex flex-col sm:flex-row xl:flex-col xl:justify-between"> <div class="w-full">
 				<a href="#" class="btn w-full">
 					Voir le planning
 				</a>

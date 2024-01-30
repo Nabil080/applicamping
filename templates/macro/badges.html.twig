@@ -3,7 +3,9 @@
 
 	{% if s is same as "en service" %}
 		{% set classes = "success" %}
-	{% elseif s is same as "aucun"%}
+	{% elseif s is same as "désactivé"%}
+		{% set classes = "danger" %}
+	{% else %}
 		{% set classes = "warning" %}
 	{% endif %}
 

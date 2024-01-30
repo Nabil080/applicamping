@@ -8,7 +8,7 @@ import { Modal } from 'flowbite';
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
 
-    initialize() {
+    connect() {
         const options = {
             backdrop: 'static',
         };
