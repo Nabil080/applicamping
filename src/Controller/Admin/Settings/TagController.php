@@ -50,30 +50,30 @@ class TagController extends AbstractController
     }
 
 
-    // #[Route('/update/{id}', name: '_update')]
-    // public function update(Tag $tag, Request $request, UploadService $uploadService, TagRepository $tagRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
-    // {
+    #[Route('/update/{id}', name: '_update')]
+    public function update(Tag $tag, Request $request, UploadService $uploadService, TagRepository $tagRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
 
-    //     $form = $this->createForm(TagType::class, $tag);
-    //     $form->handleRequest($request);
+        $form = $this->createForm(TagType::class, $tag);
+        $form->handleRequest($request);
 
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $tag = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tag = $form->getData();
 
-    //         $entityManagerInterface->persist($tag);
-    //         $entityManagerInterface->flush();
+            $entityManagerInterface->persist($tag);
+            $entityManagerInterface->flush();
 
-    //         $message = "Un tag " . $tag->getNumero() . " a été modifié (ID°" . $tag->getId() . ")";
-    //         $context = "tag";
-    //         $type = "modification";
-    //         $logService->write($message, $context, $type);
+            $message = "Un tag " . $tag->getNom() . " a été modifié (ID°" . $tag->getId() . ")";
+            $context = "tag";
+            $type = "modification";
+            $logService->write($message, $context, $type);
 
-    //         return $this->redirectToRoute('app_admin_settings_tags');
-    //     }
+            return $this->redirectToRoute('app_admin_settings_tags');
+        }
 
-    //     return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
-    // }
+        return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
+    }
 
 
 

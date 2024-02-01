@@ -18,7 +18,8 @@ class CustomEmplacementType extends AbstractType
         $resolver->setDefaults([
                 'class' => Emplacement::class,
                 'choice_label' => 'numero',
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
         ]);
     }
 
