@@ -493,7 +493,7 @@
 			<div class="actions">
 				{{ _self.addButton(option.id, "Ajouter une option") }}
 				{{ _self.updateButton(option.id) }}
-				{{ _self.deleteButton(option.id) }}
+				{{ _self.deleteButton(option.id, path( 'app_admin_settings_options_delete', {id: option.id} ), 'Option', option.nom) }}
 			</div>
 		</td>
 	</tr>
