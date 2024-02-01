@@ -8,6 +8,7 @@ use App\Repository\CampingRepository;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
 use App\Repository\LogRepository;
+use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -66,7 +67,7 @@ class SettingsController extends AbstractController
     #[Route('/logs', name: '_logs')]
     public function logs(LogRepository $logRepository): Response
     {
-        $logs = $logRepository->findBy([], ["id" => "DESC"], 10);
+        $logs = $logRepository->findBy([], ["id" => "DESC"]);
 
         return $this->render($this->getPath('logs/index'), [
             'logs' => $logs,
@@ -105,6 +106,17 @@ class SettingsController extends AbstractController
 
         return $this->render($this->getPath('emplacements/index'), [
             'emplacements' => $emplacements
+        ]);
+    }
+
+    #[Route('/tags', name: '_tags')]
+    public function tags(TagRepository $tagRepository): Response
+    {
+        $tags = $tagRepository->findBy([], ["id" => "desc"]);
+        foreach($tags as $tag) $tag->getEmplacements()->getValues();
+
+        return $this->render($this->getPath('tags/index'), [
+            'tags' => $tags
         ]);
     }
 

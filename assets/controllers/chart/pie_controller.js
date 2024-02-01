@@ -9,7 +9,7 @@ export default class extends Controller {
     }
 
     connect() {
-        document.addEventListener('turbo:before-fetch-request', () => this.hide());
+        // document.addEventListener('turbo:before-fetch-request', () => this.hide());
         document.addEventListener("turbo:load", this.render());  
     }
 

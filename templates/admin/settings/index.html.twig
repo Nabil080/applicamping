@@ -121,32 +121,12 @@
 					{{ total.emplacements }} emplacements, {{ total.hebergements }} types
 				</h4>
 				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
-					{% for hebergement in hebergements %}
+					{% for hebergement in hebergements|slice(0,5) %}
 					<div>
 						<span class="font-semibold">{{ hebergement.nom }} :</span>
 						{{ hebergement.emplacements|length }} emplacements
 					</div>
 					{% endfor %}
-					{# <div>
-						<span class="font-semibold">Camping-car :</span>
-						22 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Caravane :</span>
-						30 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Roulotte :</span>
-						20 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Emplacement simple :</span>
-						12 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Port :</span>
-						12 emplacements
-					</div> #}
 				</div>
 			</section>
 			<section class="grid gap-2  grow">

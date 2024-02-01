@@ -32,7 +32,7 @@
 
 	<script>
 		document.addEventListener('turbo:load', () => {
-$('select').select2({closeOnSelect: true, language: 'fr', });
+$('select[multiple]').select2({closeOnSelect: false, language: 'fr', });
 });
 	</script>
 {% endblock %}

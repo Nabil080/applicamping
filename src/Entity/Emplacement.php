@@ -33,10 +33,14 @@ class Emplacement
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Tarif::class)]
     private Collection $tarifs;
 
+    #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'emplacements')]
+    private Collection $tags;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,6 +140,30 @@ class Emplacement
                 $tarif->setEmplacement(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(tag $tag): static
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

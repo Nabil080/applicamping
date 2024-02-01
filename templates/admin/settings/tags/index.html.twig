@@ -3,7 +3,7 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
-{% set title = 'Emplacements' %}
+{% set title = 'Tags' %}
 
 {% block title %}
 	{{ title }}
@@ -21,12 +21,12 @@
 
 	<div class="flex justify-between items-end mb-6">
 		<a href={{ path('app_admin_create_redirect') }} class="btn">
-			Ajouter un emplacement
+			Ajouter un tag
 		</a>
 		<div>
-			<a href={{ path('app_admin_settings_tags') }} class="clickable">Voir les tags</a>
+			<a href={{ path('app_admin_settings_emplacements') }} class="clickable">Voir les emplacements</a>
 		</div>
 	</div>
 
-	{{ crud.basic(title, tables.emplacements(emplacements), options) }}
+	{{ crud.basic(title, tables.tags(tags), options) }}
 {% endblock %}

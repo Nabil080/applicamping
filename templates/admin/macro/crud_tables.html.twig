@@ -1,6 +1,6 @@
 {% macro deleteButton(id = 0, path = 'homepage', type = 'Hébergement', title = "Caravane") %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button type="button" data-id={{ id }} data-path={{ path }} data-type={{ type }} data-name={{ title }} {{ stimulus_controller('delete') }} {{ stimulus_action('delete','show')}} class="btn btn-sm btn-border delete">
+	<button {{ stimulus_controller('delete') }} data-id={{ id }} data-path={{ path }} data-type={{ type }} data-name={{ title }} {{ stimulus_action('delete','show')}} class="btn btn-sm btn-border delete">
 		{{ svg.trash }}
 		Supprimer
 	</button>
@@ -8,7 +8,7 @@
 
 {% macro updateButton(id) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<a href={{ path('app_admin_update_redirect', {id: id}) }} class="btn btn-sm update">
+	<a href={{ path('app_admin_update_redirect', {id: id} ) }} class="btn btn-sm update">
 		{{ svg.edit }}
 		Modifier
 	</a>
@@ -32,10 +32,10 @@
 
 {% macro addButton(id = 'add', text = 'Ajouter', large = false) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button type="button" data-id-value={{ id }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
+	<a href={{ path('app_admin_create_redirect') }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
 		{{ svg.plus }}
 		{{ text }}
-	</button>
+	</a>
 {% endmacro %}
 
 
@@ -337,91 +337,134 @@
 			</div>
 		</td>
 	</tr>
-{% endfor %}</tbody></table>{% endmacro %}{% macro emplacements(emplacements = 'array des emplacements') %}<table><thead>
-<tr>
-	<th scope="col">ID</th>
-	<th scope="col">N°</th>
-	<th scope="col">Type d'hébergement (ID)</th>
-	<th scope="col">Statut</th>
-	<th scope="col">Actions</th>
-</tr></thead><tbody>
-{% for emplacement in emplacements %}
-	<tr>
-		<th scope="row">
-			{{ emplacement.id }}
-		</th>
-		<td>
-			{{ emplacement.numero }}
-		</td>
-		<td>
-			{{ emplacement.hebergement.nom }}
-			({{emplacement.hebergement.id}})
-		</td>
-		<td>
-			{% import "macro/badges.html.twig" as badge %}
-			{{ badge.basic(emplacement.statut) }}
-		</td>
-		<td>
-			<div class="actions">
-				{{ _self.updateButton(emplacement.id) }}
-				{{ _self.deleteButton(emplacement.id, path('app_admin_settings_emplacements_delete', {id: emplacement.id}), "Emplacement", emplacement.numero) }}
-			</div>
-		</td>
-	</tr>
-{% endfor %}</tbody></table>{% endmacro %}{% macro saisons(saisons = 'array des saisons') %}<table><thead>
-<tr>
-	<th scope="col">ID</th>
-	<th scope="col">Nom</th>
-	<th scope="col">Début</th>
-	<th scope="col">Fin</th>
-	<th scope="col">Jours</th>
-	<th scope="col">Actions</th>
-</tr></thead><tbody>
-{% for i in 1..5 %}
-	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
-		<th scope="row">
-			{{ i }}
-		</th>
-		<td>
-			Saison été 2003
-		</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>
-			<div class="actions">
-				{% set id = i %}
-				{{ _self.addButton(id, "Ajouter une règle") }}
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
-			</div>
-		</td>
-	</tr>
+{% endfor %}</tbody></table>
+{% endmacro %}
 
-	{% for i in 1..3 %}
-		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
-			<th scope="row"></th>
-			<td></td>
-			<td>
-				14/07/2003
-			</td>
-			<td>
-				07/14/3002
-			</td>
-			<td>
-				Lundi, Mercredi, Jeudi
-			</td>
-			<td>
-				<div class="actions">
-					{% set id = i %}
-					{{ _self.updateButton(id) }}
-					{{ _self.deleteButton(id) }}
-				</div>
-			</td>
-		</tr>
-	{% endfor %}
+{% macro emplacements(emplacements = 'array des emplacements') %}
+	<table>
+		<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">N°</th>
+			<th scope="col">Type d'hébergement (ID)</th>
+			<th scope="col">Statut</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for emplacement in emplacements %}
+			<tr>
+				<th scope="row">
+					{{ emplacement.id }}
+				</th>
+				<td>
+					{{ emplacement.numero }}
+				</td>
+				<td>
+					{{ emplacement.hebergement.nom }}
+					({{emplacement.hebergement.id}})
+				</td>
+				<td>
+					{% import "macro/badges.html.twig" as badge %}
+					{{ badge.basic(emplacement.statut) }}
+				</td>
+				<td>
+					<div class="actions">
+						{{ _self.updateButton(emplacement.id) }}
+						{{ _self.deleteButton(emplacement.id, path('app_admin_settings_emplacements_delete', {id: emplacement.id}), "Emplacement", emplacement.numero) }}
+					</div>
+				</td>
+			</tr>
+		{% endfor %}</tbody></table>
+		
+		{% endmacro %}
+		
+		{% macro saisons(saisons = 'array des saisons') %}<table><thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Début</th>
+			<th scope="col">Fin</th>
+			<th scope="col">Jours</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for i in 1..5 %}
+			<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+				<th scope="row">
+					{{ i }}
+				</th>
+				<td>
+					Saison été 2003
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<div class="actions">
+						{% set id = i %}
+						{{ _self.addButton(id, "Ajouter une règle") }}
+						{{ _self.updateButton(id) }}
+						{{ _self.deleteButton(id) }}
+					</div>
+				</td>
+			</tr>
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro options(options = 'array des options') %}<table><thead>
+			{% for i in 1..3 %}
+				<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+					<th scope="row"></th>
+					<td></td>
+					<td>
+						14/07/2003
+					</td>
+					<td>
+						07/14/3002
+					</td>
+					<td>
+						Lundi, Mercredi, Jeudi
+					</td>
+					<td>
+						<div class="actions">
+							{% set id = i %}
+							{{ _self.updateButton(id) }}
+							{{ _self.deleteButton(id) }}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+
+		{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro tags(tags = 'array des tag') %}
+	<table>
+		<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Emplacements</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for tag in tags %}
+			<tr>
+				<th scope="row">
+					{{ tag.id }}
+				</th>
+				<td>
+					{{ tag.nom }}
+				</td>
+				<td>
+					{{ tag.emplacements|length }} Emplacements
+				</td>
+				<td>
+					<div class="actions">
+						{{ _self.updateButton(tag.id) }}
+						{{ _self.deleteButton(tag.id, path('app_admin_settings_tags_delete', {id: tag.id}), "Tag", tag.nom) }}
+					</div>
+				</td>
+			</tr>
+		{% endfor %}</tbody></table>{% endmacro %}
+
+{% macro options(options = 'array des options') %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Nom</th>
