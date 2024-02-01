@@ -39,10 +39,7 @@ class SettingsController extends AbstractController
 
             $entityManagerInterface->persist($camping);
 
-            $message = "Les informations du camping ont été modifiés";
-            $context = "camping";
-            $type = "modification";
-            $logService->write($message, $context, $type);
+            $logService->write($camping, "update");
 
             // return $this->redirectToRoute('app_admin_settings');
         }

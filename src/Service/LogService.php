@@ -5,12 +5,15 @@ namespace App\Service;
 use App\Entity\Log;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class LogService
 {
     private EntityManagerInterface $entityManager;
     private Security $security;
+    private Log $log; 
+    private Object $entity;
 
     public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
@@ -18,28 +21,55 @@ class LogService
         $this->security = $security;
     }
 
-    public function write(string $message, string $context, string $type): void
+    public function write(Object $entity, string $type): void
     {
-        $log = new Log;
+        $this->log = new Log;
+        $this->entity = $entity;
+
         $user = $this->security->getUser();
-        $log->setUser($user);
+        $this->log->setUser($user);
+        
+        $contexte = $this->getEntityName(); 
+        $this->log->setContexte($contexte);
 
-        $log->setMessage($message);
-        $log->setContexte($context);
-        $log->setType($type);
+        $this->log->setType($type);
 
-        $this->entityManager->persist($log);
+        $message = $this->getMessage();
+        $this->log->setMessage($message);
+
+        $this->entityManager->persist($this->log);
         $this->entityManager->flush();
+
     }
 
-    public function translate($string): string
+    public function getMessage(): string
     {
-        return match ($string) {
-            default => '',
-            'places' => 'emplacement',
-            'offers' => 'offre',
-            'locations' => 'emplacement',
-            'accomodations' => 'hébérgement'
+        $entityString = match($this->getEntityName()) {
+            "Tag" => 'Le tag "' . $this->entity->getNom() . '" ',
+            "Hebergement" => 'L\'hébergement "' . $this->entity->getNom() . '" ',
+            "Emplacement" => 'L\'emplacement "' . $this->entity->getNumero() . '" ',
+            "Camping" => 'Le camping  "' . $this->entity->getNom() . '" ',
         };
+        
+        $typeString = match($this->log->getType()) {
+            "create" => "a été crée. ",
+            "update" => "a été modifié. ",
+            "delete" => "a été supprimé. "
+        };
+
+        $idString = "(ID° " . $this->entity->getId() . ")";
+
+        $message = $entityString . $typeString . $idString;
+        
+        return $message;
+    }
+
+    public function getEntityName() :string
+    {
+        $class = get_class($this->entity);
+        $classArray = explode("\\",$class);
+        $classname = end($classArray);
+
+        return $classname;
     }
 }

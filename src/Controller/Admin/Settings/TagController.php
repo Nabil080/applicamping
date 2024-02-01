@@ -38,10 +38,7 @@ class TagController extends AbstractController
             $entityManagerInterface->persist($tag);
             $entityManagerInterface->flush();
 
-            $message = "Un tag " . $tag->getNom() . " a été crée (ID°" . $tag->getId() . ")";
-            $context = "tag";
-            $type = "creation";
-            $logService->write($message, $context, $type);
+            $logService->write($tag, "create");
 
             return $this->redirectToRoute('app_admin_settings_tags');
         }
@@ -64,10 +61,7 @@ class TagController extends AbstractController
             $entityManagerInterface->persist($tag);
             $entityManagerInterface->flush();
 
-            $message = "Un tag " . $tag->getNom() . " a été modifié (ID°" . $tag->getId() . ")";
-            $context = "tag";
-            $type = "modification";
-            $logService->write($message, $context, $type);
+            $logService->write($tag, "update");
 
             return $this->redirectToRoute('app_admin_settings_tags');
         }
@@ -81,10 +75,7 @@ class TagController extends AbstractController
     public function delete(Tag $tag, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $message = "Le tag " . $tag->getNom() . " a été supprimé (ID°" . $tag->getId() . ")";
-        $context = "tag";
-        $type = "suppression";
-        $logService->write($message, $context, $type);
+        $logService->write($tag, "delete");
 
         $entityManagerInterface->remove($tag);
         $entityManagerInterface->flush();

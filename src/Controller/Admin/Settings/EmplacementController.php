@@ -38,11 +38,9 @@ class EmplacementController extends AbstractController
             $entityManagerInterface->persist($emplacement);
             $entityManagerInterface->flush();
 
-            $message = "Un emplacement " . $emplacement->getNumero() . " a été crée (ID°" . $emplacement->getId() . ")";
-            $context = "emplacement";
-            $type = "creation";
-            $logService->write($message, $context, $type);
+            $logService->write($emplacement, "create");
 
+            
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 
@@ -64,10 +62,8 @@ class EmplacementController extends AbstractController
             $entityManagerInterface->persist($emplacement);
             $entityManagerInterface->flush();
 
-            $message = "Un emplacement " . $emplacement->getNumero() . " a été modifié (ID°" . $emplacement->getId() . ")";
-            $context = "emplacement";
-            $type = "modification";
-            $logService->write($message, $context, $type);
+            $logService->write($emplacement, "update&");
+
 
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
@@ -81,10 +77,7 @@ class EmplacementController extends AbstractController
     public function delete(Emplacement $emplacement, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $message = "L'emplacement " . $emplacement->getNumero() . " a été supprimé (ID°" . $emplacement->getId() . ")";
-        $context = "emplacement";
-        $type = "suppression";
-        $logService->write($message, $context, $type);
+        $logService->write($emplacement, "delete");
 
         $entityManagerInterface->remove($emplacement);
         $entityManagerInterface->flush();
