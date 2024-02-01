@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Option;
+use App\Form\Type\CustomStatutType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,7 @@ class OptionType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('statut')
+            ->add('statut', CustomStatutType::class)
         ;
     }
 
