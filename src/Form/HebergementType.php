@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Hebergement;
 use App\Form\Type\CustomImageType;
+use App\Form\Type\CustomStatutType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,7 @@ class HebergementType extends AbstractType
             ->add('image', CustomImageType::class, [])
             ->add('minimum')
             ->add('maximum')
-            ->add('statut')
+            ->add('statut', CustomStatutType::class )
         ;
     }
 

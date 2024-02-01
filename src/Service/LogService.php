@@ -49,6 +49,7 @@ class LogService
             "Hebergement" => 'L\'hébergement "' . $this->entity->getNom() . '" ',
             "Emplacement" => 'L\'emplacement "' . $this->entity->getNumero() . '" ',
             "Camping" => 'Le camping  "' . $this->entity->getNom() . '" ',
+            "Option" => 'Une option supplémentaire  "' . $this->entity->getNom() . '" ',
         };
         
         $typeString = match($this->log->getType()) {

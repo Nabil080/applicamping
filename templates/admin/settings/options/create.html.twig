@@ -1,0 +1,17 @@
+{% extends 'admin/settings/form.html.twig' %}
+
+{% set title = "Options" %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+
+{% block form %}
+
+	{{ form_start(form) }}
+	{{form_widget(form) }}
+	<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
+	{{ form_end(form) }}
+
+{% endblock %}
