@@ -30,11 +30,11 @@ class Saison
     #[ORM\ManyToMany(targetEntity: RegleDuree::class, mappedBy: 'saisons')]
     private Collection $regleDurees;
 
-    #[ORM\ManyToMany(targetEntity: RegleOptions::class, mappedBy: 'saisons')]
-    private Collection $regleOptions;
-
     #[ORM\ManyToMany(targetEntity: RegleSejour::class, mappedBy: 'saisons')]
     private Collection $regleSejours;
+
+    #[ORM\ManyToMany(targetEntity: OptionMaximum::class, mappedBy: 'saisons')]
+    private Collection $optionMaximums;
 
 
     public function __construct()
@@ -42,8 +42,8 @@ class Saison
         $this->saisonDates = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
         $this->regleDurees = new ArrayCollection();
-        $this->regleOptions = new ArrayCollection();
         $this->regleSejours = new ArrayCollection();
+        $this->optionMaximums = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,33 +160,6 @@ class Saison
     }
 
     /**
-     * @return Collection<int, RegleOptions>
-     */
-    public function getRegleOptions(): Collection
-    {
-        return $this->regleOptions;
-    }
-
-    public function addRegleOption(RegleOptions $regleOption): static
-    {
-        if (!$this->regleOptions->contains($regleOption)) {
-            $this->regleOptions->add($regleOption);
-            $regleOption->addSaison($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRegleOption(RegleOptions $regleOption): static
-    {
-        if ($this->regleOptions->removeElement($regleOption)) {
-            $regleOption->removeSaison($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, RegleSejour>
      */
     public function getRegleSejours(): Collection
@@ -208,6 +181,33 @@ class Saison
     {
         if ($this->regleSejours->removeElement($regleSejour)) {
             $regleSejour->removeSaison($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OptionMaximum>
+     */
+    public function getOptionMaximums(): Collection
+    {
+        return $this->optionMaximums;
+    }
+
+    public function addOptionMaximum(OptionMaximum $optionMaximum): static
+    {
+        if (!$this->optionMaximums->contains($optionMaximum)) {
+            $this->optionMaximums->add($optionMaximum);
+            $optionMaximum->addSaison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOptionMaximum(OptionMaximum $optionMaximum): static
+    {
+        if ($this->optionMaximums->removeElement($optionMaximum)) {
+            $optionMaximum->removeSaison($this);
         }
 
         return $this;

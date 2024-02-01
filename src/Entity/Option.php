@@ -22,12 +22,16 @@ class Option
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\OneToMany(mappedBy: '_option', targetEntity: Tarif::class)]
+    #[ORM\OneToMany(mappedBy: 'option', targetEntity: Tarif::class)]
     private Collection $tarifs;
+
+    #[ORM\OneToMany(mappedBy: 'option', targetEntity: OptionMaximum::class)]
+    private Collection $optionMaximums;
 
     public function __construct()
     {
         $this->tarifs = new ArrayCollection();
+        $this->optionMaximums = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class Option
             // set the owning side to null (unless already changed)
             if ($tarif->getOption() === $this) {
                 $tarif->setOption(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OptionMaximum>
+     */
+    public function getOptionMaximums(): Collection
+    {
+        return $this->optionMaximums;
+    }
+
+    public function addOptionMaximum(OptionMaximum $optionMaximum): static
+    {
+        if (!$this->optionMaximums->contains($optionMaximum)) {
+            $this->optionMaximums->add($optionMaximum);
+            $optionMaximum->setOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOptionMaximum(OptionMaximum $optionMaximum): static
+    {
+        if ($this->optionMaximums->removeElement($optionMaximum)) {
+            // set the owning side to null (unless already changed)
+            if ($optionMaximum->getOption() === $this) {
+                $optionMaximum->setOption(null);
             }
         }
 

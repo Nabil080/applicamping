@@ -36,9 +36,6 @@ class Hebergement
     #[ORM\ManyToMany(targetEntity: RegleDuree::class, mappedBy: 'hebergements')]
     private Collection $regleDurees;
 
-    #[ORM\ManyToMany(targetEntity: RegleOptions::class, mappedBy: 'hebergements')]
-    private Collection $regleOptions;
-
     #[ORM\ManyToMany(targetEntity: RegleSejour::class, mappedBy: 'hebergements')]
     private Collection $regleSejours;
 
@@ -46,7 +43,6 @@ class Hebergement
     {
         $this->emplacements = new ArrayCollection();
         $this->regleDurees = new ArrayCollection();
-        $this->regleOptions = new ArrayCollection();
         $this->regleSejours = new ArrayCollection();
     }
 
@@ -172,32 +168,6 @@ class Hebergement
         return $this;
     }
 
-    /**
-     * @return Collection<int, RegleOptions>
-     */
-    public function getRegleOptions(): Collection
-    {
-        return $this->regleOptions;
-    }
-
-    public function addRegleOption(RegleOptions $regleOption): static
-    {
-        if (!$this->regleOptions->contains($regleOption)) {
-            $this->regleOptions->add($regleOption);
-            $regleOption->addHebergement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRegleOption(RegleOptions $regleOption): static
-    {
-        if ($this->regleOptions->removeElement($regleOption)) {
-            $regleOption->removeHebergement($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, RegleSejour>

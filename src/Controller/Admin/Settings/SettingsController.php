@@ -8,6 +8,7 @@ use App\Repository\CampingRepository;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
 use App\Repository\LogRepository;
+use App\Repository\OptionRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Service\LogService;
@@ -88,10 +89,14 @@ class SettingsController extends AbstractController
     }
 
     #[Route('/options', name: '_options')]
-    public function options(): Response
+    public function options(OptionRepository $optionRepository): Response
     {
+        $options = $optionRepository->findBy([], ["id" => "desc"]);
+        foreach($options as $option) $option->getOptionMaximums()->getValues();
+
+        dump($options);
         return $this->render($this->getPath('options/index'), [
-            'controller_name' => 'AdminController',
+            'options' => $options
         ]);
     }
 

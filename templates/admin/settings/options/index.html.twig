@@ -9,9 +9,9 @@
 	{{ title }}
 {% endblock %}
 
-{% set options = {filters: filters.clients, create: true} %}
+{% set crudOptions = {filters: filters.clients, create: true} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.options('options'), options) }}
+	{{ crud.basic(title, tables.options(options), crudOptions) }}
 {% endblock %}

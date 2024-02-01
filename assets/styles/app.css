@@ -267,7 +267,8 @@
     /* ? color themes ?*/
     /* * buttons * */
     .btn.delete {
-        @apply border-danger text-danger hover:bg-danger hover:text-white;
+        /* @apply border-danger text-danger hover:bg-danger hover:text-white btn-border; */
+        @apply border-danger bg-danger text-white hover:brightness-90;
     }
     .btn.see-more, .see-more {
         @apply text-gray-900 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
