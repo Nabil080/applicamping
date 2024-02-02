@@ -17,6 +17,7 @@ class CustomSaisonType extends AbstractType
         $resolver->setDefaults([
                 'class' => Saison::class,
                 'choice_label' => 'nom',
+                'label' => 'Saisons (Laisser vide pour tous)',
                 'multiple' => true,
                 'required' => false
         ]);

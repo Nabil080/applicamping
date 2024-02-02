@@ -24,15 +24,15 @@ class OptionMaximum
     #[ORM\ManyToOne(inversedBy: 'optionMaximums')]
     private ?option $option = null;
 
-    #[ORM\ManyToMany(targetEntity: Emplacement::class, inversedBy: 'optionMaximums')]
-    private Collection $emplacements;
+    #[ORM\ManyToMany(targetEntity: Hebergement::class, inversedBy: 'optionMaximums')]
+    private Collection $hebergements;
 
     #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'optionMaximums')]
     private Collection $saisons;
 
     public function __construct()
     {
-        $this->emplacements = new ArrayCollection();
+        $this->hebergements = new ArrayCollection();
         $this->saisons = new ArrayCollection();
     }
 
@@ -78,25 +78,25 @@ class OptionMaximum
     }
 
     /**
-     * @return Collection<int, Emplacement>
+     * @return Collection<int, Hebergement>
      */
-    public function getEmplacements(): Collection
+    public function getHebergements(): Collection
     {
-        return $this->emplacements;
+        return $this->hebergements;
     }
 
-    public function addEmplacement(Emplacement $emplacement): static
+    public function addHebergement(Hebergement $hebergement): static
     {
-        if (!$this->emplacements->contains($emplacement)) {
-            $this->emplacements->add($emplacement);
+        if (!$this->hebergements->contains($hebergement)) {
+            $this->hebergements->add($hebergement);
         }
 
         return $this;
     }
 
-    public function removeEmplacement(Emplacement $emplacement): static
+    public function removeHebergement(Hebergement $hebergement): static
     {
-        $this->emplacements->removeElement($emplacement);
+        $this->hebergements->removeElement($hebergement);
 
         return $this;
     }

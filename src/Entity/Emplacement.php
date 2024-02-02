@@ -36,15 +36,12 @@ class Emplacement
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'emplacements')]
     private Collection $tags;
 
-    #[ORM\ManyToMany(targetEntity: OptionMaximum::class, mappedBy: 'emplacements')]
-    private Collection $optionMaximums;
 
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
         $this->tags = new ArrayCollection();
-        $this->optionMaximums = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,30 +169,4 @@ class Emplacement
         return $this;
     }
 
-    /**
-     * @return Collection<int, OptionMaximum>
-     */
-    public function getOptionMaximums(): Collection
-    {
-        return $this->optionMaximums;
-    }
-
-    public function addOptionMaximum(OptionMaximum $optionMaximum): static
-    {
-        if (!$this->optionMaximums->contains($optionMaximum)) {
-            $this->optionMaximums->add($optionMaximum);
-            $optionMaximum->addEmplacement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOptionMaximum(OptionMaximum $optionMaximum): static
-    {
-        if ($this->optionMaximums->removeElement($optionMaximum)) {
-            $optionMaximum->removeEmplacement($this);
-        }
-
-        return $this;
-    }
 }

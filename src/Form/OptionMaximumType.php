@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\OptionMaximum;
-use App\Form\Type\CustomEmplacementType;
+use App\Form\Type\CustomHebergementType;
 use App\Form\Type\CustomOptionType;
 use App\Form\Type\CustomSaisonType;
 use Symfony\Component\Form\AbstractType;
@@ -17,7 +17,7 @@ class OptionMaximumType extends AbstractType
         $builder
             ->add('nombre')
             ->add('option', CustomOptionType::class)
-            ->add('emplacements', CustomEmplacementType::class)
+            ->add('hebergements', CustomHebergementType::class)
             ->add('saisons', CustomSaisonType::class)
         ;
     }
