@@ -349,6 +349,7 @@
 			<th scope="col">ID</th>
 			<th scope="col">N°</th>
 			<th scope="col">Type d'hébergement (ID)</th>
+			<th scope="col">Tags</th>
 			<th scope="col">Statut</th>
 			<th scope="col">Actions</th>
 		</tr></thead><tbody>
@@ -363,6 +364,9 @@
 				<td>
 					{{ emplacement.hebergement.nom }}
 					({{emplacement.hebergement.id}})
+				</td>
+				<td>
+					{{ emplacement.tags|map(tag => tag.nom)|join(', ')|default('Aucun') }}
 				</td>
 				<td>
 					{% import "macro/badges.html.twig" as badge %}
