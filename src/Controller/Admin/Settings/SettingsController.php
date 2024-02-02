@@ -80,7 +80,6 @@ class SettingsController extends AbstractController
         ]);
     }
 
-
     #[Route('/tarifs', name: '_tarifs')]
     public function tarifs(): Response
     {

@@ -19,7 +19,7 @@ class OptionMaximum
     private ?int $nombre = null;
 
     #[ORM\ManyToOne(inversedBy: 'optionMaximums')]
-    private ?option $option = null;
+    private ?Option $option = null;
 
     #[ORM\ManyToMany(targetEntity: Hebergement::class, inversedBy: 'optionMaximums')]
     private Collection $hebergements;
@@ -50,12 +50,12 @@ class OptionMaximum
         return $this;
     }
 
-    public function getOption(): ?option
+    public function getOption(): ?Option
     {
         return $this->option;
     }
 
-    public function setOption(?option $option): static
+    public function setOption(?Option $option): static
     {
         $this->option = $option;
 

@@ -3,23 +3,18 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
+{% set crudOptions = {
+	create: false,
+} %}
 
-{% block title %}
-	Tarifs
-{% endblock %}
 
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
 		<h2 class="text-title-md font-bold">Tarifs</h2>
-		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
-			<button>Emplacements</button>
-			<button>Services supplémentaires</button>
-			<button>Adulte/enfant</button>
-			<button>Offres</button>
-		</div>
+			{{ crud.tabulation(["Emplacements","Options supplémentaires","Adulte/Enfant","Offres"]) }}
 	</div>
-
-	{{ crud.basic('Emplacements', tables.tarifs('emplacements')) }}
+	
+	{{ crud.basic('Emplacements', tables.tarifs(tarifs)) }}
 	{{ crud.basic('Options supplémentaires', tables.tarifs('options')) }}
 	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
 	{{ crud.basic('Offres', tables.offres('offres')) }}
