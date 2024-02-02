@@ -423,13 +423,13 @@
 					<td></td>
 					<td></td>
 					<td>
-						14/07/2003
+						{{ date.debut|format_date }}
 					</td>
 					<td>
-						07/14/3002
+						{{ date.fin|format_date }}
 					</td>
 					<td>
-						Lundi, Mercredi, Jeudi
+					{{ date.jours|map(jour => jour)|join(', ')|default('Tous') }}
 					</td>
 					<td>
 						<div class="actions">

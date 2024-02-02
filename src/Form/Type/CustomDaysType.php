@@ -17,15 +17,17 @@ class CustomDaysType extends AbstractType
     {
         $resolver->setDefaults([
             "choices" => [
-                "Tous" => "null",
-                "Lundi" => "1",
-                "Mardi" => "2",
-                "Mercredi" => "3",
-                "Jeudi" => "4",
-                "Vendredi" => "5",
-                "Samedi" => "6",
-                "Dimanche" => "7",
-            ]
+                "Tous" => null,
+                "Lundi" => "Lundi",
+                "Mardi" => "Mardi",
+                "Mercredi" => "Mercredi",
+                "Jeudi" => "Jeudi",
+                "Vendredi" => "Vendredi",
+                "Samedi" => "Samedi",
+                "Dimanche" => "Dimanche",
+            ],
+            "multiple" => true,
+            'required' => false,
         ]);
     }
 

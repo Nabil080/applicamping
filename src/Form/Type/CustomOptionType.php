@@ -16,7 +16,7 @@ class CustomOptionType extends AbstractType
     {
         $resolver->setDefaults([
                 'class' => Option::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
         ]);
     }
 

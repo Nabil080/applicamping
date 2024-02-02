@@ -22,8 +22,9 @@ class SaisonDateType extends AbstractType
             ->add('fin', CustomDateType::class)
             ->add('jours', CustomDaysType::class)
             ->add('saison', CustomSaisonType::class, [
+                'label' => "Saison", 
                 'multiple' => false,
-                'required' => false
+                'required' => true
             ])
         ;
     }
