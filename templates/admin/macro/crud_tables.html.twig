@@ -410,7 +410,7 @@
 				<td></td>
 				<td>
 					<div class="actions">
-						{{ _self.addButton(saison.id, "Ajouter des dates", false, path( 'app_admin_settings_saisons_dates_create', {id: saison.id})) }}
+						{{ _self.addButton(saison.id, "Ajouter des dates", false, path( 'app_admin_settings_saisons_date_create', {id: saison.id})) }}
 						{{ _self.updateButton(saison.id) }}
 						{{ _self.deleteButton(saison.id, path('app_admin_settings_saisons_delete', {id: saison.id}), 'Saison', saison.nom) }}
 					</div>
@@ -433,8 +433,8 @@
 					</td>
 					<td>
 						<div class="actions">
-							{{ _self.updateButton(date.id) }}
-							{{ _self.deleteButton(date.id) }}
+							{{ _self.updateButton(date.id, path('app_admin_settings_saisons_date_update', { id: date.id })) }}
+							{{ _self.deleteButton(date.id, path('app_admin_settings_saisons_date_delete', { id: date.id }), 'période' , date.saison.nom) }}
 						</div>
 					</td>
 				</tr>

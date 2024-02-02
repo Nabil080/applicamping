@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\Saison;
-use App\Entity\OptionMaximum;
+use App\Entity\SaisonDate;
 use App\Form\SaisonDateType;
 use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
@@ -106,7 +106,7 @@ class SaisonController extends AbstractController
         return $this->redirectToRoute('app_admin_settings_saisons');
     }
 
-    #[Route('/{id}/create', name: '_dates_create')]
+    #[Route('/{id}/create', name: '_date_create')]
     public function datesCreate(Saison $saison, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
@@ -116,12 +116,12 @@ class SaisonController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saisonMaximum = $form->getData();
+            $saisonDate = $form->getData();
 
-            $entityManagerInterface->persist($saisonMaximum);
+            $entityManagerInterface->persist($saisonDate);
             $entityManagerInterface->flush();
 
-            $logService->write($saisonMaximum, "create");
+            $logService->write($saisonDate, "create");
 
             return $this->redirectToRoute('app_admin_settings_saisons');
         }
@@ -132,39 +132,39 @@ class SaisonController extends AbstractController
         ]);
     }
 
-    #[Route('/dates/update/{id}', name: '_dates_update')]
-    public function datesUpdate(OptionMaximum $saisonMaximum, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/date/update/{id}', name: '_date_update')]
+    public function dateUpdate(SaisonDate $saisonDate, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(SaisonDateType::class, $saisonMaximum);
+        $form = $this->createForm(SaisonDateType::class, $saisonDate);
         $form->handleRequest($request);
-        $saison = "todo";
+        $saison = $saisonDate->getSaison();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saisonMaximum = $form->getData();
+            $saisonDate = $form->getData();
 
-            $entityManagerInterface->persist($saisonMaximum);
+            $entityManagerInterface->persist($saisonDate);
             $entityManagerInterface->flush();
 
-            $logService->write($saisonMaximum, "update");
+            $logService->write($saisonDate, "update");
 
             return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => "dates de saison : ". $saison->getNom(),
+            "title" => "Dates de saison : ". $saison->getNom(),
             "form" => $form,
             "create" => false
         ]);
     }
 
-    #[Route('/dates/delete/{id}', name: '_dates_delete')]
-    public function datesDelete(OptionMaximum $saisonMaximum, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/dates/delete/{id}', name: '_date_delete')]
+    public function datesDelete(SaisonDate $saisonDate, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $logService->write($saisonMaximum, "delete");
+        $logService->write($saisonDate, "delete");
 
-        $entityManagerInterface->remove($saisonMaximum);
+        $entityManagerInterface->remove($saisonDate);
         $entityManagerInterface->flush();
 
 
