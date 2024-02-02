@@ -6,9 +6,10 @@
 	</button>
 {% endmacro %}
 
-{% macro updateButton(id) %}
+{% macro updateButton(id = 0, url = false) %}
+{% set path = url|default(path('app_admin_update_redirect', {id: id})) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<a href={{ path('app_admin_update_redirect', {id: id} ) }} class="btn btn-sm update">
+	<a href={{ path }} class="btn btn-sm update">
 		{{ svg.edit }}
 		Modifier
 	</a>
@@ -471,7 +472,7 @@
 	<th scope="col">Nom</th>
 	<th scope="col">Statut</th>
 	<th scope="col">Nombre maximum</th>
-	<th scope="col">Emplacements</th>
+	<th scope="col">Hebergements</th>
 	<th scope="col">Saisons</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
@@ -505,18 +506,18 @@
 			<td></td>
 			<td></td>
 			<td>
-				{{ maximum.id }}
+				{{ maximum.nombre }}
 			</td>
 			<td>
-				{{ dump(maximum) }}
+			 	{{ maximum.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous')  }}
 			</td>
 			<td>
-			Saison, saison blabla
+			 	{{ maximum.saisons|map(saison => saison.nom)|join(', ')|default('Tous')  }}
 			</td>
 			<td>
 				<div class="actions">
-					{{ _self.updateButton(maximum.id) }}
-					{{ _self.deleteButton(maximum.id) }}
+					{{ _self.updateButton(maximum.id, path('app_admin_settings_options_maximum_update', { id: maximum.id })) }}
+					{{ _self.deleteButton(maximum.id, path('app_admin_settings_options_maximum_delete', { id: maximum.id }), 'maximum' , maximum.nombre) }}
 				</div>
 			</td>
 		</tr>

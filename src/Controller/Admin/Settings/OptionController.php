@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\Option;
+use App\Entity\OptionMaximum;
 use App\Form\OptionMaximumType;
 use App\Form\OptionType;
 use App\Repository\OptionRepository;
@@ -106,5 +107,40 @@ class OptionController extends AbstractController
         }
 
         return $this->render($this->getPath('create'), ["form" => $form, "title" => "Règle d'option supplémentaire"]);
+    }
+
+    #[Route('/maximum/update/{id}', name: '_maximum_update')]
+    public function maximumUpdate(OptionMaximum $optionMaximum, Request $request, OptionRepository $optionRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+
+        $form = $this->createForm(OptionMaximumType::class, $optionMaximum);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $optionMaximum = $form->getData();
+
+            $entityManagerInterface->persist($optionMaximum);
+            $entityManagerInterface->flush();
+
+            $logService->write($optionMaximum, "update");
+
+            return $this->redirectToRoute('app_admin_settings_options');
+        }
+
+        return $this->render($this->getPath('create'), ["form" => $form, "title" => "Règle d'option supplémentaire", "create" => false]);
+    }
+
+    #[Route('/maximum/delete/{id}', name: '_maximum_delete')]
+    public function maximumDelete(OptionMaximum $optionMaximum, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+
+        $logService->write($optionMaximum, "delete");
+
+        $entityManagerInterface->remove($optionMaximum);
+        $entityManagerInterface->flush();
+
+
+        return $this->redirectToRoute('app_admin_settings_options');
     }
 }
