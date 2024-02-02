@@ -25,7 +25,7 @@
 		{% block form %}
 		{{ form_start(form) }}
 		{{form_widget(form) }}
-		<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
+		<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
 		{{ form_end(form) }}
 		{% endblock %}
 
@@ -37,13 +37,14 @@
 
 {% block scripts %}
 
-<script>
+{# <script>
 	document.addEventListener('turbo:load', () => {
 		$('select[multiple]').select2({ 
 			closeOnSelect: false,
 			language: 'fr',
-			selectionCssClass: ''
+			selectionCssClass: '',
+			allowClear: true
 		});
 	});
-</script>
+</script> #}
 {% endblock %}

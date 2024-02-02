@@ -18,7 +18,7 @@ class EmplacementType extends AbstractType
         $builder
             ->add('numero')
             ->add('statut', CustomStatutType::class)
-            ->add('hebergement', CustomHebergementType::class)
+            ->add('hebergement', CustomHebergementType::class, ['multiple' => false])
         ;
     }
 
