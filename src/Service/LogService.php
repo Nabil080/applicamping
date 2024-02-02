@@ -52,7 +52,7 @@ class LogService
             "Option" => 'Une option supplémentaire  "' . $this->entity->getNom() . '" ',
             "OptionMaximum" => 'Un maximum de "' . $this->entity->getNombre() . '" pour l\'option "' . $this->entity->getOption()->getNom() . '" ',
             "Saison" => 'La saison "' . $this->entity->getNom() . '" ',
-            "SaisonDate" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
+            "Periode" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
         };
         
         $typeString = match($this->log->getType()) {

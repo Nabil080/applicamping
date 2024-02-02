@@ -21,8 +21,8 @@ class Saison
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: SaisonDate::class, orphanRemoval: true)]
-    private Collection $saisonDates;
+    #[ORM\OneToMany(mappedBy: 'saison', targetEntity: Periode::class, orphanRemoval: true)]
+    private Collection $periodes;
 
     #[ORM\ManyToMany(targetEntity: Tarif::class, mappedBy: 'saisons')]
     private Collection $tarifs;
@@ -39,7 +39,7 @@ class Saison
 
     public function __construct()
     {
-        $this->saisonDates = new ArrayCollection();
+        $this->periodes = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
         $this->regleDurees = new ArrayCollection();
         $this->regleSejours = new ArrayCollection();
@@ -76,29 +76,29 @@ class Saison
     }
 
     /**
-     * @return Collection<int, SaisonDate>
+     * @return Collection<int, Periode>
      */
-    public function getSaisonDates(): Collection
+    public function getPeriodes(): Collection
     {
-        return $this->saisonDates;
+        return $this->periodes;
     }
 
-    public function addSaisonDate(SaisonDate $saisonDate): static
+    public function addPeriode(Periode $periode): static
     {
-        if (!$this->saisonDates->contains($saisonDate)) {
-            $this->saisonDates->add($saisonDate);
-            $saisonDate->setSaison($this);
+        if (!$this->periodes->contains($periode)) {
+            $this->periodes->add($periode);
+            $periode->setSaison($this);
         }
 
         return $this;
     }
 
-    public function removeSaisonDate(SaisonDate $saisonDate): static
+    public function removePeriode(Periode $periode): static
     {
-        if ($this->saisonDates->removeElement($saisonDate)) {
+        if ($this->periodes->removeElement($periode)) {
             // set the owning side to null (unless already changed)
-            if ($saisonDate->getSaison() === $this) {
-                $saisonDate->setSaison(null);
+            if ($periode->getSaison() === $this) {
+                $periode->setSaison(null);
             }
         }
 

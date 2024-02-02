@@ -3,8 +3,8 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\Saison;
-use App\Entity\SaisonDate;
-use App\Form\SaisonDateType;
+use App\Entity\Periode;
+use App\Form\PeriodeType;
 use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
 use App\Service\LogService;
@@ -32,7 +32,7 @@ class SaisonController extends AbstractController
     public function saisons(SaisonRepository $saisonRepository): Response
     {
         $saisons = $saisonRepository->findBy([], ["id" => "desc"]);
-        foreach ($saisons as $saison) $saison->getSaisonDates()->getValues();
+        foreach ($saisons as $saison) $saison->getPeriodes()->getValues();
 
         return $this->render($this->getPath('index'), [
             "title" => $this->title,
@@ -106,65 +106,65 @@ class SaisonController extends AbstractController
         return $this->redirectToRoute('app_admin_settings_saisons');
     }
 
-    #[Route('/{id}/create', name: '_date_create')]
-    public function datesCreate(Saison $saison, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/{id}/create', name: '_periode_create')]
+    public function periodeCreate(Saison $saison, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(SaisonDateType::class);
+        $form = $this->createForm(PeriodeType::class);
         $form->get('saison')->setData($saison);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saisonDate = $form->getData();
+            $periode = $form->getData();
 
-            $entityManagerInterface->persist($saisonDate);
+            $entityManagerInterface->persist($periode);
             $entityManagerInterface->flush();
 
-            $logService->write($saisonDate, "create");
+            $logService->write($periode, "create");
 
             return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => "dates de saison : ". $saison->getNom(),
+            "title" => "période de saison : ". $saison->getNom(),
             "form" => $form,
         ]);
     }
 
-    #[Route('/date/update/{id}', name: '_date_update')]
-    public function dateUpdate(SaisonDate $saisonDate, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/date/update/{id}', name: '_periode_update')]
+    public function dateUpdate(Periode $periode, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(SaisonDateType::class, $saisonDate);
+        $form = $this->createForm(PeriodeType::class, $periode);
         $form->handleRequest($request);
-        $saison = $saisonDate->getSaison();
+        $saison = $periode->getSaison();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $saisonDate = $form->getData();
+            $periode = $form->getData();
 
-            $entityManagerInterface->persist($saisonDate);
+            $entityManagerInterface->persist($periode);
             $entityManagerInterface->flush();
 
-            $logService->write($saisonDate, "update");
+            $logService->write($periode, "update");
 
             return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => "Dates de saison : ". $saison->getNom(),
+            "title" => "période de saison : ". $saison->getNom(),
             "form" => $form,
             "create" => false
         ]);
     }
 
-    #[Route('/dates/delete/{id}', name: '_date_delete')]
-    public function datesDelete(SaisonDate $saisonDate, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/periode/delete/{id}', name: '_periode_delete')]
+    public function periodeDelete(Periode $periode, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $logService->write($saisonDate, "delete");
+        $logService->write($periode, "delete");
 
-        $entityManagerInterface->remove($saisonDate);
+        $entityManagerInterface->remove($periode);
         $entityManagerInterface->flush();
 
 

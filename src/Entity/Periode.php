@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\SaisonDateRepository;
+use App\Repository\PeriodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: SaisonDateRepository::class)]
-class SaisonDate
+#[ORM\Entity(repositoryClass: PeriodeRepository::class)]
+class Periode
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,7 +23,7 @@ class SaisonDate
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $jours = null;
 
-    #[ORM\ManyToOne(inversedBy: 'saisonDates')]
+    #[ORM\ManyToOne(inversedBy: 'periodes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Saison $saison = null;
 

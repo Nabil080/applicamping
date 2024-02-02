@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\SaisonDate;
+use App\Entity\Periode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<SaisonDate>
+ * @extends ServiceEntityRepository<Periode>
  *
- * @method SaisonDate|null find($id, $lockMode = null, $lockVersion = null)
- * @method SaisonDate|null findOneBy(array $criteria, array $orderBy = null)
- * @method SaisonDate[]    findAll()
- * @method SaisonDate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Periode|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Periode|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Periode[]    findAll()
+ * @method Periode[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SaisonDateRepository extends ServiceEntityRepository
+class PeriodeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SaisonDate::class);
+        parent::__construct($registry, Periode::class);
     }
 
 //    /**
-//     * @return SaisonDate[] Returns an array of SaisonDate objects
+//     * @return Periode[] Returns an array of Periode objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class SaisonDateRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?SaisonDate
+//    public function findOneBySomeField($value): ?Periode
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')

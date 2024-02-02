@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Saison;
-use App\Entity\SaisonDate;
+use App\Entity\Periode;
 use App\Form\Type\CustomDateType;
 use App\Form\Type\CustomSaisonType;
 use App\Form\Type\CustomDaysType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SaisonDateType extends AbstractType
+class PeriodeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -32,7 +32,7 @@ class SaisonDateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => SaisonDate::class,
+            'data_class' => Periode::class,
         ]);
     }
 }

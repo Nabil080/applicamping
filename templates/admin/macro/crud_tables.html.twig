@@ -410,14 +410,14 @@
 				<td></td>
 				<td>
 					<div class="actions">
-						{{ _self.addButton(saison.id, "Ajouter des dates", false, path( 'app_admin_settings_saisons_date_create', {id: saison.id})) }}
+						{{ _self.addButton(saison.id, "Ajouter une période", false, path( 'app_admin_settings_saisons_periode_create', {id: saison.id})) }}
 						{{ _self.updateButton(saison.id) }}
 						{{ _self.deleteButton(saison.id, path('app_admin_settings_saisons_delete', {id: saison.id}), 'Saison', saison.nom) }}
 					</div>
 				</td>
 			</tr>
 
-			{% for date in saison.saisonDates %}
+			{% for date in saison.periodes %}
 				<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
 					<th scope="row"></th>
 					<td></td>
@@ -433,8 +433,8 @@
 					</td>
 					<td>
 						<div class="actions">
-							{{ _self.updateButton(date.id, path('app_admin_settings_saisons_date_update', { id: date.id })) }}
-							{{ _self.deleteButton(date.id, path('app_admin_settings_saisons_date_delete', { id: date.id }), 'période' , date.saison.nom) }}
+							{{ _self.updateButton(date.id, path('app_admin_settings_saisons_periode_update', { id: date.id })) }}
+							{{ _self.deleteButton(date.id, path('app_admin_settings_saisons_periode_delete', { id: date.id }), 'période' , date.saison.nom) }}
 						</div>
 					</td>
 				</tr>
