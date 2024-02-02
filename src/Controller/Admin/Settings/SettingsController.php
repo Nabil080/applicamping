@@ -80,14 +80,6 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/saisons', name: '_saisons')]
-    public function saisons(): Response
-    {
-        return $this->render($this->getPath('saisons/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
 
     #[Route('/tarifs', name: '_tarifs')]
     public function tarifs(): Response

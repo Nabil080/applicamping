@@ -4,7 +4,9 @@
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
 
-{% set crudOptions = {filters: filters.clients, create: true} %}
+{% set crudOptions = {
+	create: "Ajouter une option",
+} %}
 
 
 {% block body %}
