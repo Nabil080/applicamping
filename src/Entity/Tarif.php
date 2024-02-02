@@ -34,7 +34,7 @@ class Tarif
     private ?bool $enfant = null;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
-    private ?option $Option = null;
+    private ?Option $option = null;
 
     #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'tarifs')]
     private Collection $saisons;
@@ -121,14 +121,14 @@ class Tarif
         return $this;
     }
 
-    public function getOption(): ?option
+    public function getOption(): ?Option
     {
-        return $this->Option;
+        return $this->option;
     }
 
-    public function setOption(?option $Option): static
+    public function setOption(?Option $option): static
     {
-        $this->Option = $Option;
+        $this->option = $option;
 
         return $this;
     }

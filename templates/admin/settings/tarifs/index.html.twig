@@ -15,7 +15,7 @@
 	</div>
 	
 	{{ crud.basic('Hebergements', tables.tarifs(hebergements)) }}
-	{{ crud.basic('Options supplémentaires', tables.tarifs('options')) }}
+	{{ crud.basic('Options supplémentaires', tables.tarifs(options)) }}
 	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
 	{{ crud.basic('Offres', tables.offres('offres')) }}
 {% endblock %}

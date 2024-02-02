@@ -6,6 +6,7 @@ use App\Entity\Tarif;
 use App\Form\TarifType;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
+use App\Repository\OptionRepository;
 use App\Repository\TarifRepository;
 use App\Service\LogService;
 use App\Service\UploadService;
@@ -30,14 +31,19 @@ class TarifController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function tarifs(HebergementRepository $hebergementRepository): Response
+    public function tarifs(HebergementRepository $hebergementRepository, OptionRepository $optionRepository): Response
     {
         $hebergements = $hebergementRepository->findBy([], ["id" => "asc"]);
         foreach ($hebergements as $hebergement) $hebergement->getTarifs()->getValues();
+        
+        $options = $optionRepository->findBy([], ["id" => "asc"]);
+        foreach ($options as $option) $option->getTarifs()->getValues();
+
 
         return $this->render($this->getPath('index'), [
             'title' => $this->title,
             'hebergements' => $hebergements,
+            'options' => $options,
         ]);
     }
 
