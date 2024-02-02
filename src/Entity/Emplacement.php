@@ -27,13 +27,13 @@ class Emplacement
     #[ORM\JoinColumn(nullable: false)]
     private ?Hebergement $hebergement = null;
 
-    #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Reservation::class)]
     private Collection $reservation;
 
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Tarif::class)]
     private Collection $tarifs;
 
-    #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'emplacements')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'emplacements')]
     private Collection $tags;
 
     #[ORM\ManyToMany(targetEntity: OptionMaximum::class, mappedBy: 'emplacements')]
@@ -89,14 +89,14 @@ class Emplacement
     }
 
     /**
-     * @return Collection<int, reservation>
+     * @return Collection<int, Reservation>
      */
     public function getReservation(): Collection
     {
         return $this->reservation;
     }
 
-    public function addReservation(reservation $reservation): static
+    public function addReservation(Reservation $reservation): static
     {
         if (!$this->reservation->contains($reservation)) {
             $this->reservation->add($reservation);
@@ -106,7 +106,7 @@ class Emplacement
         return $this;
     }
 
-    public function removeReservation(reservation $reservation): static
+    public function removeReservation(Reservation $reservation): static
     {
         if ($this->reservation->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
@@ -149,14 +149,14 @@ class Emplacement
     }
 
     /**
-     * @return Collection<int, tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function addTag(tag $tag): static
+    public function addTag(Tag $tag): static
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -165,7 +165,7 @@ class Emplacement
         return $this;
     }
 
-    public function removeTag(tag $tag): static
+    public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
 

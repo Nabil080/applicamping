@@ -25,7 +25,7 @@ class SaisonDate
 
     #[ORM\ManyToOne(inversedBy: 'saisonDates')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?saison $saison = null;
+    private ?Saison $saison = null;
 
     public function getId(): ?int
     {
@@ -68,12 +68,12 @@ class SaisonDate
         return $this;
     }
 
-    public function getSaison(): ?saison
+    public function getSaison(): ?Saison
     {
         return $this->saison;
     }
 
-    public function setSaison(?saison $saison): static
+    public function setSaison(?Saison $saison): static
     {
         $this->saison = $saison;
 

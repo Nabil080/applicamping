@@ -21,10 +21,10 @@ class RegleDuree
     #[ORM\Column(nullable: true)]
     private ?int $minimum = null;
 
-    #[ORM\ManyToMany(targetEntity: saison::class, inversedBy: 'regleDurees')]
+    #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'regleDurees')]
     private Collection $saisons;
 
-    #[ORM\ManyToMany(targetEntity: hebergement::class, inversedBy: 'regleDurees')]
+    #[ORM\ManyToMany(targetEntity: Hebergement::class, inversedBy: 'regleDurees')]
     private Collection $hebergements;
 
     public function __construct()
@@ -63,14 +63,14 @@ class RegleDuree
     }
 
     /**
-     * @return Collection<int, saison>
+     * @return Collection<int, Saison>
      */
     public function getSaisons(): Collection
     {
         return $this->saisons;
     }
 
-    public function addSaison(saison $saison): static
+    public function addSaison(Saison $saison): static
     {
         if (!$this->saisons->contains($saison)) {
             $this->saisons->add($saison);
@@ -79,7 +79,7 @@ class RegleDuree
         return $this;
     }
 
-    public function removeSaison(saison $saison): static
+    public function removeSaison(Saison $saison): static
     {
         $this->saisons->removeElement($saison);
 
@@ -87,14 +87,14 @@ class RegleDuree
     }
 
     /**
-     * @return Collection<int, hebergement>
+     * @return Collection<int, Hebergement>
      */
     public function getHebergements(): Collection
     {
         return $this->hebergements;
     }
 
-    public function addHebergement(hebergement $hebergement): static
+    public function addHebergement(Hebergement $hebergement): static
     {
         if (!$this->hebergements->contains($hebergement)) {
             $this->hebergements->add($hebergement);
@@ -103,7 +103,7 @@ class RegleDuree
         return $this;
     }
 
-    public function removeHebergement(hebergement $hebergement): static
+    public function removeHebergement(Hebergement $hebergement): static
     {
         $this->hebergements->removeElement($hebergement);
 

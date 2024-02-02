@@ -24,10 +24,10 @@ class OptionMaximum
     #[ORM\ManyToOne(inversedBy: 'optionMaximums')]
     private ?option $option = null;
 
-    #[ORM\ManyToMany(targetEntity: emplacement::class, inversedBy: 'optionMaximums')]
+    #[ORM\ManyToMany(targetEntity: Emplacement::class, inversedBy: 'optionMaximums')]
     private Collection $emplacements;
 
-    #[ORM\ManyToMany(targetEntity: saison::class, inversedBy: 'optionMaximums')]
+    #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'optionMaximums')]
     private Collection $saisons;
 
     public function __construct()
@@ -78,14 +78,14 @@ class OptionMaximum
     }
 
     /**
-     * @return Collection<int, emplacement>
+     * @return Collection<int, Emplacement>
      */
     public function getEmplacements(): Collection
     {
         return $this->emplacements;
     }
 
-    public function addEmplacement(emplacement $emplacement): static
+    public function addEmplacement(Emplacement $emplacement): static
     {
         if (!$this->emplacements->contains($emplacement)) {
             $this->emplacements->add($emplacement);
@@ -94,7 +94,7 @@ class OptionMaximum
         return $this;
     }
 
-    public function removeEmplacement(emplacement $emplacement): static
+    public function removeEmplacement(Emplacement $emplacement): static
     {
         $this->emplacements->removeElement($emplacement);
 
@@ -102,14 +102,14 @@ class OptionMaximum
     }
 
     /**
-     * @return Collection<int, saison>
+     * @return Collection<int, Saison>
      */
     public function getSaisons(): Collection
     {
         return $this->saisons;
     }
 
-    public function addSaison(saison $saison): static
+    public function addSaison(Saison $saison): static
     {
         if (!$this->saisons->contains($saison)) {
             $this->saisons->add($saison);
@@ -118,7 +118,7 @@ class OptionMaximum
         return $this;
     }
 
-    public function removeSaison(saison $saison): static
+    public function removeSaison(Saison $saison): static
     {
         $this->saisons->removeElement($saison);
 
