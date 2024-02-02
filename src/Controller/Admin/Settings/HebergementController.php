@@ -52,7 +52,7 @@ class HebergementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_hebergements');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form]);
+        return $this->render("layout/form.html.twig", ["title" => "Hébergement", "form" => $form]);
     }
 
     #[Route('/update/{id}', name: '_update')]
@@ -77,7 +77,7 @@ class HebergementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_hebergements');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", ["title" => "Hébergement", "form" => $form, "create" => false]);
     }
 
     #[Route('/delete/{id}', name: '_delete')]

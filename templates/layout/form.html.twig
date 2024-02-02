@@ -3,9 +3,12 @@
 
 {% block pretitle %}
 	{{ isAddForm ? "Ajout" : "Modification" }}
-	|
 {% endblock %}
 
+
+{% block title %}
+	{{ title }}
+{% endblock %}
 
 {% block body %}
 
@@ -19,8 +22,12 @@
 	<section class="crud grid mt-8">
 		<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
 
-			{% block form %}{% endblock %}
-
+			{% block form %}
+				{{ form_start(form) }}
+				{{form_widget(form) }}
+				<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
+				{{ form_end(form) }}
+			{% endblock %}
 
 		</div>
 	</section>

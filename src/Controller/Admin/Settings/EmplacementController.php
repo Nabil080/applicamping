@@ -44,7 +44,7 @@ class EmplacementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form]);
+        return $this->render("layout/form.html.twig", ["title" => "Emplacements", "form" => $form]);
     }
 
 
@@ -68,7 +68,7 @@ class EmplacementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", ["title" => "Emplacements", "form" => $form, "create" => false]);
     }
 
 
