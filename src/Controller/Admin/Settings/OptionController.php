@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\Option;
+use App\Form\OptionMaximumType;
 use App\Form\OptionType;
 use App\Repository\OptionRepository;
 use App\Service\LogService;
@@ -43,7 +44,7 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form]);
+        return $this->render($this->getPath('create'), ["form" => $form, "title" => "Options"]);
     }
 
 
@@ -66,7 +67,7 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render($this->getPath('create'), ["form" => $form, "create" => false]);
+        return $this->render($this->getPath('create'), ["form" => $form, "title" => "Options", "create" => false]);
     }
 
 
@@ -82,5 +83,28 @@ class OptionController extends AbstractController
 
 
         return $this->redirectToRoute('app_admin_settings_options');
+    }
+
+    #[Route('/{id}/create', name: '_maximum_create')]
+    public function maximumCreate(Request $request, OptionRepository $optionRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+
+        $form = $this->createForm(OptionMaximumType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $option = $form->getData();
+            dd($option);
+
+            $entityManagerInterface->persist($option);
+            $entityManagerInterface->flush();
+
+            $logService->write($option, "create");
+
+            return $this->redirectToRoute('app_admin_settings_options');
+        }
+
+        return $this->render($this->getPath('create'), ["form" => $form, "title" => "Règle d'option supplémentaire"]);
     }
 }

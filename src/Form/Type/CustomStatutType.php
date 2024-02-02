@@ -15,7 +15,7 @@ class CustomStatutType extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => [
-                'value' => 'Actif',
+                'empty_data' => 'Actif',
                 'placeholder' => 'Actif',
             ],
             'constraints' => [

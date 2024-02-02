@@ -25,7 +25,7 @@ class Tarif
     private ?bool $par_personne = null;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
-    private ?emplacement $emplacement = null;
+    private ?Emplacement $emplacement = null;
 
     #[ORM\Column]
     private ?bool $adulte = null;
@@ -36,7 +36,7 @@ class Tarif
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     private ?option $Option = null;
 
-    #[ORM\ManyToMany(targetEntity: saison::class, inversedBy: 'tarifs')]
+    #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'tarifs')]
     private Collection $saisons;
 
     public function __construct()
@@ -85,12 +85,12 @@ class Tarif
         return $this;
     }
 
-    public function getEmplacement(): ?emplacement
+    public function getEmplacement(): ?Emplacement
     {
         return $this->emplacement;
     }
 
-    public function setEmplacement(?emplacement $emplacement): static
+    public function setEmplacement(?Emplacement $emplacement): static
     {
         $this->emplacement = $emplacement;
 
@@ -134,14 +134,14 @@ class Tarif
     }
 
     /**
-     * @return Collection<int, saison>
+     * @return Collection<int, Saison>
      */
     public function getSaisons(): Collection
     {
         return $this->saisons;
     }
 
-    public function addSaison(saison $saison): static
+    public function addSaison(Saison $saison): static
     {
         if (!$this->saisons->contains($saison)) {
             $this->saisons->add($saison);
@@ -150,7 +150,7 @@ class Tarif
         return $this;
     }
 
-    public function removeSaison(saison $saison): static
+    public function removeSaison(Saison $saison): static
     {
         $this->saisons->removeElement($saison);
 

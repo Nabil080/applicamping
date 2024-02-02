@@ -30,9 +30,10 @@
 	</button>
 {% endmacro %}
 
-{% macro addButton(id = 'add', text = 'Ajouter', large = false, path = 'app_admin_create_redirect') %}
+{% macro addButton(id = 'add', text = 'Ajouter', large = false, url = false) %}
+{% set path = url|default(path('app_admin_create_redirect')) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<a href={{ path(path) }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
+	<a href={{ path }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
 		{{ svg.plus }}
 		{{ text }}
 	</a>
@@ -491,7 +492,7 @@
 		<td></td>
 		<td>
 			<div class="actions">
-				{{ _self.addButton(option.id, "Ajouter une option") }}
+				{{ _self.addButton(option.id, "Ajouter une option", false, path( 'app_admin_settings_options_maximum_create', {id: option.id}) ) }}
 				{{ _self.updateButton(option.id) }}
 				{{ _self.deleteButton(option.id, path( 'app_admin_settings_options_delete', {id: option.id} ), 'Option', option.nom) }}
 			</div>

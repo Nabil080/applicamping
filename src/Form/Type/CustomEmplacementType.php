@@ -15,9 +15,11 @@ class CustomEmplacementType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
+        
         $resolver->setDefaults([
                 'class' => Emplacement::class,
                 'choice_label' => 'numero',
+                'label' => 'Hebergements (Laisser vide pour tous)',
                 'multiple' => true,
                 'required' => false
         ]);

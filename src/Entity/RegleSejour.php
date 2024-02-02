@@ -22,10 +22,10 @@ class RegleSejour
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $check_out = null;
 
-    #[ORM\ManyToMany(targetEntity: hebergement::class, inversedBy: 'regleSejours')]
+    #[ORM\ManyToMany(targetEntity: Hebergement::class, inversedBy: 'regleSejours')]
     private Collection $hebergements;
 
-    #[ORM\ManyToMany(targetEntity: saison::class, inversedBy: 'regleSejours')]
+    #[ORM\ManyToMany(targetEntity: Saison::class, inversedBy: 'regleSejours')]
     private Collection $saisons;
 
     public function __construct()
@@ -63,27 +63,15 @@ class RegleSejour
         return $this;
     }
 
-    public function getSaisons(): ?saison
-    {
-        return $this->saisons;
-    }
-
-    public function setSaisons(?saison $saisons): static
-    {
-        $this->saisons = $saisons;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, hebergement>
+     * @return Collection<int, Hebergement>
      */
     public function getHebergements(): Collection
     {
         return $this->hebergements;
     }
 
-    public function addHebergement(hebergement $hebergement): static
+    public function addHebergement(Hebergement $hebergement): static
     {
         if (!$this->hebergements->contains($hebergement)) {
             $this->hebergements->add($hebergement);
@@ -92,14 +80,23 @@ class RegleSejour
         return $this;
     }
 
-    public function removeHebergement(hebergement $hebergement): static
+    public function removeHebergement(Hebergement $hebergement): static
     {
         $this->hebergements->removeElement($hebergement);
 
         return $this;
     }
 
-    public function addSaison(saison $saison): static
+    /**
+     * @return Collection<int, Saison>
+     */
+    public function getSaisons(): Collection
+    {
+        return $this->hebergements;
+    }
+
+
+    public function addSaison(Saison $saison): static
     {
         if (!$this->saisons->contains($saison)) {
             $this->saisons->add($saison);
@@ -108,7 +105,7 @@ class RegleSejour
         return $this;
     }
 
-    public function removeSaison(saison $saison): static
+    public function removeSaison(Saison $saison): static
     {
         $this->saisons->removeElement($saison);
 
