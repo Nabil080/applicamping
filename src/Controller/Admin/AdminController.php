@@ -15,7 +15,7 @@ class AdminController extends AbstractController
         return sprintf('admin/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function index(): Response
     {
         return $this->render($this->getPath('index'), [

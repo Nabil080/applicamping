@@ -5,7 +5,7 @@ namespace App\Controller\Admin\Settings;
 use App\Entity\Saison;
 use App\Entity\OptionMaximum;
 use App\Form\OptionMaximumType;
-use App\Form\OptionType;
+use App\Form\SaisonType;
 use App\Repository\SaisonRepository;
 use App\Service\LogService;
 use App\Service\UploadService;
@@ -28,11 +28,11 @@ class SaisonController extends AbstractController
         return sprintf('admin/settings/saisons/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function saisons(SaisonRepository $saisonRepository): Response
     {
         $saisons = $saisonRepository->findBy([], ["id" => "desc"]);
-        foreach ($saisons as $option) $option->getOptionMaximums()->getValues();
+        foreach ($saisons as $saison) $saison->getSaisonDates()->getValues();
 
         return $this->render($this->getPath('index'), [
             "title" => $this->title,
@@ -44,19 +44,19 @@ class SaisonController extends AbstractController
     public function create(Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(OptionType::class);
+        $form = $this->createForm(SaisonType::class);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $option = $form->getData();
+            $saison = $form->getData();
 
-            $entityManagerInterface->persist($option);
+            $entityManagerInterface->persist($saison);
             $entityManagerInterface->flush();
 
-            $logService->write($option, "create");
+            $logService->write($saison, "create");
 
-            return $this->redirectToRoute('app_admin_settings_options');
+            return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
@@ -67,22 +67,22 @@ class SaisonController extends AbstractController
 
 
     #[Route('/update/{id}', name: '_update')]
-    public function update(Saison $option, Request $request, UploadService $uploadService, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function update(Saison $saison, Request $request, UploadService $uploadService, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(OptionType::class, $option);
+        $form = $this->createForm(SaisonType::class, $saison);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $option = $form->getData();
+            $saison = $form->getData();
 
-            $entityManagerInterface->persist($option);
+            $entityManagerInterface->persist($saison);
             $entityManagerInterface->flush();
 
-            $logService->write($option, "update");
+            $logService->write($saison, "update");
 
-            return $this->redirectToRoute('app_admin_settings_options');
+            return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
@@ -94,80 +94,80 @@ class SaisonController extends AbstractController
 
 
     #[Route('/delete/{id}', name: '_delete')]
-    public function delete(Saison $option, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function delete(Saison $saison, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $logService->write($option, "delete");
+        $logService->write($saison, "delete");
 
-        $entityManagerInterface->remove($option);
+        $entityManagerInterface->remove($saison);
         $entityManagerInterface->flush();
 
 
-        return $this->redirectToRoute('app_admin_settings_options');
+        return $this->redirectToRoute('app_admin_settings_saisons');
     }
 
     #[Route('/{id}/create', name: '_maximum_create')]
-    public function maximumCreate(Saison $option, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function maximumCreate(Saison $saison, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
         $form = $this->createForm(OptionMaximumType::class);
-        $form->get('option')->setData($option);
+        $form->get('saison')->setData($saison);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $optionMaximum = $form->getData();
+            $saisonMaximum = $form->getData();
 
-            $entityManagerInterface->persist($optionMaximum);
+            $entityManagerInterface->persist($saisonMaximum);
             $entityManagerInterface->flush();
 
-            $logService->write($optionMaximum, "create");
+            $logService->write($saisonMaximum, "create");
 
-            return $this->redirectToRoute('app_admin_settings_options');
+            return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => "Règle d'option supplémentaire",
+            "title" => "Règle d'saison supplémentaire",
             "form" => $form,
         ]);
     }
 
     #[Route('/maximum/update/{id}', name: '_maximum_update')]
-    public function maximumUpdate(OptionMaximum $optionMaximum, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function maximumUpdate(OptionMaximum $saisonMaximum, Request $request, SaisonRepository $saisonRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(OptionMaximumType::class, $optionMaximum);
+        $form = $this->createForm(OptionMaximumType::class, $saisonMaximum);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $optionMaximum = $form->getData();
+            $saisonMaximum = $form->getData();
 
-            $entityManagerInterface->persist($optionMaximum);
+            $entityManagerInterface->persist($saisonMaximum);
             $entityManagerInterface->flush();
 
-            $logService->write($optionMaximum, "update");
+            $logService->write($saisonMaximum, "update");
 
-            return $this->redirectToRoute('app_admin_settings_options');
+            return $this->redirectToRoute('app_admin_settings_saisons');
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => "Règle d'option supplémentaire",
+            "title" => "Règle d'saison supplémentaire",
             "form" => $form,
             "create" => false
         ]);
     }
 
     #[Route('/maximum/delete/{id}', name: '_maximum_delete')]
-    public function maximumDelete(OptionMaximum $optionMaximum, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function maximumDelete(OptionMaximum $saisonMaximum, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $logService->write($optionMaximum, "delete");
+        $logService->write($saisonMaximum, "delete");
 
-        $entityManagerInterface->remove($optionMaximum);
+        $entityManagerInterface->remove($saisonMaximum);
         $entityManagerInterface->flush();
 
 
-        return $this->redirectToRoute('app_admin_settings_options');
+        return $this->redirectToRoute('app_admin_settings_saisons');
     }
 }

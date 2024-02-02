@@ -28,7 +28,7 @@ class OptionController extends AbstractController
         return sprintf('admin/settings/options/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function options(OptionRepository $optionRepository): Response
     {
         $options = $optionRepository->findBy([], ["id" => "desc"]);

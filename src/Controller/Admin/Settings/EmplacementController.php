@@ -26,7 +26,7 @@ class EmplacementController extends AbstractController
         return sprintf('admin/settings/emplacements/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function emplacements(EmplacementRepository $emplacementRepository): Response
     {
         $emplacements = $emplacementRepository->findBy([], ["id" => "desc"]);

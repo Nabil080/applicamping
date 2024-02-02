@@ -387,6 +387,7 @@
 		<tr>
 			<th scope="col">ID</th>
 			<th scope="col">Nom</th>
+			<th scope="col">Statut</th>
 			<th scope="col">Début</th>
 			<th scope="col">Fin</th>
 			<th scope="col">Jours</th>
@@ -399,6 +400,10 @@
 				</th>
 				<td>
 					{{ saison.nom }}
+				</td>
+				<td>
+					{% import "macro/badges.html.twig" as badge %}
+					{{ badge.basic(saison.statut)}}
 				</td>
 				<td></td>
 				<td></td>
@@ -415,6 +420,7 @@
 			{% for date in saison.saisonDates %}
 				<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
 					<th scope="row"></th>
+					<td></td>
 					<td></td>
 					<td>
 						14/07/2003

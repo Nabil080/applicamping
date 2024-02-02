@@ -51,6 +51,7 @@ class LogService
             "Camping" => 'Le camping  "' . $this->entity->getNom() . '" ',
             "Option" => 'Une option supplémentaire  "' . $this->entity->getNom() . '" ',
             "OptionMaximum" => 'Un maximum de "' . $this->entity->getNombre() . '" pour l\'option "' . $this->entity->getOption()->getNom() . '" ',
+            "Saison" => 'La saison "' . $this->entity->getNom() . '" ',
         };
         
         $typeString = match($this->log->getType()) {

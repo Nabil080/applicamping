@@ -14,8 +14,10 @@ class CustomStatutType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'empty_data' => 'Actif',
+            'empty_value' => 'Actif',
+            'required' => false,
             'attr' => [
-                'empty_data' => 'Actif',
                 'placeholder' => 'Actif',
             ],
             'constraints' => [

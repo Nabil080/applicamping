@@ -26,7 +26,7 @@ class HebergementController extends AbstractController
         return sprintf('admin/settings/hebergements/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function hebergements(HebergementRepository $hebergementRepository): Response
     {
         $hebergements = $hebergementRepository->findBy([], ["id" => "desc"]);

@@ -27,7 +27,7 @@ class TagController extends AbstractController
     }
 
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function tags(TagRepository $tagRepository): Response
     {
         $tags = $tagRepository->findBy([], ["id" => "desc"]);

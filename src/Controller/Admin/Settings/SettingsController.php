@@ -26,7 +26,7 @@ class SettingsController extends AbstractController
         return sprintf('admin/settings/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function index(HebergementRepository $hebergementRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
     {
         $camping = $campingRepository->findOneBy([]);
