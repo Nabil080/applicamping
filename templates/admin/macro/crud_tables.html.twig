@@ -505,23 +505,18 @@
 			<td></td>
 			<td></td>
 			<td>
-				{{ 4 + i }}
+				{{ maximum.id }}
 			</td>
 			<td>
-				{% if i % 2 %}
-					Camping-Car
-				{% else %}
-					Tous
-				{% endif %}
+				{{ dump(maximum) }}
 			</td>
 			<td>
 			Saison, saison blabla
 			</td>
 			<td>
 				<div class="actions">
-					{% set id = i %}
-					{{ _self.updateButton(id) }}
-					{{ _self.deleteButton(id) }}
+					{{ _self.updateButton(maximum.id) }}
+					{{ _self.deleteButton(maximum.id) }}
 				</div>
 			</td>
 		</tr>

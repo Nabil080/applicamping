@@ -90,6 +90,7 @@ class OptionController extends AbstractController
     {
 
         $form = $this->createForm(OptionMaximumType::class);
+        $form->get('option')->setData($option);
         $form->handleRequest($request);
 
 
