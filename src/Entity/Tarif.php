@@ -19,19 +19,19 @@ class Tarif
     private ?int $montant = null;
 
     #[ORM\Column]
-    private ?bool $par_nuit = null;
+    private ?bool $par_nuit = false;
 
     #[ORM\Column]
-    private ?bool $par_personne = null;
+    private ?bool $par_personne = false;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     private ?Hebergement $hebergement = null;
 
     #[ORM\Column]
-    private ?bool $adulte = null;
+    private ?bool $adulte = false;
 
     #[ORM\Column]
-    private ?bool $enfant = null;
+    private ?bool $enfant = false;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     private ?Option $option = null;

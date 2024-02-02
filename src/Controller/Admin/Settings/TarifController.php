@@ -31,19 +31,27 @@ class TarifController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function tarifs(HebergementRepository $hebergementRepository, OptionRepository $optionRepository): Response
+    public function tarifs(HebergementRepository $hebergementRepository, OptionRepository $optionRepository, TarifRepository $tarifRepository): Response
     {
         $hebergements = $hebergementRepository->findBy([], ["id" => "asc"]);
         foreach ($hebergements as $hebergement) $hebergement->getTarifs()->getValues();
-        
+
         $options = $optionRepository->findBy([], ["id" => "asc"]);
         foreach ($options as $option) $option->getTarifs()->getValues();
 
+        $adultes = $tarifRepository->findBy(["adulte" => true], ["id" => "asc"]);
+        $enfants = $tarifRepository->findBy(["enfant" => true], ["id" => "asc"]);
+
+        $ageCategory = [
+            "adulte" => ["id" => 0, "nom" => "Adulte", "tarifs" => $adultes],
+            "enfant" => ["id" => 0, "nom" => "Enfant", "tarifs" => $enfants]
+        ];
 
         return $this->render($this->getPath('index'), [
             'title' => $this->title,
             'hebergements' => $hebergements,
             'options' => $options,
+            'ageCategory' => $ageCategory,
         ]);
     }
 
