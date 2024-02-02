@@ -86,7 +86,7 @@ class OptionController extends AbstractController
     }
 
     #[Route('/{id}/create', name: '_maximum_create')]
-    public function maximumCreate(Request $request, OptionRepository $optionRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function maximumCreate(Option $option, Request $request, OptionRepository $optionRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
         $form = $this->createForm(OptionMaximumType::class);
@@ -94,13 +94,12 @@ class OptionController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $option = $form->getData();
-            dd($option);
+            $optionMaximum = $form->getData();
 
-            $entityManagerInterface->persist($option);
+            $entityManagerInterface->persist($optionMaximum);
             $entityManagerInterface->flush();
 
-            $logService->write($option, "create");
+            $logService->write($optionMaximum, "create");
 
             return $this->redirectToRoute('app_admin_settings_options');
         }

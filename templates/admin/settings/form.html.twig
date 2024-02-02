@@ -31,7 +31,7 @@
 {% block scripts %}
 
 	<script>
-		document.addEventListener('turbo:load', () => {
+		document.addEventListener('DOMContentLoaded', () => {
 $('select[multiple]').select2({closeOnSelect: false, language: 'fr', });
 });
 	</script>

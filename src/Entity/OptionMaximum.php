@@ -18,9 +18,6 @@ class OptionMaximum
     #[ORM\Column]
     private ?int $nombre = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ManyToOne = null;
-
     #[ORM\ManyToOne(inversedBy: 'optionMaximums')]
     private ?option $option = null;
 
@@ -49,18 +46,6 @@ class OptionMaximum
     public function setNombre(int $nombre): static
     {
         $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getManyToOne(): ?string
-    {
-        return $this->ManyToOne;
-    }
-
-    public function setManyToOne(string $ManyToOne): static
-    {
-        $this->ManyToOne = $ManyToOne;
 
         return $this;
     }
