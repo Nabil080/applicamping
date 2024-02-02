@@ -3,11 +3,6 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
-{% set title = 'Options' %}
-
-{% block title %}
-	{{ title }}
-{% endblock %}
 
 {% set crudOptions = {filters: filters.clients, create: true} %}
 

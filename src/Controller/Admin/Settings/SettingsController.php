@@ -88,39 +88,6 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/options', name: '_options')]
-    public function options(OptionRepository $optionRepository): Response
-    {
-        $options = $optionRepository->findBy([], ["id" => "desc"]);
-        foreach($options as $option) $option->getOptionMaximums()->getValues();
-
-        dump($options);
-        return $this->render($this->getPath('options/index'), [
-            'options' => $options
-        ]);
-    }
-
-    #[Route('/emplacements', name: '_emplacements')]
-    public function emplacements(EmplacementRepository $emplacementRepository): Response
-    {
-        $emplacements = $emplacementRepository->findBy([], ["id" => "desc"]);
-        // foreach($emplacements as $emplacement) $emplacement->getEmplacements()->getValues();
-
-        return $this->render($this->getPath('emplacements/index'), [
-            'emplacements' => $emplacements
-        ]);
-    }
-
-    #[Route('/tags', name: '_tags')]
-    public function tags(TagRepository $tagRepository): Response
-    {
-        $tags = $tagRepository->findBy([], ["id" => "desc"]);
-        foreach($tags as $tag) $tag->getEmplacements()->getValues();
-
-        return $this->render($this->getPath('tags/index'), [
-            'tags' => $tags
-        ]);
-    }
 
     #[Route('/tarifs', name: '_tarifs')]
     public function tarifs(): Response
@@ -138,14 +105,4 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/hebergements', name: '_hebergements')]
-    public function hebergements(HebergementRepository $hebergementRepository): Response
-    {
-        $hebergements = $hebergementRepository->findBy([], ["id" => "desc"]);
-        foreach ($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
-
-        return $this->render($this->getPath('hebergements/index'), [
-            'hebergements' => $hebergements,
-        ]);
-    }
 }

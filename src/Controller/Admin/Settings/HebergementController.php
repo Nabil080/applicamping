@@ -19,9 +19,23 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/hebergements', name: 'app_admin_settings_hebergements')]
 class HebergementController extends AbstractController
 {
+    private string $title = "Hébergements";
+
     private function getPath($file): string
     {
         return sprintf('admin/settings/hebergements/%s.html.twig', $file);
+    }
+
+    #[Route('/', name: '')]
+    public function hebergements(HebergementRepository $hebergementRepository): Response
+    {
+        $hebergements = $hebergementRepository->findBy([], ["id" => "desc"]);
+        foreach ($hebergements as $hebergement) $hebergement->getEmplacements()->getValues();
+
+        return $this->render($this->getPath('index'), [
+            "title" => $this->title,
+            'hebergements' => $hebergements,
+        ]);
     }
 
     #[Route('/create', name: '_create')]
@@ -52,7 +66,10 @@ class HebergementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_hebergements');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Hébergement", "form" => $form]);
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form
+        ]);
     }
 
     #[Route('/update/{id}', name: '_update')]
@@ -77,7 +94,11 @@ class HebergementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_hebergements');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Hébergement", "form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form,
+            "create" => false
+        ]);
     }
 
     #[Route('/delete/{id}', name: '_delete')]

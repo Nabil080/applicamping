@@ -3,11 +3,6 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
-{% set title = 'Emplacements' %}
-
-{% block title %}
-	{{ title }}
-{% endblock %}
 
 {% set options = { filters: filters.clients, pagination: true, search: "Rechercher un ID, un N°, un emplacement...", tooltip: 'Tous les emplacements'} %}
 

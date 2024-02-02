@@ -19,9 +19,24 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/tags', name: 'app_admin_settings_tags')]
 class TagController extends AbstractController
 {
+    private string $title = "Tags";
+
     private function getPath($file): string
     {
         return sprintf('admin/settings/tags/%s.html.twig', $file);
+    }
+
+
+    #[Route('/', name: '')]
+    public function tags(TagRepository $tagRepository): Response
+    {
+        $tags = $tagRepository->findBy([], ["id" => "desc"]);
+        foreach ($tags as $tag) $tag->getEmplacements()->getValues();
+
+        return $this->render($this->getPath('index'), [
+            'title' => $this->title,
+            'tags' => $tags
+        ]);
     }
 
     #[Route('/create', name: '_create')]
@@ -43,7 +58,10 @@ class TagController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_tags');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Tags", "form" => $form]);
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form
+        ]);
     }
 
 
@@ -66,8 +84,11 @@ class TagController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_tags');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Tags", "form" => $form, "create" => false]);
-
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form,
+            "create" => false
+        ]);
     }
 
 

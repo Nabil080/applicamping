@@ -21,9 +21,23 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/options', name: 'app_admin_settings_options')]
 class OptionController extends AbstractController
 {
+    private string $title = "Options";
+
     private function getPath($file): string
     {
         return sprintf('admin/settings/options/%s.html.twig', $file);
+    }
+
+    #[Route('/', name: '')]
+    public function options(OptionRepository $optionRepository): Response
+    {
+        $options = $optionRepository->findBy([], ["id" => "desc"]);
+        foreach ($options as $option) $option->getOptionMaximums()->getValues();
+
+        return $this->render($this->getPath('index'), [
+            "title" => $this->title,
+            "options" => $options
+        ]);
     }
 
     #[Route('/create', name: '_create')]
@@ -45,7 +59,10 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Options", "form" => $form, ]);
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form,
+        ]);
     }
 
 
@@ -68,7 +85,10 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Options", "form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", [
+            "title" => $this->title,
+            "form" => $form, "create" => false
+        ]);
     }
 
 
@@ -106,7 +126,10 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Règle d'option supplémentaire", "form" => $form,]);
+        return $this->render("layout/form.html.twig", [
+            "title" => "Règle d'option supplémentaire",
+            "form" => $form,
+        ]);
     }
 
     #[Route('/maximum/update/{id}', name: '_maximum_update')]
@@ -128,7 +151,11 @@ class OptionController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_options');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Règle d'option supplémentaire", "form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", [
+            "title" => "Règle d'option supplémentaire",
+            "form" => $form,
+            "create" => false
+        ]);
     }
 
     #[Route('/maximum/delete/{id}', name: '_maximum_delete')]

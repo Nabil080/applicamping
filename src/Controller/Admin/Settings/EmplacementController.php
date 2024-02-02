@@ -19,9 +19,23 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/emplacements', name: 'app_admin_settings_emplacements')]
 class EmplacementController extends AbstractController
 {
+    private string $title = "Emplacements";
+
     private function getPath($file): string
     {
         return sprintf('admin/settings/emplacements/%s.html.twig', $file);
+    }
+
+    #[Route('/', name: '')]
+    public function emplacements(EmplacementRepository $emplacementRepository): Response
+    {
+        $emplacements = $emplacementRepository->findBy([], ["id" => "desc"]);
+        // foreach($emplacements as $emplacement) $emplacement->getEmplacements()->getValues();
+
+        return $this->render($this->getPath('index'), [
+            "title" => $this->title,
+            'emplacements' => $emplacements
+        ]);
     }
 
     #[Route('/create', name: '_create')]
@@ -40,11 +54,14 @@ class EmplacementController extends AbstractController
 
             $logService->write($emplacement, "create");
 
-            
+
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Emplacements", "form" => $form]);
+        return $this->render("layout/form.html.twig", [
+            "title" => "Emplacements",
+            "form" => $form
+        ]);
     }
 
 
@@ -68,7 +85,11 @@ class EmplacementController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 
-        return $this->render("layout/form.html.twig", ["title" => "Emplacements", "form" => $form, "create" => false]);
+        return $this->render("layout/form.html.twig", [
+            "title" => "Emplacements",
+            "form" => $form,
+            "create" => false
+        ]);
     }
 
 
