@@ -11,10 +11,10 @@
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
 		<h2 class="text-title-md font-bold">Tarifs</h2>
-			{{ crud.tabulation(["Emplacements","Options supplémentaires","Adulte/Enfant","Offres"]) }}
+			{{ crud.tabulation(["Hebergements","Options supplémentaires","Adulte/Enfant","Offres"]) }}
 	</div>
 	
-	{{ crud.basic('Emplacements', tables.tarifs(tarifs)) }}
+	{{ crud.basic('Hebergements', tables.tarifs(hebergements)) }}
 	{{ crud.basic('Options supplémentaires', tables.tarifs('options')) }}
 	{{ crud.basic('Adulte/enfant', tables.tarifs('adultes')) }}
 	{{ crud.basic('Offres', tables.offres('offres')) }}

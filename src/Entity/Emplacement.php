@@ -30,8 +30,6 @@ class Emplacement
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Reservation::class)]
     private Collection $reservation;
 
-    #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Tarif::class)]
-    private Collection $tarifs;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'emplacements')]
     private Collection $tags;
@@ -40,7 +38,6 @@ class Emplacement
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
-        $this->tarifs = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -109,36 +106,6 @@ class Emplacement
             // set the owning side to null (unless already changed)
             if ($reservation->getEmplacement() === $this) {
                 $reservation->setEmplacement(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Tarif>
-     */
-    public function getTarifs(): Collection
-    {
-        return $this->tarifs;
-    }
-
-    public function addTarif(Tarif $tarif): static
-    {
-        if (!$this->tarifs->contains($tarif)) {
-            $this->tarifs->add($tarif);
-            $tarif->setEmplacement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTarif(Tarif $tarif): static
-    {
-        if ($this->tarifs->removeElement($tarif)) {
-            // set the owning side to null (unless already changed)
-            if ($tarif->getEmplacement() === $this) {
-                $tarif->setEmplacement(null);
             }
         }
 

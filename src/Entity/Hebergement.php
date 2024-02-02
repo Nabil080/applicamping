@@ -33,6 +33,9 @@ class Hebergement
     #[ORM\OneToMany(mappedBy: 'hebergement', targetEntity: Emplacement::class, orphanRemoval: true)]
     private Collection $emplacements;
 
+    #[ORM\OneToMany(mappedBy: 'hebergement', targetEntity: Tarif::class)]
+    private Collection $tarifs;
+
     #[ORM\ManyToMany(targetEntity: RegleDuree::class, mappedBy: 'hebergements')]
     private Collection $regleDurees;
 
@@ -45,6 +48,7 @@ class Hebergement
     public function __construct()
     {
         $this->emplacements = new ArrayCollection();
+        $this->tarifs = new ArrayCollection();
         $this->regleDurees = new ArrayCollection();
         $this->regleSejours = new ArrayCollection();
         $this->optionMaximums = new ArrayCollection();
@@ -146,6 +150,36 @@ class Hebergement
     }
 
     /**
+     * @return Collection<int, Tarif>
+     */
+    public function getTarifs(): Collection
+    {
+        return $this->tarifs;
+    }
+
+    public function addTarif(Tarif $tarif): static
+    {
+        if (!$this->tarifs->contains($tarif)) {
+            $this->tarifs->add($tarif);
+            $tarif->setHebergement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTarif(Tarif $tarif): static
+    {
+        if ($this->tarifs->removeElement($tarif)) {
+            // set the owning side to null (unless already changed)
+            if ($tarif->getHebergement() === $this) {
+                $tarif->setHebergement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, RegleDuree>
      */
     public function getRegleDurees(): Collection
@@ -200,7 +234,7 @@ class Hebergement
         return $this;
     }
 
-        /**
+    /**
      * @return Collection<int, OptionMaximum>
      */
     public function getOptionMaximums(): Collection

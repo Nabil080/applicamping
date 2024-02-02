@@ -25,7 +25,7 @@ class Tarif
     private ?bool $par_personne = null;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
-    private ?Emplacement $emplacement = null;
+    private ?Hebergement $hebergement = null;
 
     #[ORM\Column]
     private ?bool $adulte = null;
@@ -85,14 +85,14 @@ class Tarif
         return $this;
     }
 
-    public function getEmplacement(): ?Emplacement
+    public function getHebergement(): ?Hebergement
     {
-        return $this->emplacement;
+        return $this->hebergement;
     }
 
-    public function setEmplacement(?Emplacement $emplacement): static
+    public function setHebergement(?Hebergement $hebergement): static
     {
-        $this->emplacement = $emplacement;
+        $this->hebergement = $hebergement;
 
         return $this;
     }
