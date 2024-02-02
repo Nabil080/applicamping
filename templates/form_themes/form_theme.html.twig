@@ -29,3 +29,10 @@
     {{- block('form_widget') -}}
 {%- endblock -%}
 
+
+
+{# Ajouter un stimulus_controller "select2" aux input select #}
+{%- block select_widget -%}
+    {%- set widget_attributes = "cac" -%}
+    {{- block('form_widget') -}}
+{%- endblock -%}

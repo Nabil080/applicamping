@@ -2,44 +2,48 @@
 {% set isAddForm = create is defined ? create : true %}
 
 {% block pretitle %}
-	{{ isAddForm ? "Ajout" : "Modification" }}
+{{ isAddForm ? "Ajout" : "Modification" }}
 {% endblock %}
 
 
 {% block title %}
-	{{ title }}
+{{ title }}
 {% endblock %}
 
 {% block body %}
 
-	<div class="text-center">
-		<h1 class="text-3xl font-black">
-			{{ isAddForm ? "Ajout" : "Modification" }}
-			{{ title }}
-		</h1>
+<div class="text-center">
+	<h1 class="text-3xl font-black">
+		{{ isAddForm ? "Ajout" : "Modification" }}
+		{{ title }}
+	</h1>
+</div>
+
+<section class="crud grid mt-8">
+	<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
+
+		{% block form %}
+		{{ form_start(form) }}
+		{{form_widget(form) }}
+		<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
+		{{ form_end(form) }}
+		{% endblock %}
+
 	</div>
-
-	<section class="crud grid mt-8">
-		<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
-
-			{% block form %}
-				{{ form_start(form) }}
-				{{form_widget(form) }}
-				<button type="submit" class="btn w-full btn-md rounded-md ">Valider</button>
-				{{ form_end(form) }}
-			{% endblock %}
-
-		</div>
-	</section>
+</section>
 
 
 {% endblock %}
 
 {% block scripts %}
 
-	<script>
-		document.addEventListener('turbo:load', () => {
-$('select[multiple]').select2({closeOnSelect: false, language: 'fr', });
-});
-	</script>
+<script>
+	document.addEventListener('turbo:load', () => {
+		$('select[multiple]').select2({ 
+			closeOnSelect: false,
+			language: 'fr',
+			selectionCssClass: ''
+		});
+	});
+</script>
 {% endblock %}

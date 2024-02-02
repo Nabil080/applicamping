@@ -382,6 +382,14 @@
     .input-default.file {
 	    @apply cursor-pointer file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 dark:file:border-form-strokedark dark:file:bg-white/30 file:text-black dark:file:text-white
     }
+
+    /* select2 input */
+    .select2-selection {
+        @apply !px-3 !py-3 !border-stroke
+    }
+    .select2-selection[aria-expanded="true"] {
+        @apply !border-primary
+    }
 }
 
 /* third-party libraries CSS */
@@ -577,9 +585,9 @@ span.flatpickr-weekday,
 }
 
 .custom-select2 {
-    @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+    /* @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50; */
 }
 
 .select2 {
-    width: 100% !important
+    width: 100% !important;
 }
