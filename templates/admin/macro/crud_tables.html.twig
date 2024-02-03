@@ -677,7 +677,7 @@
 		</td>
 		<td>
 			<div class="actions">
-				{{ _self.updateButton(rule.id) }}
+				{{ _self.updateButton(rule.id, path('app_admin_settings_regles_sejour_update', {id: rule.id, type: rule.checkIn ? 'checkin' : 'checkout'})) }}
 				{{ _self.deleteButton(rule.id) }}
 			</div>
 		</td>

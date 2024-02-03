@@ -27,7 +27,9 @@ class CustomDaysType extends AbstractType
                 "Dimanche" => "Dimanche",
             ],
             "multiple" => true,
-            'required' => false,
+            'required' => true,
+            'placeholder' => 'Tous', // Set the default value to "Tous",
+            'constraints' => [new NotBlank]
         ]);
     }
 
