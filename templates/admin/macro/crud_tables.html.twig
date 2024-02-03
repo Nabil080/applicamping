@@ -649,7 +649,7 @@
 		</tr>
 	{% endfor %}
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro jours(jours = 'array des règles') %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro jours(rules = 'array des règles de checkin/out') %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Jours</th>
@@ -657,42 +657,30 @@
 	<th scope="col">Saisons</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for i in 1..5 %}
+{% for rule in rules %}
 	<tr>
 		<th scope="row">
-			{{ i }}
+			{{ rule.id }}
 		</th>
 		<td>
-			{% if i % 2 %}
-				Tous
-			{% else %}
-				Lundi, Mercredi, Vendredi
-			{% endif %}
+			{{ rule.checkIn ? rule.checkIn|map(day => day)|join(', ')|default('Tous') : rule.checkOut|map(day => day)|join(', ')|default('Tous') }}
 		</td>
 		<td>
-			{% if i % 2 %}
-				Camping-Car
-			{% else %}
-				Tous
-			{% endif %}
+			{{ rule.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous') }}
 		</td>
 		<td>
-			{% if i % 3 %}
-				Saison 1
-			{% else %}
-				Tous
-			{% endif %}
+			{{ rule.saisons|map(saison => saison.nom)|join(', ')|default('Tous') }}
 		</td>
 		<td>
 			<div class="actions">
-				{% set id = i %}
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
+				{{ _self.updateButton(rule.id) }}
+				{{ _self.deleteButton(rule.id) }}
 			</div>
 		</td>
 	</tr>
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro durée(durée = 'array des règles') %}<table><thead>
+{% endfor %}
+</tbody></table>{% endmacro %}{% macro durée(durée = 'array des règles') %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Séjour</th>

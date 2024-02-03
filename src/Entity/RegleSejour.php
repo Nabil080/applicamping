@@ -92,7 +92,7 @@ class RegleSejour
      */
     public function getSaisons(): Collection
     {
-        return $this->hebergements;
+        return $this->saisons;
     }
 
 

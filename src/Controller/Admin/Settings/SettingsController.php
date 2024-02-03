@@ -88,12 +88,4 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/rules', name: '_regles')]
-    public function regles(): Response
-    {
-        return $this->render($this->getPath('regles/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
 }

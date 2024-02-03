@@ -21,6 +21,26 @@ class RegleSejourRepository extends ServiceEntityRepository
         parent::__construct($registry, RegleSejour::class);
     }
 
+    public function getCheckIns(): array
+    {
+        return $this->createQueryBuilder('regle')
+            ->andWhere('regle.check_in IS NOT NULL')
+            ->orderBy('regle.id', 'DESC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCheckOuts(): array
+    {
+        return $this->createQueryBuilder('regle')
+            ->andWhere('regle.check_out IS NOT NULL')
+            ->orderBy('regle.id', 'DESC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return RegleSejour[] Returns an array of RegleSejour objects
 //     */

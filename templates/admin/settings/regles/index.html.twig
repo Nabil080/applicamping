@@ -5,27 +5,17 @@
 {% import 'macro/inputs.html.twig' as inputs %}
 {% import 'macro/svg.html.twig' as svg %}
 
-{% set title = 'Règles de réservation' %}
 {% set options = { create: 'Ajouter une règle' } %}
 
-{% block title %}
-	{{ title }}
-{% endblock %}
 
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
 		<h2 class="text-title-md font-bold">{{ title }}</h2>
-		<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
-			<button>Arrivés</button>
-			<button>Départs</button>
-			<button>Durée mini</button>
-			<button>Durée maxi</button>
-			<button>Plus</button>
-		</div>
+		{{ crud.tabulation(['Arrivés','Départs','Durée mini','Durée maxi','Plus'])}}
 	</div>
 
-	{{ crud.basic("Jours d'arrivées", tables.jours('arrivés'), options) }}
-	{{ crud.basic('Jours de départ', tables.jours('départs'), options) }}
+	{{ crud.basic("Jours d'arrivées", tables.jours(checkIn), options) }}
+	{{ crud.basic('Jours de départ', tables.jours(checkOut), options) }}
 	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), options) }}
 	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), options) }}
 	<div class="crud px-12 py-8 flex gap-16">
