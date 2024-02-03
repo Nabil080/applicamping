@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Settings;
 use App\Entity\Saison;
 use App\Entity\Periode;
 use App\Form\PeriodeType;
+use App\Form\RegleSejourType;
 use App\Form\SaisonType;
 use App\Repository\RegleSejourRepository;
 use App\Repository\SaisonRepository;
@@ -51,6 +52,32 @@ class ReglesController extends AbstractController
             'title' => $this->title,
             'checkIn' => $checkIn,
             'checkOut' => $checkOut,
+        ]);
+    }
+
+    #[Route('/create/{type}', name: '_create')]
+    public function create(string $type, Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(RegleSejourType::class, null, [
+            'type' => $type,
+        ]);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $regle = $form->getData();
+
+            $entityManagerInterface->persist($regle);
+            $entityManagerInterface->flush();
+
+            $logService->write($regle, "create");
+
+            return $this->redirectToRoute('app_admin_settings_regles');
+        }
+
+        dump('hello');
+
+        return $this->render("layout/form.html.twig", [
+            "title" => 'règle ' . ($type === 'checkin' ? 'd\'arrivé' : 'règle de départ'),
+            "form" => $form
         ]);
     }
 }

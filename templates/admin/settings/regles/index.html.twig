@@ -5,8 +5,6 @@
 {% import 'macro/inputs.html.twig' as inputs %}
 {% import 'macro/svg.html.twig' as svg %}
 
-{% set options = { create: 'Ajouter une règle' } %}
-
 
 {% block body %}
 	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
@@ -14,10 +12,10 @@
 		{{ crud.tabulation(['Arrivés','Départs','Durée mini','Durée maxi','Plus'])}}
 	</div>
 
-	{{ crud.basic("Jours d'arrivées", tables.jours(checkIn), options) }}
-	{{ crud.basic('Jours de départ', tables.jours(checkOut), options) }}
-	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), options) }}
-	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), options) }}
+	{{ crud.basic("Jours d'arrivées", tables.jours(checkIn), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_create', {type: 'checkin'}) }) }}
+	{{ crud.basic('Jours de départ', tables.jours(checkOut), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_create', {type: 'checkout'}) }) }}
+	{{ crud.basic('Durée minimum de séjour', tables.durée('mini'), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_create', {type: 'minstay'}) }) }}
+	{{ crud.basic('Durée maximum de séjour', tables.durée('maxi'), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_create', {type: 'maxstay'}) }) }}
 	<div class="crud px-12 py-8 flex gap-16">
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
