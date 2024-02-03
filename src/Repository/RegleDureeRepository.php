@@ -21,6 +21,26 @@ class RegleDureeRepository extends ServiceEntityRepository
         parent::__construct($registry, RegleDuree::class);
     }
 
+    public function getMinStay(): array
+    {
+        return $this->createQueryBuilder('regle')
+            ->andWhere("regle.minimum IS NOT NULL")
+            ->orderBy('regle.id', 'DESC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getMaxStay(): array
+    {
+        return $this->createQueryBuilder('regle')
+            ->andWhere("regle.maximum IS NOT NULL")
+            ->orderBy('regle.id', 'DESC')
+            // ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return RegleDuree[] Returns an array of RegleDuree objects
 //     */

@@ -8,6 +8,7 @@ use App\Entity\RegleSejour;
 use App\Form\PeriodeType;
 use App\Form\RegleSejourType;
 use App\Form\SaisonType;
+use App\Repository\RegleDureeRepository;
 use App\Repository\RegleSejourRepository;
 use App\Repository\SaisonRepository;
 use App\Service\LogService;
@@ -33,7 +34,7 @@ class ReglesController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function regles(RegleSejourRepository $regleSejourRepository): Response
+    public function regles(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository): Response
     {
         $checkIn = $regleSejourRepository->getCheckIns();
         foreach ($checkIn as $rule) $rule->getHebergements()->getValues();
@@ -43,9 +44,13 @@ class ReglesController extends AbstractController
         foreach ($checkOut as $rule) $rule->getHebergements()->getValues();
         foreach ($checkOut as $rule) $rule->getSaisons()->getValues();
 
-        $minStay = "";
+        $minStay = $regleDureeRepository->getMinStay();
+        foreach ($minStay as $rule) $rule->getHebergements()->getValues();
+        foreach ($minStay as $rule) $rule->getSaisons()->getValues();
 
-        $maxStay = "";
+        $maxStay = $regleDureeRepository->getMaxStay();
+        foreach ($maxStay as $rule) $rule->getHebergements()->getValues();
+        foreach ($maxStay as $rule) $rule->getSaisons()->getValues();
 
         $reservationRules = "";
         return $this->render($this->getPath('index'), [
@@ -53,6 +58,8 @@ class ReglesController extends AbstractController
             'title' => $this->title,
             'checkIn' => $checkIn,
             'checkOut' => $checkOut,
+            'minStay' => $minStay,
+            'maxStay' => $maxStay,
         ]);
     }
 
@@ -109,5 +116,18 @@ class ReglesController extends AbstractController
             "form" => $form,
             "create" => false
         ]);
+    }
+
+    
+    #[Route('/sejour/{type}/delete/{id}', name: '_sejour_delete')]
+    public function delete(RegleSejour $regleSejour, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $logService->write($regleSejour, "delete");
+
+        $entityManagerInterface->remove($regleSejour);
+        $entityManagerInterface->flush();
+
+
+        return $this->redirectToRoute('app_admin_settings_regles');
     }
 }
