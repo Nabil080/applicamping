@@ -6,6 +6,7 @@ use App\Entity\Saison;
 use App\Entity\Periode;
 use App\Entity\RegleSejour;
 use App\Form\PeriodeType;
+use App\Form\RegleDureeType;
 use App\Form\RegleSejourType;
 use App\Form\SaisonType;
 use App\Repository\RegleDureeRepository;
@@ -129,5 +130,35 @@ class ReglesController extends AbstractController
 
 
         return $this->redirectToRoute('app_admin_settings_regles');
+    }
+
+    // ! regle de durée
+
+    
+    #[Route('/duree/{type}/create', name: '_duree_create')]
+    public function dureeCreate(string $type, Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(RegleDureeType::class, null, [
+            'type' => $type,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $regle = $form->getData();
+
+            $entityManagerInterface->persist($regle);
+            $entityManagerInterface->flush();
+
+            $logService->write($regle, "create");
+
+            return $this->redirectToRoute('app_admin_settings_regles');
+        }
+
+
+        return $this->render("layout/form.html.twig", [
+            "title" => 'règle de durée ' . ($type === 'minstay' ? 'minimum' : 'maximum'),
+            "form" => $form
+        ]);
     }
 }

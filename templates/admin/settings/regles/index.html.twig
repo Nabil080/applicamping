@@ -15,8 +15,8 @@
 
 	{{ crud.basic("Jours d'arrivées", tables.jours(checkIn), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_sejour_create', {type: 'checkin'}) }) }}
 	{{ crud.basic('Jours de départ', tables.jours(checkOut), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_sejour_create', {type: 'checkout'}) }) }}
-	{{ crud.basic('Durée minimum de séjour', tables.durée(minStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles', {type: 'minstay'}) }) }}
-	{{ crud.basic('Durée maximum de séjour', tables.durée(maxStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles', {type: 'maxstay'}) }) }}
+	{{ crud.basic('Durée minimum de séjour', tables.durée(minStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_duree_create', {type: 'minstay'}) }) }}
+	{{ crud.basic('Durée maximum de séjour', tables.durée(maxStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_duree_create', {type: 'maxstay'}) }) }}
 	<div class="crud px-12 py-8 flex gap-16">
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
