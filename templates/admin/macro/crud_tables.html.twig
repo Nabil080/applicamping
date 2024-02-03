@@ -568,10 +568,10 @@
 	{% for offre in type.offres %}
 		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
 			<th scope="row"></th>
-			<td>{{ offre.id }}</td>
+			<td></td>
 			<td>{{ offre.nom }}</td>
 			<td>
-				{{ offre.montant }}
+				{{ (offre.montant / 100)|number_format(2, ',', '.')  }}
 				{{ offre.devise is same as 'euro' ? '€' : '%' }}
 			</td>
 			<td>
@@ -630,7 +630,7 @@
 			<th scope="row"></th>
 			<td></td>
 			<td>
-				{{ tarif.montant }}
+				{{ (tarif.montant / 100)|number_format(2, ',', '.') }}
 				€
 			</td>
 			<td>

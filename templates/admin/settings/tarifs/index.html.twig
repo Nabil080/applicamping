@@ -13,7 +13,7 @@
 		<h2 class="text-title-md font-bold">Tarifs</h2>
 			{{ crud.tabulation(["Hebergements","Options supplémentaires","Adulte/Enfant","Offres"]) }}
 	</div>
-	
+
 	{{ crud.basic('Hebergements', tables.tarifs(hebergements)) }}
 	{{ crud.basic('Options supplémentaires', tables.tarifs(options)) }}
 	{{ crud.basic('Adulte/enfant', tables.tarifs(ageCategory)) }}
