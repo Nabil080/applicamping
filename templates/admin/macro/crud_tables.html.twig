@@ -663,7 +663,11 @@
 			{{ rule.id }}
 		</th>
 		<td>
-			{{ rule.checkIn ? rule.checkIn|map(day => day)|join(', ')|default('Tous') : rule.checkOut|map(day => day)|join(', ')|default('Tous') }}
+		{% if rule.checkIn %}
+			{{ rule.checkIn|map(day => day)|join(', ')|default('Tous') }}
+		{% elseif rule.checkOut %}
+			{{ rule.checkOut|map(day => day)|join(', ')|default('Tous') }}
+		{% endif %}
 		</td>
 		<td>
 			{{ rule.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous') }}

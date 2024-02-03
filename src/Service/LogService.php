@@ -55,6 +55,7 @@ class LogService
             "Periode" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
             "Tarif" => 'Un tarif pour "'. ($this->entity->getHebergement()?->getNom()) . ($this->entity->getOption()?->getNom()) . ($this->entity->isAdulte() ? "adulte" : "") . ($this->entity->isEnfant() ? "enfant" : "") . '" ',
             "Offre" => 'Une offre "'. $this->entity->getNom() . '" ',
+            "RegleSejour" => 'Une regle ' . ($this->entity->getCheckIn() ? "d'arrivé" : "de départ"),
         };
         
         $typeString = match($this->log->getType()) {

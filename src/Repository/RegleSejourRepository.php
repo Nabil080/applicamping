@@ -24,7 +24,7 @@ class RegleSejourRepository extends ServiceEntityRepository
     public function getCheckIns(): array
     {
         return $this->createQueryBuilder('regle')
-            ->andWhere('regle.check_in IS NOT NULL')
+            ->andWhere("regle.check_in <> 'N;' ") // Only rows where check_in is not empty array
             ->orderBy('regle.id', 'DESC')
             // ->setMaxResults(10)
             ->getQuery()
@@ -34,35 +34,35 @@ class RegleSejourRepository extends ServiceEntityRepository
     public function getCheckOuts(): array
     {
         return $this->createQueryBuilder('regle')
-            ->andWhere('regle.check_out IS NOT NULL')
+            ->andWhere("regle.check_out <> 'N;' ") // Only rows where check_out is not empty array
             ->orderBy('regle.id', 'DESC')
             // ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
 
-//    /**
-//     * @return RegleSejour[] Returns an array of RegleSejour objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return RegleSejour[] Returns an array of RegleSejour objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('r.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?RegleSejour
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?RegleSejour
+    //    {
+    //        return $this->createQueryBuilder('r')
+    //            ->andWhere('r.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

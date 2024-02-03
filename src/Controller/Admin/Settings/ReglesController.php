@@ -62,6 +62,8 @@ class ReglesController extends AbstractController
             'type' => $type,
         ]);
 
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $regle = $form->getData();
 
@@ -73,7 +75,6 @@ class ReglesController extends AbstractController
             return $this->redirectToRoute('app_admin_settings_regles');
         }
 
-        dump('hello');
 
         return $this->render("layout/form.html.twig", [
             "title" => 'règle ' . ($type === 'checkin' ? 'd\'arrivé' : 'règle de départ'),
