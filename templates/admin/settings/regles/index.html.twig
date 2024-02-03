@@ -52,8 +52,14 @@
 			<div class="grid gap-4 mt-6">
 				{{ form_row(form.acompte) }}
 
+				{{ form_row(form.acompte_seul) }}
+			</div>
+		</div>
+		<div>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Taxes</h4>
+			<div class="grid gap-4 mt-6">
 				<div>
-				{{ form_label(form.acompte_montant, 'Montant en pourcentage:') }}
+				{{ form_label(form.acompte_montant, 'Montant de l\'acompte :') }}
 				<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
 				{{ form_widget(form.acompte_montant, {'attr': {'class': 'input-default' } }) }}
 				</div>
@@ -63,7 +69,6 @@
 				</div>
 				</div>
 
-				{{ form_row(form.acompte_seul) }}
 			</div>
 		</div>
 	</div>

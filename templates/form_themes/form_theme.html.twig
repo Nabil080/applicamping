@@ -24,6 +24,12 @@
     {{- parent() -}}
 {%- endblock -%}
 
+{# Custom de tous les help #}
+{%- block form_help -%}
+	{%- set help_class = help_class|default('mt-1 text-gray-400') -%}
+    {{- parent() -}}
+{%- endblock -%}
+
 {# Modifie les input type="file" #}
 {%- block file_widget -%}
     {%- set widget_class = widget_class|default('input-default file') -%}
