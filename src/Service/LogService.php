@@ -53,6 +53,7 @@ class LogService
             "OptionMaximum" => 'Un maximum de "' . $this->entity->getNombre() . '" pour l\'option "' . $this->entity->getOption()->getNom() . '" ',
             "Saison" => 'La saison "' . $this->entity->getNom() . '" ',
             "Periode" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
+            "Tarif" => 'Un tarif pour "'. ($this->entity->getHebergement()?->getNom()) . ($this->entity->getOption()?->getNom()) . ($this->entity->isAdulte() ? "adulte" : "") . ($this->entity->isEnfant() ? "enfant" : "") . '" ',
         };
         
         $typeString = match($this->log->getType()) {
