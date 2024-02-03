@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Settings;
 
 use App\Entity\Saison;
 use App\Entity\Periode;
+use App\Entity\RegleDuree;
 use App\Entity\RegleSejour;
 use App\Form\PeriodeType;
 use App\Form\RegleDureeType;
@@ -121,7 +122,7 @@ class ReglesController extends AbstractController
 
     
     #[Route('/sejour/{type}/delete/{id}', name: '_sejour_delete')]
-    public function delete(RegleSejour $regleSejour, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function sejourDelete(RegleSejour $regleSejour, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
         $logService->write($regleSejour, "delete");
 
@@ -160,5 +161,47 @@ class ReglesController extends AbstractController
             "title" => 'règle de durée ' . ($type === 'minstay' ? 'minimum' : 'maximum'),
             "form" => $form
         ]);
+    }
+
+    
+    #[Route('/duree/{type}/update/{id}', name: '_duree_update')]
+    public function dureeUpdate(string $type, RegleDuree $regleDuree, Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(RegledureeType::class, $regleDuree, [
+            'type' => $type,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $regle = $form->getData();
+
+            $entityManagerInterface->persist($regle);
+            $entityManagerInterface->flush();
+
+            $logService->write($regle, "update");
+
+            return $this->redirectToRoute('app_admin_settings_regles');
+        }
+
+
+        return $this->render("layout/form.html.twig", [
+            "title" => 'règle de durée ' . ($type === 'minstay' ? 'minimum' : 'maximum'),
+            "form" => $form,
+            "create" => false
+        ]);
+    }
+
+        
+    #[Route('/duree/{type}/delete/{id}', name: '_duree_delete')]
+    public function dureeDelete(RegleDuree $regleDuree, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $logService->write($regleDuree, "delete");
+
+        $entityManagerInterface->remove($regleDuree);
+        $entityManagerInterface->flush();
+
+
+        return $this->redirectToRoute('app_admin_settings_regles');
     }
 }

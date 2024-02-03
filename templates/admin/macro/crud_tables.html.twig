@@ -709,8 +709,8 @@
 		</td>
 		<td>
 			<div class="actions">
-				{{ _self.updateButton(rule.id, path('app_admin_settings_regles_sejour_update', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'})) }}
-				{{ _self.deleteButton(rule.id, path('app_admin_settings_regles_sejour_delete', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'}), 'règle', rule.minimum ? 'minstay' : 'maxstay' ) }}
+				{{ _self.updateButton(rule.id, path('app_admin_settings_regles_duree_update', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'})) }}
+				{{ _self.deleteButton(rule.id, path('app_admin_settings_regles_duree_delete', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'}), 'règle', rule.minimum ? 'minstay' : 'maxstay' ) }}
 			</div>
 		</td>
 	</tr>
