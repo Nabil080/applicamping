@@ -1,0 +1,51 @@
+{% extends "layout/settings.html.twig" %}
+{% set isAddForm = create is defined ? create : true %}
+
+{% block pretitle %}
+{{ isAddForm ? "Ajout" : "Modification" }}
+{% endblock %}
+
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+<div class="text-center">
+	<h1 class="text-3xl font-black">
+		{{ isAddForm ? "Ajout" : "Modification" }}
+		{{ title }}
+	</h1>
+</div>
+	<a href={{ app.request.headers.get('referer') }} class="clickable w-fit">
+		Retour à la liste
+	</a>
+<section class="crud grid mt-8">
+	<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
+		{% block form %}
+		{{ form_start(form) }}
+		{{form_widget(form) }}
+		<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
+		{{ form_end(form) }}
+		{% endblock %}
+
+	</div>
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{# <script>
+	document.addEventListener('turbo:load', () => {
+		$('select[multiple]').select2({ 
+			closeOnSelect: false,
+			language: 'fr',
+			selectionCssClass: '',
+			allowClear: true
+		});
+	});
+</script> #}
+{% endblock %}

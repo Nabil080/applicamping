@@ -267,7 +267,8 @@
     /* ? color themes ?*/
     /* * buttons * */
     .btn.delete {
-        @apply border-danger text-danger hover:bg-danger hover:text-white;
+        /* @apply border-danger text-danger hover:bg-danger hover:text-white btn-border; */
+        @apply border-danger bg-danger text-white hover:brightness-90;
     }
     .btn.see-more, .see-more {
         @apply text-gray-900 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
@@ -292,6 +293,9 @@
     }
     .badge.warning {
         @apply bg-warning bg-opacity-20 text-warning 
+    }
+    .badge.danger {
+        @apply bg-danger bg-opacity-20 text-danger 
     }
 
 
@@ -362,6 +366,29 @@
 
     div:has(> .floating-input:required) .floating-label::after {
         content: "*";
+    }
+
+    .input-default {
+        @apply w-full rounded border-[1.5px] border-stroke bg-transparent font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary
+    }
+    .input-default:not(.file){
+        @apply py-3 px-5
+    }
+
+    .form-row.error .input-default {
+	    @apply border-danger dark:focus:border-danger
+    }
+
+    .input-default.file {
+	    @apply cursor-pointer file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 dark:file:border-form-strokedark dark:file:bg-white/30 file:text-black dark:file:text-white
+    }
+
+    /* select2 input */
+    .select2-selection, .select2-selection--single {
+        @apply !px-3 !py-3 !border-stroke
+    }
+    .select2-selection[aria-expanded="true"] {
+        @apply !border-primary
     }
 }
 
@@ -558,9 +585,9 @@ span.flatpickr-weekday,
 }
 
 .custom-select2 {
-    @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+    /* @apply !mt-1 !block !w-full !py-2 text-base !rounded-md !border-gray-300 !shadow-sm focus:border-green-200 focus:ring focus:ring-green-200 focus:ring-opacity-50; */
 }
 
 .select2 {
-    width: 100% !important
+    width: 100% !important;
 }

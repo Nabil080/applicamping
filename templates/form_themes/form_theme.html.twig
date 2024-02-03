@@ -1,0 +1,52 @@
+{% use 'tailwind_2_layout.html.twig' %}
+
+{# Modifie toutes les lignes #}
+{%- block form_row -%}
+
+<div class="mb-4.5 form-row {{ errors|length > 0 ? "error" }} ">
+		{{- form_label(form) -}}
+		{{- form_widget(form) -}}
+		{{- form_help(form) -}}
+		{{- form_errors(form) -}}
+</div>
+
+{%- endblock %}
+
+{# Custom de tous les labels #}
+{%- block form_label -%}
+    {%- set label_class = label_class|default('block text-black dark:text-white mb-2.5') -%}
+    {{- parent() -}}
+{%- endblock -%}
+
+{# Custom de tous les inputs #}
+{%- block widget_attributes -%}
+	{%- set widget_class = widget_class|default('input-default') -%}
+    {{- parent() -}}
+{%- endblock -%}
+
+{# Modifie les input type="file" #}
+{%- block file_widget -%}
+    {%- set widget_class = widget_class|default('input-default file') -%}
+    {{- block('form_widget') -}}
+{%- endblock -%}
+
+{# Ajouter un stimulus_controller "select2" aux input select multiple #}
+{%- block choice_widget -%}
+    {%- if multiple -%}
+            {%- set attr = attr|merge({'data-controller': 'select2'}) -%}
+    {%- endif -%}
+
+    {{- parent() -}}
+{%- endblock -%}
+
+{# Modifie les input type="checkbox" #}
+{%- block checkbox_row -%}
+	<label class="relative flex items-center cursor-pointer my-4">
+				{{- form_widget(form, {'attr': {'class': 'sr-only peer'} }) -}}
+		<div class="peer-checked:bg-primary w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-main-300 dark:peer-focus:ring-main-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600"></div>
+		<span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ label }}</span>
+	{{- form_errors(form) -}}
+	{{- form_help(form) -}}
+    </label>
+    
+{% endblock %}

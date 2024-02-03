@@ -1,4 +1,4 @@
-{% extends 'admin/settings/base.html.twig' %}
+{% extends 'layout/settings.html.twig' %}
 {% import 'admin/macro/dashboard_cells.html.twig' as cell %}
 {% import "macro/svg.html.twig" as svg %}
 
@@ -25,24 +25,40 @@
 			<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
 				<div>
 					<span class="font-semibold">Nom :</span>
-					Camping mont olympe
+					{{ camping.nom }}
 				</div>
 				<div>
 					<span class="font-semibold">Adresse :</span>
-					17 rue des Paquerettes, 08000 Charleville-Mézières, France
+					{{ camping.adresse }}
 				</div>
 				<div>
 					<span class="font-semibold">Tel :</span>
-					06.06.06.06.06
+					{{ camping.telephone}}
 				</div>
 				<div>
 					<span class="font-semibold">Mail :</span>
-					camping@contact.com
+					{{ camping.email }}
+				</div>
+				<div>
+					<span class="font-semibold">Site :</span>
+					{{ camping.site }}
+				</div>
+				<div>
+					<span class="font-semibold">Code NAF :</span>
+					{{ camping.codeNaf }}
+				</div>
+				<div>
+					<span class="font-semibold">Capital :</span>
+					{{ camping.capital }}
+				</div>
+				<div>
+					<span class="font-semibold">Forme juridique :</span>
+					{{ camping.formeJuridique }}
 				</div>
 
 			</div>
 			<div class="flex justify-end mt-2">
-				<button data-modal-target="info-modal" data-modal-toggle="info-modal" class="clickable block">
+				<button data-modal-open="info-modal" class="clickable block">
 					Modifier
 				</button>
 			</div>
@@ -53,23 +69,31 @@
 				Dernières actions
 			</h4>
 
-			<div class="overflow-y-scroll grow max-h-60 xl:h-1">
-				{% for i in 1..10 %}
+			<div class="overflow-y-scroll grow max-h-60 xl:max-h-none xl:h-1 divide-y divide-stroke">
+				{% for log in logs %}
 					<a href="messages.html" class="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4 text-black dark:text-bodydark">
 						<div class="relative h-8 w-8 rounded-full">
-							{{ svg.blueCard }}
+							{% if log.contexte is same as 'camping' %}
+								{{ svg.blueCard }}
+							{% elseif log.contexte is same as 'paiement' %}
+								{{ svg.blueCard }}
+							{% else %}
+								{{ svg.blueCard }}
+							{% endif %}
 						</div>
-						<div class="flex flex-1 items-center justify-between">
+						<div class="flex flex-1 items-end justify-between">
 							<div>
 								<h5 class="font-medium dark:font-semibold">
-									Nabil bellila
+									{{ log.user.prenom }}
+									{{ log.user.nom }}
 								</h5>
-								<p>
-									<span class="text-sm font-medium">Ajout d'un paiement (réservation)</span>
+								<p class="">
+									<span class="text-sm font-medium">{{ log.message }}</span>
 								</p>
 							</div>
 							<div>
-								<span class="text-xs text-body">15 nov, 12h26</span>
+								{# <span class="text-xs text-body">15 nov, 12h26</span> #}
+								<span class="text-xs text-body whitespace-nowrap">{{ log.date|format_datetime() }}</span>
 							</div>
 						</div>
 					</a>
@@ -94,33 +118,19 @@
 		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
 			<section class="">
 				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
-					120 emplacements, 5 types
+					{{ total.emplacements }} emplacements, {{ total.hebergements }} types
 				</h4>
 				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
+					{% for hebergement in hebergements|slice(0,5) %}
 					<div>
-						<span class="font-semibold">Camping-car :</span>
-						22 emplacements
+						<span class="font-semibold">{{ hebergement.nom }} :</span>
+						{{ hebergement.emplacements|length }} emplacements
 					</div>
-					<div>
-						<span class="font-semibold">Caravane :</span>
-						30 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Roulotte :</span>
-						20 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Emplacement simple :</span>
-						12 emplacements
-					</div>
-					<div>
-						<span class="font-semibold">Port :</span>
-						12 emplacements
-					</div>
+					{% endfor %}
 				</div>
 			</section>
 			<section class="grid gap-2  grow">
-				<button class="btn">Types d'hébèrgements</button>
+				<a href={{ path('app_admin_settings_hebergements') }} class="btn">Hébèrgements</a>
 				<a href={{ path('app_admin_settings_emplacements') }} class="btn">Emplacements</a>
 				<button class="btn">Carte interactive</button>
 			</section>
@@ -133,12 +143,12 @@
 					<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
 						Saison en cours
 					</h4>
-					<a href={{ path('app_admin_settings_saisons') }} class=" clickable xl:block">
+					<a href={{ path('app_admin_settings_saisons') }} class="clickable xl:block">
 						Voir les saisons
 					</a>
 				</div>
 				<div class="grid">
-					<button class="btn max-xl:px-2 btn">Haute saison 2023</button>
+					<button class="btn max-xl:px-2 btn pointer-events-none">Haute saison 2023</button>
 				</div>
 			</div>
 			<div class="space-y-2">
@@ -171,44 +181,55 @@
 
 	{% import "macro/inputs.html.twig" as input %}
 
-	<article id="info-modal" tabindex="-1" aria-hidden="true" class="modal hidden">
-		<div class="p-6.5 min-w-[500px] crud rounded-md">
+	<article {{ stimulus_controller('modal') }} id="info-modal" class="modal hidden">
+		<div class="p-6.5 min-w-[50dvw] crud rounded-md max-h-[90dvh] overflow-y-scroll lg:overflow-hidden text-black dark:text-white">
 			<div class="relative">
 				<div class="flex items-center justify-between">
-					<h3 class="text-xl font-bold text-black dark:text-white sm:text-2xl">
+					<h3 class="text-xl font-bold sm:text-2xl">
 						Informations camping
 					</h3>
-					<button data-modal-target="info-modal" data-modal-hide="info-modal" class="rounded-lg  hover:bg-bodydark p-1.5">
+					<button {{ stimulus_action('modal','hide') }} class="rounded-lg hover:bg-bodydark p-1.5">
 						{{ svg.cross(26) }}</button>
 				</div>
 				<span class="mx-auto inline-block h-1 w-22.5 rounded bg-primary"></span>
 			</div>
-			<p class="py-4">
+			<p class="py-4 text-body dark:text-bodydark">
 				Ces informations sont utilisées et affichées lors de la génération de facture.
 			</p>
-			<form action="#">
-				<div class="">
-					{% set classes = '' %}
 
-					{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+			{{ form_start(campingForm) }}
+			{{form_widget(campingForm, {'attr': {'class': 'lg:grid grid-cols-2 gap-x-2.5 '}})}}
+			<button type="submit" class="btn w-full btn-md rounded-md">Valider</button>
+			{{ form_end(campingForm) }}
 
-					{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
-
-					{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
-
-					{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
-
-					{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
-
-					{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
-
-					<button type="submit" class="btn w-full btn-md rounded-md">
-						Valider
-					</button>
-				</div>
-			</form>
 		</div>
 	</article>
 
 
+{% endblock %}
+
+
+{% block comment %}
+
+	<form action="#">
+		<div class="">
+			{% set classes = '' %}
+
+			{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+
+			{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
+
+			{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
+
+			{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
+
+			{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
+
+			{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
+
+			<button type="submit" class="btn w-full btn-md rounded-md">
+				Valider
+			</button>
+		</div>
+	</form>
 {% endblock %}

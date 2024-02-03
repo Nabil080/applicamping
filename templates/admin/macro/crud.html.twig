@@ -1,8 +1,17 @@
+{% macro tabulation(buttons = []) %}
+	<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
+		{% for button in buttons %}
+			<button>{{ button }}</button>
+		{% endfor %}
+	</div>
+{% endmacro %}
+
+
 {% macro basic(title, table, option = { } ) %}
 
 	{% set filters = option.filters is defined ? option.filters : false %}
 	{% set create = option.create is defined ? (option.create is same as true ? 'Créer' : option.create) : false %}
-	{% set search = option.search is defined ? option.search : 'Recherche...' %}
+	{% set search = option.search is defined ? (option.search is same as true ? 'Recherche....' : option.search) : 'Recherche...' %}
 	{% set tooltip = option.tooltip is defined ? option.tooltip : false %}
 	{% set pagination = option.pagination is defined ? option.pagination : false %}
 	

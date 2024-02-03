@@ -18,7 +18,7 @@ export default class extends Controller {
             freeMode: freeMode,
             spaceBetween: spaceBetween,
             breakpoints: {
-                1920: {
+                1420: {
                     slidesPerView: slidesDesktop
                 },
                 992: {

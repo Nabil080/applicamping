@@ -15,7 +15,7 @@ class AdminController extends AbstractController
         return sprintf('admin/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
+    #[Route('', name: '')]
     public function index(): Response
     {
         return $this->render($this->getPath('index'), [
@@ -50,7 +50,12 @@ class AdminController extends AbstractController
     #[Route('/create', name: '_create_redirect')]
     public function createRedirect(Request $rq): Response
     {
-
         return $this->redirect($rq->headers->get('referer') . "/create");
+    }
+
+    #[Route('/update/{id}', name: '_update_redirect')]
+    public function updateRedirect(int $id, Request $rq): Response
+    {
+        return $this->redirect($rq->headers->get('referer') . "/update/". $id);
     }
 }

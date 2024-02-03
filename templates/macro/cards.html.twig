@@ -14,38 +14,42 @@
 	</article>
 {% endmacro %}
 
-{% macro hebergementAdmin(i) %}
+{% macro hebergementAdmin(hebergement) %}
 	{% import "macro/svg.html.twig" as svg %}
-	<article data-name="Camping-car" data-price="{{9 + i}}00" data-min-size="2" data-max-size="3" class="group crud flex relative text-black dark:text-white">
-		<button class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
+	{% import "macro/badges.html.twig" as badge %}
+	<article class="group crud flex relative text-black dark:text-white">
+		<button data-path={{ path('app_admin_settings_hebergements_delete',{id: hebergement.id})}} data-type="Hébergement" data-name={{ hebergement.nom }} data-id={{ hebergement.id }} {{ stimulus_controller('delete') }} {{ stimulus_action('delete','show')}} class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
 		<div class="max-w-md p-4">
-			<img class="border border-stroke" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
+			<img class="border border-stroke" src={{ asset("uploads/hebergements/" ~ hebergement.image) }} alt=""/>
 		</div>
 		<div class="p-5 grow flex flex-col">
-			<h5 class="mb-2 text-title-lg font-bold">Camping-car (ID
-				{{ i }})</h5>
+			<h5 class="mb-2 text-title-lg font-bold">{{ hebergement.nom }}
+				(ID
+				{{ hebergement.id }})</h5>
 			<div class="grow mb-3 text-lg">
 				<div>
 					<span class="font-semibold">Minimum :</span>
-					<span class="mini">1 personnes</span>
+					<span class="mini">{{ hebergement.minimum }}
+						personnes</span>
 				</div>
 				<div>
 					<span class="font-semibold">Maximum :</span>
-					<span class="maxi">5 personnes</span>
+					<span class="maxi">{{ hebergement.maximum }}
+						personnes</span>
 				</div>
 				<div class="inline-flex gap-2 items-center">
 					<span class="font-semibold">Nombre d'emplacements :</span>
-					<span class="size">22</span>
+					<span class="size">{{ hebergement.emplacements|length() }}</span>
 					<a href="#" class="text-primary">{{ svg.eye(26) }}</a>
 				</div>
 			</div>
 			<div class="flex justify-between items-end">
 				<div>
 					<span class="statut font-semibold">Statut :</span>
-					<span class="badge success">En service</span>
+					{{ badge.basic( hebergement.statut )}}
 				</div>
 				<div>
-					<button class="btn btn-md">Modifier</button>
+					<a href={{ path('app_admin_settings_hebergements_update',{id: hebergement.id})}} class="btn btn-md">Modifier</a>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-{% extends 'admin/settings/base.html.twig' %}
+{% extends 'layout/settings.html.twig' %}
 {% import "macro/cards.html.twig" as cards %}
 
 {% set title = "Types d'hébérgements" %}
@@ -17,17 +17,17 @@
 	</div>
 
 	<div class="flex justify-between items-end">
-		<button class="btn">
+		<a href={{ path('app_admin_create_redirect') }} class="btn">
 			Ajouter un type d'hébérgement
-		</button>
+		</a>
 		<div>
 			<a href={{ path('app_admin_settings_emplacements') }} class="clickable">Voir les emplacements</a>
 		</div>
 	</div>
 
 	<section class="grid gap-12 mt-6">
-		{% for i in 1..10 %}
-			{{ cards.hebergementAdmin(i) }}
+		{% for hebergement in hebergements %}
+			{{ cards.hebergementAdmin(hebergement) }}
 		{% endfor %}
 	</section>
 

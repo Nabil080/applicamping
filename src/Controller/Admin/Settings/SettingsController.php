@@ -2,8 +2,19 @@
 
 namespace App\Controller\Admin\Settings;
 
-
+use App\Entity\Hebergement;
+use App\Form\CampingType;
+use App\Repository\CampingRepository;
+use App\Repository\EmplacementRepository;
+use App\Repository\HebergementRepository;
+use App\Repository\LogRepository;
+use App\Repository\OptionRepository;
+use App\Repository\TagRepository;
+use App\Repository\UserRepository;
+use App\Service\LogService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,19 +26,49 @@ class SettingsController extends AbstractController
         return sprintf('admin/settings/%s.html.twig', $file);
     }
 
-    #[Route('/', name: '')]
-    public function index(): Response
+    #[Route('', name: '')]
+    public function index(HebergementRepository $hebergementRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
     {
+        $camping = $campingRepository->findOneBy([]);
+
+        $campingForm = $this->createForm(CampingType::class, $camping);
+        $campingForm->handleRequest($request);
+
+
+        if ($campingForm->isSubmitted() && $campingForm->isValid()) {
+            $camping = $campingForm->getData();
+
+            $entityManagerInterface->persist($camping);
+
+            $logService->write($camping, "update");
+
+            // return $this->redirectToRoute('app_admin_settings');
+        }
+
+        $logs = $logRepository->findBy([], ["id" => "DESC"], 10);
+
+        $hebergements = $hebergementRepository->findAll();
+        $totalEmplacements = count(array_merge(...array_map(fn ($hebergement) => $hebergement->getEmplacements()->getValues(), $hebergements)));
+
+
+        $total = ["emplacements" => $totalEmplacements, "hebergements" => count($hebergements)];
+
         return $this->render($this->getPath('index'), [
-            'controller_name' => 'AdminController',
+            'camping' => $camping,
+            'campingForm' => $campingForm,
+            'logs' => $logs,
+            'hebergements' => $hebergements,
+            'total' => $total,
         ]);
     }
 
     #[Route('/logs', name: '_logs')]
-    public function logs(): Response
+    public function logs(LogRepository $logRepository): Response
     {
+        $logs = $logRepository->findBy([], ["id" => "DESC"]);
+
         return $this->render($this->getPath('logs/index'), [
-            'controller_name' => 'AdminController',
+            'logs' => $logs,
         ]);
     }
 
@@ -35,30 +76,6 @@ class SettingsController extends AbstractController
     public function users(): Response
     {
         return $this->render($this->getPath('users/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-    #[Route('/saisons', name: '_saisons')]
-    public function saisons(): Response
-    {
-        return $this->render($this->getPath('saisons/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-    #[Route('/options', name: '_options')]
-    public function options(): Response
-    {
-        return $this->render($this->getPath('options/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-    #[Route('/emplacements', name: '_emplacements')]
-    public function emplacements(): Response
-    {
-        return $this->render($this->getPath('emplacements/index'), [
             'controller_name' => 'AdminController',
         ]);
     }
@@ -79,11 +96,4 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/hebergements', name: '_hebergements')]
-    public function hebergements(): Response
-    {
-        return $this->render($this->getPath('hebergements/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
 }

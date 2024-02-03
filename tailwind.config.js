@@ -27,6 +27,7 @@ module.exports = {
       body: '#64748B', // body text-color
       stroke: '#E2E8F0', // border-stroke
       'gray-2': '#F7F9FC',
+      'form-input': '#1d2a39',
 
 
       // darkmode
@@ -37,6 +38,7 @@ module.exports = {
       'boxdark-2': '#1A222C',
       graydark: '#333A48', // dark:hover:bg-graydark
       strokedark: '#2E3A47', // dark:border-stroke
+      'form-strokedark': '#3d4d60',
 
 
 
@@ -69,6 +71,8 @@ module.exports = {
     extend: {
       backgroundColor: {
         black: '#1C2434',
+        whiter: '#F5F7FD',
+        primary: '#3C50E0',
       },
       colors: {
         // background: "#f3f3f8",
@@ -97,8 +101,8 @@ module.exports = {
           '800': '#272da6',
           '900': '#252b83',
           '950': '#1b1d50',
-      },
-    
+        },
+
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

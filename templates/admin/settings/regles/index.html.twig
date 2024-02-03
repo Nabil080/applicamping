@@ -1,4 +1,4 @@
-{% extends 'admin/settings/base.html.twig' %}
+{% extends 'layout/settings.html.twig' %}
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
@@ -33,7 +33,7 @@
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
 			<div class="grid gap-2 mt-4">
 				{{ inputs.checkSlide('Nom',{ name:'name', checked: true }) }}
-				{{ inputs.checkSlide('Prénom',{ name:'name', inputClasses:'peer-checked:bg-black', checked:true  }) }}
+				{{ inputs.checkSlide('Prénom',{ name:'name', inputClasses:'peer-checked:!bg-black', checked:true  }) }}
 				{{ inputs.checkSlide('Email',{ name:'name'  }) }}
 				{{ inputs.checkSlide('Téléphone',{ name:'name'  }) }}
 				{{ inputs.checkSlide('Adresse',{ name:'name' }) }}
