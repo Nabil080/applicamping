@@ -573,10 +573,11 @@
 				{{ offre.devise is same as 'euro' ? '€' : '%' }}
 			</td>
 			<td>
-				{{ offre.debut|format_date|default('Pas de date de début') }}
+				{{ offre.debut ? offre.debut|format_date : "Pas de date de début" }}
 			</td>
 			<td>
-			{{ offre.fin|format_date|default('Pas de date de fin') }}
+				{{ offre.fin ? offre.fin|format_date : "Pas de date de début" }}
+
 			</td>
 			<td>
 			{{ offre.utilisations|default('Pas de limite d\'utilisation') }}
@@ -586,9 +587,8 @@
 			</td>
 			<td>
 				<div class="actions">
-					{{ _self.updateButton(offre.id) }}
-					{# {{ _self.deleteButton(offre.id, path('app_admin_settings_tarifs_delete', {id: tarif.id})) }} #}
-					{# {{ _self.deleteButton(maximum.id, path('app_admin_settings_options_maximum_delete', { id: maximum.id }), 'maximum' , maximum.nombre) }} #}
+					{{ _self.updateButton(offre.id, path('app_admin_settings_tarifs_offres_update', {id: offre.id} )) }}
+					{{ _self.deleteButton(offre.id, path('app_admin_settings_tarifs_offres_delete', { id: offre.id }), offre.type , offre.nom) }}
 				
 				</div>
 			</td>

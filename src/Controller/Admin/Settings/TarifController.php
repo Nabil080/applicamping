@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\Hebergement;
+use App\Entity\Offre;
 use App\Entity\Option;
 use App\Entity\Tarif;
 use App\Form\OffreType;
@@ -183,9 +184,6 @@ class TarifController extends AbstractController
                 $form->get('type')->setData('coupon');
                 break;
         }
-        if ($type === 'Remises') {
-        }
-        $title = "offre";
 
         $form->handleRequest($request);
 
@@ -205,5 +203,44 @@ class TarifController extends AbstractController
             "title" => "offre",
             "form" => $form
         ]);
+    }
+
+    #[Route('/offres/update/{id}', name: '_offres_update')]
+    public function offresUpdate(Offre $offre, Request $request, TarifRepository $tarifRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(OffreType::class, $offre);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offre = $form->getData();
+
+            $entityManagerInterface->persist($offre);
+            $entityManagerInterface->flush();
+
+            $logService->write($offre, "update");
+
+            return $this->redirectToRoute('app_admin_settings_tarifs');
+        }
+
+        return $this->render("layout/form.html.twig", [
+            "title" => "offre " . $offre->getNom(),
+            "form" => $form
+        ]);
+    }
+
+    
+    #[Route('/offres/delete/{id}', name: '_offres_delete')]
+    public function offresDelete(Offre $offre, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+
+        $logService->write($offre, "delete");
+
+        $entityManagerInterface->remove($offre);
+        $entityManagerInterface->flush();
+
+
+        return $this->redirectToRoute('app_admin_settings_tarifs');
     }
 }
