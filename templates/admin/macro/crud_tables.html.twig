@@ -531,7 +531,7 @@
 		</tr>
 	{% endfor %}
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro offres(type = ["Remise/coupon"]) %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro offres(array = ["Remise/coupon"]) %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Type</th>
@@ -543,7 +543,7 @@
 	<th scope="col">Hebergements</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for type in type %}
+{% for type in array %}
 	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
 		<th scope="row">
 			{{ type.id }}
@@ -559,9 +559,7 @@
 		<td></td>
 		<td>
 			<div class="actions">
-				{# {{ _self.addButton(type.id, "Ajouter un tarif", false, path('app_admin_settings_tarifs_create', {type: typeName, id: type.id})) }} #}
-				{{ _self.updateButton(type.id) }}
-				{{ _self.deleteButton(type.id) }}
+				{{ _self.addButton(type.id, "Ajouter une offre", false, path('app_admin_settings_tarifs_offres_create', {type: type.type, id: type.id})) }}
 			</div>
 		</td>
 	</tr>
@@ -589,7 +587,9 @@
 			<td>
 				<div class="actions">
 					{{ _self.updateButton(offre.id) }}
-					{{ _self.deleteButton(offre.id) }}
+					{# {{ _self.deleteButton(offre.id, path('app_admin_settings_tarifs_delete', {id: tarif.id})) }} #}
+					{# {{ _self.deleteButton(maximum.id, path('app_admin_settings_options_maximum_delete', { id: maximum.id }), 'maximum' , maximum.nombre) }} #}
+				
 				</div>
 			</td>
 		</tr>
@@ -620,8 +620,6 @@
 		<td>
 			<div class="actions">
 				{{ _self.addButton(entity.id, "Ajouter un tarif", false, path('app_admin_settings_tarifs_create', {type: typeName, id: entity.id})) }}
-				{{ _self.updateButton(entity.id) }}
-				{{ _self.deleteButton(entity.id) }}
 			</div>
 		</td>
 	</tr>
@@ -644,8 +642,8 @@
 			</td>
 			<td>
 				<div class="actions">
-					{{ _self.updateButton(tarif.id) }}
-					{{ _self.deleteButton(tarif.id) }}
+					{{ _self.updateButton(tarif.id, path('app_admin_settings_tarifs_update', {id: tarif.id})) }}
+					{{ _self.deleteButton(tarif.id, path('app_admin_settings_tarifs_delete', {id: tarif.id}), 'Tarif', (tarif.montant / 100)|number_format(2, ',', '.') ~ "€") }}
 				</div>
 			</td>
 		</tr>

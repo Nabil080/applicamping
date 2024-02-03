@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Settings;
 use App\Entity\Hebergement;
 use App\Entity\Option;
 use App\Entity\Tarif;
+use App\Form\OffreType;
 use App\Form\TarifType;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
@@ -54,8 +55,8 @@ class TarifController extends AbstractController
         $coupons = $offreRepository->findBy(["type" => "coupon"], ["id" => "asc"]);
 
         $offres = [
-            "remise" => ["id" => 0, "type" => "Remises", "offres" => $remises ],
-            "coupon" => ["id" => 1, "type" => "Coupons", "offres" => $coupons ],
+            "remise" => ["id" => 0, "type" => "Remises", "offres" => $remises],
+            "coupon" => ["id" => 1, "type" => "Coupons", "offres" => $coupons],
         ];
 
         return $this->render($this->getPath('index'), [
@@ -74,27 +75,28 @@ class TarifController extends AbstractController
             'type' => $type,
         ]);
 
-        if($type === 'hebergement'){
-            $hebergement = $entityManagerInterface->getRepository(Hebergement::class)->find($id);
-            $form->get('hebergement')->setData($hebergement);
-            $form->get('par_nuit')->setData(true);
-            $form->get('par_personne')->setData(false);
-            $title = "tarif hébergement : " . $hebergement->getNom();
-        };
-
-        if($type === 'option'){
-            $option = $entityManagerInterface->getRepository(Option::class)->find($id);
-            $form->get('option')->setData($option);
-            $title = "tarif option : " . $option->getNom();
-        };
-
-        if($type === 'ageCategory'){
-            $category = $id === 0 ? "adulte" : "enfant";
-            $form->get($category)->setData(true);
-            $form->get('par_nuit')->setData(true);
-            $form->get('par_personne')->setData(true);
-            $title = "tarif " . $category;
-        };
+        switch ($type) {
+            case 'hebergement':
+                $hebergement = $entityManagerInterface->getRepository(Hebergement::class)->find($id);
+                $form->get('hebergement')->setData($hebergement);
+                $form->get('par_nuit')->setData(true);
+                $form->get('par_personne')->setData(false);
+                $title = "tarif hébergement : " . $hebergement->getNom();
+                break;
+            case 'option':
+                $option = $entityManagerInterface->getRepository(Option::class)->find($id);
+                $form->get('option')->setData($option);
+                $title = "tarif option : " . $option->getNom();
+            case 'ageCategory':
+                $category = $id === 0 ? "adulte" : "enfant";
+                $form->get($category)->setData(true);
+                $form->get('par_nuit')->setData(true);
+                $form->get('par_personne')->setData(true);
+                $title = "tarif " . $category;
+            default:
+                $title = "tarif";
+                break;
+        }
 
         $form->handleRequest($request);
 
@@ -120,8 +122,14 @@ class TarifController extends AbstractController
     #[Route('/update/{id}', name: '_update')]
     public function update(Tarif $tarif, Request $request, UploadService $uploadService, TarifRepository $tarifRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
+        if ($tarif->getHebergement()) $type = 'hebergement';
+        if ($tarif->getOption()) $type = 'option';
+        if ($tarif->isAdulte() || $tarif->isEnfant()) $type = 'ageCategory';
 
-        $form = $this->createForm(TarifType::class, $tarif);
+
+        $form = $this->createForm(TarifType::class, $tarif, [
+            'type' => $type,
+        ]);
         $form->handleRequest($request);
 
 
@@ -156,5 +164,46 @@ class TarifController extends AbstractController
 
 
         return $this->redirectToRoute('app_admin_settings_tarifs');
+    }
+
+
+    // ! OFFRES
+
+
+    #[Route('/offres/create/{type}/{id}', name: '_offres_create')]
+    public function offresCreate(string $type, int $id, Request $request, TarifRepository $tarifRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $form = $this->createForm(OffreType::class);
+
+        switch ($type) {
+            case 'Remises':
+                $form->get('type')->setData('remise');
+                break;
+            case 'Coupons':
+                $form->get('type')->setData('coupon');
+                break;
+        }
+        if ($type === 'Remises') {
+        }
+        $title = "offre";
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offre = $form->getData();
+
+            $entityManagerInterface->persist($offre);
+            $entityManagerInterface->flush();
+
+            $logService->write($offre, "create");
+
+            return $this->redirectToRoute('app_admin_settings_tarifs');
+        }
+
+        return $this->render("layout/form.html.twig", [
+            "title" => "offre",
+            "form" => $form
+        ]);
     }
 }

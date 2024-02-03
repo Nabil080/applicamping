@@ -54,6 +54,7 @@ class LogService
             "Saison" => 'La saison "' . $this->entity->getNom() . '" ',
             "Periode" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
             "Tarif" => 'Un tarif pour "'. ($this->entity->getHebergement()?->getNom()) . ($this->entity->getOption()?->getNom()) . ($this->entity->isAdulte() ? "adulte" : "") . ($this->entity->isEnfant() ? "enfant" : "") . '" ',
+            "Offre" => 'Une offre "'. $this->entity->getNom() . '" ',
         };
         
         $typeString = match($this->log->getType()) {

@@ -18,10 +18,11 @@
 		{{ title }}
 	</h1>
 </div>
-
+	<a href={{ app.request.headers.get('referer') }} class="clickable w-fit">
+		Retour à la liste
+	</a>
 <section class="crud grid mt-8">
 	<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
-
 		{% block form %}
 		{{ form_start(form) }}
 		{{form_widget(form) }}
