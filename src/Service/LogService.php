@@ -12,7 +12,7 @@ class LogService
 {
     private EntityManagerInterface $entityManager;
     private Security $security;
-    private Log $log; 
+    private Log $log;
     private Object $entity;
 
     public function __construct(EntityManagerInterface $entityManager, Security $security)
@@ -28,8 +28,8 @@ class LogService
 
         $user = $this->security->getUser();
         $this->log->setUser($user);
-        
-        $contexte = $this->getEntityName(); 
+
+        $contexte = $this->getEntityName();
         $this->log->setContexte($contexte);
 
         $this->log->setType($type);
@@ -39,12 +39,11 @@ class LogService
 
         $this->entityManager->persist($this->log);
         $this->entityManager->flush();
-
     }
 
     public function getMessage(): string
     {
-        $entityString = match($this->getEntityName()) {
+        $entityString = match ($this->getEntityName()) {
             "Tag" => 'Le tag "' . $this->entity->getNom() . '" ',
             "Hebergement" => 'L\'hébergement "' . $this->entity->getNom() . '" ',
             "Emplacement" => 'L\'emplacement "' . $this->entity->getNumero() . '" ',
@@ -52,14 +51,15 @@ class LogService
             "Option" => 'Une option supplémentaire  "' . $this->entity->getNom() . '" ',
             "OptionMaximum" => 'Un maximum de "' . $this->entity->getNombre() . '" pour l\'option "' . $this->entity->getOption()->getNom() . '" ',
             "Saison" => 'La saison "' . $this->entity->getNom() . '" ',
-            "Periode" => 'Une période pour la saison "'. $this->entity->getSaison()->getNom() . '" ',
-            "Tarif" => 'Un tarif pour "'. ($this->entity->getHebergement()?->getNom()) . ($this->entity->getOption()?->getNom()) . ($this->entity->isAdulte() ? "adulte" : "") . ($this->entity->isEnfant() ? "enfant" : "") . '" ',
-            "Offre" => 'Une offre "'. $this->entity->getNom() . '" ',
+            "Periode" => 'Une période pour la saison "' . $this->entity->getSaison()->getNom() . '" ',
+            "Tarif" => 'Un tarif pour "' . ($this->entity->getHebergement()?->getNom()) . ($this->entity->getOption()?->getNom()) . ($this->entity->isAdulte() ? "adulte" : "") . ($this->entity->isEnfant() ? "enfant" : "") . '" ',
+            "Offre" => 'Une offre "' . $this->entity->getNom() . '" ',
             "RegleSejour" => 'Une regle ' . ($this->entity->getCheckIn() ? "d'arrivé " : "de départ "),
             "RegleDuree" => 'Une regle de durée ' . ($this->entity->getMinimum() ? "minimum " : "maximum "),
+            "RegleReservation" => 'Les règles de réservation du camping ont été modifiées.'
         };
-        
-        $typeString = match($this->log->getType()) {
+
+        $typeString = match ($this->log->getType()) {
             "create" => "a été crée. ",
             "update" => "a été modifié. ",
             "delete" => "a été supprimé. "
@@ -67,15 +67,23 @@ class LogService
 
         $idString = "(ID° " . $this->entity->getId() . ")";
 
-        $message = $entityString . $typeString . $idString;
-        
+        switch ($this->getEntityName()) {
+            case 'RegleReservation':
+                $message = $entityString;
+                break;
+
+            default:
+                $message = $entityString . $typeString . $idString;
+                break;
+        }
+
         return $message;
     }
 
-    public function getEntityName() :string
+    public function getEntityName(): string
     {
         $class = get_class($this->entity);
-        $classArray = explode("\\",$class);
+        $classArray = explode("\\", $class);
         $classname = end($classArray);
 
         return $classname;

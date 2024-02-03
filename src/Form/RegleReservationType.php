@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\RegleReservation;
 use App\Form\Type\CustomCheckboxType;
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType as TypeIntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +30,7 @@ class RegleReservationType extends AbstractType
             ->add('paiement_espece', CustomCheckboxType::class, ['label' => 'Espèce'])
             ->add('acompte', CustomCheckboxType::class, ['label' => 'Acompte'])
             ->add('acompte_seul', CustomCheckboxType::class, ['label' => 'Acompte seul'])
-            ->add('acompte_montant')
+            ->add('acompte_montant', TypeIntegerType::class, ['label' => 'Montant'] )
         ;
     }
 

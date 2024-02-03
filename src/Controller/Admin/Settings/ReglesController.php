@@ -38,7 +38,7 @@ class ReglesController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function regles(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, RegleReservationRepository $regleReservationRepository): Response
+    public function regles(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, RegleReservationRepository $regleReservationRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService): Response
     {
         $checkIn = $regleSejourRepository->getCheckIns();
         foreach ($checkIn as $rule) $rule->getHebergements()->getValues();
@@ -56,8 +56,19 @@ class ReglesController extends AbstractController
         foreach ($maxStay as $rule) $rule->getHebergements()->getValues();
         foreach ($maxStay as $rule) $rule->getSaisons()->getValues();
 
-        $reservationRule = $regleReservationRepository->findOneBy([],["id" => "desc"]);
-        $form = $this->createForm(RegleReservationType::class, $reservationRule);
+        $regleReservation = $regleReservationRepository->findOneBy([],["id" => "desc"]);
+        $form = $this->createForm(RegleReservationType::class, $regleReservation);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $regleReservation = $form->getData();
+
+            $entityManagerInterface->persist($regleReservation);
+            $entityManagerInterface->flush();
+
+            $logService->write($regleReservation, "create");
+        }
 
         return $this->render($this->getPath('index'), [
             'controller_name' => 'AdminController',
@@ -66,7 +77,7 @@ class ReglesController extends AbstractController
             'checkOut' => $checkOut,
             'minStay' => $minStay,
             'maxStay' => $maxStay,
-            'reservation' => $reservationRule,
+            'reservation' => $regleReservation,
             'form' => $form,
         ]);
     }

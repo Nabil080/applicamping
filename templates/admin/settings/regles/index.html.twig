@@ -18,10 +18,10 @@
 	{{ crud.basic('Durée maximum de séjour', tables.durée(maxStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_duree_create', {type: 'maxstay'}) }) }}
 
 		{{ form_start(form) }}
-	<div class="crud px-12 py-8 flex gap-16">
+	<div class="crud px-12 py-8 flex flex-col flex-wrap gap-y-6 gap-x-16 lg:flex-row">
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
-			<div class="grid gap-2 mt-4">
+			<div class="grid gap-4 mt-4">
 				{{ form_row(form.client_nom)}}
 				{{ form_row(form.client_prenom)}}
 				{{ form_row(form.client_email)}}
@@ -55,7 +55,10 @@
 				{{ form_row(form.acompte_seul) }}
 			</div>
 		</div>
-
 	</div>
+	<div class="flex mt-6 justify-content-end justify-items-end">
+		<button type="submit" class="btn btn-md rounded-md" formnovalidate>Modifier</button>
+	</div>
+	
 	{{ form_end(form) }}
 {% endblock %}
