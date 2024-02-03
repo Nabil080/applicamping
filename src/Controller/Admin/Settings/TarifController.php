@@ -23,7 +23,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/tarifs', name: 'app_admin_settings_tarifs')]
 class TarifController extends AbstractController
 {
-    private string $title = "Tarifs";
+    private string $title = "tarifs";
 
     private function getPath($file): string
     {
