@@ -8,9 +8,11 @@ use App\Entity\RegleDuree;
 use App\Entity\RegleSejour;
 use App\Form\PeriodeType;
 use App\Form\RegleDureeType;
+use App\Form\RegleReservationType;
 use App\Form\RegleSejourType;
 use App\Form\SaisonType;
 use App\Repository\RegleDureeRepository;
+use App\Repository\RegleReservationRepository;
 use App\Repository\RegleSejourRepository;
 use App\Repository\SaisonRepository;
 use App\Service\LogService;
@@ -36,7 +38,7 @@ class ReglesController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function regles(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository): Response
+    public function regles(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, RegleReservationRepository $regleReservationRepository): Response
     {
         $checkIn = $regleSejourRepository->getCheckIns();
         foreach ($checkIn as $rule) $rule->getHebergements()->getValues();
@@ -54,7 +56,9 @@ class ReglesController extends AbstractController
         foreach ($maxStay as $rule) $rule->getHebergements()->getValues();
         foreach ($maxStay as $rule) $rule->getSaisons()->getValues();
 
-        $reservationRules = "";
+        $reservationRule = $regleReservationRepository->findOneBy([],["id" => "desc"]);
+        $form = $this->createForm(RegleReservationType::class, $reservationRule);
+
         return $this->render($this->getPath('index'), [
             'controller_name' => 'AdminController',
             'title' => $this->title,
@@ -62,6 +66,8 @@ class ReglesController extends AbstractController
             'checkOut' => $checkOut,
             'minStay' => $minStay,
             'maxStay' => $maxStay,
+            'reservation' => $reservationRule,
+            'form' => $form,
         ]);
     }
 

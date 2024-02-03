@@ -1,5 +1,5 @@
-{% macro tabulation(buttons = []) %}
-	<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='.crud' class="tabulation">
+{% macro tabulation(buttons = [], selector = '.crud' ) %}
+	<div {{ stimulus_controller('tabulation') }} data-tabulation-selector-value='{{ selector }}' class="tabulation">
 		{% for button in buttons %}
 			<button>{{ button }}</button>
 		{% endfor %}

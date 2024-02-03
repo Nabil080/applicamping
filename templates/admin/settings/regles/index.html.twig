@@ -12,62 +12,50 @@
 		{{ crud.tabulation(['Arrivés','Départs','Durée mini','Durée maxi','Plus'])}}
 	</div>
 
-
 	{{ crud.basic("Jours d'arrivées", tables.jours(checkIn), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_sejour_create', {type: 'checkin'}) }) }}
 	{{ crud.basic('Jours de départ', tables.jours(checkOut), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_sejour_create', {type: 'checkout'}) }) }}
 	{{ crud.basic('Durée minimum de séjour', tables.durée(minStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_duree_create', {type: 'minstay'}) }) }}
 	{{ crud.basic('Durée maximum de séjour', tables.durée(maxStay), { create: 'Ajouter une règle', createPath: path('app_admin_settings_regles_duree_create', {type: 'maxstay'}) }) }}
+
+		{{ form_start(form) }}
 	<div class="crud px-12 py-8 flex gap-16">
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Informations clients obligatoires</h4>
 			<div class="grid gap-2 mt-4">
-				{{ inputs.checkSlide('Nom',{ name:'name', checked: true }) }}
-				{{ inputs.checkSlide('Prénom',{ name:'name', inputClasses:'peer-checked:!bg-black', checked:true  }) }}
-				{{ inputs.checkSlide('Email',{ name:'name'  }) }}
-				{{ inputs.checkSlide('Téléphone',{ name:'name'  }) }}
-				{{ inputs.checkSlide('Adresse',{ name:'name' }) }}
+				{{ form_row(form.client_nom)}}
+				{{ form_row(form.client_prenom)}}
+				{{ form_row(form.client_email)}}
+				{{ form_row(form.client_telephone)}}
+				{{ form_row(form.client_adresse)}}
 			</div>
 		</div>
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Emplacement</h4>
 			<div class="grid gap-4 mt-6">
-				{{ inputs.checkSlide('Libre',{ name:'name' }) }}
-				{{ inputs.checkSlide('Aléatoire',{ name:'name' }) }}
-				<div>
-					{{ inputs.checkSlide('Défini',{ name:'name' }) }}
-					<a href="#" class="mt-4 text-sm font-semibold details">
-						Définir l'ordre de prio
-					</a>
-				</div>
+				{{ form_row(form.emplacement_libre)}}
+				{{ form_row(form.emplacement_aleatoire)}}
+				{{ form_row(form.emplacement_defini)}}
 			</div>
 		</div>
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Méthodes de paiement</h4>
 			<div class="grid gap-4 mt-6">
-				{{ inputs.checkSlide('Carte bancaire',{ name:'name' }) }}
-				{{ inputs.checkSlide('Virement bancaire',{ name:'name' }) }}
-				{{ inputs.checkSlide('Chèque vacance',{ name:'name' }) }}
-				{{ inputs.checkSlide('Chèque',{ name:'name' }) }}
-				{{ inputs.checkSlide('Espèce',{ name:'name' }) }}
+				{{ form_row(form.paiement_carte_bancaire) }}
+				{{ form_row(form.paiement_virement_bancaire) }}
+				{{ form_row(form.paiement_cheque_vacance) }}
+				{{ form_row(form.paiement_cheque) }}
+				{{ form_row(form.paiement_espece) }}
 			</div>
 		</div>
 		<div>
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Acompte</h4>
 			<div class="grid gap-4 mt-6">
-				{{ inputs.checkSlide('Actif',{ name:'name' }) }}
-				<div class="inline-flex gap-2 items-center text-black dark:text-white">
-					Montant :
-					<span>
-						20%</span>
-					<a href="">
-						{{ svg.edit(20)}}
-					</a>
-				</div>
-				<div class="-translate-y-2">
-					{{ inputs.checkSlide('Acompte seul à la réservation') }}
-				</div>
+				{{ form_row(form.acompte) }}
+				{{ form_row(form.acompte_montant) }}
+				{{ form_row(form.acompte_seul) }}
 			</div>
 		</div>
 
 	</div>
+	{{ form_end(form) }}
 {% endblock %}

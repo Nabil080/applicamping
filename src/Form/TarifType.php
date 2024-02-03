@@ -19,8 +19,8 @@ class TarifType extends AbstractType
     {
         $builder
             ->add('montant', CustomPriceType::class)
-            ->add('par_nuit', CustomCheckboxType::class, ['label' => 'Par nuit'])
-            ->add('par_personne', CustomCheckboxType::class, ['label' => 'Par personne']);
+            ->add('par_nuit', CustomCheckboxType::class, ['label' => 'Par nuit', 'attr' => ['class' => "my-4 caca"]])
+            ->add('par_personne', CustomCheckboxType::class, ['label' => 'Par personne', 'attr' => ['class' => "my-4 caca"]]);
         
         switch ($options['type']) {
             case 'hebergement':
