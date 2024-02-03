@@ -559,7 +559,7 @@
 		<td></td>
 		<td>
 			<div class="actions">
-				{{ _self.addButton(type.id, "Ajouter un tarif") }}
+				{# {{ _self.addButton(type.id, "Ajouter un tarif", false, path('app_admin_settings_tarifs_create', {type: typeName, id: type.id})) }} #}
 				{{ _self.updateButton(type.id) }}
 				{{ _self.deleteButton(type.id) }}
 			</div>
@@ -595,7 +595,7 @@
 		</tr>
 	{% endfor %}
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro tarifs(type = ["Array du type, exemple : emplacements"]) %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro tarifs(type = ["Array du type, exemple : emplacements"], typeName = 'Hebergement') %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Nom</th>
@@ -619,7 +619,8 @@
 		<td></td>
 		<td>
 			<div class="actions">
-				{{ _self.addButton(entity.id, "Ajouter un tarif") }}
+			{{dump()}}
+				{{ _self.addButton(entity.id, "Ajouter un tarif", false, path('app_admin_settings_tarifs_create', {type: typeName, id: entity.id})) }}
 				{{ _self.updateButton(entity.id) }}
 				{{ _self.deleteButton(entity.id) }}
 			</div>

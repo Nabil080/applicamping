@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin\Settings;
 
+use App\Entity\Hebergement;
+use App\Entity\Option;
 use App\Entity\Tarif;
 use App\Form\TarifType;
 use App\Repository\EmplacementRepository;
@@ -23,7 +25,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/tarifs', name: 'app_admin_settings_tarifs')]
 class TarifController extends AbstractController
 {
-    private string $title = "tarifs";
+    private string $title = "tarif";
 
     private function getPath($file): string
     {
@@ -45,7 +47,7 @@ class TarifController extends AbstractController
 
         $ageCategory = [
             "adulte" => ["id" => 0, "nom" => "Adulte", "tarifs" => $adultes],
-            "enfant" => ["id" => 0, "nom" => "Enfant", "tarifs" => $enfants]
+            "enfant" => ["id" => 1, "nom" => "Enfant", "tarifs" => $enfants]
         ];
 
         $remises = $offreRepository->findBy(["type" => "remise"], ["id" => "asc"]);
@@ -53,7 +55,7 @@ class TarifController extends AbstractController
 
         $offres = [
             "remise" => ["id" => 0, "type" => "Remises", "offres" => $remises ],
-            "coupon" => ["id" => 0, "type" => "Coupons", "offres" => $coupons ],
+            "coupon" => ["id" => 1, "type" => "Coupons", "offres" => $coupons ],
         ];
 
         return $this->render($this->getPath('index'), [
@@ -65,11 +67,35 @@ class TarifController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: '_create')]
-    public function create(Request $request, TarifRepository $tarifRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/create/{type}/{id}', name: '_create')]
+    public function create(string $type, int $id, Request $request, TarifRepository $tarifRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
+        $form = $this->createForm(TarifType::class, null, [
+            'type' => $type,
+        ]);
 
-        $form = $this->createForm(TarifType::class);
+        if($type === 'hebergement'){
+            $hebergement = $entityManagerInterface->getRepository(Hebergement::class)->find($id);
+            $form->get('hebergement')->setData($hebergement);
+            $form->get('par_nuit')->setData(true);
+            $form->get('par_personne')->setData(false);
+            $title = "tarif hébergement : " . $hebergement->getNom();
+        };
+
+        if($type === 'option'){
+            $option = $entityManagerInterface->getRepository(Option::class)->find($id);
+            $form->get('option')->setData($option);
+            $title = "tarif option : " . $option->getNom();
+        };
+
+        if($type === 'ageCategory'){
+            $category = $id === 0 ? "adulte" : "enfant";
+            $form->get($category)->setData(true);
+            $form->get('par_nuit')->setData(true);
+            $form->get('par_personne')->setData(true);
+            $title = "tarif " . $category;
+        };
+
         $form->handleRequest($request);
 
 
@@ -85,7 +111,7 @@ class TarifController extends AbstractController
         }
 
         return $this->render("layout/form.html.twig", [
-            "title" => $this->title,
+            "title" => $title,
             "form" => $form
         ]);
     }
