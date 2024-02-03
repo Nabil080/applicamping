@@ -6,6 +6,7 @@ use App\Entity\Tarif;
 use App\Form\TarifType;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
+use App\Repository\OffreRepository;
 use App\Repository\OptionRepository;
 use App\Repository\TarifRepository;
 use App\Service\LogService;
@@ -31,7 +32,7 @@ class TarifController extends AbstractController
 
 
     #[Route('', name: '')]
-    public function tarifs(HebergementRepository $hebergementRepository, OptionRepository $optionRepository, TarifRepository $tarifRepository): Response
+    public function tarifs(HebergementRepository $hebergementRepository, OptionRepository $optionRepository, TarifRepository $tarifRepository, OffreRepository $offreRepository): Response
     {
         $hebergements = $hebergementRepository->findBy([], ["id" => "asc"]);
         foreach ($hebergements as $hebergement) $hebergement->getTarifs()->getValues();
@@ -47,11 +48,20 @@ class TarifController extends AbstractController
             "enfant" => ["id" => 0, "nom" => "Enfant", "tarifs" => $enfants]
         ];
 
+        $remises = $offreRepository->findBy(["type" => "remise"], ["id" => "asc"]);
+        $coupons = $offreRepository->findBy(["type" => "coupon"], ["id" => "asc"]);
+
+        $offres = [
+            "remise" => ["id" => 0, "type" => "Remises", "offres" => $remises ],
+            "coupon" => ["id" => 0, "type" => "Coupons", "offres" => $coupons ],
+        ];
+
         return $this->render($this->getPath('index'), [
             'title' => $this->title,
             'hebergements' => $hebergements,
             'options' => $options,
             'ageCategory' => $ageCategory,
+            'offres' => $offres,
         ]);
     }
 

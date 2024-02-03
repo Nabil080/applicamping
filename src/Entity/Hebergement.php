@@ -45,6 +45,9 @@ class Hebergement
     #[ORM\ManyToMany(targetEntity: OptionMaximum::class, mappedBy: 'emplacements')]
     private Collection $optionMaximums;
 
+    #[ORM\ManyToMany(targetEntity: Offre::class, mappedBy: 'hebergements')]
+    private Collection $offres;
+
     public function __construct()
     {
         $this->emplacements = new ArrayCollection();
@@ -52,6 +55,7 @@ class Hebergement
         $this->regleDurees = new ArrayCollection();
         $this->regleSejours = new ArrayCollection();
         $this->optionMaximums = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,6 +260,33 @@ class Hebergement
     {
         if ($this->optionMaximums->removeElement($optionMaximum)) {
             $optionMaximum->removeHebergement($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Offre>
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): static
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres->add($offre);
+            $offre->addHebergement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): static
+    {
+        if ($this->offres->removeElement($offre)) {
+            $offre->removeHebergement($this);
         }
 
         return $this;

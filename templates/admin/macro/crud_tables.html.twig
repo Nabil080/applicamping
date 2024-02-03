@@ -531,7 +531,7 @@
 		</tr>
 	{% endfor %}
 
-{% endfor %}</tbody></table>{% endmacro %}{% macro offres(offres = 'array des offres') %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro offres(type = ["Remise/coupon"]) %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Type</th>
@@ -540,20 +540,16 @@
 	<th scope="col">Début</th>
 	<th scope="col">Fin</th>
 	<th scope="col">Utilisations restantes</th>
-	<th scope="col">Emplacements</th>
+	<th scope="col">Hebergements</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for i in 1..2 %}
+{% for type in type %}
 	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
 		<th scope="row">
-			{{ i }}
+			{{ type.id }}
 		</th>
 		<td>
-			{% if i % 2 %}
-				Remises
-			{% else %}
-				Coupons
-			{% endif %}
+			{{ type.type }}
 		</td>
 		<td></td>
 		<td></td>
@@ -563,51 +559,37 @@
 		<td></td>
 		<td>
 			<div class="actions">
-				{% set id = i %}
-				{{ _self.addButton(id, "Ajouter un tarif") }}
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
+				{{ _self.addButton(type.id, "Ajouter un tarif") }}
+				{{ _self.updateButton(type.id) }}
+				{{ _self.deleteButton(type.id) }}
 			</div>
 		</td>
 	</tr>
-	{% for i in 1..3 %}
+	{% for offre in type.offres %}
 		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
 			<th scope="row"></th>
-			<td></td>
-			<td>REMISE08</td>
+			<td>{{ offre.id }}</td>
+			<td>{{ offre.nom }}</td>
 			<td>
-				{{ 50 + (i * 2) }}
-				€
+				{{ offre.montant }}
+				{{ offre.devise is same as 'euro' ? '€' : '%' }}
 			</td>
 			<td>
-				2023-01-01
+				{{ offre.debut|format_date|default('Pas de date de début') }}
 			</td>
 			<td>
-				{% if i % 2 %}
-					Pas de date de fin
-				{% else %}
-					2023-01-01
-				{% endif %}
+			{{ offre.fin|format_date|default('Pas de date de fin') }}
 			</td>
 			<td>
-				{% if i % 2 %}
-					20
-				{% else %}
-					Pas d'utilisations maximum
-				{% endif %}
+			{{ offre.utilisations|default('Pas de limite d\'utilisation') }}
 			</td>
 			<td>
-				{% if i % 2 %}
-					Camping-Car
-				{% else %}
-					Tous
-				{% endif %}
+			{{ offre.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous')}}
 			</td>
 			<td>
 				<div class="actions">
-					{% set id = i %}
-					{{ _self.updateButton(id) }}
-					{{ _self.deleteButton(id) }}
+					{{ _self.updateButton(offre.id) }}
+					{{ _self.deleteButton(offre.id) }}
 				</div>
 			</td>
 		</tr>

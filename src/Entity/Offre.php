@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OffreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,17 @@ class Offre
 
     #[ORM\Column(nullable: true)]
     private ?int $utilisations = null;
+
+    #[ORM\ManyToMany(targetEntity: Hebergement::class, inversedBy: 'offres')]
+    private Collection $hebergements;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    public function __construct()
+    {
+        $this->hebergements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +133,42 @@ class Offre
     public function setUtilisations(?int $utilisations): static
     {
         $this->utilisations = $utilisations;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hebergement>
+     */
+    public function getHebergements(): Collection
+    {
+        return $this->hebergements;
+    }
+
+    public function addHebergement(Hebergement $hebergement): static
+    {
+        if (!$this->hebergements->contains($hebergement)) {
+            $this->hebergements->add($hebergement);
+        }
+
+        return $this;
+    }
+
+    public function removeHebergement(Hebergement $hebergement): static
+    {
+        $this->hebergements->removeElement($hebergement);
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
