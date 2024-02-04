@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Settings;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\AdminType;
 use App\Repository\UserRepository;
 use App\Service\LogService;
 use App\Service\UploadService;
@@ -19,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/admin/settings/users', name: 'app_admin_settings_users')]
 class UserController extends AbstractController
 {
-    private string $title = "Users";
+    private string $title = "Gestionnaires";
 
     private function getPath($file): string
     {
@@ -30,7 +30,7 @@ class UserController extends AbstractController
     #[Route('', name: '')]
     public function users(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findByRole("ROLE_SUPER_ADMIN");
+        $users = $userRepository->findByRole("ROLE_ADMIN");
         foreach ($users as $user) $user->getLogs()->getValues();
 
         return $this->render($this->getPath('index'), [
@@ -43,12 +43,13 @@ class UserController extends AbstractController
     public function create(Request $request, UserRepository $userRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(RegistrationFormType::class);
+        $form = $this->createForm(AdminType::class);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
+            $user->setRoles(['ROLE_ADMIN']);
 
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
@@ -69,7 +70,7 @@ class UserController extends AbstractController
     public function update(User $user, Request $request, UploadService $uploadService, UserRepository $userRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(AdminType::class, $user);
         $form->handleRequest($request);
 
 

@@ -22,15 +22,17 @@
 		Retour à la liste
 	</a>
 <section class="crud grid mt-8">
-	<div class="space-y-3 md:space-y-0 md:space-x-4 p-8">
+{% block formcontainer %}
+	<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
+	<div class="mb-4">* champs requis</div>
 		{% block form %}
 		{{ form_start(form) }}
 		{{form_widget(form) }}
 		<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
 		{{ form_end(form) }}
 		{% endblock %}
-
 	</div>
+{% endblock %}
 </section>
 
 

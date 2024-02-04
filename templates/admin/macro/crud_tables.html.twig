@@ -263,7 +263,7 @@
 			<br>
 		</td>
 		<td>
-			{{log.date|format_datetime()}}
+			{{log.date|format_datetime()|split(',')|join('<br>')|raw()}}
 		</td>
 		<td>
 			<div class="flex items-center justify-center gap-2">
@@ -282,9 +282,10 @@
 			{{ log.message }}
 		</td>
 	</tr>
-{% endfor %}</tbody></table>{% endmacro %}{% macro admins(user = 'array des user') %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro admins(users = 'array des user') %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
+	<th scope="col">Statut</th>
 	<th scope="col">
 		Nom<br>
 		Prénom</th>
@@ -295,47 +296,52 @@
 	<th scope="col">Création</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for i in 0..5 %}
+{% for user in users %}
 	<tr>
 		<th scope="row">
-			1430
+			{{ user.id }}
 		</th>
 		<td>
-			BELLILA
+			{% import "macro/badges.html.twig" as badge %}
+			{{ badge.basic(user.statut)}}
+		</td>
+		<td>
+			{{ user.nom|upper }}
 			<br>
-			Nabil
+			{{ user.prenom }}
 			<br>
 		</td>
 		<td>
-			bellilanabil8@gmail.com
+			{{ user.email }}
 		</td>
 		<td>
-			06.38.05.89.97
+			{{ user.telephone|default('<span class="details">Inconnu</span>')|raw() }}
 		</td>
 		<td>
-			17 rue des tilleuls
+		{% if user.adresse %}
+			{{ user.adresse }}
 			<br>
-			08000, Villers-Semeuse,
+			{{ user.codePostal }}, {{ user.ville }},
 			<br>
-			France
+			{{ user.pays }}
+		{% else %}
+			<span class="details">Inconnu</span>
+		{% endif %}
 		</td>
 		<td>
 			<div>
-				150 actions
+				{{ user.logs|length }} actions
 				<br>
-				<a href={{ path('app_admin_settings_logs') }} class="details">Voir les actions</a>
+				<a href={{ path('app_admin_settings_logs', { userId: user.id }) }} class="details">Voir les actions</a>
 			</div>
 		</td>
 		<td>
-			14/07/2003
-			<br>
-			14h57
+			{{ user.creation|format_datetime()|split(',')|join('<br>')|raw() }}
 		</td>
 		<td>
 			<div class="actions">
-				{% set id = i %}
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
+				{{ _self.updateButton(user.id) }}
+				{{ _self.deleteButton(user.id) }}
 			</div>
 		</td>
 	</tr>
