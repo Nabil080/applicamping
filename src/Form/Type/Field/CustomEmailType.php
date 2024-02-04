@@ -24,7 +24,7 @@ class CustomEmailType extends AbstractType
             'label' => "Adresse email",
             'constraints' => [
                 new NotBlank,
-                new Length(['min' => 7, 'max' => 10])
+                // new Length(['min' => 7, 'max' => 10])
             ]
         ]);
     }

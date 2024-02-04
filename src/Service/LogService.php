@@ -56,7 +56,8 @@ class LogService
             "Offre" => 'Une offre "' . $this->entity->getNom() . '" ',
             "RegleSejour" => 'Une regle ' . ($this->entity->getCheckIn() ? "d'arrivé " : "de départ "),
             "RegleDuree" => 'Une regle de durée ' . ($this->entity->getMinimum() ? "minimum " : "maximum "),
-            "RegleReservation" => 'Les règles de réservation du camping ont été modifiées.'
+            "RegleReservation" => 'Les règles de réservation du camping ont été modifiées.',
+            "User" => 'Un utilisateur "' . $this->entity->getNom() . '" ',
         };
 
         $typeString = match ($this->log->getType()) {
