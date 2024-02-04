@@ -23,14 +23,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/clients', name: '_clients')]
-    public function clients(): Response
-    {
-        return $this->render($this->getPath('clients/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
     #[Route('/reservations', name: '_reservations')]
     public function reservations(): Response
     {
@@ -57,5 +49,11 @@ class AdminController extends AbstractController
     public function updateRedirect(int $id, Request $rq): Response
     {
         return $this->redirect($rq->headers->get('referer') . "/update/". $id);
+    }
+
+    #[Route('/delete/{id}', name: '_delete_redirect')]
+    public function deleteRedirect(int $id, Request $rq): Response
+    {
+        return $this->redirect($rq->headers->get('referer') . "/delete/". $id);
     }
 }

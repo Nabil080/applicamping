@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin\Settings;
+namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\AdminType;
@@ -16,26 +16,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/admin/settings/users', name: 'app_admin_settings_users')]
-class UserController extends AbstractController
+#[Route('/admin/clients', name: 'app_admin_clients')]
+class ClientController extends AbstractController
 {
-    private string $title = "Gestionnaires";
+    private string $title = "Clients";
 
     private function getPath($file): string
     {
-        return sprintf('admin/settings/users/%s.html.twig', $file);
+        return sprintf('admin/clients/%s.html.twig', $file);
     }
 
 
     #[Route('', name: '')]
-    public function users(UserRepository $userRepository): Response
+    public function clients(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findByRole("ROLE_ADMIN");
-        foreach ($users as $user) $user->getLogs()->getValues();
+        $clients = $userRepository->findByRole("ROLE_USER");
+        foreach ($clients as $user) $user->getLogs()->getValues();
 
         return $this->render($this->getPath('index'), [
             'title' => $this->title,
-            'users' => $users
+            'clients' => $clients
         ]);
     }
 
@@ -49,14 +49,14 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles(['ROLE_USER']);
 
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
 
             $logService->write($user, "create");
 
-            return $this->redirectToRoute('app_admin_settings_users');
+            return $this->redirectToRoute('app_admin_clients');
         }
 
         return $this->render("layout/form.html.twig", [
@@ -82,7 +82,7 @@ class UserController extends AbstractController
 
             $logService->write($user, "update");
 
-            return $this->redirectToRoute('app_admin_settings_users');
+            return $this->redirectToRoute('app_admin_clients');
         }
 
         return $this->render("layout/form.html.twig", [
@@ -104,6 +104,6 @@ class UserController extends AbstractController
         $entityManagerInterface->flush();
 
 
-        return $this->redirectToRoute('app_admin_settings_users');
+        return $this->redirectToRoute('app_admin_clients');
     }
 }

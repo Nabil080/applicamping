@@ -72,12 +72,4 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/tarifs', name: '_tarifs')]
-    public function tarifs(): Response
-    {
-        return $this->render($this->getPath('tarifs/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
 }
