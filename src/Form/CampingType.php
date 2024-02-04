@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Camping;
-use App\Form\Type\CustomEmailType;
+use App\Form\Type\Field\CustomEmailType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

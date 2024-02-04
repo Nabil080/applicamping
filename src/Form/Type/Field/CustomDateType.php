@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Form\Type;
+namespace App\Form\Type\Field;
 
-use App\Entity\Option;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CustomOptionType extends AbstractType
+class CustomDateType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-                'class' => Option::class,
-                'choice_label' => 'nom',
+            'widget' => 'single_text',
         ]);
     }
 
     public function getParent(): string
     {
-        return EntityType::class;
+        return DateType::class;
     }
 }

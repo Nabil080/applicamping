@@ -3,10 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Offre;
-use App\Form\Type\CustomDateType;
-use App\Form\Type\CustomDeviseType;
-use App\Form\Type\CustomHebergementType;
-use App\Form\Type\CustomPriceType;
+use App\Form\Type\Field\CustomDateType;
+use App\Form\Type\Field\CustomDeviseType;
+use App\Form\Type\Entity\CustomHebergementType;
+use App\Form\Type\Field\CustomPriceType;
 use App\Form\Type\CustomStatutType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

@@ -4,9 +4,9 @@ namespace App\Form;
 
 use App\Entity\Saison;
 use App\Entity\Periode;
-use App\Form\Type\CustomDateType;
-use App\Form\Type\CustomSaisonType;
-use App\Form\Type\CustomDaysType;
+use App\Form\Type\Field\CustomDateType;
+use App\Form\Type\Entity\CustomSaisonType;
+use App\Form\Type\Field\CustomDaysType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

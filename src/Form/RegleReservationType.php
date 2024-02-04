@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\RegleReservation;
-use App\Form\Type\CustomCheckboxType;
-use App\Form\Type\CustomPriceType;
+use App\Form\Type\Field\CustomCheckboxType;
+use App\Form\Type\Field\CustomPriceType;
 use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType as TypeIntegerType;

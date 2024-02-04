@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Tag;
-use App\Form\Type\CustomEmplacementType;
+use App\Form\Type\Entity\CustomEmplacementType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

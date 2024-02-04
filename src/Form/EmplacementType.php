@@ -4,8 +4,8 @@ namespace App\Form;
 
 use App\Entity\Emplacement;
 use App\Entity\Hebergement;
-use App\Form\Type\CustomHebergementType;
 use App\Form\Type\CustomStatutType;
+use App\Form\Type\Entity\CustomHebergementType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

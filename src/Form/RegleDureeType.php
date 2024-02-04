@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\RegleDuree;
-use App\Form\Type\CustomHebergementType;
-use App\Form\Type\CustomSaisonType;
+use App\Form\Type\Entity\CustomHebergementType;
+use App\Form\Type\Entity\CustomSaisonType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;

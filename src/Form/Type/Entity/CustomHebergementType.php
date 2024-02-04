@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Type;
+namespace App\Form\Type\Entity;
 
 use App\Entity\Hebergement;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

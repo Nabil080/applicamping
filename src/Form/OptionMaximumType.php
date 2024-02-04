@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\OptionMaximum;
-use App\Form\Type\CustomHebergementType;
-use App\Form\Type\CustomOptionType;
-use App\Form\Type\CustomSaisonType;
+use App\Form\Type\Entity\CustomHebergementType;
+use App\Form\Type\Entity\CustomOptionType;
+use App\Form\Type\Entity\CustomSaisonType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;

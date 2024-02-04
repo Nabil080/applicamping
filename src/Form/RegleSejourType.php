@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\RegleSejour;
-use App\Form\Type\CustomDaysType;
-use App\Form\Type\CustomHebergementType;
-use App\Form\Type\CustomSaisonType;
+use App\Form\Type\Field\CustomDaysType;
+use App\Form\Type\Entity\CustomHebergementType;
+use App\Form\Type\Entity\CustomSaisonType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

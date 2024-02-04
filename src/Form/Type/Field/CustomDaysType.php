@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Type;
+namespace App\Form\Type\Field;
 
 use App\Entity\Option;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Hebergement;
-use App\Form\Type\CustomImageType;
 use App\Form\Type\CustomStatutType;
+use App\Form\Type\Field\CustomImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
