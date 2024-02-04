@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\AdminType;
+use App\Form\ClientType;
 use App\Repository\UserRepository;
 use App\Service\LogService;
 use App\Service\UploadService;
@@ -43,7 +43,7 @@ class ClientController extends AbstractController
     public function create(Request $request, UserRepository $userRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(AdminType::class);
+        $form = $this->createForm(ClientType::class);
         $form->handleRequest($request);
 
 
@@ -70,7 +70,7 @@ class ClientController extends AbstractController
     public function update(User $user, Request $request, UploadService $uploadService, UserRepository $userRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
-        $form = $this->createForm(AdminType::class, $user);
+        $form = $this->createForm(ClientType::class, $user);
         $form->handleRequest($request);
 
 

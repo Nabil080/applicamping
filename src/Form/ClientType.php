@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AdminType extends AbstractType
+class ClientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -22,7 +22,6 @@ class AdminType extends AbstractType
             ->add('ville')
             ->add('code_postal')
             ->add('pays');
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
