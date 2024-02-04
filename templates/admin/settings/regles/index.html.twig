@@ -59,16 +59,26 @@
 			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Taxes</h4>
 			<div class="grid gap-4 mt-6">
 				<div>
-				{{ form_label(form.acompte_montant, 'Montant de l\'acompte :') }}
-				<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
-				{{ form_widget(form.acompte_montant, {'attr': {'class': 'input-default' } }) }}
-				</div>
-				<div class="">
-				{{ form_help(form.acompte_montant) }}
-				{{ form_errors(form.acompte_montant) }}
-				</div>
+					<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
+						{{ form_widget(form.acompte_montant, {'attr': {'class': 'input-default !w-[6ch] !p-2' } }) }}
+					{{ form_label(form.acompte_montant) }}
+					</div>
+					<div class="">
+						{{ form_help(form.acompte_montant) }}
+						{{ form_errors(form.acompte_montant) }}
+					</div>
 				</div>
 
+				<div>
+					<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
+						{{ form_widget(form.taxe_sejour_montant, {'attr': {'class': 'input-default !w-[6ch] !p-2' } }) }}
+					{{ form_label(form.taxe_sejour_montant) }}
+					</div>
+					<div class="">
+						{{ form_help(form.taxe_sejour_montant) }}
+						{{ form_errors(form.taxe_sejour_montant) }}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

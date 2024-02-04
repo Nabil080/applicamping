@@ -36,7 +36,7 @@
     {{- block('form_widget') -}}
 {%- endblock -%}
 
-{# Ajouter un stimulus_controller "select2" aux input select multiple #}
+{# Ajouter un stimulus_controller "select2" aux input select multiple #} 
 {%- block choice_widget -%}
     {%- if multiple -%}
             {%- set attr = attr|merge({'data-controller': 'select2'}) -%}

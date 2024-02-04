@@ -40,7 +40,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "test": "encore production --watch",
-        "build": "encore production --progress"
+        "build": "encore production --progress",
+        "migrate": "symfony console make:migration && symfony console doctrine:migrations:migrate"
     },
     "dependencies": {
         "@alpinejs/persist": "^3.12.0",

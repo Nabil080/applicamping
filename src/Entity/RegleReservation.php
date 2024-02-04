@@ -61,6 +61,9 @@ class RegleReservation
     #[ORM\Column(nullable: true)]
     private ?int $acompte_montant = null;
 
+    #[ORM\Column]
+    private ?int $taxe_sejour_montant = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -254,6 +257,18 @@ class RegleReservation
     public function setAcompteMontant(?int $acompte_montant): static
     {
         $this->acompte_montant = $acompte_montant;
+
+        return $this;
+    }
+
+    public function getTaxeSejourMontant(): ?int
+    {
+        return $this->taxe_sejour_montant;
+    }
+
+    public function setTaxeSejourMontant(int $taxe_sejour_montant): static
+    {
+        $this->taxe_sejour_montant = $taxe_sejour_montant;
 
         return $this;
     }

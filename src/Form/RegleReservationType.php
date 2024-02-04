@@ -31,7 +31,8 @@ class RegleReservationType extends AbstractType
             ->add('paiement_espece', CustomCheckboxType::class, ['label' => 'Espèce'])
             ->add('acompte', CustomCheckboxType::class, ['label' => 'Acompte'])
             ->add('acompte_seul', CustomCheckboxType::class, ['label' => 'Acompte seul'])
-            ->add('acompte_montant', CustomPriceType::class, ['label' => 'Montant', 'help' => 'en % et virgules autorisés.'] )
+            ->add('acompte_montant', CustomPriceType::class, ['label' => 'Acompte', 'help' => 'en % et virgules autorisés.'] )
+            ->add('taxe_sejour_montant', CustomPriceType::class, ['label' => 'Taxe de séjour', 'help' => 'en € et virgules autorisés.'] )
         ;
     }
 
