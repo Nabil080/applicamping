@@ -55,14 +55,14 @@ class RegleReservation
     #[ORM\Column]
     private ?bool $acompte = null;
 
-    #[ORM\Column]
-    private ?bool $acompte_seul = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $acompte_montant = null;
 
     #[ORM\Column]
     private ?int $taxe_sejour_montant = null;
+
+    #[ORM\Column]
+    private ?bool $paiement_sur_place = null;
 
     public function getId(): ?int
     {
@@ -237,18 +237,6 @@ class RegleReservation
         return $this;
     }
 
-    public function isAcompteSeul(): ?bool
-    {
-        return $this->acompte_seul;
-    }
-
-    public function setAcompteSeul(bool $acompte_seul): static
-    {
-        $this->acompte_seul = $acompte_seul;
-
-        return $this;
-    }
-
     public function getAcompteMontant(): ?int
     {
         return $this->acompte_montant;
@@ -269,6 +257,18 @@ class RegleReservation
     public function setTaxeSejourMontant(int $taxe_sejour_montant): static
     {
         $this->taxe_sejour_montant = $taxe_sejour_montant;
+
+        return $this;
+    }
+
+    public function isPaiementSurPlace(): ?bool
+    {
+        return $this->paiement_sur_place;
+    }
+
+    public function setPaiementSurPlace(bool $paiement_sur_place): static
+    {
+        $this->paiement_sur_place = $paiement_sur_place;
 
         return $this;
     }

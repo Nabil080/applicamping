@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div>
-			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Emplacement</h4>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Choix de l'emplacement</h4>
 			<div class="grid gap-4 mt-6">
 				{{ form_row(form.emplacement_libre)}}
 				{{ form_row(form.emplacement_aleatoire)}}
@@ -48,20 +48,20 @@
 			</div>
 		</div>
 		<div>
-			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Acompte</h4>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Règlement</h4>
 			<div class="grid gap-4 mt-6">
 				{{ form_row(form.acompte) }}
 
-				{{ form_row(form.acompte_seul) }}
+				{{ form_row(form.paiement_sur_place) }}
 			</div>
 		</div>
 		<div>
-			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Taxes</h4>
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">Montants</h4>
 			<div class="grid gap-4 mt-6">
 				<div>
 					<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
 						{{ form_widget(form.acompte_montant, {'attr': {'class': 'input-default !w-[6ch] !p-2' } }) }}
-					{{ form_label(form.acompte_montant) }}
+						{{ form_label(form.acompte_montant) }}
 					</div>
 					<div class="">
 						{{ form_help(form.acompte_montant) }}
@@ -72,7 +72,7 @@
 				<div>
 					<div class="flex flex-wrap items-center gap-2 [&_label]:m-0">
 						{{ form_widget(form.taxe_sejour_montant, {'attr': {'class': 'input-default !w-[6ch] !p-2' } }) }}
-					{{ form_label(form.taxe_sejour_montant) }}
+						{{ form_label(form.taxe_sejour_montant) }}
 					</div>
 					<div class="">
 						{{ form_help(form.taxe_sejour_montant) }}
