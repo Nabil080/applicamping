@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Periode;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,6 +22,16 @@ class PeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Periode::class);
     }
 
+    public function findByStartEnd(DateTime $start, DateTime $end): Periode
+    {
+        return $this->createQueryBuilder('periode')
+                    ->andWhere('periode.debut < :start')
+                    ->setParameter('start', $start)
+                    ->andWhere('periode.fin > :start')
+                    ->setParameter('start', $end)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+    }
 //    /**
 //     * @return Periode[] Returns an array of Periode objects
 //     */

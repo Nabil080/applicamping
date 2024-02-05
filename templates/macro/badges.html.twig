@@ -1,7 +1,7 @@
 {% macro basic(statut) %}
 	{% set s = statut|lower %}
 
-	{% if s is same as "en service" %}
+	{% if s is same as "en service" or s is same as "actif" %}
 		{% set classes = "success" %}
 	{% elseif s is same as "désactivé"%}
 		{% set classes = "danger" %}
