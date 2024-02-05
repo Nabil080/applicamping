@@ -136,4 +136,11 @@ class Emplacement
         return $this;
     }
 
+    // custom
+    public function isAvailable(): bool
+    {
+
+        return true;
+    }
+
 }

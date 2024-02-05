@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\EmplacementRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +19,30 @@ class AdminController extends AbstractController
     }
 
     #[Route('', name: '')]
-    public function index(): Response
+    public function index(ReservationRepository $reservationRepository, UserRepository $userRepository, EmplacementRepository $emplacementRepository): Response
     {
+
+        // TODO
+        $cardInfo = [
+            // $paiements = "paiementRepository->getTotal('date' = 'ajourdhui')",
+            // $reservations = $reservationRepository->count([]),
+            // $utilisateurs = $userRepository->count([]),
+        ];
+
+        $emplacements = [
+            // $libres = $emplacementRepository->getAvailable(),
+            // $occupes = $emplacementRepository->getOccupied(),
+        ];
+
+        $check = [
+            // "in" => $reservationRepository->getCheckIns(),
+            // "out" => $reservationRepository->getCheckOuts(),
+        ];
+
         return $this->render($this->getPath('index'), [
-            'controller_name' => 'AdminController',
+            'cards' => $cardInfo,
+            'emplacements' => $emplacements,
+            'check' => $check,
         ]);
     }
 
@@ -48,12 +71,12 @@ class AdminController extends AbstractController
     #[Route('/update/{id}', name: '_update_redirect')]
     public function updateRedirect(int $id, Request $rq): Response
     {
-        return $this->redirect($rq->headers->get('referer') . "/update/". $id);
+        return $this->redirect($rq->headers->get('referer') . "/update/" . $id);
     }
 
     #[Route('/delete/{id}', name: '_delete_redirect')]
     public function deleteRedirect(int $id, Request $rq): Response
     {
-        return $this->redirect($rq->headers->get('referer') . "/delete/". $id);
+        return $this->redirect($rq->headers->get('referer') . "/delete/" . $id);
     }
 }

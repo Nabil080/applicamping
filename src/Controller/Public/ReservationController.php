@@ -1,11 +1,16 @@
 <?php
 
-namespace App\Controller\Public\Reservation;
+namespace App\Controller\Public;
 
+use App\Service\ReservationService;
+use DateTime;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// #[Route('/reservation', name: 'app_reservation')]
 class ReservationController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
@@ -24,4 +29,15 @@ class ReservationController extends AbstractController
             'controller_name' => 'ReservationController',
         ]);
     }
+    
+    #[Route('/reservation/hebergements', name: 'reservation_show')]
+    public function getHebergements(Request $request, ReservationService $reservationService)
+    {
+        $hebergements = $reservationService->getHebergementsByRequest($request);
+        
+        dd($hebergements);
+
+        return $this->json("Ca marche", 200);
+    }
+    
 }

@@ -72,6 +72,7 @@ export default class extends Controller {
         // prix enfant
         data.enfant = 230
         // liste des hebergements avec emplacements libres
+        fetch(`reservation/hebergements?start=${this.reservation.durée.début.str}&end=${this.reservation.durée.fin.str}`)
         return data
     }
 
@@ -80,6 +81,7 @@ export default class extends Controller {
         let progress
         switch (number) {
             case 0:
+                // Attribue les valeurs js pour la suite (affichage/calculs)
                 [step, progress] = [this.steps[0], this.stepsProgress[0]]
                 this.reservation.durée.début = {
                     date: strToDate(step.querySelector('input[name="start"]').value),
@@ -94,6 +96,7 @@ export default class extends Controller {
                 this.reservation.nombre.adultes = parseInt(step.querySelector('input#adult-counter').value)
                 this.reservation.nombre.enfants = parseInt(step.querySelector('input#child-counter').value)
 
+                // Vérifie que les dates sont correctes et qu'il y a au minimum une nuit
                 if (this.reservation.durée.début.date instanceof Date
                     && this.reservation.durée.fin.date instanceof Date
                     && this.reservation.durée.nuits > 0
@@ -101,10 +104,11 @@ export default class extends Controller {
                     && Number.isInteger(this.reservation.nombre.enfants)) {
                     step.classList.add('valid')
 
+                    // Recupere les données par rapport au séjour
                     this.database = this.fetchDatabase()
                     // console.log(this.database);
 
-                    // prix
+                    // calcul du prix du séjour (adulte et enfant)
                     this.reservation.tarif.sejour.adultes = (this.database.adulte * this.reservation.nombre.adultes * this.reservation.durée.nuits)
                     this.reservation.tarif.sejour.enfants = (this.database.enfant * this.reservation.nombre.enfants * this.reservation.durée.nuits)
 
@@ -116,6 +120,9 @@ export default class extends Controller {
                         ${this.reservation.nombre.enfants} enfants
                         `
                 }
+                // ! traitement back
+                console.log(this.database)
+
                 break;
             case 1:
                 [step, progress] = [this.steps[1], this.stepsProgress[1]]
