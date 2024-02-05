@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Emplacement;
 use App\Entity\Hebergement;
 use App\Entity\Log;
+use App\Entity\RegleDuree;
 use App\Entity\Saison;
 use App\Repository\ReservationRepository;
 use App\Repository\EmplacementRepository;
@@ -99,6 +100,7 @@ class DisplayHebergement
     private array $emplacements = [];
     private int $tarif = 0;
     private array $error = [];
+    
 
     public function __construct(Hebergement $hebergement, Saison $saison, int $adult, int $child, DateTime $start, DateTime $end)
     {
@@ -132,19 +134,37 @@ class DisplayHebergement
         $minimum = $this->hebergement->getMinimum();
         $maximum = $this->hebergement->getMaximum();
 
-        if($size < $minimum) $this->error[] = "Trop peu de personnes, minimum requis : " . $minimum;
-        if($size > $maximum) $this->error[] = "Trop de personnes, maximum autorisé : " . $maximum;        
+        if ($size < $minimum) $this->error[] = "Trop peu de personnes, minimum requis : " . $minimum;
+        if ($size > $maximum) $this->error[] = "Trop de personnes, maximum autorisé : " . $maximum;
     }
 
     public function checkLength(): void
     {
         $length = $this->start->diff($this->end)->format('%a%');
-        // Récupère les règles de durée de l'hébergement
-        $rules1 = $this->hebergement->getRegleDurees()->getValues();
-        $rules2 = $this->saison->getRegleDurees()->getValues();
-        
-        // Récupère les règles de durée de Tous les hébérgements
-        
+
+        // ! Règles de durées ciblant l'hébergement
+        $hebergementRulesCollection = $this->hebergement->getRegleDurees();
+
+        // Récupère les règles de durée de l'hébergement et de la saison
+        $rules1 = array_map(function (RegleDuree $rule) {
+            $rule->getSaisons()->contains($this->saison);
+        }, $hebergementRulesCollection->toArray());
+        // Récupère les règles de durée de l'hébergement de toutes saisons
+        $rules2 = array_map(function (RegleDuree $rule) {
+            $rule->getSaisons()->count() === 0;
+        }, $hebergementRulesCollection->toArray());
+
+        // ! Règles de durées ciblant la saison
+        $saisonRulesCollection = $this->saison->getRegleDurees();
+
+        // Récupère les règles de durée de tout hébergement de la saison
+        $rules3 = array_map(function (RegleDuree $rule) {
+            $rule->getHebergements()->count() === 0;
+        }, $saisonRulesCollection->toArray());
+
+        // Récupère les règles de durée de tout hébergement de toutes saisons
+        $rules4 = 
+
 
         /*
         Cible hebergement + saison
@@ -153,6 +173,6 @@ class DisplayHebergement
         Cible tout + tout
         */
 
-        var_dump($rules1);
+        var_dump($hebergementRulesCollection, $saisonRulesCollection);
     }
 }
