@@ -6,6 +6,7 @@ use App\Repository\TarifRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TarifRepository::class)]
 class Tarif
@@ -13,24 +14,30 @@ class Tarif
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?int $montant = null;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?bool $par_nuit = false;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?bool $par_personne = false;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]
     private ?Hebergement $hebergement = null;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?bool $adulte = false;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?bool $enfant = false;
 
     #[ORM\ManyToOne(inversedBy: 'tarifs')]

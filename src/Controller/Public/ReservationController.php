@@ -2,6 +2,8 @@
 
 namespace App\Controller\Public;
 
+use App\Repository\EmplacementRepository;
+use App\Repository\HebergementRepository;
 use App\Service\ReservationService;
 use DateTime;
 use DateTimeZone;
@@ -9,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 // #[Route('/reservation', name: 'app_reservation')]
 class ReservationController extends AbstractController
@@ -31,13 +34,11 @@ class ReservationController extends AbstractController
     }
     
     #[Route('/reservation/hebergements', name: 'reservation_show')]
-    public function getHebergements(Request $request, ReservationService $reservationService)
+    public function getHebergements(Request $request, ReservationService $reservationService, SerializerInterface $serializer, HebergementRepository $er)
     {
         $displayHebergements = $reservationService->getHebergementsByRequest($request);
         
-        dd($displayHebergements);
-
-        return $this->json("Ca marche", 200);
+        return $this->json($displayHebergements, 200, [], ["groups" => "displayHebergement"]);
     }
     
 }

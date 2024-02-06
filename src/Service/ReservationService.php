@@ -24,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ReservationService extends AbstractController
@@ -123,8 +124,9 @@ class ReservationService extends AbstractController
             $displayHebergement->emplacements[$statut][] = $emplacement;
         }
 
-        if($emplacements = []) $displayHebergement->error[] = "Aucun emplacement en service";
-        if($displayHebergement->emplacements["Libres"] = []) $displayHebergement->error[] = "Aucun emplacement libre, essayez d'autres dates";
+        // Ajoute les erreurs pour emplacements vides / indisponibles
+        if ($emplacements = []) $displayHebergement->error[] = "Aucun emplacement en service";
+        if ($displayHebergement->emplacements["Libres"] = []) $displayHebergement->error[] = "Aucun emplacement libre, essayez d'autres dates";
     }
 
     // Sous fonctions
@@ -208,21 +210,29 @@ class ReservationService extends AbstractController
     {
         $reservation = $this->reservationRepository->findByEmplacementAndDates($emplacement, $start, $end);
 
-        return $reservation ? true : false ;
+        return $reservation ? true : false;
     }
 }
 
 
 class DisplayHebergement
 {
+    #[Groups(['displayHebergement'])]
     public Hebergement $hebergement;
+    #[Groups(['displayHebergement'])]
     public Saison $saison;
+    #[Groups(['displayHebergement'])]
     public DateTime $start;
+    #[Groups(['displayHebergement'])]
     public DateTime $end;
+    #[Groups(['displayHebergement'])]
     public int $adult = 0;
+    #[Groups(['displayHebergement'])]
     public int $child = 0;
     public array $emplacements = [];
+    #[Groups(['displayHebergement'])]
     public Tarif $tarif;
+    #[Groups(['displayHebergement'])]
     public array $error = [];
 
 

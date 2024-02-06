@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EmplacementRepository::class)]
 #[UniqueEntity('numero')]
@@ -16,12 +17,15 @@ class Emplacement
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['displayHebergement'])]
     private ?int $numero = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['displayHebergement'])]
     private ?string $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'emplacements')]
@@ -30,7 +34,6 @@ class Emplacement
 
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Reservation::class)]
     private Collection $reservations;
-
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'emplacements')]
     private Collection $tags;

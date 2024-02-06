@@ -72,7 +72,7 @@ export default class extends Controller {
         // prix enfant
         data.enfant = 230
         // liste des hebergements avec emplacements libres
-        fetch(`reservation/hebergements?start=${this.reservation.durée.début.str}&end=${this.reservation.durée.fin.str}`)
+        fetch(`reservation/hebergements?start=${this.reservation.durée.début.str}&end=${this.reservation.durée.fin.str}&adult=${this.reservation.nombre.adultes}&child=${this.reservation.nombre.enfants}`)
         return data
     }
 
