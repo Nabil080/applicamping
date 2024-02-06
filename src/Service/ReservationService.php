@@ -67,7 +67,7 @@ class ReservationService extends AbstractController
         foreach ($hebergements as $hebergement) {
             $displayHebergement = new DisplayHebergement($hebergement, $saison, $adult, $child, $start, $end);
             // ? Vérifie les règles et ajoute une erreur ou non
-            $this->checkErrors($displayHebergement);
+            $this->checkRules($displayHebergement);
             // ? Récupère le tarif correspondant
             $this->getTarif($displayHebergement);
             // ? Récupère les émplacements correspondants
@@ -80,7 +80,7 @@ class ReservationService extends AbstractController
 
     // fonctions principales
 
-    public function checkErrors(DisplayHebergement $displayHebergement): void
+    public function checkRules(DisplayHebergement $displayHebergement): void
     {
         // Règle de nombre de personnes
         $this->checkSize($displayHebergement);
@@ -107,21 +107,24 @@ class ReservationService extends AbstractController
                 $tarif2 = $tarif;
         }
 
-        if($tarifs === []) $displayHebergement->error[] = "Aucun tarif indiqué";
+        if ($tarifs === []) $displayHebergement->error[] = "Aucun tarif indiqué";
         else $displayHebergement->setTarif($tarif1 ?? $tarif2);
     }
 
     public function getEmplacements(DisplayHebergement $displayHebergement): void
     {
         // Récupère les emplacements de l'hébergement
-        $emplacements = $displayHebergement->hebergement->getEmplacements()->filter(fn(Emplacement $emplacement)=>$emplacement->getStatut() === "Actif");
+        $emplacements = $displayHebergement->hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() === "Actif")->getValues();
         $displayHebergement->emplacements = ["Libres" => [], "Occupés" => [], "Total" => count($emplacements)];
-        
+
         // Sépare les emplacements libres et occupés pour les dates donnés
-        foreach($emplacements as $emplacement){
-            $statut = $emplacement->isOccupied($displayHebergement->start,$displayHebergement->end) ? "Occupés" : "Libres";
+        foreach ($emplacements as $emplacement) {
+            $statut = $this->isEmplacementOccupied($emplacement, $displayHebergement->start, $displayHebergement->end) ? "Occupés" : "Libres";
             $displayHebergement->emplacements[$statut][] = $emplacement;
         }
+
+        if($emplacements = []) $displayHebergement->error[] = "Aucun emplacement en service";
+        if($displayHebergement->emplacements["Libres"] = []) $displayHebergement->error[] = "Aucun emplacement libre, essayez d'autres dates";
     }
 
     // Sous fonctions
@@ -199,6 +202,13 @@ class ReservationService extends AbstractController
     public function checkStatut(DisplayHebergement $displayHebergement): void
     {
         if ($displayHebergement->hebergement->getStatut() === 'Maintenance') $displayHebergement->error[] = "Cet hebergement est en cours de maintenance";
+    }
+
+    public function isEmplacementOccupied(Emplacement $emplacement, DateTime $start, DateTime $end): bool
+    {
+        $reservation = $this->reservationRepository->findByEmplacementAndDates($emplacement, $start, $end);
+
+        return $reservation ? true : false ;
     }
 }
 

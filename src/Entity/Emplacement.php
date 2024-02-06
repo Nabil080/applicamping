@@ -29,7 +29,7 @@ class Emplacement
     private ?Hebergement $hebergement = null;
 
     #[ORM\OneToMany(mappedBy: 'emplacement', targetEntity: Reservation::class)]
-    private Collection $reservation;
+    private Collection $reservations;
 
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'emplacements')]
@@ -38,7 +38,7 @@ class Emplacement
 
     public function __construct()
     {
-        $this->reservation = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -86,15 +86,15 @@ class Emplacement
     /**
      * @return Collection<int, Reservation>
      */
-    public function getReservation(): Collection
+    public function getReservations(): Collection
     {
-        return $this->reservation;
+        return $this->reservations;
     }
 
     public function addReservation(Reservation $reservation): static
     {
-        if (!$this->reservation->contains($reservation)) {
-            $this->reservation->add($reservation);
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
             $reservation->setEmplacement($this);
         }
 
@@ -103,7 +103,7 @@ class Emplacement
 
     public function removeReservation(Reservation $reservation): static
     {
-        if ($this->reservation->removeElement($reservation)) {
+        if ($this->reservations->removeElement($reservation)) {
             // set the owning side to null (unless already changed)
             if ($reservation->getEmplacement() === $this) {
                 $reservation->setEmplacement(null);
@@ -139,12 +139,6 @@ class Emplacement
 
     // custom
     public function isAvailable(): bool
-    {
-
-        return true;
-    }
-
-    public function isOccupied(DateTime $start, DateTime $end): bool
     {
 
         return true;

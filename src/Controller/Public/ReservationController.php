@@ -33,9 +33,9 @@ class ReservationController extends AbstractController
     #[Route('/reservation/hebergements', name: 'reservation_show')]
     public function getHebergements(Request $request, ReservationService $reservationService)
     {
-        $hebergements = $reservationService->getHebergementsByRequest($request);
+        $displayHebergements = $reservationService->getHebergementsByRequest($request);
         
-        dd($hebergements);
+        dd($displayHebergements);
 
         return $this->json("Ca marche", 200);
     }
