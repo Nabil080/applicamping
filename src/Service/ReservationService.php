@@ -7,6 +7,7 @@ use App\Entity\Hebergement;
 use App\Entity\Log;
 use App\Entity\RegleDuree;
 use App\Entity\Saison;
+use App\Entity\Tarif;
 use App\Repository\ReservationRepository;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
@@ -14,6 +15,7 @@ use App\Repository\PeriodeRepository;
 use App\Repository\RegleDureeRepository;
 use App\Repository\RegleSejourRepository;
 use App\Repository\SaisonRepository;
+use App\Repository\TarifRepository;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManager;
@@ -33,8 +35,9 @@ class ReservationService extends AbstractController
     private PeriodeRepository $periodeRepository;
     private RegleDureeRepository $regleDureeRepository;
     private RegleSejourRepository $regleSejourRepository;
+    private TarifRepository $tarifRepository;
 
-    public function __construct(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
+    public function __construct(TarifRepository $tarifRepository, RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->emplacementRepository = $emplacementRepository;
@@ -43,6 +46,7 @@ class ReservationService extends AbstractController
         $this->periodeRepository = $periodeRepository;
         $this->regleDureeRepository = $regleDureeRepository;
         $this->regleSejourRepository = $regleSejourRepository;
+        $this->tarifRepository = $tarifRepository;
     }
 
     public function getHebergementsByRequest(Request $request): array
@@ -63,38 +67,21 @@ class ReservationService extends AbstractController
         foreach ($hebergements as $hebergement) {
             $displayHebergement = new DisplayHebergement($hebergement, $saison, $adult, $child, $start, $end);
             // ? Vérifie les règles et ajoute une erreur ou non
-            $displayHebergements[] = $this->checkErrors($displayHebergement);
+            $this->checkErrors($displayHebergement);
+            // ? Récupère le tarif correspondant
+            $this->getTarif($displayHebergement);
+            // ? Récupère les émplacements correspondants
+            $this->getEmplacements($displayHebergement);
+            $displayHebergements[] = $displayHebergement;
         };
 
         return ($displayHebergements);
-        // Associe à chaque hébérgement ses emplacements 
-        // $hebergementsArray = array_map(
-        //     fn (Hebergement $hebergement) => [
-        //         "hebergement" => $hebergement,
-        //         "emplacements" => $hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() == 'Actif')
-        //     ],
-        //     $hebergements
-        // );
-        // // pour chaque hébérgement, garde uniquement les emplacements libres pour la période donnée
-
-
-
-
-        // // ne renvoie que les hébergements avec au moins un emplacement
-        // return $hebergementsArray;
-
-
-        // $emplacements = $this->emplacementRepository->findBy(['statut' => 'Actif']);
-        // $libres = array_filter($emplacements, function (Emplacement $emplacement) use ($start, $end) {
-        //     return $emplacement->isAvailable();
-        // });
-
-        //
     }
 
-    public function checkErrors(DisplayHebergement $displayHebergement): DisplayHebergement
+    // fonctions principales
+
+    public function checkErrors(DisplayHebergement $displayHebergement): void
     {
-        dump("pre-check", $displayHebergement);
         // Règle de nombre de personnes
         $this->checkSize($displayHebergement);
         // Règles de durée minimum / maximum
@@ -103,14 +90,41 @@ class ReservationService extends AbstractController
         // Règle d'arrivés / de départ
         $this->checkDays($displayHebergement, 'checkin');
         $this->checkDays($displayHebergement, 'checkout');
-
         // Statut actif
         $this->checkStatut($displayHebergement);
-        dump("post-check", $displayHebergement);
-
-        return $displayHebergement;
     }
 
+    public function getTarif(DisplayHebergement $displayHebergement): void
+    {
+        $tarifs = $displayHebergement->hebergement->getTarifs()->getValues();
+
+        foreach ($tarifs as $tarif) {
+            // PRIO 1 : Saison correspondante
+            if ($tarif->getSaisons()->contains($displayHebergement->saison))
+                $tarif1 = $tarif;
+            // PRIO 2 : Toute saison
+            if ($tarif->getSaisons()->count() === 0)
+                $tarif2 = $tarif;
+        }
+
+        if($tarifs === []) $displayHebergement->error[] = "Aucun tarif indiqué";
+        else $displayHebergement->setTarif($tarif1 ?? $tarif2);
+    }
+
+    public function getEmplacements(DisplayHebergement $displayHebergement): void
+    {
+        // Récupère les emplacements de l'hébergement
+        $emplacements = $displayHebergement->hebergement->getEmplacements()->filter(fn(Emplacement $emplacement)=>$emplacement->getStatut() === "Actif");
+        $displayHebergement->emplacements = ["Libres" => [], "Occupés" => [], "Total" => count($emplacements)];
+        
+        // Sépare les emplacements libres et occupés pour les dates donnés
+        foreach($emplacements as $emplacement){
+            $statut = $emplacement->isOccupied($displayHebergement->start,$displayHebergement->end) ? "Occupés" : "Libres";
+            $displayHebergement->emplacements[$statut][] = $emplacement;
+        }
+    }
+
+    // Sous fonctions
     public function checkSize(DisplayHebergement $displayHebergement): void
     {
         $size = $displayHebergement->adult + $displayHebergement->child;
@@ -198,7 +212,7 @@ class DisplayHebergement
     public int $adult = 0;
     public int $child = 0;
     public array $emplacements = [];
-    public int $tarif = 0;
+    public Tarif $tarif;
     public array $error = [];
 
 
@@ -210,5 +224,10 @@ class DisplayHebergement
         $this->child = $child;
         $this->start = $start;
         $this->end = $end;
+    }
+
+    public function setTarif(Tarif $tarif): void
+    {
+        $this->tarif = $tarif;
     }
 }
