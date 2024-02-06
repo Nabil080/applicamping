@@ -1,4 +1,4 @@
-{% macro deleteButton(id = 0, path = null, type = null , title = null ) %}
+{% macro deleteButton(id = 0, url = null, type = null , title = null ) %}
 	{% import 'macro/svg.html.twig' as svg %}
 	{% set path = url|default(path('app_admin_delete_redirect', {id: id})) %}
 	<button {{ stimulus_controller('delete') }} data-id={{ id }} data-path={{ path }} data-type={{ type|default('entité') }} data-name={{ title|default('objet') }} {{ stimulus_action('delete','show')}} class="btn btn-sm  delete">
