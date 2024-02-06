@@ -104,8 +104,8 @@ class ReservationService extends AbstractController
         $this->checkDays($displayHebergement, 'checkin');
         $this->checkDays($displayHebergement, 'checkout');
 
-        // // Statut actif
-        // $this->checkStatut();
+        // Statut actif
+        $this->checkStatut($displayHebergement);
         dump("post-check", $displayHebergement);
 
         return $displayHebergement;
@@ -144,16 +144,47 @@ class ReservationService extends AbstractController
         // Utilise la règle la plus précise
         $lengthRule = $rule1 ?? $rule2 ?? $rule3 ?? $rule4;
         // Vérifie avec la durée de la réservation
-        if ($lengthRule->getMinimum() && $length < $lengthRule->getMinimum()) $displayHebergement->error[] = "Le séjour est trop court, nuits minimum requises : " . $lengthRule->getMinimum();
-        if ($lengthRule->getMaximum() && $length < $lengthRule->getMinimum()) $displayHebergement->error[] = "Le séjour est trop long, nuits maximum autorisés : " . $lengthRule->getMaximum();
+        if ($lengthRule->getMinimum() && $length < $lengthRule->getMinimum())
+            $displayHebergement->error[] = "Le séjour est trop court, nuits minimum requises : " . $lengthRule->getMinimum();
+        if ($lengthRule->getMaximum() && $length < $lengthRule->getMinimum())
+            $displayHebergement->error[] = "Le séjour est trop long, nuits maximum autorisés : " . $lengthRule->getMaximum();
     }
 
     public function checkDays(DisplayHebergement $displayHebergement, string $type = 'checkin'): void
     {
         $startDay = $displayHebergement->start->format('N');
         $endDay = $displayHebergement->end->format('N');
-        $daysRules = $type === 'checkin' ? $this->regleSejourRepository->getCheckIns() : $this->regleSejourRepository->getCheckOuts();
-        dump($type, $daysRules);
+        $dayRules = $type === 'checkin' ? $this->regleSejourRepository->getCheckIns() : $this->regleSejourRepository->getCheckOuts();
+
+        foreach ($dayRules as $rule) {
+            // PRIO 1 : Hébérgement + saison correspondante
+            if ($rule->getHebergements()->contains($displayHebergement->hebergement) && $rule->getSaisons()->contains($displayHebergement->saison))
+                $rule1 = $rule;
+            // PRIO 2 : Hébérgement + toute saison
+            if ($rule->getHebergements()->contains($displayHebergement->hebergement) && $rule->getSaisons()->count() === 0)
+                $rule2 = $rule;
+            // PRIO 3 : Tout hébérgement + saison correspondante
+            if ($rule->getHebergements()->count() === 0 && $rule->getSaisons()->contains($displayHebergement->saison))
+                $rule3 = $rule;
+            // PRIO 4 : Tout hébérgement + toute saison
+            if ($rule->getHebergements()->count() === 0 && $rule->getSaisons()->count() === 0)
+                $rule4 = $rule;
+        }
+
+        // Utilise la règle la plus précise
+        $dayRule = $rule1 ?? $rule2 ?? $rule3 ?? $rule4;
+        // Vérifie avec le jour d'arrivé / départ
+        $authorizedDays = $dayRule->getFormattedDays($type);
+        // 0 = Tous, 1 = Lundi ... 7 = Dimanche
+        if ($type === 'checkin' && !(in_array($startDay, $authorizedDays) | in_array(0, $authorizedDays)))
+            $displayHebergement->error[] = "Le jour d\'arrivé n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckIn());
+        if ($type === 'checkout' && !(in_array($endDay, $authorizedDays) | in_array(0, $authorizedDays)))
+            $displayHebergement->error[] = "Le jour de départ n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckOut());
+    }
+
+    public function checkStatut(DisplayHebergement $displayHebergement): void
+    {
+        if ($displayHebergement->hebergement->getStatut() === 'Maintenance') $displayHebergement->error[] = "Cet hebergement est en cours de maintenance";
     }
 }
 

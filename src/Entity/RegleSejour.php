@@ -111,4 +111,23 @@ class RegleSejour
 
         return $this;
     }
+
+    public function getFormattedDays(string $type ='checkin'): array
+    {
+        $formatArray = [
+            null => 0,
+            "Lundi" => 1,
+            "Mardi" => 2,
+            "Mercredi" => 3,
+            "Jeudi" => 4,
+            "Vendredi" => 5,
+            "Samedi" => 6,
+            "Dimanche" => 7,
+        ];
+
+        if($type === 'checkin') $formattedDays = array_map(fn ($day) => $formatArray[$day] , $this->check_in);
+        if($type === 'checkout') $formattedDays = array_map(fn ($day) => $formatArray[$day] , $this->check_out);
+
+        return $formattedDays ?? [];
+    }
 }

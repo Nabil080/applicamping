@@ -5,6 +5,8 @@
 		{% set classes = "success" %}
 	{% elseif s is same as "désactivé"%}
 		{% set classes = "danger" %}
+	{% elseif s is same as "maintenance" %}
+		{% set classes = "warning" %}
 	{% else %}
 		{% set classes = "warning" %}
 	{% endif %}

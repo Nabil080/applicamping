@@ -109,4 +109,5 @@ class RegleDuree
 
         return $this;
     }
+
 }
