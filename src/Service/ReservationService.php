@@ -11,30 +11,38 @@ use App\Repository\ReservationRepository;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
 use App\Repository\PeriodeRepository;
+use App\Repository\RegleDureeRepository;
+use App\Repository\RegleSejourRepository;
 use App\Repository\SaisonRepository;
 use DateTime;
 use DateTimeZone;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class ReservationService
+class ReservationService extends AbstractController
 {
     private ReservationRepository $reservationRepository;
     private EmplacementRepository $emplacementRepository;
     private HebergementRepository $hebergementRepository;
     private SaisonRepository $saisonRepository;
     private PeriodeRepository $periodeRepository;
+    private RegleDureeRepository $regleDureeRepository;
+    private RegleSejourRepository $regleSejourRepository;
 
-    public function __construct(PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
+    public function __construct(RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->emplacementRepository = $emplacementRepository;
         $this->hebergementRepository = $hebergementRepository;
         $this->saisonRepository = $saisonRepository;
         $this->periodeRepository = $periodeRepository;
+        $this->regleDureeRepository = $regleDureeRepository;
+        $this->regleSejourRepository = $regleSejourRepository;
     }
 
     public function getHebergementsByRequest(Request $request): array
@@ -51,32 +59,29 @@ class ReservationService
         // ? Récupère la liste des hébérgements et créer un DisplayHebergement pour chaque
         $hebergements = $this->hebergementRepository->findBy(['statut' => ['Actif', 'Maintenance'],]);
 
-        $displayHebergements = array_map(
-            function ($hebergement) use ($saison, $adult, $child, $start, $end) {
-                $displayHebergement = new DisplayHebergement($hebergement, $saison, $adult, $child, $start, $end);
-                // ? Vérifie les règles et ajoute une erreur ou non
-                return $displayHebergement->checkErrors();
-            },
-            $hebergements
-        );
+        $displayHebergements = [];
+        foreach ($hebergements as $hebergement) {
+            $displayHebergement = new DisplayHebergement($hebergement, $saison, $adult, $child, $start, $end);
+            // ? Vérifie les règles et ajoute une erreur ou non
+            $displayHebergements[] = $this->checkErrors($displayHebergement);
+        };
 
         return ($displayHebergements);
-
         // Associe à chaque hébérgement ses emplacements 
-        $hebergementsArray = array_map(
-            fn (Hebergement $hebergement) => [
-                "hebergement" => $hebergement,
-                "emplacements" => $hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() == 'Actif')
-            ],
-            $hebergements
-        );
-        // pour chaque hébérgement, garde uniquement les emplacements libres pour la période donnée
+        // $hebergementsArray = array_map(
+        //     fn (Hebergement $hebergement) => [
+        //         "hebergement" => $hebergement,
+        //         "emplacements" => $hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() == 'Actif')
+        //     ],
+        //     $hebergements
+        // );
+        // // pour chaque hébérgement, garde uniquement les emplacements libres pour la période donnée
 
 
 
 
-        // ne renvoie que les hébergements avec au moins un emplacement
-        return $hebergementsArray;
+        // // ne renvoie que les hébergements avec au moins un emplacement
+        // return $hebergementsArray;
 
 
         // $emplacements = $this->emplacementRepository->findBy(['statut' => 'Actif']);
@@ -84,23 +89,87 @@ class ReservationService
         //     return $emplacement->isAvailable();
         // });
 
-        // return $libres;
+        //
+    }
+
+    public function checkErrors(DisplayHebergement $displayHebergement): DisplayHebergement
+    {
+        dump("pre-check", $displayHebergement);
+        // Règle de nombre de personnes
+        $this->checkSize($displayHebergement);
+        // Règles de durée minimum / maximum
+        $this->checkLength($displayHebergement, 'minimum');
+        $this->checkLength($displayHebergement, 'maximum');
+        // Règle d'arrivés / de départ
+        $this->checkDays($displayHebergement, 'checkin');
+        $this->checkDays($displayHebergement, 'checkout');
+
+        // // Statut actif
+        // $this->checkStatut();
+        dump("post-check", $displayHebergement);
+
+        return $displayHebergement;
+    }
+
+    public function checkSize(DisplayHebergement $displayHebergement): void
+    {
+        $size = $displayHebergement->adult + $displayHebergement->child;
+        $minimum = $displayHebergement->hebergement->getMinimum();
+        $maximum = $displayHebergement->hebergement->getMaximum();
+
+        if ($size < $minimum) $displayHebergement->error[] = "Trop peu de personnes, minimum requis : " . $minimum;
+        if ($size > $maximum) $displayHebergement->error[] = "Trop de personnes, maximum autorisé : " . $maximum;
+    }
+
+    public function checkLength(DisplayHebergement $displayHebergement, string $type = 'minimum'): void
+    {
+        $length = $displayHebergement->start->diff($displayHebergement->end)->format('%a%');
+        $lengthRules = $type === 'minimum' ? $this->regleDureeRepository->getMinStay() : $this->regleDureeRepository->getMaxStay();
+
+        foreach ($lengthRules as $rule) {
+            // PRIO 1 : Hébérgement + saison correspondante
+            if ($rule->getHebergements()->contains($displayHebergement->hebergement) && $rule->getSaisons()->contains($displayHebergement->saison))
+                $rule1 = $rule;
+            // PRIO 2 : Hébérgement + toute saison
+            if ($rule->getHebergements()->contains($displayHebergement->hebergement) && $rule->getSaisons()->count() === 0)
+                $rule2 = $rule;
+            // PRIO 3 : Tout hébérgement + saison correspondante
+            if ($rule->getHebergements()->count() === 0 && $rule->getSaisons()->contains($displayHebergement->saison))
+                $rule3 = $rule;
+            // PRIO 4 : Tout hébérgement + toute saison
+            if ($rule->getHebergements()->count() === 0 && $rule->getSaisons()->count() === 0)
+                $rule4 = $rule;
+        }
+
+        // Utilise la règle la plus précise
+        $lengthRule = $rule1 ?? $rule2 ?? $rule3 ?? $rule4;
+        // Vérifie avec la durée de la réservation
+        if ($lengthRule->getMinimum() && $length < $lengthRule->getMinimum()) $displayHebergement->error[] = "Le séjour est trop court, nuits minimum requises : " . $lengthRule->getMinimum();
+        if ($lengthRule->getMaximum() && $length < $lengthRule->getMinimum()) $displayHebergement->error[] = "Le séjour est trop long, nuits maximum autorisés : " . $lengthRule->getMaximum();
+    }
+
+    public function checkDays(DisplayHebergement $displayHebergement, string $type = 'checkin'): void
+    {
+        $startDay = $displayHebergement->start->format('N');
+        $endDay = $displayHebergement->end->format('N');
+        $daysRules = $type === 'checkin' ? $this->regleSejourRepository->getCheckIns() : $this->regleSejourRepository->getCheckOuts();
+        dump($type, $daysRules);
     }
 }
 
 
 class DisplayHebergement
 {
-    private Hebergement $hebergement;
-    private Saison $saison;
-    private DateTime $start;
-    private DateTime $end;
-    private int $adult = 0;
-    private int $child = 0;
-    private array $emplacements = [];
-    private int $tarif = 0;
-    private array $error = [];
-    
+    public Hebergement $hebergement;
+    public Saison $saison;
+    public DateTime $start;
+    public DateTime $end;
+    public int $adult = 0;
+    public int $child = 0;
+    public array $emplacements = [];
+    public int $tarif = 0;
+    public array $error = [];
+
 
     public function __construct(Hebergement $hebergement, Saison $saison, int $adult, int $child, DateTime $start, DateTime $end)
     {
@@ -110,69 +179,5 @@ class DisplayHebergement
         $this->child = $child;
         $this->start = $start;
         $this->end = $end;
-    }
-
-    public function checkErrors(): DisplayHebergement
-    {
-        // Règle de nombre de personnes
-        $this->checkSize();
-        // Règle d'arrivés / de départ
-        // $this->checkDays('checkin');
-        // $this->checkDays('checkout');
-        // // Règles de durée minimum / maximum
-        $this->checkLength();
-        // $this->checkLength('maximum');
-        // // Statut actif
-        // $this->checkStatut();
-
-        return $this;
-    }
-
-    public function checkSize(): void
-    {
-        $size = $this->adult + $this->child;
-        $minimum = $this->hebergement->getMinimum();
-        $maximum = $this->hebergement->getMaximum();
-
-        if ($size < $minimum) $this->error[] = "Trop peu de personnes, minimum requis : " . $minimum;
-        if ($size > $maximum) $this->error[] = "Trop de personnes, maximum autorisé : " . $maximum;
-    }
-
-    public function checkLength(): void
-    {
-        $length = $this->start->diff($this->end)->format('%a%');
-
-        // ! Règles de durées ciblant l'hébergement
-        $hebergementRulesCollection = $this->hebergement->getRegleDurees();
-
-        // Récupère les règles de durée de l'hébergement et de la saison
-        $rules1 = array_map(function (RegleDuree $rule) {
-            $rule->getSaisons()->contains($this->saison);
-        }, $hebergementRulesCollection->toArray());
-        // Récupère les règles de durée de l'hébergement de toutes saisons
-        $rules2 = array_map(function (RegleDuree $rule) {
-            $rule->getSaisons()->count() === 0;
-        }, $hebergementRulesCollection->toArray());
-
-        // ! Règles de durées ciblant la saison
-        $saisonRulesCollection = $this->saison->getRegleDurees();
-
-        // Récupère les règles de durée de tout hébergement de la saison
-        $rules3 = array_map(function (RegleDuree $rule) {
-            $rule->getHebergements()->count() === 0;
-        }, $saisonRulesCollection->toArray());
-
-        // Récupère les règles de durée de tout hébergement de toutes saisons
-        $rules4 = 
-
-
-        /*
-        Cible hebergement + saison
-        Cible hebergement + tout
-        Cible tout + saison
-        Cible tout + tout
-        */
-
-        var_dump($hebergementRulesCollection, $saisonRulesCollection);
     }
 }
