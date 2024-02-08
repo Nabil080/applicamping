@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -250,5 +251,14 @@ class Reservation
         $this->options->removeElement($option);
 
         return $this;
+    }
+
+    // Custom
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        if ($this->getDate() === null)
+            $this->setDate(new DateTime('now'));
     }
 }

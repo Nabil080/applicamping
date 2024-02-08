@@ -114,7 +114,7 @@
 							{{ _self.seeMoreButton(reservation.id) }}
 							{{ _self.updateButton(reservation.id) }}
 							{{ _self.printButton(reservation.id,"Facture") }}
-							{{ _self.deleteButton(reservation.id) }}
+							{{ _self.deleteButton(reservation.id,  path('app_admin_reservations_delete', {id: reservation.id} ), 'Réservation', reservation.id ) }}
 						</div>
 					</td>
 				</tr>

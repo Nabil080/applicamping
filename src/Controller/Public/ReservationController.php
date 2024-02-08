@@ -2,11 +2,14 @@
 
 namespace App\Controller\Public;
 
+use App\Entity\Reservation;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
+use App\Service\LogService;
 use App\Service\ReservationService;
 use DateTime;
 use DateTimeZone;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

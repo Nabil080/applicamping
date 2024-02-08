@@ -58,12 +58,14 @@ class LogService
             "RegleDuree" => 'Une regle de durée ' . ($this->entity->getMinimum() ? "minimum " : "maximum "),
             "RegleReservation" => 'Les règles de réservation du camping ont été modifiées.',
             "User" => 'Un utilisateur "' . $this->entity->getNom() . '" ',
+            "Reservation" => 'Une réservation '
         };
 
         $typeString = match ($this->log->getType()) {
             "create" => "a été crée. ",
             "update" => "a été modifié. ",
-            "delete" => "a été supprimé. "
+            "delete" => "a été supprimé. ",
+            "archive" => "a été archivé. ",
         };
 
         $idString = "(ID° " . $this->entity->getId() . ")";

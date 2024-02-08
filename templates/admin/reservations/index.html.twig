@@ -7,7 +7,7 @@
 	{{ title }}
 {% endblock %}
 
-{% set options = { filters: filters.reservations, pagination: true, search: "N°, client, statut...", tooltip: 'Toutes les réservations'} %}
+{% set options = { filters: filters.reservations, create:'Créer une réservation', createPath:path('app_admin_reservations_create'), pagination: true, search: "N°, client, statut...", tooltip: 'Toutes les réservations'} %}
 
 
 {% block body %}
