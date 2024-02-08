@@ -6,6 +6,7 @@ use App\Entity\Emplacement;
 use App\Entity\Hebergement;
 use App\Entity\Log;
 use App\Entity\RegleDuree;
+use App\Entity\Reservation;
 use App\Entity\Saison;
 use App\Entity\Tarif;
 use App\Repository\ReservationRepository;
@@ -50,16 +51,33 @@ class ReservationService extends AbstractController
         $this->tarifRepository = $tarifRepository;
     }
 
-    public function getHebergementsByRequest(Request $request): array
+    public function getHebergementsChoice(Reservation $reservation): array
     {
-        // ? Récupère les données de la requête
-        $start = date_create_from_format('d/m/Y', $request->query->get('start'));
-        $end = date_create_from_format('d/m/Y', $request->query->get('end'));
-        $adult = $request->query->get('adult');
-        $child = $request->query->get('child');
+        $displayHebergements = $this->getHebergementsByRequestOrReservation(null, $reservation);
+        
+        $hebergementsChoices = [];
+        foreach($displayHebergements as $d) $hebergementsChoices[$d->hebergement->getId()] = $d->hebergement; 
+
+        return $hebergementsChoices;
+    }
+
+    public function getHebergementsByRequestOrReservation(?Request $request = null, ?Reservation $reservation = null): array
+    {
+        if($request){
+            // ? Récupère les données de la requête
+            $start = date_create_from_format('d/m/Y', $request->query->get('start'));
+            $end = date_create_from_format('d/m/Y', $request->query->get('end'));
+            $adult = $request->query->get('adult');
+            $child = $request->query->get('child');
+        }elseif($reservation){
+            $start = $reservation->getDebut();
+            $end = $reservation->getFin();
+            $adult = $reservation->getAdultes();
+            $child = $reservation->getEnfants();
+        }
 
         // ? Récupère la saison de la période
-        $saison = $this->periodeRepository->findByStartEnd($start, $end)->getSaison();
+        $saison = $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([],['id' => 'desc']);
 
         // ? Récupère la liste des hébérgements et créer un DisplayHebergement pour chaque
         $hebergements = $this->hebergementRepository->findBy(['statut' => ['Actif', 'Maintenance'],]);

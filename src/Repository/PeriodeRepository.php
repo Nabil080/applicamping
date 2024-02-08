@@ -22,7 +22,7 @@ class PeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Periode::class);
     }
 
-    public function findByStartEnd(DateTime $start, DateTime $end): Periode
+    public function findByStartEnd(DateTime $start, DateTime $end): ?Periode
     {
         return $this->createQueryBuilder('periode')
                     ->andWhere('periode.debut < :start')

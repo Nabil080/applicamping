@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Reservation;
 use App\Form\Type\Entity\CustomEmplacementType;
+use App\Form\Type\Entity\CustomHebergementType;
 use App\Form\Type\Entity\CustomOptionType;
 use App\Form\Type\Field\CustomDateType;
 use App\Form\Type\Field\CustomPriceType;
+use App\Service\ReservationService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,8 +16,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReservationType extends AbstractType
 {
+    private ReservationService $reservationService;
+    public function __construct(ReservationService $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $reservation = $options['data'];
         switch ($options['flow_step']) {
             case 1:
                 $builder->add('debut', CustomDateType::class);
@@ -24,8 +33,9 @@ class ReservationType extends AbstractType
                 $builder->add('enfants', IntegerType::class);
                 break;
             case 2:
-                // This form type is not defined in the example.
-                $builder->add('montant', CustomPriceType::class);
+                $hebergementsChoices = $this->reservationService->getHebergementsChoice($reservation);
+                $builder->add('hebergement', CustomHebergementType::class, ['choices' => $hebergementsChoices, 'mapped' => false, 'multiple' => false, 'help' => '']);
+                $builder->add('emplacement', CustomEmplacementType::class, ['multiple' => false]);
                 break;
         }
     }

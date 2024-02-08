@@ -25,7 +25,7 @@ class Reservation
     private ?\DateTimeInterface $fin = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $adultes = 0;
+    private ?int $adultes = 1;
 
     #[ORM\Column(nullable: true)]
     private ?int $enfants = 0;

@@ -15,13 +15,13 @@
 	<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
 
 
-	<div class="mb-4 text-black dark:text-white">
+	<div class="pb-4 mb-4 text-black dark:text-white border-b">
 		<span class=""> Etapes : </span>
 		{% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
 	</div>
 
 
-	<div class="mb-4">* champs requis</div>
+	{# <div class="mb-4">* champs requis</div> #}
 	{{ form_start(form) }}
 	{{ form_rest(form) }}
 	{% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
