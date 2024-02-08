@@ -91,7 +91,7 @@ class ReservationService extends AbstractController
         // Règle d'arrivés / de départ
         $this->checkDays($displayHebergement, 'checkin');
         $this->checkDays($displayHebergement, 'checkout');
-        // Statut actif
+        // Vérifie que l'emplacement n'est pas en maintenance
         $this->checkStatut($displayHebergement);
     }
 
@@ -219,19 +219,28 @@ class DisplayHebergement
 {
     #[Groups(['displayHebergement'])]
     public Hebergement $hebergement;
+
     #[Groups(['displayHebergement'])]
     public Saison $saison;
+
     #[Groups(['displayHebergement'])]
     public DateTime $start;
+
     #[Groups(['displayHebergement'])]
     public DateTime $end;
+
     #[Groups(['displayHebergement'])]
     public int $adult = 0;
+
     #[Groups(['displayHebergement'])]
     public int $child = 0;
+
+    #[Groups(['displayHebergement'])]
     public array $emplacements = [];
+
     #[Groups(['displayHebergement'])]
     public Tarif $tarif;
+    
     #[Groups(['displayHebergement'])]
     public array $error = [];
 

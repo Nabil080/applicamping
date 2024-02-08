@@ -10,11 +10,15 @@
 		<img class="max-w-64" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/></section>
 	<section id="account">
 		<div class="btn btn-sm relative">
-			<a href={{ app.user ? path('app_profil') : path('app_login') }} class="overlay"></a>
+			<a href={{ app.user ? (is_granted('ROLE_ADMIN') ? path('app_admin') : path('app_profil')) : path('app_login') }} class="overlay"></a>
 			<p>
 				<i class="fa fa-user-circle"></i>
 				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						Interface administrateur
+					{% else %}
 					Mon compte client
+					{% endif %}
 				{% else %}
 					Se connecter
 				{% endif %}

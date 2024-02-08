@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,11 +15,32 @@ class ReservationsController extends AbstractController
         return sprintf('admin/reservations/%s.html.twig', $file);
     }
 
-    #[Route('/pointages', name: '_day')]
-    public function index(): Response
+    #[Route('', name: '')]
+    public function reservations(ReservationRepository $reservationRepository): Response
     {
+        $reservations = $reservationRepository->findBy([], ["id" => "desc"]);
+        // foreach ($reservations as $reservation) $reservation->getEmplacements()->getValues();
+
+        return $this->render($this->getPath('index'), [
+            'title' => 'Réservations',
+            'reservations' => $reservations,
+        ]);
+    }
+
+    #[Route('/pointages', name: '_day')]
+    public function index(ReservationRepository $reservationRepository): Response
+    {
+        $checkIns = $reservationRepository->getCheckIns();
+        $checkOuts = $reservationRepository->getCheckOuts();
+        $current = $reservationRepository->getCurrent();
+
+        // dd($checkIns, $checkOuts, $current);
+
         return $this->render($this->getPath("day"), [
-            'controller_name' => 'ReservationsController',
+            'title' => 'Pointages',
+            'checkIns' => $checkIns,
+            'checkOuts' => $checkOuts,
+            'current' => $current,
         ]);
     }
 

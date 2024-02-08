@@ -28,10 +28,14 @@ class Option
     #[ORM\OneToMany(mappedBy: 'option', targetEntity: OptionMaximum::class)]
     private Collection $optionMaximums;
 
+    #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'options')]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->tarifs = new ArrayCollection();
         $this->optionMaximums = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,6 +122,33 @@ class Option
             if ($optionMaximum->getOption() === $this) {
                 $optionMaximum->setOption(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->addOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            $reservation->removeOption($this);
         }
 
         return $this;

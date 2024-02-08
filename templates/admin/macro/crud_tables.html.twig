@@ -59,70 +59,62 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for i in 1..5 %}
+			{% for reservation in reservations %}
 				<tr>
 					<th scope="row">
-						1430
+						{{ reservation.id }}
 					</th>
-					<td class="px-4 py-3 text-center">
-						{% if i is same as 1 or i is same as 5 %}
-							<span class="badge success">Confirmé</span>
-						{% elseif i % 2 %}
-							<span class="badge warning">En attente</span>
-						{% else %}
-							<span class="badge danger">Annulé</span>
-						{% endif %}
+					<td>
+						{% import "macro/badges.html.twig" as badge %}
+						{{ badge.basic(reservation.statut)}}
 					</td>
 					<td>
-						14/07/2003
+						{{ reservation.debut|format_date }}
 						<br>
-						19/08/2022
+						{{ reservation.fin|format_date }}
 						<br>
-						<span class="details">5 nuits</span>
+						<span class="details">{{ reservation.nuits }} nuits</span>
 					</td>
 					<td>
 						<div class="flex justify-center">
 							{{ svg.adult(24) }}
-							2
+							{{ reservation.adultes }}
 						</div>
 						<div class="flex justify-center">
 							{{ svg.child(24) }}
-							1
+							{{ reservation.enfants }}
 						</div>
 					</td>
 					<td>
-						Camping-car
+						{{ reservation.emplacement.hebergement.nom}}
 						<br>
-						Emplacement 12</td>
+						Emplacement {{ reservation.emplacement.numero }}</td>
 					<td>
-						Tarif : 100 €
+						Tarif : {{ reservation.montant }} €
 						<br>
 						Réglé :
-						<span>90 €</span>
+						<span>{{ reservation.paiementsTotal }} €</span>
 						<br>
-						<span class="details">3 options</span>
+						<span class="details">{{ reservation.options|length }} options</span>
 					</td>
 					<td>
 						<div>
-							BERTRAND
+							{{ reservation.user.nom|upper }}
 							<br>
-							Sylvain
+							{{ reservation.user.prenom }}
 							<br>
-							<span class="details">Pas de commentaire</span>
+							<span class="details">{{ reservation.commentaire ? 'Voir le commentaire' : 'Pas de commentaire' }}</span>
 						</div>
 					</td>
 					<td>
-						14/07/2003
-						<br>
-						14h57
+						{{ reservation.date|format_datetime()|split(',')|join('<br>')|raw() }}
 					</td>
 					<td>
 						<div class="actions grid-cols-2">
-							{% set id = i %}
-							{{ _self.seeMoreButton(id) }}
-							{{ _self.updateButton(id) }}
-							{{ _self.printButton(id,"Facture") }}
-							{{ _self.deleteButton(id) }}
+							{{ _self.seeMoreButton(reservation.id) }}
+							{{ _self.updateButton(reservation.id) }}
+							{{ _self.printButton(reservation.id,"Facture") }}
+							{{ _self.deleteButton(reservation.id) }}
 						</div>
 					</td>
 				</tr>

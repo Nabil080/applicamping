@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
@@ -51,9 +52,13 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Emplacement $emplacement = null;
 
+    #[ORM\ManyToMany(targetEntity: Option::class, inversedBy: 'reservations')]
+    private Collection $options;
+
     public function __construct()
     {
         $this->paiements = new ArrayCollection();
+        $this->options = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,6 +212,42 @@ class Reservation
     public function setEmplacement(?Emplacement $emplacement): static
     {
         $this->emplacement = $emplacement;
+
+        return $this;
+    }
+
+    public function getNuits(): ?int
+    {
+        $length = $this->debut->diff($this->fin)->format('%a%');
+        
+        return  intval($length);
+    }
+
+    public function getPaiementsTotal(): ?int
+    {
+        return $this->paiements->reduce(fn(int $accumulator, int $value): int => $accumulator + $value) ?? 0;
+    }
+
+    /**
+     * @return Collection<int, Option>
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): static
+    {
+        if (!$this->options->contains($option)) {
+            $this->options->add($option);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): static
+    {
+        $this->options->removeElement($option);
 
         return $this;
     }

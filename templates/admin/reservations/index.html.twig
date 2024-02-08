@@ -3,8 +3,6 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
-{% set title = 'Réservations' %}
-
 {% block title %}
 	{{ title }}
 {% endblock %}
@@ -13,5 +11,5 @@
 
 
 {% block body %}
-	{{ crud.basic(title, tables.reservations('all'), options) }}
+	{{ crud.basic(title, tables.reservations(reservations), options) }}
 {% endblock %}
