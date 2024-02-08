@@ -7,6 +7,7 @@ use App\Form\Flow\ReservationFlow;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use App\Service\LogService;
+use App\Service\ReservationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +84,7 @@ class ReservationsController extends AbstractController
     // }
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, ReservationRepository $reservationRepository, LogService $logService, EntityManagerInterface $em, ReservationFlow $flow): Response
+    public function create(Request $request, ReservationService $reservationService, LogService $logService, EntityManagerInterface $em, ReservationFlow $flow): Response
     {
         $reservation = new Reservation(); // Your form data class. Has to be an object, won't work properly with an array.
 
@@ -96,6 +97,8 @@ class ReservationsController extends AbstractController
 
             if ($flow->nextStep()) {
                 // form for the next step
+                if($flow->getCurrentStepNumber() > 1) $displayHebergements = $reservationService->getHebergementsByRequestOrReservation(null,$reservation);
+
                 $form = $flow->createForm();
             } else {
                 // flow finished
@@ -115,7 +118,8 @@ class ReservationsController extends AbstractController
             "form" => $form,
             'flow' => $flow,
             "redirectRoute" => 'app_admin_reservations',
-            'turbo' => false
+            'turbo' => false,
+            'displayHebergements' => $displayHebergements ?? [],
         ]);
     }
 

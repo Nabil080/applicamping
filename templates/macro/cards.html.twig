@@ -1,15 +1,41 @@
-{% macro hebergement(i) %}
-	<article data-name="Camping-car" data-price="{{9 + i}}00" data-min-size="2" data-max-size="3" class="swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
+{% macro hebergement(displayHebergement) %}
+	<article {{ stimulus_controller('display_reservation') }} {{ stimulus_action('display_reservation','select','click')}} data-id="{{ displayHebergement.hebergement.id }}" data-name="" data-price="" data-min-size="" data-max-size="" class="swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
 		<div class="overlay bg-main-500 opacity-0"></div>
-		<img class="rounded-t-lg" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2019/04/IMG_5183-1024x683.jpg" alt=""/>
+		<img class="rounded-t-lg" src={{ asset("uploads/hebergements/" ~ displayHebergement.hebergement.image) }} alt=""/>
 		<div class="p-5 relative">
-			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">Camping-car</h5>
+			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">{{ displayHebergement.hebergement.nom }}</h5>
 			<p class="mb-3">
-				<span class="size">2/6 personnes</span>
+				<span class="size">{{ displayHebergement.hebergement.minimum }}-{{ displayHebergement.hebergement.maximum }} personnes</span>
 				<br>
-				<span class="amount">9/12 emplacements</span>
+				<span class="amount">{{ displayHebergement.emplacements.Libres|length }}/{{ displayHebergement.emplacements.Total }} emplacements libres</span>
 			</p>
-			<div class="price absolute  right-4 bottom-4 ">{{ 9 + i }}€/nuit</div>
+			{% if displayHebergement.tarif is defined %}
+				<div class="price absolute  right-4 bottom-4 ">{{ displayHebergement.tarif.montant }}€/nuit</div>
+			{% endif %}
+		</div>
+	</article>
+{% endmacro %}
+
+{% macro hebergementError(displayHebergement) %}
+	<article class="select-none pointer-events-none swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
+                <div class="overlay z-50 bg-black bg-opacity-80">
+                    <div class="grid w-full h-full place-items-center text-xl text-center text-white">
+                        {% for error in displayHebergement.errors %}
+							<span>{{error}}</span>
+						{% endfor %}
+                    </div>
+                </div>
+		<img class="rounded-t-lg" src={{ asset("uploads/hebergements/" ~ displayHebergement.hebergement.image) }} alt=""/>
+		<div class="p-5 relative">
+			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">{{ displayHebergement.hebergement.nom }}</h5>
+			<p class="mb-3">
+				<span class="size">{{ displayHebergement.hebergement.minimum }}-{{ displayHebergement.hebergement.maximum }} personnes</span>
+				<br>
+				<span class="amount">{{ displayHebergement.emplacements.Libres|length }}/{{ displayHebergement.emplacements.Total }} emplacements libres</span>
+			</p>
+			{% if displayHebergement.tarif is defined %}
+				<div class="price absolute  right-4 bottom-4 ">{{ displayHebergement.tarif.montant }}€/nuit</div>
+			{% endif %}
 		</div>
 	</article>
 {% endmacro %}

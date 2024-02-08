@@ -9,7 +9,6 @@ use MyCompany\MyBundle\Form\CreateVehicleForm;
 
 class ReservationFlow extends FormFlow {
 	protected $allowDynamicStepNavigation = true;
-	
 
 	protected function loadStepsConfig() {
 		return [

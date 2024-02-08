@@ -54,22 +54,22 @@ class ReservationService extends AbstractController
     public function getHebergementsChoice(Reservation $reservation): array
     {
         $displayHebergements = $this->getHebergementsByRequestOrReservation(null, $reservation);
-        
+
         $hebergementsChoices = [];
-        foreach($displayHebergements as $d) $hebergementsChoices[$d->hebergement->getId()] = $d->hebergement; 
+        foreach ($displayHebergements as $d) $hebergementsChoices[$d->hebergement->getId()] = $d->hebergement;
 
         return $hebergementsChoices;
     }
 
     public function getHebergementsByRequestOrReservation(?Request $request = null, ?Reservation $reservation = null): array
     {
-        if($request){
+        if ($request) {
             // ? Récupère les données de la requête
             $start = date_create_from_format('d/m/Y', $request->query->get('start'));
             $end = date_create_from_format('d/m/Y', $request->query->get('end'));
             $adult = $request->query->get('adult');
             $child = $request->query->get('child');
-        }elseif($reservation){
+        } elseif ($reservation) {
             $start = $reservation->getDebut();
             $end = $reservation->getFin();
             $adult = $reservation->getAdultes();
@@ -77,7 +77,7 @@ class ReservationService extends AbstractController
         }
 
         // ? Récupère la saison de la période
-        $saison = $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([],['id' => 'desc']);
+        $saison = $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([], ['id' => 'desc']);
 
         // ? Récupère la liste des hébérgements et créer un DisplayHebergement pour chaque
         $hebergements = $this->hebergementRepository->findBy(['statut' => ['Actif', 'Maintenance'],]);
@@ -87,10 +87,11 @@ class ReservationService extends AbstractController
             $displayHebergement = new DisplayHebergement($hebergement, $saison, $adult, $child, $start, $end);
             // ? Vérifie les règles et ajoute une erreur ou non
             $this->checkRules($displayHebergement);
+            // ? Récupère les emplacements correspondants
+            $this->getEmplacements($displayHebergement);
             // ? Récupère le tarif correspondant
             $this->getTarif($displayHebergement);
-            // ? Récupère les émplacements correspondants
-            $this->getEmplacements($displayHebergement);
+
             $displayHebergements[] = $displayHebergement;
         };
 
@@ -126,7 +127,7 @@ class ReservationService extends AbstractController
                 $tarif2 = $tarif;
         }
 
-        if ($tarifs === []) $displayHebergement->error[] = "Aucun tarif indiqué";
+        if ($tarifs === []) $displayHebergement->errors = ["Aucun tarif indiqué"];
         else $displayHebergement->setTarif($tarif1 ?? $tarif2);
     }
 
@@ -135,7 +136,6 @@ class ReservationService extends AbstractController
         // Récupère les emplacements de l'hébergement
         $emplacements = $displayHebergement->hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() === "Actif")->getValues();
         $displayHebergement->emplacements = ["Libres" => [], "Occupés" => [], "Total" => count($emplacements)];
-
         // Sépare les emplacements libres et occupés pour les dates donnés
         foreach ($emplacements as $emplacement) {
             $statut = $this->isEmplacementOccupied($emplacement, $displayHebergement->start, $displayHebergement->end) ? "Occupés" : "Libres";
@@ -143,8 +143,8 @@ class ReservationService extends AbstractController
         }
 
         // Ajoute les erreurs pour emplacements vides / indisponibles
-        if ($emplacements = []) $displayHebergement->error[] = "Aucun emplacement en service";
-        if ($displayHebergement->emplacements["Libres"] = []) $displayHebergement->error[] = "Aucun emplacement libre, essayez d'autres dates";
+        if ($displayHebergement->emplacements["Libres"] == []) $displayHebergement->errors = ["Aucun emplacement libre, essayez d'autres dates"];
+        if ($emplacements == []) $displayHebergement->errors = ["Aucun emplacement en service"];
     }
 
     // Sous fonctions
@@ -154,8 +154,8 @@ class ReservationService extends AbstractController
         $minimum = $displayHebergement->hebergement->getMinimum();
         $maximum = $displayHebergement->hebergement->getMaximum();
 
-        if ($size < $minimum) $displayHebergement->error[] = "Trop peu de personnes, minimum requis : " . $minimum;
-        if ($size > $maximum) $displayHebergement->error[] = "Trop de personnes, maximum autorisé : " . $maximum;
+        if ($size < $minimum) $displayHebergement->errors = ["Trop peu de personnes, minimum requis : " . $minimum];
+        if ($size > $maximum) $displayHebergement->errors = ["Trop de personnes, maximum autorisé : " . $maximum];
     }
 
     public function checkLength(DisplayHebergement $displayHebergement, string $type = 'minimum'): void
@@ -182,9 +182,9 @@ class ReservationService extends AbstractController
         $lengthRule = $rule1 ?? $rule2 ?? $rule3 ?? $rule4;
         // Vérifie avec la durée de la réservation
         if ($lengthRule->getMinimum() && $length < $lengthRule->getMinimum())
-            $displayHebergement->error[] = "Le séjour est trop court, nuits minimum requises : " . $lengthRule->getMinimum();
+            $displayHebergement->errors = ["Le séjour est trop court, nuits minimum requises : " . $lengthRule->getMinimum()];
         if ($lengthRule->getMaximum() && $length < $lengthRule->getMinimum())
-            $displayHebergement->error[] = "Le séjour est trop long, nuits maximum autorisés : " . $lengthRule->getMaximum();
+            $displayHebergement->errors = ["Le séjour est trop long, nuits maximum autorisés : " . $lengthRule->getMaximum()];
     }
 
     public function checkDays(DisplayHebergement $displayHebergement, string $type = 'checkin'): void
@@ -214,14 +214,14 @@ class ReservationService extends AbstractController
         $authorizedDays = $dayRule->getFormattedDays($type);
         // 0 = Tous, 1 = Lundi ... 7 = Dimanche
         if ($type === 'checkin' && !(in_array($startDay, $authorizedDays) | in_array(0, $authorizedDays)))
-            $displayHebergement->error[] = "Le jour d\'arrivé n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckIn());
+            $displayHebergement->errors = ["Le jour d'arrivé n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckIn())];
         if ($type === 'checkout' && !(in_array($endDay, $authorizedDays) | in_array(0, $authorizedDays)))
-            $displayHebergement->error[] = "Le jour de départ n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckOut());
+            $displayHebergement->errors = ["Le jour de départ n'est pas autorisé, sont autorisés : " . implode(', ', $dayRule->getCheckOut())];
     }
 
     public function checkStatut(DisplayHebergement $displayHebergement): void
     {
-        if ($displayHebergement->hebergement->getStatut() === 'Maintenance') $displayHebergement->error[] = "Cet hebergement est en cours de maintenance";
+        if ($displayHebergement->hebergement->getStatut() === 'Maintenance') $displayHebergement->errors = ["Cet hebergement est en cours de maintenance"];
     }
 
     public function isEmplacementOccupied(Emplacement $emplacement, DateTime $start, DateTime $end): bool
@@ -233,34 +233,26 @@ class ReservationService extends AbstractController
 }
 
 
+#[Groups(['displayHebergement'])]
 class DisplayHebergement
 {
-    #[Groups(['displayHebergement'])]
     public Hebergement $hebergement;
 
-    #[Groups(['displayHebergement'])]
     public Saison $saison;
 
-    #[Groups(['displayHebergement'])]
     public DateTime $start;
 
-    #[Groups(['displayHebergement'])]
     public DateTime $end;
 
-    #[Groups(['displayHebergement'])]
     public int $adult = 0;
 
-    #[Groups(['displayHebergement'])]
     public int $child = 0;
 
-    #[Groups(['displayHebergement'])]
     public array $emplacements = [];
 
-    #[Groups(['displayHebergement'])]
     public Tarif $tarif;
-    
-    #[Groups(['displayHebergement'])]
-    public array $error = [];
+
+    public array $errors = [];
 
 
     public function __construct(Hebergement $hebergement, Saison $saison, int $adult, int $child, DateTime $start, DateTime $end)
