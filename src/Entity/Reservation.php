@@ -55,6 +55,7 @@ class Reservation
 
     #[ORM\ManyToMany(targetEntity: Option::class, inversedBy: 'reservations')]
     private Collection $options;
+    public Hebergement $hebergement;
 
     public function __construct()
     {

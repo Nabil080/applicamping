@@ -51,14 +51,28 @@ class ReservationService extends AbstractController
         $this->tarifRepository = $tarifRepository;
     }
 
-    public function getHebergementsChoice(Reservation $reservation): array
+    public function getHebergementsChoices(Reservation $reservation): array
     {
         $displayHebergements = $this->getHebergementsByRequestOrReservation(null, $reservation);
 
-        $hebergementsChoices = [];
-        foreach ($displayHebergements as $d) $hebergementsChoices[$d->hebergement->getId()] = $d->hebergement;
+        foreach ($displayHebergements as $d)
+            if ($d->errors === [])
+                $hebergementsChoices[$d->hebergement->getId()] = $d->hebergement;
 
-        return $hebergementsChoices;
+        return $hebergementsChoices ?? [];
+    }
+
+    public function getEmplacementsChoices(Reservation $reservation): array
+    {
+        // Récupère les emplacements de l'hébergement
+        $emplacements = $reservation->hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() === "Actif")->getValues();
+
+        foreach ($emplacements as $emplacement) {
+            if ( $this->isEmplacementOccupied($emplacement, $reservation->getDebut(), $reservation->getFin()) ) continue;
+                $emplacementsChoices[$emplacement->getId()] = $emplacement;
+        }
+
+        return $emplacementsChoices ?? [];
     }
 
     public function getHebergementsByRequestOrReservation(?Request $request = null, ?Reservation $reservation = null): array

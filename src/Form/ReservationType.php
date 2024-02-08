@@ -33,9 +33,13 @@ class ReservationType extends AbstractType
                 $builder->add('enfants', IntegerType::class);
                 break;
             case 2:
-                $hebergementsChoices = $this->reservationService->getHebergementsChoice($reservation);
-                $builder->add('hebergement', CustomHebergementType::class, ['choices' => $hebergementsChoices, 'mapped' => false, 'multiple' => false, 'help' => '']);
+                $hebergementsChoices = $this->reservationService->getHebergementsChoices($reservation);
+                $builder->add('hebergement', CustomHebergementType::class, ['choices' => $hebergementsChoices, 'mapped' => true, 'multiple' => false, 'help' => '']);
                 break;
+            case 3:
+                dump($reservation);
+                $emplacementsChoices = $this->reservationService->getEmplacementsChoices($reservation);
+                $builder->add('emplacement', CustomEmplacementType::class, ['choices' => $emplacementsChoices, 'multiple' => false, 'help' => '']);
         }
     }
 

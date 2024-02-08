@@ -24,7 +24,11 @@ class ReservationFlow extends FormFlow {
 				},
 			],
 			[
-				'label' => 'Paiement',
+				'label' => 'Emplacement',
+				'form_type' => ReservationType::class,
+				'skip' => function($estimatedCurrentStepNumber, FormFlowInterface $flow) {
+					return $estimatedCurrentStepNumber > 1 && !$flow->getFormData();
+				},
 			],
 		];
 	}
