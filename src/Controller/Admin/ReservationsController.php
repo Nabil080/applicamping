@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Reservation;
+use App\Form\Flow\ReservationFlow;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use App\Service\LogService;
@@ -52,32 +53,69 @@ class ReservationsController extends AbstractController
         ]);
     }
 
+    // #[Route('/create', name: '_create')]
+    // public function create(Request $request, ReservationRepository $reservationRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    // {
+    //     $step = intval($request->get('step') ?? 0);
+    //     $reservation = $request->get('reservation') ?? null;
+    //     $form = $this->createForm(ReservationType::class, $reservation, [
+    //         'step' => $step
+    //     ]);
+    //     $form->handleRequest($request);
+
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $reservation = $form->getData();
+
+    //         dump($reservation);
+    //         if ($step === 5) {
+    //             dd('done');
+    //             return $this->redirectToRoute('app_admin_reservations_create');
+    //         }
+    //         return $this->redirectToRoute('app_admin_reservations_create', ['step' => $step + 1, 'reservation' => $reservation]);
+    //     }
+
+    //     return $this->render("layout/form.html.twig", [
+    //         "title" => $this->title,
+    //         "form" => $form,
+    //         "redirectRoute" => 'app_admin_reservations',
+    //     ]);
+    // }
+
     #[Route('/create', name: '_create')]
-    public function create(Request $request, ReservationRepository $reservationRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function create(Request $request, ReservationRepository $reservationRepository, LogService $logService, EntityManagerInterface $em, ReservationFlow $flow): Response
     {
-        $step = intval($request->get('step') ?? 0);
-        $reservation = $request->get('reservation') ?? null;
-        $form = $this->createForm(ReservationType::class, $reservation, [
-            'step' => $step
-        ]);
-        $form->handleRequest($request);
+        $reservation = new Reservation(); // Your form data class. Has to be an object, won't work properly with an array.
 
+        $flow->bind($reservation);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation = $form->getData();
+        // form of the current step
+        $form = $flow->createForm();
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
 
-            dump($reservation);
-            if ($step === 5) {
-                dd('done');
-                return $this->redirectToRoute('app_admin_reservations_create');
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm();
+            } else {
+                // flow finished
+                $em->persist($reservation);
+                $em->flush();
+
+                $flow->reset(); // remove step data from the session
+
+                $logService->write($reservation, "create");
+                return $this->redirectToRoute('app_admin_reservations'); // redirect when done
             }
-            return $this->redirectToRoute('app_admin_reservations_create', ['step' => $step + 1]);
         }
 
-        return $this->render("layout/form.html.twig", [
+
+        return $this->render("layout/flow.html.twig", [
             "title" => $this->title,
             "form" => $form,
+            'flow' => $flow,
             "redirectRoute" => 'app_admin_reservations',
+            'turbo' => false
         ]);
     }
 

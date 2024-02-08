@@ -18,17 +18,17 @@ class Reservation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $debut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fin = null;
 
-    #[ORM\Column]
-    private ?int $adultes = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $adultes = 0;
 
-    #[ORM\Column]
-    private ?int $enfants = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $enfants = 0;
 
     #[ORM\Column(length: 510, nullable: true)]
     private ?string $commentaire = null;
