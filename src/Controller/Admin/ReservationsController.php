@@ -99,6 +99,14 @@ class ReservationsController extends AbstractController
                 // form for the next step
                 if($flow->getCurrentStepNumber() > 1) $displayHebergements = $reservationService->getHebergementsByRequestOrReservation(null,$reservation);
 
+                if($flow->getCurrentStepNumber() === 5){
+                    // $recapitulatif = $reservationService->getRecap
+                }
+
+
+
+
+
                 $form = $flow->createForm();
             } else {
                 // flow finished

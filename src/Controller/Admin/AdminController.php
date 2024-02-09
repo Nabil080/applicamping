@@ -46,13 +46,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/paiements', name: '_paiements')]
-    public function paiements(): Response
-    {
-        return $this->render($this->getPath('paiements/index'), [
-            'controller_name' => 'AdminController',
-        ]);
-    }
 
     #[Route('/create', name: '_create_redirect')]
     public function createRedirect(Request $rq): Response

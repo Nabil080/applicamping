@@ -403,12 +403,16 @@ ol.craue_formflow_steplist {
     @apply inline-flex gap-4 flex-wrap
 }
 
-ol.craue_formflow_steplist li {
+ol li {
     @apply opacity-50
 }
 
-ol.craue_formflow_steplist li.craue_formflow_current_step{
+ol li.craue_formflow_current_step{
     @apply opacity-100 text-primary
+}
+
+ol li.craue_formflow_done_step{
+    @apply opacity-80 hover:text-primary
 }
 
 

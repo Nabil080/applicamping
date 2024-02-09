@@ -58,7 +58,8 @@ class LogService
             "RegleDuree" => 'Une regle de durée ' . ($this->entity->getMinimum() ? "minimum " : "maximum "),
             "RegleReservation" => 'Les règles de réservation du camping ont été modifiées.',
             "User" => 'Un utilisateur "' . $this->entity->getNom() . '" ',
-            "Reservation" => 'Une réservation '
+            "Reservation" => 'Une réservation ',
+            "Paiement" => 'Un paiement pour la réservation "' . $this->entity->getReservation()->getId() . '" ',
         };
 
         $typeString = match ($this->log->getType()) {

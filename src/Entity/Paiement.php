@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PaiementRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: PaiementRepository::class)]
 class Paiement
 {
@@ -17,7 +19,7 @@ class Paiement
     #[ORM\Column]
     private ?int $montant = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
@@ -93,5 +95,13 @@ class Paiement
         $this->reservation = $reservation;
 
         return $this;
+    }
+
+    // custom
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        if ($this->getDate() === null)
+            $this->setDate(new DateTime('now'));
     }
 }

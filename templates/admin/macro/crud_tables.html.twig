@@ -184,7 +184,7 @@
 			</div>
 		</td>
 	</tr>
-{% endfor %}</tbody></table>{% endmacro %}{% macro paiements(user = 'array des paiements') %}{% import 'macro/svg.html.twig' as svg %}<table><thead>
+{% endfor %}</tbody></table>{% endmacro %}{% macro paiements(paiements = 'array des paiements') %}{% import 'macro/svg.html.twig' as svg %}<table><thead>
 <tr>
 	<th scope="col">ID</th>
 	<th scope="col">Réservation</th>
@@ -194,23 +194,22 @@
 	<th scope="col">Date du paiement</th>
 	<th scope="col">Actions</th>
 </tr></thead><tbody>
-{% for i in 0..5 %}
-	{% set id = i %}
+{% for paiement in paiements %}
 	<tr>
 		<th scope="row">
-			{{ id }}
+			{{ paiement.id }}
 		</th>
 		<td>
 			<div>
-				1450
+				{{ paiement.reservation.id }}
 				<br>
 				<a href="" class="details">Voir la réservation</a>
 			</div>
 		</td>
 		<td>
-			BELLILA
+			{{ paiement.user.nom|upper }}
 			<br>
-			Nabil
+			{{ paiement.user.prenom }}
 			<br>
 		</td>
 		<td>
@@ -218,7 +217,7 @@
 				<div class="text-body">
 					{{ svg.euro(24) }}
 				</div>
-				50,20€
+				{{ paiement.montant }}€
 			</div>
 		</td>
 		<td>
@@ -226,18 +225,16 @@
 				<div class="text-body">
 					{{ svg.blueCard(24) }}
 				</div>
-				Carte bancaire
+				{{ paiement.methode }}
 			</div>
 		</td>
 		<td>
-			14/07/2003
-			<br>
-			14h57
+			{{ paiement.date|format_datetime|split(',')|join('<br>')|raw }}
 		</td>
 		<td>
 			<div class="actions">
-				{{ _self.updateButton(id) }}
-				{{ _self.deleteButton(id) }}
+				{{ _self.updateButton(paiement.id) }}
+				{{ _self.deleteButton(paiement.id) }}
 			</div>
 		</td>
 	</tr>

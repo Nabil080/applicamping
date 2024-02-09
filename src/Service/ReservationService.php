@@ -12,6 +12,8 @@ use App\Entity\Tarif;
 use App\Repository\ReservationRepository;
 use App\Repository\EmplacementRepository;
 use App\Repository\HebergementRepository;
+use App\Repository\OptionMaximumRepository;
+use App\Repository\OptionRepository;
 use App\Repository\PeriodeRepository;
 use App\Repository\RegleDureeRepository;
 use App\Repository\RegleSejourRepository;
@@ -38,8 +40,9 @@ class ReservationService extends AbstractController
     private RegleDureeRepository $regleDureeRepository;
     private RegleSejourRepository $regleSejourRepository;
     private TarifRepository $tarifRepository;
+    private OptionMaximumRepository $optionMaximumRepository;
 
-    public function __construct(TarifRepository $tarifRepository, RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
+    public function __construct(OptionMaximumRepository $optionMaximumRepository, TarifRepository $tarifRepository, RegleSejourRepository $regleSejourRepository, RegleDureeRepository $regleDureeRepository, PeriodeRepository $periodeRepository, ReservationRepository $reservationRepository, EmplacementRepository $emplacementRepository, HebergementRepository $hebergementRepository, SaisonRepository $saisonRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->emplacementRepository = $emplacementRepository;
@@ -49,6 +52,7 @@ class ReservationService extends AbstractController
         $this->regleDureeRepository = $regleDureeRepository;
         $this->regleSejourRepository = $regleSejourRepository;
         $this->tarifRepository = $tarifRepository;
+        $this->optionMaximumRepository = $optionMaximumRepository;
     }
 
     public function getHebergementsChoices(Reservation $reservation): array
@@ -68,11 +72,25 @@ class ReservationService extends AbstractController
         $emplacements = $reservation->hebergement->getEmplacements()->filter(fn (Emplacement $emplacement) => $emplacement->getStatut() === "Actif")->getValues();
 
         foreach ($emplacements as $emplacement) {
-            if ( $this->isEmplacementOccupied($emplacement, $reservation->getDebut(), $reservation->getFin()) ) continue;
-                $emplacementsChoices[$emplacement->getId()] = $emplacement;
+            if ($this->isEmplacementOccupied($emplacement, $reservation->getDebut(), $reservation->getFin())) continue;
+            $emplacementsChoices[$emplacement->getId()] = $emplacement;
         }
 
         return $emplacementsChoices ?? [];
+    }
+
+    public function getOptionsChoices(Reservation $reservation): array
+    {
+        $reservation->saison = $this->getSaison($reservation->getDebut(), $reservation->getFin());
+        $optionsMaximums = $this->optionMaximumRepository->findByReservation($reservation);
+        dd($optionsMaximums);
+        // Récupère un option à chaque hébérgement
+        // SELECT om.id FROM `option_maximum` AS om
+        // LEFT JOIN `option_maximum_hebergement` AS omh ON om.id = omh.option_maximum_id
+        // LEFT JOIN `option_maximum_saison` AS oms ON om.id = oms.option_maximum_id
+        // WHERE (omh.hebergement_id = 1 OR omh.option_maximum_id IS NULL)
+        // AND (oms.saison_id = 4 OR oms.option_maximum_id IS NULL);
+        return [];
     }
 
     public function getHebergementsByRequestOrReservation(?Request $request = null, ?Reservation $reservation = null): array
@@ -91,7 +109,7 @@ class ReservationService extends AbstractController
         }
 
         // ? Récupère la saison de la période
-        $saison = $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([], ['id' => 'desc']);
+        $saison = $this->getSaison($start,$end);
 
         // ? Récupère la liste des hébérgements et créer un DisplayHebergement pour chaque
         $hebergements = $this->hebergementRepository->findBy(['statut' => ['Actif', 'Maintenance'],]);
@@ -243,6 +261,11 @@ class ReservationService extends AbstractController
         $reservation = $this->reservationRepository->findByEmplacementAndDates($emplacement, $start, $end);
 
         return $reservation ? true : false;
+    }
+
+    public function getSaison(DateTime $start,DateTime $end): ?Saison
+    {
+        return $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([], ['id' => 'desc']);
     }
 }
 
