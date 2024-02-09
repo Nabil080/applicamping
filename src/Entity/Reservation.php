@@ -228,7 +228,8 @@ class Reservation
 
     public function getPaiementsTotal(): ?int
     {
-        return $this->paiements->reduce(fn(int $accumulator, int $value): int => $accumulator + $value) ?? 0;
+        if ($this->paiements->count() === 0) return 0;
+        return $this->paiements->reduce(fn(?int $accumulator, Paiement $paiement): int => ($accumulator ?? 0) + $paiement->getMontant());
     }
 
     /**

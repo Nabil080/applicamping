@@ -3,7 +3,7 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 
 {% block title %}
-	Caisse du jour
+	{{ title }}
 {% endblock %}
 
 {% block body %}
@@ -40,14 +40,10 @@
 		<div
 			class="space-y-12">
 
-			<!-- ! Arrivées attendues -->
-			{{ crud.basic("Paiements en Carte bancaire", tables.paiements('CB')) }}
+			{% for method, array in paiementsArray %}
+				{{ crud.basic("Paiements en " ~ method, tables.paiements(array.paiements, array.total), {total: array.total}) }}
+			{% endfor %}
 
-			<!-- ! Départs attendues -->
-			{{ crud.basic("Paiements en Espèce", tables.paiements('ESPECE')) }}
-
-			<!-- ! Réservations en cours -->
-			{{ crud.basic("Paiements en Chèques Vacances", tables.paiements('VACANCE')) }}
 
 		</div>
 	</div>

@@ -237,7 +237,7 @@
 		<td>
 			<div class="actions">
 				{{ _self.updateButton(paiement.id) }}
-				{{ _self.deleteButton(paiement.id) }}
+				{{ _self.deleteButton(paiement.id, null, 'Paiement', (paiement.montant / 100)|number_format(2, ',', '.') ~ '€') }}
 			</div>
 		</td>
 	</tr>
