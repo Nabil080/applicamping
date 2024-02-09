@@ -32,6 +32,9 @@ class Paiement
     #[ORM\JoinColumn(nullable: false)]
     private ?Reservation $reservation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paiements')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,5 +106,17 @@ class Paiement
     {
         if ($this->getDate() === null)
             $this->setDate(new DateTime('now'));
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

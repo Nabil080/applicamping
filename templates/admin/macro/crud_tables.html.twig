@@ -207,23 +207,26 @@
 			</div>
 		</td>
 		<td>
+		{% if paiement.user %}
 			{{ paiement.user.nom|upper }}
 			<br>
 			{{ paiement.user.prenom }}
-			<br>
+		{% else %}
+			{{ 'Aucun utilisateur' }}
+		{% endif %}
 		</td>
 		<td>
 			<div class="flex items-center justify-center gap-2">
 				<div class="text-body">
 					{{ svg.euro(24) }}
 				</div>
-				{{ paiement.montant }}€
+				{{ (paiement.montant / 100)|number_format(2, ',', '.') }}€
 			</div>
 		</td>
 		<td>
 			<div class="flex items-center justify-center gap-2">
 				<div class="text-body">
-					{{ svg.blueCard(24) }}
+					{{ svg.paiementMethode(paiement.methode, 24) }}
 				</div>
 				{{ paiement.methode }}
 			</div>

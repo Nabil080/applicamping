@@ -7,6 +7,7 @@ use App\Repository\PaiementRepository;
 use App\Service\LogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,7 +50,7 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
+    public function create(Security $security, Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
     {
 
         $form = $this->createForm(PaiementType::class);
@@ -58,6 +59,7 @@ class PaiementsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $paiement = $form->getData();
+            $paiement->setUser($security->getUser());
 
             $entityManagerInterface->persist($paiement);
             $entityManagerInterface->flush();

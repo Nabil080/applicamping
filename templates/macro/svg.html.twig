@@ -180,3 +180,23 @@
 {% macro plus(width = "100%", classes = "", stroke = '2') %}
 	<svg xmlns="http://www.w3.org/2000/svg" width={{ width }} viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width={{ stroke }} stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus {{ classes }}"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
 {% endmacro %}
+
+
+
+
+{% macro paiementMethode(method, width = "100%") %}
+	
+	{% set m = method|lower %}
+
+	{% if m is same as "carte bancaire" or m is same as "virement bancaire" %}
+		{{ _self.blueCard(width) }}
+	{% elseif m is same as "espèce"%}
+		{{ _self.coins(width) }}
+
+	{# todo: ajouter les autres méthodes de paiement #}
+
+	{% endif %}
+	
+
+
+{% endmacro %}

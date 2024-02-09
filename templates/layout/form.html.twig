@@ -1,39 +1,39 @@
-{% extends "layout/settings.html.twig" %}
 {% set isAddForm = create is defined ? create : true %}
+{% set layout = 'settings' in app.request.requestUri ? 'layout/settings.html.twig' : 'layout/admin.html.twig' %}
+
+	{% extends layout %}
+
+
 
 {% block pretitle %}
 {{ isAddForm ? "Ajout" : "Modification" }}
 {% endblock %}
 
 
-{% block title %}
-{{ title }}
-{% endblock %}
-
 {% block body %}
 
-<div class="text-center">
-	<h1 class="text-3xl font-black">
-		{{ isAddForm ? "Ajout" : "Modification" }}
-		{{ title }}
-	</h1>
-</div>
-	<a href={{ redirectRoute is defined ? path(redirectRoute) : app.request.headers.get('referer') }} class="clickable w-fit">
-		Retour à la liste
-	</a>
-<section class="crud grid mt-8">
-{% block formcontainer %}
-	<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
-	<div class="mb-4">* champs requis</div>
-		{% block form %}
-		{{ form_start(form) }}
-		{{form_widget(form) }}
-		<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
-		{{ form_end(form) }}
-		{% endblock %}
+	<div class="text-center">
+		<h1 class="text-3xl font-black">
+			{{ isAddForm ? "Ajout" : "Modification" }}
+			{{ title }}
+		</h1>
 	</div>
-{% endblock %}
-</section>
+		<a href={{ redirectRoute is defined ? path(redirectRoute) : app.request.headers.get('referer') }} class="clickable w-fit">
+			Retour à la liste
+		</a>
+	<section class="crud grid mt-8">
+		{% block formcontainer %}
+			<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
+			<div class="mb-4">* champs requis</div>
+				{% block form %}
+				{{ form_start(form) }}
+				{{form_widget(form) }}
+				<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
+				{{ form_end(form) }}
+				{% endblock %}
+			</div>
+		{% endblock %}
+	</section>
 
 
 {% endblock %}
