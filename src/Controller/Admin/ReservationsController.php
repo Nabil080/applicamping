@@ -8,6 +8,7 @@ use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use App\Service\LogService;
 use App\Service\ReservationService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,11 +39,15 @@ class ReservationsController extends AbstractController
     }
 
     #[Route('/pointages', name: '_day')]
-    public function index(ReservationRepository $reservationRepository): Response
+    public function index(Request $request, ReservationRepository $reservationRepository): Response
     {
-        $checkIns = $reservationRepository->getCheckIns();
-        $checkOuts = $reservationRepository->getCheckOuts();
-        $current = $reservationRepository->getCurrent();
+        $day = new DateTime($request->get('day') ?? 'now');
+
+        $checkIns = $reservationRepository->getCheckIns($day);
+        $checkOuts = $reservationRepository->getCheckOuts($day);
+        $current = $reservationRepository->getCurrent($day);
+
+        $total = count($checkIns) + count($checkOuts) + count($current);
 
         // dd($checkIns, $checkOuts, $current);
 
@@ -51,37 +56,11 @@ class ReservationsController extends AbstractController
             'checkIns' => $checkIns,
             'checkOuts' => $checkOuts,
             'current' => $current,
+            'total' => $total,
+            'day' => $day,
         ]);
     }
 
-    // #[Route('/create', name: '_create')]
-    // public function create(Request $request, ReservationRepository $reservationRepository, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
-    // {
-    //     $step = intval($request->get('step') ?? 0);
-    //     $reservation = $request->get('reservation') ?? null;
-    //     $form = $this->createForm(ReservationType::class, $reservation, [
-    //         'step' => $step
-    //     ]);
-    //     $form->handleRequest($request);
-
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $reservation = $form->getData();
-
-    //         dump($reservation);
-    //         if ($step === 5) {
-    //             dd('done');
-    //             return $this->redirectToRoute('app_admin_reservations_create');
-    //         }
-    //         return $this->redirectToRoute('app_admin_reservations_create', ['step' => $step + 1, 'reservation' => $reservation]);
-    //     }
-
-    //     return $this->render("layout/form.html.twig", [
-    //         "title" => $this->title,
-    //         "form" => $form,
-    //         "redirectRoute" => 'app_admin_reservations',
-    //     ]);
-    // }
 
     #[Route('/create', name: '_create')]
     public function create(Request $request, ReservationService $reservationService, LogService $logService, EntityManagerInterface $em, ReservationFlow $flow): Response

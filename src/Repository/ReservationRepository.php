@@ -43,18 +43,24 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function getCheckIns(): array
+    public function getCheckIns(?DateTime $day = null): array
     {
+        $day = $day ?? new DateTime('now');
+
         return $this->createQueryBuilder('reservation')
-            ->andWhere('reservation.debut = CURRENT_DATE()')
+            ->andWhere('reservation.debut = :day')
+            ->setParameter('day', $day)
             ->getQuery()
             ->getResult();
     }
 
-    public function getCheckOuts(): array
+    public function getCheckOuts(?DateTime $day = null): array
     {
+        $day = $day ?? new DateTime('now');
+
         return $this->createQueryBuilder('reservation')
-            ->andWhere('reservation.fin = CURRENT_DATE()')
+            ->andWhere('reservation.fin = :day')
+            ->setParameter('day', $day)
             ->getQuery()
             ->getResult();
     }

@@ -236,8 +236,8 @@
 		</td>
 		<td>
 			<div class="actions">
-				{{ _self.updateButton(paiement.id) }}
-				{{ _self.deleteButton(paiement.id, null, 'Paiement', (paiement.montant / 100)|number_format(2, ',', '.') ~ '€') }}
+				{{ _self.updateButton(paiement.id, path('app_admin_paiements_update',{id: paiement.id} )) }}
+				{{ _self.deleteButton(paiement.id, path('app_admin_paiements_delete',{id: paiement.id} ), 'Paiement', (paiement.montant / 100)|number_format(2, ',', '.') ~ '€') }}
 			</div>
 		</td>
 	</tr>
