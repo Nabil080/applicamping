@@ -57,6 +57,7 @@ class SettingsController extends AbstractController
 
         $day = new DateTime('now');
         $saison = $reservationService->getSaison($day,$day);
+        $nextSaison = $reservationService->getNextSaison($day);
 
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
@@ -64,7 +65,8 @@ class SettingsController extends AbstractController
             'logs' => $logs,
             'hebergements' => $hebergements,
             'total' => $total,
-            'saison' => $saison
+            'saison' => $saison,
+            'nextSaison' => $nextSaison
         ]);
     }
 

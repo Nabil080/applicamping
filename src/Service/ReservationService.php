@@ -109,7 +109,7 @@ class ReservationService extends AbstractController
         }
 
         // ? Récupère la saison de la période
-        $saison = $this->getSaison($start,$end);
+        $saison = $this->getSaison($start, $end);
 
         // ? Récupère la liste des hébérgements et créer un DisplayHebergement pour chaque
         $hebergements = $this->hebergementRepository->findBy(['statut' => ['Actif', 'Maintenance'],]);
@@ -263,9 +263,14 @@ class ReservationService extends AbstractController
         return $reservation ? true : false;
     }
 
-    public function getSaison(DateTime $start,DateTime $end): ?Saison
+    public function getSaison(DateTime $start, DateTime $end): ?Saison
     {
         return $this->periodeRepository->findByStartEnd($start, $end)?->getSaison() ?? $this->saisonRepository->findOneBy([], ['id' => 'desc']);
+    }
+
+    public function getNextSaison(DateTime $day): ?Saison
+    {
+        return ($this->periodeRepository->findNext()->getSaison() ?? $this->saisonRepository->findOneBy([], ['id' => 'desc']));
     }
 }
 

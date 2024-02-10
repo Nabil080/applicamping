@@ -32,6 +32,20 @@ class PeriodeRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getOneOrNullResult();
     }
+
+    public function findNext(DateTime $date = null): ?Periode
+    {
+        $date = $date ?? new DateTime('now');
+        
+        return ($this->createQueryBuilder('periode')
+        ->andWhere('periode.debut > :date')
+        ->setParameter('date', $date)
+        ->orderBy('periode.debut', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getResult())[0];
+    }
+
 //    /**
 //     * @return Periode[] Returns an array of Periode objects
 //     */
