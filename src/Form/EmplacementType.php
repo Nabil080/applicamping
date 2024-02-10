@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EmplacementType extends AbstractType
 {
@@ -18,7 +19,7 @@ class EmplacementType extends AbstractType
         $builder
             ->add('numero')
             ->add('statut', CustomStatutType::class)
-            ->add('hebergement', CustomHebergementType::class, ['multiple' => false])
+            ->add('hebergement', CustomHebergementType::class, ['multiple' => false, 'required' => true, 'constraints' => [new NotBlank]])
         ;
     }
 

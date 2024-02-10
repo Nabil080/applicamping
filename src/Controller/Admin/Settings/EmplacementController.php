@@ -30,7 +30,6 @@ class EmplacementController extends AbstractController
     public function emplacements(EmplacementRepository $emplacementRepository): Response
     {
         $emplacements = $emplacementRepository->findBy([], ["id" => "desc"]);
-        foreach($emplacements as $emplacement) $emplacement->getTags()->getValues();
 
         return $this->render($this->getPath('index'), [
             "title" => $this->title,
@@ -54,7 +53,7 @@ class EmplacementController extends AbstractController
 
             $logService->write($emplacement, "create");
 
-
+            if ($request->request->get('more')) exit;
             return $this->redirectToRoute('app_admin_settings_emplacements');
         }
 

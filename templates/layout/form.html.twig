@@ -28,12 +28,19 @@
 				{% block form %}
 				{{ form_start(form) }}
 				{{form_widget(form) }}
+				<div class="flex items-center gap-2 mb-4">
+				<input type="checkbox" name="more" id="more"><label for="more">Continuer l'ajout</label>
+				</div>
 				<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
 				{{ form_end(form) }}
+					{% if success is defined and success %}
+						<div>La requête a bien été traitée</div>
+					{% endif %}
 				{% endblock %}
 			</div>
 		{% endblock %}
 	</section>
+
 
 
 {% endblock %}
