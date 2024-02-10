@@ -57,83 +57,58 @@
 						<h5 class="text-sm font-medium uppercase xsm:text-base">Montant total</h5>
 					</div>
 				</div>
+				{% set allTransactions, allAverage = 0, 0 %}
+				{% for method, array in paiementsArray %}
+					{% set transactions = array.paiements|length %}
+					{% set allTransactions = allTransactions + transactions %}
 
-				{% for i in 1..5 %}
+					{% set average = array.total / array.paiements|length %}
+					{% set allAverage = allAverage + average %}
+
 					<div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
 						<div class="flex items-center gap-3 p-2.5 xl:p-5">
-							{% set size = 24 %}
-							{% if i is same as 1 %}
 								<div class="flex-shrink-0">
-									{{ svg.blueCard(size) }}
+									{{ svg.paiementMethode(method, 24) }}
 								</div>
 								<p class="hidden font-medium text-black dark:text-white sm:block">
-									Carte bancaire
+									{{ method }}
 								</p>
-							{% elseif i is same as 2 %}
-								<div class="flex-shrink-0">
-									{{ svg.coins(size) }}
-								</div>
-								<p class="hidden font-medium text-black dark:text-white sm:block">
-									Espèce
-								</p>
-							{% elseif i is same as 3 %}
-								<div class="flex-shrink-0">
-									{{ svg.check(size) }}
-								</div>
-								<p class="hidden font-medium text-black dark:text-white sm:block">
-									Chèques Vacances
-								</p>
-							{% elseif i is same as 4 %}
-								<div class="flex-shrink-0">
-									{{ svg.question(size) }}
-								</div>
-								<p class="hidden font-medium text-black dark:text-white sm:block">
-									Autre
-								</p>
-							{% elseif i is same as 5 %}
-								<div class="flex-shrink-0">
-									{{ svg.reduction(size) }}
-								</div>
-								<p class="hidden font-medium text-black dark:text-white sm:block">
-									Code de réduction
-								</p>
-							{% endif %}
 						</div>
 
 						<div class="flex items-center justify-center p-2.5 xl:p-5">
-							<p class="font-medium text-black dark:text-white">3 500</p>
+							<p class="font-medium text-black dark:text-white">{{ array.reservations|length }}</p>
 						</div>
 
 						<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-							<p class="font-medium text-black dark:text-white">4 200</p>
+							<p class="font-medium text-black dark:text-white">{{ transactions }}</p>
 						</div>
 
 						<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-							<p class="font-medium text-black dark:text-white">65€</p>
+							<p class="font-medium text-black dark:text-white">{{ (average / 100)|number_format(2,',','.') }}€</p>
 						</div>
 
 						<div class="flex items-center justify-center p-2.5 xl:p-5">
 							<p class="font-medium text-meta-3">
-								<span>8 300,56€</p>
+								<span>{{ (array.total / 100)|number_format(2,',','.') }}€</p>
 							</p>
 						</div>
 					</div>
 				{% endfor %}
 				<div class="grid grid-cols-3 border-t border-black  dark:border-strokedark sm:grid-cols-5">
 					<div class="flex items-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white">Septembre 2023</p>
+						<p class="font-bold dark:text-white capitalize">{{ month|format_date(locale='fr',pattern='MMMM Y') }}</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white">12 000</p>
+						<p class="font-bold dark:text-white">{{ countReservations }}</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white">15 000</p>
+						<p class="font-bold dark:text-white">{{ allTransactions }}</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white">32€</p>
+						<p class="font-bold dark:text-white">{{ (allAverage / 100)|number_format(2,',','.')}}€</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white text-meta-3">17 500,26€</p>
+						<p class="font-bold dark:text-white text-meta-3">{{ (total / 100)|number_format(2,',','.') }}€</p>
 					</div>
 				</div>
 			</div>

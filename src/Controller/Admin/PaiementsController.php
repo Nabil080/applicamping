@@ -42,8 +42,8 @@ class PaiementsController extends AbstractController
     {
         $day = new DateTime($request->get('day') ?? 'now');
         $paiements = $paiementRepository->findByDay($day);
-        $total = 0;
         $count = count($paiements);
+        $total = 0;
 
 
         foreach ($paiements as $paiement) {
@@ -58,7 +58,7 @@ class PaiementsController extends AbstractController
             'total' => $total,
             'day' => $day,
             'count' => $count,
-        ]);
+            ]);
     }
 
     #[Route('/mois', name: '_month')]
@@ -66,12 +66,15 @@ class PaiementsController extends AbstractController
     {
         $month = new DateTime($request->get('month') ?? 'now');
         $paiements = $paiementRepository->findByMonth($month);
+        $count = count($paiements);
         $total = 0;
-        $count = count($reservationRepository->findByMonth($month));
 
+        $totalReservations = [];
         foreach ($paiements as $paiement) {
             $paiementsArray[$paiement->getMethode()]['paiements'][] = $paiement;
             $paiementsArray[$paiement->getMethode()]['total'] = ($paiementsArray[$paiement->getMethode()]['total'] ?? 0) + $paiement->getMontant();
+            $paiementsArray[$paiement->getMethode()]['reservations'][$paiement->getReservation()->getId()] = ($paiement->getReservation());
+            $totalReservations[$paiement->getReservation()->getId()] = true;
             $total += $paiement->getMontant();
         }
 
@@ -81,6 +84,7 @@ class PaiementsController extends AbstractController
             'month' => $month,
             'total' => $total,
             'count' => $count,
+            'countReservations' => count($totalReservations)
         ]);
     }
 

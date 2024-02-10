@@ -188,10 +188,16 @@
 	
 	{% set m = method|lower %}
 
-	{% if m is same as "carte bancaire" or m is same as "virement bancaire" %}
+	{% if m in ["carte bancaire","virement bancaire"] %}
 		{{ _self.blueCard(width) }}
-	{% elseif m is same as "espèce"%}
+	{% elseif m in ['espèce']%}
 		{{ _self.coins(width) }}
+	{% elseif m in ['chèque vacance','chèque'] %}
+		{{ _self.check(width) }}
+	{% elseif m in ['remise','coupon','réduction administrateur'] %}
+		{{ _self.reduction(width) }}
+	{% else %}
+		{{ _self.question(width) }}
 
 	{# todo: ajouter les autres méthodes de paiement #}
 
