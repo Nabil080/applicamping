@@ -52,7 +52,7 @@
 					{{ create }}
 				</a>
 			{% elseif 'paiement' in title|lower %}
-				<div class="text-lg">Total : {{ (option.total / 100)|number_format(2, ',', '.') }}€</div>
+				<div class="text-lg">Total : {{ ((option.total ?? 0) / 100)|number_format(2, ',', '.') }}€</div>
 			{% endif %}
 		</div>
 		{% if filters %}

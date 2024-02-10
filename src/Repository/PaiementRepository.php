@@ -22,10 +22,23 @@ class PaiementRepository extends ServiceEntityRepository
         parent::__construct($registry, Paiement::class);
     }
 
-    public function findByDay(DateTime $date): array
+    public function findByDay(DateTime $day): array
     {
-        $min = $date->format('Y-m-d 00:00:00');
-        $max = $date->format('Y-m-d 23:59:59');
+        $min = $day->format('Y-m-d 00:00:00');
+        $max = $day->format('Y-m-d 23:59:59');
+
+        return $this->createQueryBuilder('paiement')
+            ->andWhere('paiement.date BETWEEN :min AND :max')
+            ->setParameter('min', $min)
+            ->setParameter('max', $max)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMonth(DateTime $month): array
+    {
+        $min = $month->format('Y-m-01 00:00:00');
+        $max = $month->format('Y-m-t 23:59:59');
 
         return $this->createQueryBuilder('paiement')
             ->andWhere('paiement.date BETWEEN :min AND :max')

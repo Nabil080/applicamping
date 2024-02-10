@@ -2,10 +2,6 @@
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 
-{% block title %}
-	{{ title }}
-{% endblock %}
-
 {% block body %}
 	<div class="space-y-6">
 		<div class="text-center">
@@ -19,7 +15,7 @@
 					Changer de jour</button>
 			</form>
 			<form class="grid md:inline-flex gap-4">
-				<input type="date" name="month">
+				<input type="month" name="month">
 				<button type="submit" class="btn-sm btn ">
 					Changer de mois</button>
 			</form>

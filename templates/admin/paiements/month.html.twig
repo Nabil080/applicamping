@@ -3,14 +3,11 @@
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'macro/svg.html.twig' as svg %}
 
-{% block title %}
-	Caisse du mois
-{% endblock %}
 
 {% block body %}
 	<div class="space-y-6">
 		<div class="text-center">
-			<h1 class="text-3xl font-black">Caisse de juillet 2003</d>
+			<h1 class="text-3xl font-black">Caisse de {{ month|format_date(locale='fr',pattern='MMMM Y')}}</h1>
 		</div>
 
 		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
@@ -19,8 +16,8 @@
 				<button type="submit" class="btn-sm btn ">
 					Changer de jour</button>
 			</form>
-			<form class="grid md:inline-flex gap-4">
-				<input type="date" name="month">
+			<form action='#' method='GET' class="grid md:inline-flex gap-4">
+				<input type="month" name="month" value={{ month|date('Y-m') }}>
 				<button type="submit" class="btn-sm btn ">
 					Changer de mois</button>
 			</form>
@@ -152,17 +149,23 @@
 		</div>
 
 
+	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
+		{{ crud.tabulation(paiementsArray|map((array, index) => index)) }}
+	</div>
+
 		<div
 			class="space-y-12">
 
-			<!-- ! Arrivées attendues -->
-			{{ crud.basic("Paiements en Carte bancaire", tables.paiements('CB')) }}
+			{% for method, array in paiementsArray %}
+				{{ crud.basic("Paiements en " ~ method, tables.paiements(array.paiements, array.total), {total: array.total}) }}
+			{% endfor %}
 
-			<!-- ! Départs attendues -->
-			{{ crud.basic("Paiements en Espèce", tables.paiements('ESPECE')) }}
 
-			<!-- ! Réservations en cours -->
-			{{ crud.basic("Paiements en Chèques Vacances", tables.paiements('VACANCE')) }}
+			{% if paiementsArray|length is same as 0 %}
+			
+			Aucun paiement ce mois
+			
+			{% endif %}
 
 		</div>
 	</div>

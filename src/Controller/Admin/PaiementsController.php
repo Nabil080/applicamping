@@ -37,7 +37,7 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/jour', name: '_day')]
-    public function day(Request $request ,PaiementRepository $paiementRepository): Response
+    public function day(Request $request, PaiementRepository $paiementRepository): Response
     {
         $day = new DateTime($request->get('day') ?? 'now');
         $paiements = $paiementRepository->findByDay($day);
@@ -59,10 +59,23 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/mois', name: '_month')]
-    public function month(): Response
+    public function month(Request $request, PaiementRepository $paiementRepository): Response
     {
+        $month = new DateTime($request->get('month') ?? 'now');
+        $paiements = $paiementRepository->findByMonth($month);
+        $total = 0;
+
+        foreach ($paiements as $paiement) {
+            $paiementsArray[$paiement->getMethode()]['paiements'][] = $paiement;
+            $paiementsArray[$paiement->getMethode()]['total'] = ($paiementsArray[$paiement->getMethode()]['total'] ?? 0) + $paiement->getMontant();
+            $total += $paiement->getMontant();
+        }
+
         return $this->render($this->getPath("month"), [
-            'controller_name' => 'paiementsController',
+            'title' => 'Caisse du mois',
+            'paiementsArray' => $paiementsArray ?? [],
+            'month' => $month,
+            'total' => $total,
         ]);
     }
 
