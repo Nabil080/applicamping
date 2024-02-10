@@ -36,14 +36,14 @@
 
 		{% set size = 22 %}
 
-		{% set more = {text: 'Ouvrir la caisse', link:path('app_admin') } %}
+		{% set more = {text: 'Ouvrir la caisse', link:path('app_admin_paiements') } %}
 		{{ cell.numberCard('Caisse du jour','1520€',more,svg.shoppingCart(size))}}
 
 
-		{% set more = {text: 'Voir plus', link:path('app_admin') } %}
+		{% set more = {text: 'Voir plus', link:path('app_admin_reservations') } %}
 		{{ cell.numberCard('Réservations','36.562',more,svg.shoppingBag(size))}}
 
-		{% set more = {text: 'Voir les clients', link:path('app_admin') } %}
+		{% set more = {text: 'Voir les clients', link:path('app_admin_clients') } %}
 		{{ cell.numberCard('Utilisateurs','3.456',more,svg.users(size))}}
 
 	</div>
@@ -84,7 +84,7 @@
 
 		<!-- Check in -->
 		{% set text = '8 arrivés à valider' %}
-		{% set more = {text: 'Voir les check-in', link:path('app_admin') } %}
+		{% set more = {text: 'Voir les check-in', link:path('app_admin_reservations_day') } %}
 
 
 		{{ cell.textCard(text,more,svg.login(20))}}
@@ -92,7 +92,7 @@
 
 		<!-- Check out -->
 		{% set text = '3 départs à valider' %}
-		{% set more = {text: 'Voir les check-out', link:path('app_admin') } %}
+		{% set more = {text: 'Voir les check-out', link:path('app_admin_reservations_day') } %}
 		{{ cell.textCard(text,more,svg.logout(20))}}
 		<!-- Check out -->
 

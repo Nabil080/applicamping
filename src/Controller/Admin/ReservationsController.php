@@ -47,7 +47,7 @@ class ReservationsController extends AbstractController
         $checkOuts = $reservationRepository->getCheckOuts($day);
         $current = $reservationRepository->getCurrent($day);
 
-        $total = count($checkIns) + count($checkOuts) + count($current);
+        $count = count($checkIns) + count($checkOuts) + count($current);
 
         // dd($checkIns, $checkOuts, $current);
 
@@ -56,7 +56,7 @@ class ReservationsController extends AbstractController
             'checkIns' => $checkIns,
             'checkOuts' => $checkOuts,
             'current' => $current,
-            'total' => $total,
+            'count' => $count,
             'day' => $day,
         ]);
     }

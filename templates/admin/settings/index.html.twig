@@ -118,7 +118,7 @@
 		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
 			<section class="">
 				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
-					{{ total.emplacements }} emplacements, {{ total.hebergements }} types
+					{{ total.emplacements }} emplacements, {{ total.hebergements }} hébergements
 				</h4>
 				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
 					{% for hebergement in hebergements|slice(0,5) %}
@@ -148,7 +148,7 @@
 					</a>
 				</div>
 				<div class="grid">
-					<button class="btn max-xl:px-2 btn pointer-events-none">Haute saison 2023</button>
+					<button class="btn max-xl:px-2 btn pointer-events-none">{{ saison.nom }}</button>
 				</div>
 			</div>
 			<div class="space-y-2">
@@ -170,7 +170,7 @@
 		</div>
 
 		{% set width, classes, stroke = '100%','', 1 %}
-		{{ cell.imageCard("Règles de réservation","app_admin_settings",svg.rules(width,classes,stroke)) }}
+		{{ cell.imageCard("Règles de réservation","app_admin_settings_regles",svg.rules(width,classes,stroke)) }}
 		{{ cell.imageCard("Tarifs","app_admin_settings_tarifs",svg.bills(width,classes,stroke)) }}
 		{{ cell.imageCard("Options supplémentaires","app_admin_settings_options",svg.dog(width,classes,stroke)) }}
 	</div>

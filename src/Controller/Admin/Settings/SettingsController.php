@@ -12,6 +12,8 @@ use App\Repository\OptionRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Service\LogService;
+use App\Service\ReservationService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +29,7 @@ class SettingsController extends AbstractController
     }
 
     #[Route('', name: '')]
-    public function index(HebergementRepository $hebergementRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
+    public function index(ReservationService $reservationService, HebergementRepository $hebergementRepository, Request $request, EntityManagerInterface $entityManagerInterface, LogService $logService, CampingRepository $campingRepository, LogRepository $logRepository): Response
     {
         $camping = $campingRepository->findOneBy([]);
 
@@ -53,12 +55,16 @@ class SettingsController extends AbstractController
 
         $total = ["emplacements" => $totalEmplacements, "hebergements" => count($hebergements)];
 
+        $day = new DateTime('now');
+        $saison = $reservationService->getSaison($day,$day);
+
         return $this->render($this->getPath('index'), [
             'camping' => $camping,
             'campingForm' => $campingForm,
             'logs' => $logs,
             'hebergements' => $hebergements,
             'total' => $total,
+            'saison' => $saison
         ]);
     }
 
