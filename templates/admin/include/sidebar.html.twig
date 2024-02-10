@@ -33,24 +33,24 @@
 					{{ sidebar.basic("Accueil","app_admin",svg.house(size)) }}
 
 					{% set dropdown = [
-						{name: "Toutes", routeName: "app_admin_reservations"},
-						{name: "Pointages", routeName: "app_admin_reservations_day"},
+						{name: "Toutes", url: path("app_admin_reservations")},
+						{name: "Pointages", url: path("app_admin_reservations_day")},
 					] %}
 
 					{{ sidebar.dropdown("Réservations","app_admin_reservations",svg.reservations(size), dropdown) }}
 
 
 					{% set dropdown = [
-						{name: "Du jour", routeName: "app_admin_paiements_day"},
-						{name: "Du mois", routeName: "app_admin_paiements_month"},
+						{name: "Du jour", url: path("app_admin_paiements_caisse",{type:'day'})},
+						{name: "Du mois", url: path("app_admin_paiements_caisse",{type:'month'})},
 					] %}
 
-					{{ sidebar.dropdown("Caisse","app_admin_paiements_day",svg.bills(size), dropdown) }}
+					{{ sidebar.dropdown("Caisse","app_admin_paiements_caisse",svg.bills(size), dropdown) }}
 
 
 					{% set dropdown = [
-						{name: "Semaine", routeName: "homepage"},
-						{name: "Du mois", routeName: "homepage"},
+						{name: "Semaine", url: path("homepage")},
+						{name: "Du mois", url: path("homepage")},
 					] %}
 
 					{{ sidebar.dropdown("Planning","homepage",svg.calendar(size), dropdown) }}

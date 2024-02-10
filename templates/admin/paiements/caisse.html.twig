@@ -7,17 +7,19 @@
 {% block body %}
 	<div class="space-y-6">
 		<div class="text-center">
-			<h1 class="text-3xl font-black">Caisse de {{ month|format_date(locale='fr',pattern='MMMM Y')}}</h1>
+			<h1 class="text-3xl font-black">Caisse de {{ date|format_date(locale='fr',pattern='dd MMMM Y')}}</h1>
 		</div>
 
 		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
-			<form action={{path('app_admin_paiements_day')}} class="grid md:inline-flex gap-4">
-				<input type="date" name="day" value={{month|date('Y-m-d')}}>
+			<form action='#' class="grid md:inline-flex gap-4">
+				<input type="date" name="day" value={{date|date('Y-m-d')}}>
+				<input type="hidden" name="type" value='day'>
 				<button type="submit" class="btn-sm btn ">
 					Changer de jour</button>
 			</form>
 			<form action='#'  class="grid md:inline-flex gap-4">
-				<input type="month" name="month" value={{ month|date('Y-m') }}>
+				<input type="month" name="month" value={{ date|date('Y-m') }}>
+				<input type="hidden" name="type" value='month'>
 				<button type="submit" class="btn-sm btn ">
 					Changer de mois</button>
 			</form>
@@ -96,7 +98,7 @@
 				{% endfor %}
 				<div class="grid grid-cols-5 border-t border-black  dark:border-strokedark">
 					<div class="flex items-center p-2.5 xl:p-5">
-						<p class="font-bold dark:text-white capitalize">{{ month|format_date(locale='fr',pattern='MMMM Y') }}</p>
+						<p class="font-bold dark:text-white capitalize">{{ date|format_date(locale='fr',pattern='dd MMMM Y') }}</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 xl:p-5">
 						<p class="font-bold dark:text-white">{{ countReservations }}</p>
@@ -212,7 +214,7 @@
 				{% endfor %}
 				<div class="grid grid-cols-3 border-t border-black  dark:border-strokedark sm:grid-cols-5">
 					<div class="flex items-center p-2.5 ">
-						<p class="font-bold dark:text-white capitalize">{{ month|format_date(locale='fr',pattern='MMMM Y') }}</p>
+						<p class="font-bold dark:text-white capitalize">{{ date|format_date(locale='fr',pattern='dd MMMM Y') }}</p>
 					</div>
 					<div class="flex items-center justify-center p-2.5 ">
 						<p class="font-bold dark:text-white">{{ countReservations }}</p>

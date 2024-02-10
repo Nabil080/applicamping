@@ -37,11 +37,12 @@ class PaiementsController extends AbstractController
         ]);
     }
 
-    #[Route('/jour', name: '_day')]
-    public function day(Request $request, PaiementRepository $paiementRepository, ReservationRepository $reservationRepository): Response
+    #[Route('/caisse', name: '_caisse')]
+    public function caisse(Request $request, PaiementRepository $paiementRepository, ReservationRepository $reservationRepository): Response
     {
-        $day = new DateTime($request->get('day') ?? 'now');
-        $paiements = $paiementRepository->findByDay($day);
+        $type = $request->get('type') ?? 'day';
+        $date = new DateTime($request->get($type) ?? 'now');
+        $paiements = $type === 'day' ? $paiementRepository->findByDay($date) : $paiementRepository->findByMonth($date);
         $count = count($paiements);
         $total = 0;
 
@@ -54,42 +55,16 @@ class PaiementsController extends AbstractController
             $total += $paiement->getMontant();
         }
 
-        return $this->render($this->getPath("day"), [
-            'title' => 'Caisse du jour',
+        return $this->render($this->getPath("caisse"), [
+            'title' => 'Caisse du ' . ($type === 'day' ? 'jour' : 'mois'),
             'paiementsArray' => $paiementsArray ?? [],
             'total' => $total,
-            'day' => $day,
+            'date' => $date,
             'count' => $count,
             'countReservations' => count($totalReservations)
             ]);
     }
 
-    #[Route('/mois', name: '_month')]
-    public function month(Request $request, PaiementRepository $paiementRepository,  ReservationRepository $reservationRepository): Response
-    {
-        $month = new DateTime($request->get('month') ?? 'now');
-        $paiements = $paiementRepository->findByMonth($month);
-        $count = count($paiements);
-        $total = 0;
-
-        $totalReservations = [];
-        foreach ($paiements as $paiement) {
-            $paiementsArray[$paiement->getMethode()]['paiements'][] = $paiement;
-            $paiementsArray[$paiement->getMethode()]['total'] = ($paiementsArray[$paiement->getMethode()]['total'] ?? 0) + $paiement->getMontant();
-            $paiementsArray[$paiement->getMethode()]['reservations'][$paiement->getReservation()->getId()] = ($paiement->getReservation());
-            $totalReservations[$paiement->getReservation()->getId()] = true;
-            $total += $paiement->getMontant();
-        }
-
-        return $this->render($this->getPath("month"), [
-            'title' => 'Caisse du mois',
-            'paiementsArray' => $paiementsArray ?? [],
-            'month' => $month,
-            'total' => $total,
-            'count' => $count,
-            'countReservations' => count($totalReservations)
-        ]);
-    }
 
     #[Route('/create', name: '_create')]
     public function create(Security $security, Request $request, LogService $logService, EntityManagerInterface $entityManagerInterface): Response
