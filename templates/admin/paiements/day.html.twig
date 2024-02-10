@@ -9,12 +9,12 @@
 {% block body %}
 	<div class="space-y-6">
 		<div class="text-center">
-			<h1 class="text-3xl font-black">Caisse du 14/07/2003</d>
+			<h1 class="text-3xl font-black">Caisse du {{ day|date('d/m/Y') }}</h1>
 		</div>
 
 		<div class="md:flex flex-wrap space-y-4 md:space-y-0 gap-4">
-			<form class="grid md:inline-flex gap-4">
-				<input type="date" name="day" value="2003-07-14">
+			<form action="#" method="GET" class="grid md:inline-flex gap-4">
+				<input type="date" name="day" value={{day|date('Y-m-d')}}>
 				<button type="submit" class="btn-sm btn ">
 					Changer de jour</button>
 			</form>
@@ -36,7 +36,10 @@
 			</div>
 		</div>
 
-		<h2 class="text-title-md font-bold">Montant du jour : 120€</h2>
+	<div class="mb-6 flex flex-wrap gap-4 justify-between lg:items-center max-lg:flex-col">
+		<h2 class="text-title-md font-bold">Montant du jour : {{ (total / 100)|number_format(2, ',', '.') }}€</h2>
+		{{ crud.tabulation(paiementsArray|map((array, index) => index)) }}
+	</div>
 		<div
 			class="space-y-12">
 
@@ -44,6 +47,13 @@
 				{{ crud.basic("Paiements en " ~ method, tables.paiements(array.paiements, array.total), {total: array.total}) }}
 			{% endfor %}
 
+
+			{% if paiementsArray|length is same as 0 %}
+			
+			Aucun paiement ce jour
+			
+			{% endif %}
+			
 
 		</div>
 	</div>

@@ -37,43 +37,24 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/jour', name: '_day')]
-    public function day(PaiementRepository $paiementRepository): Response
+    public function day(Request $request ,PaiementRepository $paiementRepository): Response
     {
-        $now = new DateTime('now');
-        $paiements = $paiementRepository->findByDay($now);
+        $day = new DateTime($request->get('day') ?? 'now');
+        $paiements = $paiementRepository->findByDay($day);
+        $total = 0;
+
 
         foreach ($paiements as $paiement) {
-            switch ($paiement->getMethode()) {
-                case 'Carte bancaire':
-                    $paiementsArray['Carte bancaire']['paiements'][] = $paiement;
-                    $paiementsArray['Carte bancaire']['total'] = ($paiementsArray['Carte bancaire']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-                case 'Virement bancaire':
-                    $paiementsArray['Virement bancaire']['paiements'][] = $paiement;
-                    $paiementsArray['Virement bancaire']['total'] = ($paiementsArray['Virement bancaire']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-                case 'Espèce':
-                    $paiementsArray['Espèce']['paiements'][] = $paiement;
-                    $paiementsArray['Espèce']['total'] = ($paiementsArray['Espèce']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-                case 'Chèque vacance':
-                    $paiementsArray['Chèque vacance']['paiements'][] = $paiement;
-                    $paiementsArray['Chèque vacance']['total'] = ($paiementsArray['Chèque vacance']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-                case 'chèque':
-                    $paiementsArray['chèque']['paiements'][] = $paiement;
-                    $paiementsArray['chèque']['total'] = ($paiementsArray['chèque']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-                default:
-                    $paiementsArray['autre']['paiements'][] = $paiement;
-                    $paiementsArray['autre']['total'] = ($paiementsArray['autre']['total'] ?? 0) + $paiement->getMontant();
-                    break;
-            }
+            $paiementsArray[$paiement->getMethode()]['paiements'][] = $paiement;
+            $paiementsArray[$paiement->getMethode()]['total'] = ($paiementsArray[$paiement->getMethode()]['total'] ?? 0) + $paiement->getMontant();
+            $total += $paiement->getMontant();
         }
 
         return $this->render($this->getPath("day"), [
             'title' => 'Caisse du jour',
-            'paiementsArray' => $paiementsArray
+            'paiementsArray' => $paiementsArray ?? [],
+            'total' => $total,
+            'day' => $day
         ]);
     }
 
