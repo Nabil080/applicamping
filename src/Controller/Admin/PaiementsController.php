@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Paiement;
 use App\Form\PaiementType;
 use App\Repository\PaiementRepository;
+use App\Repository\ReservationRepository;
 use App\Service\LogService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,11 +38,12 @@ class PaiementsController extends AbstractController
     }
 
     #[Route('/jour', name: '_day')]
-    public function day(Request $request, PaiementRepository $paiementRepository): Response
+    public function day(Request $request, PaiementRepository $paiementRepository, ReservationRepository $reservationRepository): Response
     {
         $day = new DateTime($request->get('day') ?? 'now');
         $paiements = $paiementRepository->findByDay($day);
         $total = 0;
+        $reservationTotal = count($reservationRepository->getCurrent($day));
 
 
         foreach ($paiements as $paiement) {
@@ -54,16 +56,18 @@ class PaiementsController extends AbstractController
             'title' => 'Caisse du jour',
             'paiementsArray' => $paiementsArray ?? [],
             'total' => $total,
-            'day' => $day
+            'day' => $day,
+            'reservationTotal' => $reservationTotal,
         ]);
     }
 
     #[Route('/mois', name: '_month')]
-    public function month(Request $request, PaiementRepository $paiementRepository): Response
+    public function month(Request $request, PaiementRepository $paiementRepository,  ReservationRepository $reservationRepository): Response
     {
         $month = new DateTime($request->get('month') ?? 'now');
         $paiements = $paiementRepository->findByMonth($month);
         $total = 0;
+        $reservationTotal = count($reservationRepository->findByMonth($month));
 
         foreach ($paiements as $paiement) {
             $paiementsArray[$paiement->getMethode()]['paiements'][] = $paiement;
@@ -76,6 +80,7 @@ class PaiementsController extends AbstractController
             'paiementsArray' => $paiementsArray ?? [],
             'month' => $month,
             'total' => $total,
+            'reservationTotal' => $reservationTotal,
         ]);
     }
 

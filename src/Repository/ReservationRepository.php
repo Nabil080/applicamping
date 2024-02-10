@@ -59,12 +59,31 @@ class ReservationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getCurrent() :array
+    public function getCurrent(?DateTime $day = null): array
     {
+        $day = $day ?? new DateTime('now');
+
         return $this->createQueryBuilder('reservation')
-            ->andWhere('CURRENT_DATE() BETWEEN reservation.debut AND reservation.fin')
+            ->andWhere(':day BETWEEN reservation.debut AND reservation.fin')
+            ->setParameter('day', $day)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByMonth(DateTime $month): array
+    {
+        $start = $month->format('Y-m-01 00:00:00');
+        $end = $month->format('Y-m-t 23:59:59');
+        
+        return $this->createQueryBuilder('reservation')
+        ->andWhere('reservation.debut BETWEEN :debut AND :fin')
+        ->orWhere('reservation.fin BETWEEN :debut AND :fin')
+        ->orWhere('reservation.debut < :debut AND reservation.fin > :fin')
+        ->orWhere('reservation.debut > :debut AND reservation.fin < :fin')
+        ->setParameter('debut', $start)
+        ->setParameter('fin', $end)
+        ->getQuery()
+        ->getResult();
     }
 
     //    /**
