@@ -26,7 +26,7 @@
 
 {% macro printButton(options = {}) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button data-tools-selector-value={{ options.selector|default('') }} {{ stimulus_controller('tools') }} {{ stimulus_action('tools','print') }} type="button" class="btn {{ options.large is defined ?: 'btn-sm' }} btn-border see-more">
+	<button data-tools-selector-value={{ options.selector|default('') }} {{ stimulus_controller('tools') }} {{ stimulus_action('tools','print') }} type="button" class="btn {{ options.large is defined ?: 'btn-sm' }} btn-border see-more hover:brightness-90">
 		{{ svg.print }}
 		{{ options.text|default('Imprimer') }}
 	</button>
