@@ -24,11 +24,11 @@
 	</button>
 {% endmacro %}
 
-{% macro printButton(id = 'month', text = 'Imprimer', large = false) %}
+{% macro printButton(options = {}) %}
 	{% import 'macro/svg.html.twig' as svg %}
-	<button type="button" data-id-value={{ id }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
+	<button data-tools-selector-value={{ options.selector|default('') }} {{ stimulus_controller('tools') }} {{ stimulus_action('tools','print') }} type="button" class="btn {{ options.large is defined ?: 'btn-sm' }} btn-border see-more">
 		{{ svg.print }}
-		{{ text }}
+		{{ options.text|default('Imprimer') }}
 	</button>
 {% endmacro %}
 

@@ -13,6 +13,11 @@ module.exports = {
     "./node_modules/flowbite/**/*.js", // flowbite package
     "./vendor/symfony/twig-bridge/Resources/views/Form/tailwind_2_layout.html.twig", // tailwind form theme
   ],
+  extend: {
+    screens: {
+      print: { raw: 'print' },
+    },
+  },
   darkMode: 'class',
   theme: {
     fontFamily: {

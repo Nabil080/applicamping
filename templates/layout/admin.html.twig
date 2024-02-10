@@ -23,29 +23,35 @@
 	</head>
 	<body data-turbo="{{(turbo ?? true) ? "true" : "false" }}" x-data="{ page: '{{app.request.get('_route')}}', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
 
+		<div class="hidden print:block">
+		{% block print %}{% endblock %}
+		</div>
 		{# {{ dump(app.request.get('_route')  )  }} #}
 
-		<!-- ===== Page Wrapper Start ===== -->
-			<div
-			class="flex h-screen overflow-hidden"> <!-- ===== Sidebar Start ===== -->
-			{% block sidebar %}
-				{% include "admin/include/sidebar.html.twig" %}
-			{% endblock %}
-			<!-- ===== Sidebar End ===== -->
+			<!-- ===== Page Wrapper Start ===== -->
+			<div class="print:hidden flex h-screen overflow-hidden"> 
 
-			<!-- ===== Content Area Start ===== -->
-			<div
-				class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-				<!-- ===== Header Start ===== -->
-				{% include "admin/include/header.html.twig" %}
-				<!-- ===== Header End ===== -->
+				<!-- ===== Sidebar Start ===== -->
+				{% block sidebar %}
+					{% include "admin/include/sidebar.html.twig" %}
+				{% endblock %}
+				<!-- ===== Sidebar End ===== -->
 
-				<!-- ===== Main Content Start ===== -->
+				<!-- ===== Content Area Start ===== -->
+				<div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+
+					<!-- ===== Header Start ===== -->
+					{% include "admin/include/header.html.twig" %}
+					<!-- ===== Header End ===== -->
+
+					<!-- ===== Main Content Start ===== -->
 					<main class="relative"> {% include "admin/include/preloader.html.twig" %}
-					<div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10"> {% block body %}{% endblock %}
+						<div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+							{% block body %}{% endblock %}
 						</div>
 					</main>
 					<!-- ===== Main Content End ===== -->
+
 				</div>
 				<!-- ===== Content Area End ===== -->
 			</div>

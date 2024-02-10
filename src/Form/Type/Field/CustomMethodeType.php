@@ -27,6 +27,7 @@ class CustomMethodeType extends AbstractType
                 "Coupon" => "Coupon",
                 "Réduction administrateur" => "Réduction administrateur",
                 "Remboursement" => "Remboursement",
+                "Taxe de séjour" => "Taxe de séjour",
             ],
             "multiple" => false,
             'required' => true,

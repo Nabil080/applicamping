@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<div class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+		<div id="recap" class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
 			<h4 class="mb-6 text-xl font-bold text-black dark:text-white">
 				Récapitulatif
 			</h4>
@@ -120,7 +120,7 @@
 				Réservations correspondantes
 				<i class="fa fa-arrow-down"></i>
 			</div>
-			{{ tables.printButton(0,"Imprimer le récapitulatif",true) }}
+			{{ tables.printButton({large:true, selector:'#recap'}) }}
 		</div>
 
 
@@ -144,4 +144,93 @@
 
 		</div>
 	</div>
+{% endblock %}
+
+
+{% block print %}
+
+
+		<div id="recap" class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+			<h4 class="mb-6 text-xl font-bold text-black dark:text-white">
+				Récapitulatif
+			</h4>
+
+			<div class="flex flex-col">
+				<div class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+					<div class="p-2.5 xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Méthode</h5>
+					</div>
+					<div class="p-2.5 text-center xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Réservations</h5>
+					</div>
+					<div class="p-2.5 text-center xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Transactions</h5>
+					</div>
+					<div class="hidden p-2.5 text-center sm:block xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Montant moyen</h5>
+					</div>
+					<div class="hidden p-2.5 text-center sm:block xl:p-5">
+						<h5 class="text-sm font-medium uppercase xsm:text-base">Montant total</h5>
+					</div>
+				</div>
+				{% set allTransactions, allAverage = 0, 0 %}
+				{% for method, array in paiementsArray %}
+					{% set transactions = array.paiements|length %}
+					{% set allTransactions = allTransactions + transactions %}
+
+					{% set average = array.total / array.paiements|length %}
+					{% set allAverage = allAverage + average %}
+
+					<div class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5">
+						<div class="flex items-center gap-3 p-2.5 xl:p-5">
+								<div class="flex-shrink-0">
+									{{ svg.paiementMethode(method, 24) }}
+								</div>
+								<p class="hidden font-medium text-black dark:text-white sm:block">
+									{{ method }}
+								</p>
+						</div>
+
+						<div class="flex items-center justify-center p-2.5 xl:p-5">
+							<p class="font-medium text-black dark:text-white">{{ array.reservations|length }}</p>
+						</div>
+
+						<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+							<p class="font-medium text-black dark:text-white">{{ transactions }}</p>
+						</div>
+
+						<div class="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+							<p class="font-medium text-black dark:text-white">{{ (average / 100)|number_format(2,',','.') }}€</p>
+						</div>
+
+						<div class="flex items-center justify-center p-2.5 xl:p-5">
+							<p class="font-medium text-meta-3">
+								<span>{{ (array.total / 100)|number_format(2,',','.') }}€</p>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="grid grid-cols-3 border-t border-black  dark:border-strokedark sm:grid-cols-5">
+					<div class="flex items-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white capitalize">{{ month|format_date(locale='fr',pattern='MMMM Y') }}</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white">{{ countReservations }}</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white">{{ allTransactions }}</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white">{{ (allAverage / 100)|number_format(2,',','.')}}€</p>
+					</div>
+					<div class="flex items-center justify-center p-2.5 xl:p-5">
+						<p class="font-bold dark:text-white text-meta-3">{{ (total / 100)|number_format(2,',','.') }}€</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
 {% endblock %}
