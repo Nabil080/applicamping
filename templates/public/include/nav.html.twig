@@ -1,4 +1,4 @@
-<nav class="flex justify-between border-b-2 bg-main-50  border-main-500 items-center px-12 py-1">
+<nav class="flex justify-between bg-black text-bodydark1 items-center px-12 py-4 shadow-xl">
 	<section id="goback">
 		<a href="" class="underline italic">
 			<i class="fa fa-arrow-left"></i>
@@ -7,17 +7,18 @@
 	</section>
 	<section id="logo" class="grid relative">
 		<a href={{ path('homepage') }} class="overlay"></a>
-		<img
-		class="mx-auto" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/01/logo-camping.png" alt="logo">
-	{# <img class="" src="https://static.vecteezy.com/system/resources/thumbnails/024/553/676/small/skull-wearing-crown-logo-skull-king-sticker-pastel-cute-colors-generative-ai-png.png" alt="logo"> #}
-	</section>
+		<img class="max-w-64" src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/></section>
 	<section id="account">
-		<div class="button relative">
-			<a href={{ app.user ? path('app_profil') : path('app_login') }} class="overlay"></a>
+		<div class="btn btn-sm relative">
+			<a href={{ app.user ? (is_granted('ROLE_ADMIN') ? path('app_admin') : path('app_profil')) : path('app_login') }} class="overlay"></a>
 			<p>
 				<i class="fa fa-user-circle"></i>
 				{% if app.user %}
+					{% if is_granted('ROLE_ADMIN') %}
+						Interface administrateur
+					{% else %}
 					Mon compte client
+					{% endif %}
 				{% else %}
 					Se connecter
 				{% endif %}

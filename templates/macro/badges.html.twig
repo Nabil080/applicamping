@@ -1,0 +1,27 @@
+{% macro basic(statut) %}
+	{% set s = statut|lower %}
+
+	{% if s is same as "en service" or s is same as "actif" %}
+		{% set classes = "success" %}
+	{% elseif s is same as "désactivé"%}
+		{% set classes = "danger" %}
+	{% elseif s is same as "maintenance" %}
+		{% set classes = "warning" %}
+	{% else %}
+		{% set classes = "warning" %}
+	{% endif %}
+
+	<span class="badge {{ classes }}">{{ statut }}</span>
+{% endmacro %}
+
+
+Liste des statuts : 
+
+Fonctionne normalement
+En maintenance
+Annulé
+Validé
+En attente de validation
+Refusé
+Archivé
+

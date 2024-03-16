@@ -1,18 +1,12 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'layout/admin.html.twig' %}
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
 
-{% block title %}
-	Clients
-{% endblock %}
-
-{% set title = 'Clients' %}
-{% set tooltip = 'Tous les utilisateurs avec le rôle client' %}
-{% set search_placeholder = 'Rechercher un client...' %}
+{% set options = { filters: filters.clients, create: 'Créer un compte client', pagination: true, search: 'Rechercher un client...', tooltip: 'Tous les utilisateurs avec le rôle client'} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.clients('clients'), filters.clients, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.clients(clients), options) }}
 {% endblock %}

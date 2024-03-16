@@ -7,6 +7,8 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "buzzingpixel/twig-switch": "^1.0",
+        "craue/formflow-bundle": "^3.7",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
@@ -41,6 +43,7 @@
         "symfony/webpack-encore-bundle": "^2.1",
         "symfony/yaml": "6.3.*",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.8",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {

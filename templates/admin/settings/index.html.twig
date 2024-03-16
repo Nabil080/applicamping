@@ -1,0 +1,235 @@
+{% extends 'layout/settings.html.twig' %}
+{% import 'admin/macro/dashboard_cells.html.twig' as cell %}
+{% import "macro/svg.html.twig" as svg %}
+
+
+{% block title %}
+	Accueil
+{% endblock %}
+
+{% block body %}
+	<!-- ! card items -->
+	<div class="2xl:gap-7.5 grid grid-cols-12 gap-4 md:gap-6 text-base xl:text-lg">
+		{# <div class="2xl:gap-7.5 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6"> #}
+		{# ! administration ! #}
+			<div class="col-span-full"> <h2>
+				Administrations
+			</h2>
+		</div>
+
+		<!-- Card Item Start -->
+		<article class="basic-card col-span-full xl:col-span-6">
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+				Infos camping
+			</h4>
+			<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
+				<div>
+					<span class="font-semibold">Nom :</span>
+					{{ camping.nom }}
+				</div>
+				<div>
+					<span class="font-semibold">Adresse :</span>
+					{{ camping.adresse }}
+				</div>
+				<div>
+					<span class="font-semibold">Tel :</span>
+					{{ camping.telephone}}
+				</div>
+				<div>
+					<span class="font-semibold">Mail :</span>
+					{{ camping.email }}
+				</div>
+				<div>
+					<span class="font-semibold">Site :</span>
+					{{ camping.site }}
+				</div>
+				<div>
+					<span class="font-semibold">Code NAF :</span>
+					{{ camping.codeNaf }}
+				</div>
+				<div>
+					<span class="font-semibold">Capital :</span>
+					{{ camping.capital }}
+				</div>
+				<div>
+					<span class="font-semibold">Forme juridique :</span>
+					{{ camping.formeJuridique }}
+				</div>
+
+			</div>
+			<div class="flex justify-end mt-2">
+				<button data-modal-open="info-modal" class="clickable block">
+					Modifier
+				</button>
+			</div>
+		</article>
+
+		<article class="basic-card flex flex-col col-span-full xl:col-span-6">
+			<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+				Dernières actions
+			</h4>
+
+			<div class="overflow-y-scroll grow max-h-60 xl:max-h-none xl:h-1 divide-y divide-stroke">
+				{% for log in logs %}
+					<a href="messages.html" class="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4 text-black dark:text-bodydark">
+						<div class="relative h-8 w-8 rounded-full">
+							{% if log.contexte is same as 'camping' %}
+								{{ svg.blueCard }}
+							{% elseif log.contexte is same as 'paiement' %}
+								{{ svg.blueCard }}
+							{% else %}
+								{{ svg.blueCard }}
+							{% endif %}
+						</div>
+						<div class="flex flex-1 items-end justify-between">
+							<div>
+								<h5 class="font-medium dark:font-semibold">
+									{{ log.user.prenom }}
+									{{ log.user.nom }}
+								</h5>
+								<p class="">
+									<span class="text-sm font-medium">{{ log.message }}</span>
+								</p>
+							</div>
+							<div>
+								{# <span class="text-xs text-body">15 nov, 12h26</span> #}
+								<span class="text-xs text-body whitespace-nowrap">{{ log.date|format_datetime()|split(',')|join('<br>')|raw() }}</span>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+			<div class="text-end mt-2">
+				<a href={{ path('app_admin_settings_logs') }} class="clickable block">
+					Voir le registre
+				</a>
+			</div>
+		</article>
+
+
+		{# ! Camping ! #}
+		<div class="col-span-full">
+			<h2>
+				Camping
+			</h2>
+		</div>
+
+		<!-- Card Item Start -->
+		<article class="basic-card col-span-full xl:col-span-8 flex flex-wrap xl:flex-nowrap gap-6 xl:gap-12">
+			<section class="">
+				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+					{{ total.emplacements }} emplacements, {{ total.hebergements }} hébergements
+				</h4>
+				<div class="grid mt-4 gap-2 text-black dark:text-bodydark">
+					{% for hebergement in hebergements|slice(0,5) %}
+					<div>
+						<span class="font-semibold">{{ hebergement.nom }} :</span>
+						{{ hebergement.emplacements|length }} emplacements
+					</div>
+					{% endfor %}
+				</div>
+			</section>
+			<section class="grid gap-2  grow">
+				<a href={{ path('app_admin_settings_hebergements') }} class="btn">Hébèrgements</a>
+				<a href={{ path('app_admin_settings_emplacements') }} class="btn">Emplacements</a>
+				<button class="btn">Carte interactive</button>
+			</section>
+		</article>
+
+		<!-- Card Item Start -->
+		<article class="basic-card col-span-full xl:col-span-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-2">
+			<div class="space-y-2">
+				<div class="flex flex-wrap justify-between">
+					<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+						Saison en cours
+					</h4>
+					<a href={{ path('app_admin_settings_saisons') }} class="clickable xl:block">
+						Voir les saisons
+					</a>
+				</div>
+				<div class="grid">
+					<button class="btn max-xl:px-2 btn pointer-events-none">{{ saison.nom }}</button>
+				</div>
+			</div>
+			<div class="space-y-2">
+				<h4 class="text-title-xsm xl:text-title-sm font-bold text-black dark:text-white">
+					Prochaine saison
+				</h4>
+				<div class="grid">
+					<button class="btn max-xl:px-2 btn-border pointer-events-none">{{ nextSaison.nom }}</button>
+				</div>
+			</div>
+		</article>
+
+
+		{# ! Paramètres ! #}
+		<div class="col-span-full">
+			<h2>
+				Personnaliser
+			</h2>
+		</div>
+
+		{% set width, classes, stroke = '100%','', 1 %}
+		{{ cell.imageCard("Règles de réservation","app_admin_settings_regles",svg.rules(width,classes,stroke)) }}
+		{{ cell.imageCard("Tarifs","app_admin_settings_tarifs",svg.bills(width,classes,stroke)) }}
+		{{ cell.imageCard("Options supplémentaires","app_admin_settings_options",svg.dog(width,classes,stroke)) }}
+	</div>
+{% endblock %}
+
+
+{% block modals %}
+
+	{% import "macro/inputs.html.twig" as input %}
+
+	<article {{ stimulus_controller('modal') }} id="info-modal" class="modal hidden">
+		<div class="p-6.5 min-w-[50dvw] crud rounded-md max-h-[90dvh] overflow-y-scroll lg:overflow-hidden text-black dark:text-white">
+			<div class="relative">
+				<div class="flex items-center justify-between">
+					<h3 class="text-xl font-bold sm:text-2xl">
+						Informations camping
+					</h3>
+					<button {{ stimulus_action('modal','hide') }} class="rounded-lg hover:bg-bodydark p-1.5">
+						{{ svg.cross(26) }}</button>
+				</div>
+				<span class="mx-auto inline-block h-1 w-22.5 rounded bg-primary"></span>
+			</div>
+			<p class="py-4 text-body dark:text-bodydark">
+				Ces informations sont utilisées et affichées lors de la génération de facture.
+			</p>
+
+			{{ form_start(campingForm) }}
+			{{form_widget(campingForm, {'attr': {'class': 'lg:grid grid-cols-2 gap-x-2.5 '}})}}
+			<button type="submit" class="btn w-full btn-md rounded-md">Valider</button>
+			{{ form_end(campingForm) }}
+
+		</div>
+	</article>
+
+
+{% endblock %}
+
+
+{% block comment %}
+
+	<form action="#">
+		<div class="">
+			{% set classes = '' %}
+
+			{{ input.text("Nom du camping", {name: 'test', placeholder: 'Camping Mont-Olympe', inputClasses: classes, attributes: "required" }) }}
+
+			{{ input.text("Email", {name: 'test', placeholder: 'exemple@exemple.com', inputClasses: classes }) }}
+
+			{{ input.text("Téléphone", {name: 'test', placeholder: '06 38 05 89 97', inputClasses: classes }) }}
+
+			{{ input.text("Adresse", {name: 'test', placeholder: 'Rue, ville, pays', inputClasses: classes }) }}
+
+			{{ input.text("Code NAF", {name: 'test', placeholder: 'Code NAF', inputClasses: classes }) }}
+
+			{{ input.text("Site web", {name: 'test', placeholder: 'camping.com', inputClasses: classes }) }}
+
+			<button type="submit" class="btn w-full btn-md rounded-md">
+				Valider
+			</button>
+		</div>
+	</form>
+{% endblock %}

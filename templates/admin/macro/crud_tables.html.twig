@@ -1,45 +1,49 @@
-{% macro deleteButton(id) %}
-	<button type="button" data-id-value={{ id }} class="btn btn-sm btn-border delete">
-		<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-			<path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
-		</svg>
+{% macro deleteButton(id = 0, url = null, type = null , title = null ) %}
+	{% import 'macro/svg.html.twig' as svg %}
+	{% set path = url|default(path('app_admin_delete_redirect', {id: id})) %}
+	<button {{ stimulus_controller('delete') }} data-id={{ id }} data-path={{ path }} data-type={{ type|default('entité') }} data-name={{ title|default('objet') }} {{ stimulus_action('delete','show')}} class="btn btn-sm  delete">
+		{{ svg.trash }}
 		Supprimer
 	</button>
 {% endmacro %}
 
-{% macro updateButton(id) %}
-	<button type="button" data-id-value={{ id }} class="btn btn-sm update">
-		<svg xmlns="http://www.w3.org/2000/svg" class="" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-			<path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"/>
-			<path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"/>
-		</svg>
+{% macro updateButton(id = 0, url = false) %}
+{% set path = url|default(path('app_admin_update_redirect', {id: id})) %}
+	{% import 'macro/svg.html.twig' as svg %}
+	<a href={{ path }} class="btn btn-sm update">
+		{{ svg.edit }}
 		Modifier
-	</button>
+	</a>
 {% endmacro %}
 
 {% macro seeMoreButton(id) %}
+	{% import 'macro/svg.html.twig' as svg %}
 	<button type="button" data-id-value={{ id }} class="btn btn-sm btn-border see-more">
-		<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor">
-			<path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/>
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"/>
-		</svg>
+		{{ svg.eye }}
 		Voir
 	</button>
 {% endmacro %}
 
-{% macro printButton(id = 'month', text = 'Imprimer', large = false) %}
-	<button type="button" data-id-value={{ id }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
-		<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer">
-			<polyline points="6 9 6 2 18 2 18 9"/>
-			<path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-			<rect width="12" height="8" x="6" y="14"/>
-		</svg>
-		{{ text }}
+{% macro printButton(options = {}) %}
+	{% import 'macro/svg.html.twig' as svg %}
+	<button data-tools-selector-value={{ options.selector|default('') }} {{ stimulus_controller('tools') }} {{ stimulus_action('tools','print') }} type="button" class="btn {{ options.large is defined ?: 'btn-sm' }} btn-border see-more hover:brightness-90">
+		{{ svg.print }}
+		{{ options.text|default('Imprimer') }}
 	</button>
+{% endmacro %}
+
+{% macro addButton(id = 'add', text = 'Ajouter', large = false, url = false) %}
+{% set path = url|default(path('app_admin_create_redirect')) %}
+	{% import 'macro/svg.html.twig' as svg %}
+	<a href={{ path }} class="btn {{ large ? : 'btn-sm' }} btn-border see-more">
+		{{ svg.plus }}
+		{{ text }}
+	</a>
 {% endmacro %}
 
 
 {% macro reservations(reservations = 'array des reservations') %}
+	{% import 'macro/svg.html.twig' as svg %}
 	<table>
 		<thead>
 			<tr>
@@ -55,207 +59,665 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for i in 1..5 %}
+			{% for reservation in reservations %}
 				<tr>
 					<th scope="row">
-						1430
+						{{ reservation.id }}
 					</th>
-					<td class="px-4 py-3 text-center">
-						<span class="badge success">Confirmé</span>
+					<td>
+						{% import "macro/badges.html.twig" as badge %}
+						{{ badge.basic(reservation.statut)}}
 					</td>
 					<td>
-						14/07/2003
+						{{ reservation.debut|format_date }}
 						<br>
-						19/08/2022
+						{{ reservation.fin|format_date }}
 						<br>
-						<span class="details">5 nuits</span>
+						<span class="details">{{ reservation.nuits }} nuits</span>
 					</td>
 					<td>
 						<div class="flex justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round text-gray-400 mr-2">
-								<circle cx="12" cy="8" r="5"/>
-								<path d="M20 21a8 8 0 0 0-16 0"/>
-							</svg>
-							2
+							{{ svg.adult(24) }}
+							{{ reservation.adultes }}
 						</div>
 						<div class="flex justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-baby text-gray-400 mr-2">
-								<path d="M9 12h.01"/>
-								<path d="M15 12h.01"/>
-								<path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
-								<path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/>
-							</svg>
-							1
+							{{ svg.child(24) }}
+							{{ reservation.enfants }}
 						</div>
 					</td>
 					<td>
-						Camping-car
+						{{ reservation.emplacement.hebergement.nom}}
 						<br>
-						Emplacement 12</td>
+						Emplacement {{ reservation.emplacement.numero }}</td>
 					<td>
-						Tarif : 100 €
+						Tarif : {{ reservation.montant }} €
 						<br>
 						Réglé :
-						<span>90 €</span>
+						<span>{{ reservation.paiementsTotal }} €</span>
 						<br>
-						<span class="details">3 options</span>
+						<span class="details">{{ reservation.options|length }} options</span>
 					</td>
 					<td>
 						<div>
-							BERTRAND
+							{{ reservation.user.nom|upper }}
 							<br>
-							Sylvain
+							{{ reservation.user.prenom }}
 							<br>
-							<span class="details">Pas de commentaire</span>
+							<span class="details">{{ reservation.commentaire ? 'Voir le commentaire' : 'Pas de commentaire' }}</span>
 						</div>
 					</td>
 					<td>
-						14/07/2003
-						<br>
-						14h57
+						{{ reservation.date|format_datetime()|split(',')|join('<br>')|raw() }}
 					</td>
 					<td>
 						<div class="actions grid-cols-2">
-							{% set id = i %}
-							{{ _self.seeMoreButton(id) }}
-							{{ _self.updateButton(id) }}
-							{{ _self.printButton(id,"Facture") }}
-							{{ _self.deleteButton(id) }}
+							{{ _self.seeMoreButton(reservation.id) }}
+							{{ _self.updateButton(reservation.id) }}
+							{{ _self.printButton(reservation.id,"Facture") }}
+							{{ _self.deleteButton(reservation.id,  path('app_admin_reservations_delete', {id: reservation.id} ), 'Réservation', reservation.id ) }}
 						</div>
 					</td>
 				</tr>
-			{% endfor %}
+			</tbody>
 		</tbody>
-	</table>
-
+	</tr>
+{% endfor %}</tbody></table>{% endmacro %}{% macro clients(clients = 'array des user') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Statut</th>
+	<th scope="col">
+		Nom<br>
+		Prénom</th>
+	<th scope="col">Email</th>
+	<th scope="col">Téléphone</th>
+	<th scope="col">Adresse</th>
+	<th scope="col">Réservations</th>
+	<th scope="col">Création</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for user in clients %}
+	<tr>
+		<th scope="row">
+			{{ user.id }}
+		</th>
+		<td>
+			{% import "macro/badges.html.twig" as badge %}
+			{{ badge.basic(user.statut)}}
+		</td>
+		<td>
+			{{ user.nom|upper }}
+			<br>
+			{{ user.prenom }}
+			<br>
+		</td>
+		<td>
+			{{ user.email }}
+		</td>
+		<td>
+			{{ user.telephone|default('<span class="details">Inconnu</span>')|raw() }}
+		</td>
+		<td>
+		{% if user.adresse %}
+			{{ user.adresse }}
+			<br>
+			{{ user.codePostal }}, {{ user.ville }},
+			<br>
+			{{ user.pays }}
+		{% else %}
+			<span class="details">Inconnu</span>
+		{% endif %}
+		</td>
+		<td>
+			<div>
+				{{ user.reservations|length}} réservations
+				<br>
+				<a href={{ path('app_admin_reservations', {userId: user.id}) }} class="details">Voir les détails</a>
+			</div>
+		</td>
+		<td>
+			{{ user.creation|format_datetime()|split(',')|join('<br>')|raw() }}
+		</td>
+		<td>
+			<div class="actions">
+				{{ _self.updateButton(user.id) }}
+				{{ _self.deleteButton(user.id) }}
+			</div>
+		</td>
+	</tr>
+{% endfor %}</tbody></table>{% endmacro %}{% macro paiements(paiements = 'array des paiements') %}{% import 'macro/svg.html.twig' as svg %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Réservation</th>
+	<th scope="col">Client</th>
+	<th scope="col">Montant</th>
+	<th scope="col">Méthode</th>
+	<th scope="col">Date du paiement</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for paiement in paiements %}
+	<tr>
+		<th scope="row">
+			{{ paiement.id }}
+		</th>
+		<td>
+			<div>
+				{{ paiement.reservation.id }}
+				<br>
+				<a href="" class="details">Voir la réservation</a>
+			</div>
+		</td>
+		<td>
+		{% if paiement.user %}
+			{{ paiement.user.nom|upper }}
+			<br>
+			{{ paiement.user.prenom }}
+		{% else %}
+			{{ 'Aucun utilisateur' }}
+		{% endif %}
+		</td>
+		<td>
+			<div class="flex items-center justify-center gap-2">
+				<div class="text-body">
+					{{ svg.euro(24) }}
+				</div>
+				{{ (paiement.montant / 100)|number_format(2, ',', '.') }}€
+			</div>
+		</td>
+		<td>
+			<div class="flex items-center justify-center gap-2">
+				<div class="text-body">
+					{{ svg.paiementMethode(paiement.methode, 24) }}
+				</div>
+				{{ paiement.methode }}
+			</div>
+		</td>
+		<td>
+			{{ paiement.date|format_datetime|split(',')|join('<br>')|raw }}
+		</td>
+		<td>
+			<div class="actions">
+				{{ _self.updateButton(paiement.id, path('app_admin_paiements_update',{id: paiement.id} )) }}
+				{{ _self.deleteButton(paiement.id, path('app_admin_paiements_delete',{id: paiement.id} ), 'Paiement', (paiement.montant / 100)|number_format(2, ',', '.') ~ '€') }}
+			</div>
+		</td>
+	</tr>
+{% endfor %}</tbody></table>{% endmacro %}{% macro logs(logs) %}{% import 'macro/svg.html.twig' as svg %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Utilisateur</th>
+	<th scope="col">Date</th>
+	<th scope="col">Contexte</th>
+	<th scope="col">Type</th>
+	<th scope="col">Message</th>
+</tr></thead><tbody>
+{% for log in logs %}
+	<tr>
+		<th scope="row">
+			{{ log.id }}
+		</th>
+		<td>
+			{{ log.user.nom|upper }}
+			<br>
+			{{ log.user.prenom }}
+			<br>
+		</td>
+		<td>
+			{{log.date|format_datetime()|split(',')|join('<br>')|raw()}}
+		</td>
+		<td>
+			<div class="flex items-center justify-center gap-2">
+				<div class="text-body">
+					{{ svg.blueCard(24) }}
+				</div>
+				{{ log.contexte }}
+			</div>
+		</td>
+		<td>
+			<span class="text-danger">
+				{{ log.type }}
+			</span>
+		</td>
+		<td>
+			{{ log.message }}
+		</td>
+	</tr>
+{% endfor %}</tbody></table>{% endmacro %}{% macro admins(users = 'array des user') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Statut</th>
+	<th scope="col">
+		Nom<br>
+		Prénom</th>
+	<th scope="col">Email</th>
+	<th scope="col">Téléphone</th>
+	<th scope="col">Adresse</th>
+	<th scope="col">Registre</th>
+	<th scope="col">Création</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for user in users %}
+	<tr>
+		<th scope="row">
+			{{ user.id }}
+		</th>
+		<td>
+			{% import "macro/badges.html.twig" as badge %}
+			{{ badge.basic(user.statut)}}
+		</td>
+		<td>
+			{{ user.nom|upper }}
+			<br>
+			{{ user.prenom }}
+			<br>
+		</td>
+		<td>
+			{{ user.email }}
+		</td>
+		<td>
+			{{ user.telephone|default('<span class="details">Inconnu</span>')|raw() }}
+		</td>
+		<td>
+		{% if user.adresse %}
+			{{ user.adresse }}
+			<br>
+			{{ user.codePostal }}, {{ user.ville }},
+			<br>
+			{{ user.pays }}
+		{% else %}
+			<span class="details">Inconnu</span>
+		{% endif %}
+		</td>
+		<td>
+			<div>
+				{{ user.logs|length }} actions
+				<br>
+				<a href={{ path('app_admin_settings_logs', { userId: user.id }) }} class="details">Voir les actions</a>
+			</div>
+		</td>
+		<td>
+			{{ user.creation|format_datetime()|split(',')|join('<br>')|raw() }}
+		</td>
+		<td>
+			<div class="actions">
+				{{ _self.updateButton(user.id) }}
+				{{ _self.deleteButton(user.id) }}
+			</div>
+		</td>
+	</tr>
+{% endfor %}</tbody></table>
 {% endmacro %}
 
-{% macro clients(user = 'array des user') %}
+{% macro emplacements(emplacements = 'array des emplacements') %}
 	<table>
 		<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">N°</th>
+			<th scope="col">Type d'hébergement (ID)</th>
+			<th scope="col">Tags</th>
+			<th scope="col">Statut</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for emplacement in emplacements %}
 			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">
-					Nom<br>
-					Prénom</th>
-				<th scope="col">Email</th>
-				<th scope="col">Téléphone</th>
-				<th scope="col">Adresse</th>
-				<th scope="col">Réservations</th>
-				<th scope="col">Création</th>
-				<th scope="col">Actions</th>
+				<th scope="row">
+					{{ emplacement.id }}
+				</th>
+				<td>
+					{{ emplacement.numero }}
+				</td>
+				<td>
+					{{ emplacement.hebergement.nom }}
+					({{emplacement.hebergement.id}})
+				</td>
+				<td>
+					{{ emplacement.tags|map(tag => tag.nom)|join(', ')|default('Aucun') }}
+				</td>
+				<td>
+					{% import "macro/badges.html.twig" as badge %}
+					{{ badge.basic(emplacement.statut) }}
+				</td>
+				<td>
+					<div class="actions">
+						{{ _self.updateButton(emplacement.id) }}
+						{{ _self.deleteButton(emplacement.id, path('app_admin_settings_emplacements_delete', {id: emplacement.id}), "Emplacement", emplacement.numero) }}
+					</div>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			{% for i in 0..5 %}
-				<tr>
-					<th scope="row">
-						1430
-					</th>
+		{% endfor %}</tbody></table>
+		
+		{% endmacro %}
+		
+		{% macro saisons(saisons = 'array des saisons') %}<table><thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Statut</th>
+			<th scope="col">Début</th>
+			<th scope="col">Fin</th>
+			<th scope="col">Jours</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for saison in saisons %}
+			<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+				<th scope="row">
+					{{ saison.id }}
+				</th>
+				<td>
+					{{ saison.nom }}
+				</td>
+				<td>
+					{% import "macro/badges.html.twig" as badge %}
+					{{ badge.basic(saison.statut)}}
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<div class="actions">
+						{{ _self.addButton(saison.id, "Ajouter une période", false, path( 'app_admin_settings_saisons_periode_create', {id: saison.id})) }}
+						{{ _self.updateButton(saison.id) }}
+						{{ _self.deleteButton(saison.id, path('app_admin_settings_saisons_delete', {id: saison.id}), 'Saison', saison.nom) }}
+					</div>
+				</td>
+			</tr>
+
+			{% for date in saison.periodes %}
+				<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+					<th scope="row"></th>
+					<td></td>
+					<td></td>
 					<td>
-						BELLILA
-						<br>
-						Nabil
-						<br>
+						{{ date.debut|format_date }}
 					</td>
 					<td>
-						bellilanabil8@gmail.com
+						{{ date.fin|format_date }}
 					</td>
 					<td>
-						06.38.05.89.97
-					</td>
-					<td>
-						17 rue des tilleuls
-						<br>
-						08000, Villers-Semeuse,
-						<br>
-						France
-					</td>
-					<td>
-						<div>
-							2 réservations
-							<br>
-							<a href="" class="details">Voir les détails</a>
-						</div>
-					</td>
-					<td>
-						14/07/2003
-						<br>
-						14h57
+					{{ date.jours|map(jour => jour)|join(', ')|default('Tous') }}
 					</td>
 					<td>
 						<div class="actions">
-							{% set id = i %}
-							{{ _self.updateButton(id) }}
-							{{ _self.deleteButton(id) }}
+							{{ _self.updateButton(date.id, path('app_admin_settings_saisons_periode_update', { id: date.id })) }}
+							{{ _self.deleteButton(date.id, path('app_admin_settings_saisons_periode_delete', { id: date.id }), 'période' , date.saison.nom) }}
 						</div>
 					</td>
 				</tr>
 			{% endfor %}
+
+		{% endfor %}
 		</tbody>
 	</table>
 {% endmacro %}
 
-{% macro paiements(user = 'array des paiements') %}
+{% macro tags(tags = 'array des tag') %}
 	<table>
 		<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Emplacements</th>
+			<th scope="col">Actions</th>
+		</tr></thead><tbody>
+		{% for tag in tags %}
 			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Réservation</th>
-				<th scope="col">Client</th>
-				<th scope="col">Montant</th>
-				<th scope="col">Méthode</th>
-				<th scope="col">Date du paiement</th>
-				<th scope="col">Actions</th>
+				<th scope="row">
+					{{ tag.id }}
+				</th>
+				<td>
+					{{ tag.nom }}
+				</td>
+				<td>
+					{{ tag.emplacements|length }} Emplacements
+				</td>
+				<td>
+					<div class="actions">
+						{{ _self.updateButton(tag.id) }}
+						{{ _self.deleteButton(tag.id, path('app_admin_settings_tags_delete', {id: tag.id}), "Tag", tag.nom) }}
+					</div>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-			{% for i in 0..5 %}
-				{% set id = i %}
-				<tr>
-					<th scope="row">
-						{{ id }}
-					</th>
-					<td>
-						<div>
-							1450
-							<br>
-							<a href="" class="details">Voir la réservation</a>
-						</div>
-					</td>
-					<td>
-						BELLILA
-						<br>
-						Nabil
-						<br>
-					</td>
-					<td>
-						<div class="flex items-center justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-euro text-gray-400 mr-2">
-								<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M7 12h5"/><path d="M15 9.4a4 4 0 1 0 0 5.2"/>
-							</svg>
-							50,20€
-						</div>
-					</td>
-					<td>
-						<div class="flex items-center justify-center">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-gray-400 mr-2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-							Carte bancaire
-						</div>
-					</td>
-					<td>
-						14/07/2003
-						<br>
-						14h57
-					</td>
-					<td>
-						<div class="actions">
-							{{ _self.updateButton(id) }}
-							{{ _self.deleteButton(id) }}
-						</div>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-{% endmacro %}
+		{% endfor %}</tbody></table>{% endmacro %}
+
+{% macro options(options = 'array des options') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Nom</th>
+	<th scope="col">Statut</th>
+	<th scope="col">Nombre maximum</th>
+	<th scope="col">Hebergements</th>
+	<th scope="col">Saisons</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for option in options %}
+	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+		<th scope="row">
+			{{ option.id }}
+		</th>
+		<td>
+			{{ option.nom }}
+		</td>
+		<td>
+			{% import "macro/badges.html.twig" as badge %}
+			{{ badge.basic(option.statut)}}
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>
+			<div class="actions">
+				{{ _self.addButton(option.id, "Ajouter une option", false, path( 'app_admin_settings_options_maximum_create', {id: option.id}) ) }}
+				{{ _self.updateButton(option.id) }}
+				{{ _self.deleteButton(option.id, path( 'app_admin_settings_options_delete', {id: option.id} ), 'Option', option.nom) }}
+			</div>
+		</td>
+	</tr>
+
+	{% for maximum in option.optionMaximums %}
+		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+			<th scope="row"></th>
+			<td></td>
+			<td></td>
+			<td>
+				{{ maximum.nombre }}
+			</td>
+			<td>
+			 	{{ maximum.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous')  }}
+			</td>
+			<td>
+			 	{{ maximum.saisons|map(saison => saison.nom)|join(', ')|default('Tous')  }}
+			</td>
+			<td>
+				<div class="actions">
+					{{ _self.updateButton(maximum.id, path('app_admin_settings_options_maximum_update', { id: maximum.id })) }}
+					{{ _self.deleteButton(maximum.id, path('app_admin_settings_options_maximum_delete', { id: maximum.id }), 'maximum' , maximum.nombre) }}
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+
+{% endfor %}</tbody></table>{% endmacro %}{% macro offres(array = ["Remise/coupon"]) %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Type</th>
+	<th scope="col">Nom</th>
+	<th scope="col">Montant</th>
+	<th scope="col">Début</th>
+	<th scope="col">Fin</th>
+	<th scope="col">Utilisations restantes</th>
+	<th scope="col">Hebergements</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for type in array %}
+	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+		<th scope="row">
+			{{ type.id }}
+		</th>
+		<td>
+			{{ type.type }}
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>
+			<div class="actions">
+				{{ _self.addButton(type.id, "Ajouter une offre", false, path('app_admin_settings_tarifs_offres_create', {type: type.type, id: type.id})) }}
+			</div>
+		</td>
+	</tr>
+	{% for offre in type.offres %}
+		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+			<th scope="row"></th>
+			<td></td>
+			<td>{{ offre.nom }}</td>
+			<td>
+				{{ (offre.montant / 100)|number_format(2, ',', '.')  }}
+				{{ offre.devise is same as 'euro' ? '€' : '%' }}
+			</td>
+			<td>
+				{{ offre.debut ? offre.debut|format_date : "Pas de date de début" }}
+			</td>
+			<td>
+				{{ offre.fin ? offre.fin|format_date : "Pas de date de début" }}
+
+			</td>
+			<td>
+			{{ offre.utilisations|default('Pas de limite d\'utilisation') }}
+			</td>
+			<td>
+			{{ offre.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous')}}
+			</td>
+			<td>
+				<div class="actions">
+					{{ _self.updateButton(offre.id, path('app_admin_settings_tarifs_offres_update', {id: offre.id} )) }}
+					{{ _self.deleteButton(offre.id, path('app_admin_settings_tarifs_offres_delete', { id: offre.id }), offre.type , offre.nom) }}
+				
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+
+{% endfor %}</tbody></table>{% endmacro %}{% macro tarifs(type = ["Array du type, exemple : emplacements"], typeName = 'Hebergement') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Nom</th>
+	<th scope="col">Prix</th>
+	<th scope="col">Par nuit</th>
+	<th scope="col">Par personne</th>
+	<th scope="col">Saisons</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for entity in type %}
+	<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 !bg-gray-100 dark:!bg-gray-800">
+		<th scope="row">
+			{{ entity.id }}
+		</th>
+		<td>
+			{{ entity.nom }}
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>
+			<div class="actions">
+				{{ _self.addButton(entity.id, "Ajouter un tarif", false, path('app_admin_settings_tarifs_create', {type: typeName, id: entity.id})) }}
+			</div>
+		</td>
+	</tr>
+	{% for tarif in entity.tarifs %}
+		<tr class="hover:!bg-gray-200 dark:!border-gray-600 dark:hover:!bg-gray-700 dark:!bg-boxdark !bg-white">
+			<th scope="row"></th>
+			<td></td>
+			<td>
+				{{ (tarif.montant / 100)|number_format(2, ',', '.') }}
+				€
+			</td>
+			<td>
+				{{ tarif.parNuit ? "Oui" : "Non" }}
+			</td>
+			<td>
+				{{ tarif.parPersonne ? "Oui" : "Non" }}
+			</td>
+			<td>
+				{{ tarif.saisons|map(saison => saison.nom)|join(', ')|default('Tous') }}
+			</td>
+			<td>
+				<div class="actions">
+					{{ _self.updateButton(tarif.id, path('app_admin_settings_tarifs_update', {id: tarif.id})) }}
+					{{ _self.deleteButton(tarif.id, path('app_admin_settings_tarifs_delete', {id: tarif.id}), 'Tarif', (tarif.montant / 100)|number_format(2, ',', '.') ~ "€") }}
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+
+{% endfor %}</tbody></table>{% endmacro %}{% macro jours(rules = 'array des règles de checkin/out') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Jours</th>
+	<th scope="col">Type d'hébergement</th>
+	<th scope="col">Saisons</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for rule in rules %}
+	<tr>
+		<th scope="row">
+			{{ rule.id }}
+		</th>
+		<td>
+		{% if rule.checkIn %}
+			{{ rule.checkIn|map(day => day)|join(', ')|default('Tous') }}
+		{% elseif rule.checkOut %}
+			{{ rule.checkOut|map(day => day)|join(', ')|default('Tous') }}
+		{% endif %}
+		</td>
+		<td>
+			{{ rule.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous') }}
+		</td>
+		<td>
+			{{ rule.saisons|map(saison => saison.nom)|join(', ')|default('Tous') }}
+		</td>
+		<td>
+			<div class="actions">
+				{{ _self.updateButton(rule.id, path('app_admin_settings_regles_sejour_update', {id: rule.id, type: rule.checkIn ? 'checkin' : 'checkout'})) }}
+				{{ _self.deleteButton(rule.id, path('app_admin_settings_regles_sejour_delete', {id: rule.id, type: rule.checkIn ? 'checkin' : 'checkout'}), 'règle', rule.checkIn ? 'arrivé' : 'départ' ) }}
+			</div>
+		</td>
+	</tr>
+
+{% endfor %}
+</tbody></table>{% endmacro %}{% macro durée(rules = 'array des règles de min/maxstay') %}<table><thead>
+<tr>
+	<th scope="col">ID</th>
+	<th scope="col">Séjour</th>
+	<th scope="col">Type d'hébergement</th>
+	<th scope="col">Saisons</th>
+	<th scope="col">Actions</th>
+</tr></thead><tbody>
+{% for rule in rules %}
+	<tr>
+		<th scope="row">
+			{{ rule.id }}
+		</th>
+		<td>
+			{{ rule.minimum ?: rule.maximum}}
+			nuits
+		</td>
+		<td>
+			{{ rule.hebergements|map(hebergement => hebergement.nom)|join(', ')|default('Tous') }}
+		</td>
+		<td>
+			{{ rule.saisons|map(saison => saison.nom)|join(', ')|default('Tous') }}
+		</td>
+		<td>
+			<div class="actions">
+				{{ _self.updateButton(rule.id, path('app_admin_settings_regles_duree_update', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'})) }}
+				{{ _self.deleteButton(rule.id, path('app_admin_settings_regles_duree_delete', {id: rule.id, type: rule.minimum ? 'minstay' : 'maxstay'}), 'règle', rule.minimum ? 'minstay' : 'maxstay' ) }}
+			</div>
+		</td>
+	</tr>
+
+{% endfor %}</tbody></table>{% endmacro %}

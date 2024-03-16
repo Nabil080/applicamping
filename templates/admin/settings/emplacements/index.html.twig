@@ -1,0 +1,27 @@
+{% extends 'layout/settings.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% set options = { filters: filters.clients, pagination: true, search: "Rechercher un ID, un N°, un emplacement...", tooltip: 'Tous les emplacements'} %}
+
+
+{% block body %}
+	<div class="text-center">
+		<h1 class="text-3xl font-black">
+			{{ title }}
+		</h1>
+	</div>
+
+	<div class="flex justify-between items-end mb-6">
+		<a href={{ path('app_admin_settings_emplacements_create') }} class="btn">
+			Ajouter un emplacement
+		</a>
+		<div>
+			<a href={{ path('app_admin_settings_tags') }} class="clickable">Voir les tags</a>
+		</div>
+	</div>
+
+	{{ crud.basic(title, tables.emplacements(emplacements), options) }}
+{% endblock %}

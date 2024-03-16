@@ -1,0 +1,83 @@
+{% macro hebergement(displayHebergement) %}
+	<article {{ stimulus_controller('display_reservation') }} {{ stimulus_action('display_reservation','select','click')}} data-id="{{ displayHebergement.hebergement.id }}" data-name="" data-price="" data-min-size="" data-max-size="" class="swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
+		<div class="overlay bg-main-500 opacity-0"></div>
+		<img class="rounded-t-lg" src={{ asset("uploads/hebergements/" ~ displayHebergement.hebergement.image) }} alt=""/>
+		<div class="p-5 relative">
+			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">{{ displayHebergement.hebergement.nom }}</h5>
+			<p class="mb-3">
+				<span class="size">{{ displayHebergement.hebergement.minimum }}-{{ displayHebergement.hebergement.maximum }} personnes</span>
+				<br>
+				<span class="amount">{{ displayHebergement.emplacements.Libres|length }}/{{ displayHebergement.emplacements.Total }} emplacements libres</span>
+			</p>
+			{% if displayHebergement.tarif is defined %}
+				<div class="price absolute  right-4 bottom-4 ">{{ displayHebergement.tarif.montant }}€/nuit</div>
+			{% endif %}
+		</div>
+	</article>
+{% endmacro %}
+
+{% macro hebergementError(displayHebergement) %}
+	<article class="select-none pointer-events-none swiper-slide hebergement-card group max-w-sm border-stroke border rounded-lg shadow cursor-pointer relative [&_*]:pointer-events-none hover:active">
+                <div class="overlay z-50 bg-black bg-opacity-80">
+                    <div class="grid w-full h-full place-items-center text-xl text-center text-white">
+                        {% for error in displayHebergement.errors %}
+							<span>{{error}}</span>
+						{% endfor %}
+                    </div>
+                </div>
+		<img class="rounded-t-lg" src={{ asset("uploads/hebergements/" ~ displayHebergement.hebergement.image) }} alt=""/>
+		<div class="p-5 relative">
+			<h5 class="mb-2 text-2xl font-bold tracking-tight text-black">{{ displayHebergement.hebergement.nom }}</h5>
+			<p class="mb-3">
+				<span class="size">{{ displayHebergement.hebergement.minimum }}-{{ displayHebergement.hebergement.maximum }} personnes</span>
+				<br>
+				<span class="amount">{{ displayHebergement.emplacements.Libres|length }}/{{ displayHebergement.emplacements.Total }} emplacements libres</span>
+			</p>
+			{% if displayHebergement.tarif is defined %}
+				<div class="price absolute  right-4 bottom-4 ">{{ displayHebergement.tarif.montant }}€/nuit</div>
+			{% endif %}
+		</div>
+	</article>
+{% endmacro %}
+
+{% macro hebergementAdmin(hebergement) %}
+	{% import "macro/svg.html.twig" as svg %}
+	{% import "macro/badges.html.twig" as badge %}
+	<article class="group crud flex relative text-black dark:text-white">
+		<button data-path={{ path('app_admin_settings_hebergements_delete',{id: hebergement.id})}} data-type="Hébergement" data-name={{ hebergement.nom }} data-id={{ hebergement.id }} {{ stimulus_controller('delete') }} {{ stimulus_action('delete','show')}} class="absolute top-4 right-4 text-danger hover:brightness-50">{{ svg.trash(24) }}</button>
+		<div class="max-w-md p-4">
+			<img class="border border-stroke" src={{ asset("uploads/hebergements/" ~ hebergement.image) }} alt=""/>
+		</div>
+		<div class="p-5 grow flex flex-col">
+			<h5 class="mb-2 text-title-lg font-bold">{{ hebergement.nom }}
+				(ID
+				{{ hebergement.id }})</h5>
+			<div class="grow mb-3 text-lg">
+				<div>
+					<span class="font-semibold">Minimum :</span>
+					<span class="mini">{{ hebergement.minimum }}
+						personnes</span>
+				</div>
+				<div>
+					<span class="font-semibold">Maximum :</span>
+					<span class="maxi">{{ hebergement.maximum }}
+						personnes</span>
+				</div>
+				<div class="inline-flex gap-2 items-center">
+					<span class="font-semibold">Nombre d'emplacements :</span>
+					<span class="size">{{ hebergement.emplacements|length() }}</span>
+					<a href="#" class="text-primary">{{ svg.eye(26) }}</a>
+				</div>
+			</div>
+			<div class="flex justify-between items-end">
+				<div>
+					<span class="statut font-semibold">Statut :</span>
+					{{ badge.basic( hebergement.statut )}}
+				</div>
+				<div>
+					<a href={{ path('app_admin_settings_hebergements_update',{id: hebergement.id})}} class="btn btn-md">Modifier</a>
+				</div>
+			</div>
+		</div>
+	</article>
+{% endmacro %}

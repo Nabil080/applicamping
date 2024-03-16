@@ -8,11 +8,18 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static values = {
         input: String,
+        selector: String,
     }
 
     showPassword(){
         let input = document.querySelector(this.inputValue)
 
         input.type = input.type === 'text' ? 'password' : 'text' ;
+    }
+
+    print() {
+        console.log(this.selectorValue)
+        print()
+
     }
 }

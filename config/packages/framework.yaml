@@ -18,6 +18,14 @@ framework:
     php_errors:
         log: true
 
+    serializer:
+        default_context:
+            enable_max_depth: true
+            yaml_indentation: 2
+
+    # custom
+    default_locale: fr
+
 when@test:
     framework:
         test: true

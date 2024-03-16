@@ -1,18 +1,15 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'layout/admin.html.twig' %}
 {% import 'admin/macro/crud.html.twig' as crud %}
 {% import 'admin/macro/crud_tables.html.twig' as tables %}
 {% import 'admin/macro/crud_filters.html.twig' as filters %}
 
-
 {% block title %}
-	Réservations
+	{{ title }}
 {% endblock %}
 
-{% set title = 'Réservations' %}
-{% set tooltip = 'Toutes les réservations' %}
-{% set search_placeholder = 'Rechercher une réservation' %}
+{% set options = { filters: filters.reservations, create:'Créer une réservation', createPath:path('app_admin_reservations_create'), pagination: true, search: "N°, client, statut...", tooltip: 'Toutes les réservations'} %}
 
 
 {% block body %}
-	{{ crud.basic(title, tables.reservations('all'), filters.reservations, search_placeholder, tooltip) }}
+	{{ crud.basic(title, tables.reservations(reservations), options) }}
 {% endblock %}

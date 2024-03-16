@@ -1,0 +1,15 @@
+{# templates/form/text_input_widget.html.twig #}
+
+{% block text_input_widget %}
+    {% set placeholder = attr.placeholder|default('') %}
+    {% set name = attr.name|default('') %}
+    {% set inputClasses = attr.inputClasses|default('') %}
+    {% set attributes = attr.attributes|default('') %}
+
+    <div class="mb-4.5">
+        <label class="mb-2.5 block text-black dark:text-white">
+            {{ label }}
+        </label>
+        <input type="text" {{ attributes }} placeholder="{{ placeholder }}" name="{{ name }}" class="{{ inputClasses }} w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+    </div>
+{% endblock %}

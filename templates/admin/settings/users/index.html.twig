@@ -1,0 +1,12 @@
+{% extends 'layout/settings.html.twig' %}
+{% import 'admin/macro/crud.html.twig' as crud %}
+{% import 'admin/macro/crud_tables.html.twig' as tables %}
+{% import 'admin/macro/crud_filters.html.twig' as filters %}
+
+
+{% set options = {filters: filters.clients, create: 'Ajouter un compte administrateur', pagination: true, search: 'Nom, prénom...', tooltip: 'Tous les administrateurs' } %}
+
+
+{% block body %}
+	{{ crud.basic(title, tables.admins(users), options) }}
+{% endblock %}

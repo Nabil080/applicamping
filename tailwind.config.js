@@ -13,6 +13,11 @@ module.exports = {
     "./node_modules/flowbite/**/*.js", // flowbite package
     "./vendor/symfony/twig-bridge/Resources/views/Form/tailwind_2_layout.html.twig", // tailwind form theme
   ],
+  extend: {
+    screens: {
+      print: { raw: 'print' },
+    },
+  },
   darkMode: 'class',
   theme: {
     fontFamily: {
@@ -27,6 +32,7 @@ module.exports = {
       body: '#64748B', // body text-color
       stroke: '#E2E8F0', // border-stroke
       'gray-2': '#F7F9FC',
+      'form-input': '#1d2a39',
 
 
       // darkmode
@@ -37,6 +43,7 @@ module.exports = {
       'boxdark-2': '#1A222C',
       graydark: '#333A48', // dark:hover:bg-graydark
       strokedark: '#2E3A47', // dark:border-stroke
+      'form-strokedark': '#3d4d60',
 
 
 
@@ -69,35 +76,38 @@ module.exports = {
     extend: {
       backgroundColor: {
         black: '#1C2434',
+        whiter: '#F5F7FD',
+        primary: '#3C50E0',
       },
       colors: {
         // background: "#f3f3f8",
         // main: {
-        //   50: "#f3f6fc",
-        //   100: "#e7edf7",
-        //   200: "#c9d8ee",
-        //   300: "#9ab9df",
-        //   400: "#6393cd",
-        //   500: "#3f76b8",
-        //   600: "#2e5d9b",
-        //   700: "#274b7d",
-        //   800: "#234069",
-        //   900: "#223758",
-        //   950: "#0c131f",
+        //   50: "#f2fbf4",
+        //   100: "#e2f6e6",
+        //   200: "#c6ecce",
+        //   300: "#9adbaa",
+        //   400: "#66c27c",
+        //   500: "#41a659",
+        //   600: "#35944c",
+        //   700: "#296c3a",
+        //   800: "#255632",
+        //   900: "#20472a",
+        //   950: "#0d2614",
         // },
         main: {
-          50: "#f2fbf4",
-          100: "#e2f6e6",
-          200: "#c6ecce",
-          300: "#9adbaa",
-          400: "#66c27c",
-          500: "#41a659",
-          600: "#35944c",
-          700: "#296c3a",
-          800: "#255632",
-          900: "#20472a",
-          950: "#0d2614",
+          '50': '#f0f3fe',
+          '100': '#dde4fc',
+          '200': '#c3d0fa',
+          '300': '#9ab3f6',
+          '400': '#6a8cf0',
+          '500': '#4766ea',
+          '600': '#3c50e0',
+          '700': '#2935cc',
+          '800': '#272da6',
+          '900': '#252b83',
+          '950': '#1b1d50',
         },
+
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

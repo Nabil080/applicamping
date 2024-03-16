@@ -1,0 +1,63 @@
+{% extends "layout/form.html.twig" %}
+
+{% block body %}
+
+<div class="text-center">
+	<h1 class="text-3xl font-black">
+		{{ isAddForm ? "Ajout" : "Modification" }}
+		{{ title }}
+	</h1>
+</div>
+	<a href={{ redirectRoute ? path(redirectRoute) : app.request.headers.get('referer') }} class="clickable w-fit">
+		Retour à la liste
+	</a>
+<section class="crud grid mt-8">
+	<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
+
+
+	<div class="pb-4 mb-4 text-black dark:text-white border-b">
+		<span class=""> Etapes : </span>
+		{% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
+	</div>
+	
+	{% if flow.getCurrentStepNumber() == 2 %}
+	{% import "macro/cards.html.twig" as card %}
+		<div class="flex flex-wrap gap-20">
+		
+		{% for d in displayHebergements %}
+			{% if d.errors|length is same as 0 %}
+				{{ card.hebergement(d) }}
+			{% else %}
+				{{ card.hebergementError(d) }}
+			{% endif %}
+		{% endfor %}
+		</div>
+
+	{% endif %}
+	
+
+	{# <div class="mb-4">* champs requis</div> #}
+	{{ form_start(form) }}
+	{{ form_rest(form) }}
+	{% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
+		craue_formflow_button_class_last: 'btn btn-primary ml-4 capitalize',
+		craue_formflow_button_class_back: 'btn btn-border ml-4 see-more capitalize',
+		craue_formflow_button_class_reset: 'btn btn-border see-more capitalize',
+	} %}
+	{{ form_end(form) }}
+	</div>
+</section>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

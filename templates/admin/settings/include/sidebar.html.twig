@@ -1,0 +1,98 @@
+{% import 'admin/macro/sidebar_items.html.twig' as sidebar %}
+{% import 'macro/svg.html.twig' as svg %}
+
+
+<aside
+	:class="sidebarToggle ? 'translate-x-0' : '-translate-x-full'" class="z-9999 w-72.5 dark:bg-boxdark absolute left-0 top-0 flex h-screen flex-col overflow-y-hidden bg-black duration-300 ease-linear lg:static lg:translate-x-0" @click.outside="sidebarToggle = false">
+
+	<!-- SIDEBAR HEADER -->
+	<div class="py-5.5 lg:py-6.5 flex items-center justify-between gap-2 px-6">
+		<a href={{ path('app_admin_settings') }} @click="selected = (selected === 'app_admin_settings' ? '':'app_admin_settings')">
+			<img src="https://www.camping-mont-olympe.fr/wp-content/uploads/2020/04/logo-camping-mobile.png" alt="Logo"/>
+		</a>
+
+		<button class="block lg:hidden" @click.stop="sidebarToggle = !sidebarToggle">
+			<svg class="fill-current" width="20" height="18" viewbox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M19 8.175H2.98748L9.36248 1.6875C9.69998 1.35 9.69998 0.825 9.36248 0.4875C9.02498 0.15 8.49998 0.15 8.16248 0.4875L0.399976 8.3625C0.0624756 8.7 0.0624756 9.225 0.399976 9.5625L8.16248 17.4375C8.31248 17.5875 8.53748 17.7 8.76248 17.7C8.98748 17.7 9.17498 17.625 9.36248 17.475C9.69998 17.1375 9.69998 16.6125 9.36248 16.275L3.02498 9.8625H19C19.45 9.8625 19.825 9.4875 19.825 9.0375C19.825 8.55 19.45 8.175 19 8.175Z" fill=""/>
+			</svg>
+		</button>
+	</div>
+	<!-- SIDEBAR HEADER -->
+
+	<div
+		class="no-scrollbar flex grow flex-col overflow-y-auto duration-300 ease-linear">
+		<!-- Sidebar Menu -->
+		{% set size = 20 %}
+		<nav
+			class="mt-0 flex h-full flex-col py-4 px-4 lg:mt-0 lg:px-6" x-data="{selected: $persist('Dashboard')}">
+			<!-- Menu Group -->
+			<div>
+				<h3 class="text-bodydark2 mb-4 ml-4 text-sm font-medium">MENU</h3>
+
+				<ul
+					class="mb-6 flex flex-col gap-1.5">
+					<!-- Menu Item Dashboard -->
+
+					{{ sidebar.basic("Accueil","app_admin_settings",svg.house(size)) }}
+
+					{{ sidebar.basic("Hebergements","app_admin_settings_hebergements",svg.caravan(size)) }}
+
+					{{ sidebar.basic("Emplacements","app_admin_settings_emplacements",svg.location(size)) }}
+
+					{{ sidebar.basic("Options supplémentaires","app_admin_settings_options",svg.dog(size)) }}
+
+				</ul>
+			</div>
+
+			<!-- Menu Group -->
+			<div>
+				<h3 class="text-bodydark2 mb-4 ml-4 text-sm font-medium">PARAMÈTRES</h3>
+
+				<ul
+					class="mb-6 flex flex-col gap-1.5">
+					<!-- Menu Item Dashboard -->
+					{{ sidebar.basic("Saisons","app_admin_settings_saisons",svg.calendar(size)) }}
+
+					{{ sidebar.basic("Tarifs","app_admin_settings_tarifs",svg.bills(size)) }}
+
+					{{ sidebar.basic("Règles de réservation","app_admin_settings_regles",svg.rules(size)) }}
+
+				</ul>
+			</div>
+
+			<!-- ! Super admin -->
+			<div>
+				<h3 class="text-bodydark2 mb-4 ml-4 text-sm font-medium">
+					ADMINISTRATION
+				</h3>
+
+				<ul
+					class="mb-6 flex flex-col gap-1.5">
+					{# {{ sidebar.basic("Infos camping","app_admin",svg) }} #}
+
+					{{ sidebar.basic("Registre","app_admin_settings_logs",svg.logs(size)) }}
+
+					{{ sidebar.basic("Gestionnaires","app_admin_settings_users",svg.users(size)) }}
+
+					{{ sidebar.basic("Gestion camping","app_admin",svg.settings(size)) }}
+				</ul>
+			</div>
+
+			<!-- ! AUTRE -->
+			<div class="mt-auto opacity-50 transition-opacity hover:opacity-100">
+				<h3 class="text-bodydark2 mb-4 ml-4 text-sm font-medium">AUTRES</h3>
+
+				<ul class="mb-6 flex flex-col gap-1.5">
+
+					{{ sidebar.detail('Mon compte','app_admin') }}
+
+					{{ sidebar.detail('Se déconnecter','app_logout') }}
+
+					{{ sidebar.detail('Aller sur le site','homepage') }}
+
+				</ul>
+			</div>
+		</nav>
+		<!-- Sidebar Menu -->
+	</div>
+</aside>

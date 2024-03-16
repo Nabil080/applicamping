@@ -1,0 +1,60 @@
+{% set isAddForm = create is defined ? create : true %}
+{% set layout = 'settings' in app.request.requestUri ? 'layout/settings.html.twig' : 'layout/admin.html.twig' %}
+
+	{% extends layout %}
+
+
+
+{% block pretitle %}
+{{ isAddForm ? "Ajout" : "Modification" }}
+{% endblock %}
+
+
+{% block body %}
+
+	<div class="text-center">
+		<h1 class="text-3xl font-black">
+			{{ isAddForm ? "Ajout" : "Modification" }}
+			{{ title }}
+		</h1>
+	</div>
+		<a href={{ redirectRoute is defined ? path(redirectRoute) : app.request.headers.get('referer') }} class="clickable w-fit">
+			Retour à la liste
+		</a>
+	<section class="crud grid mt-8">
+		{% block formcontainer %}
+			<div class="relative space-y-3 md:space-y-0 md:space-x-4 p-8">
+			<div class="mb-4">* champs requis</div>
+				{% block form %}
+				{{ form_start(form) }}
+				{{form_widget(form) }}
+				<div class="flex items-center gap-2 mb-4">
+				<input type="checkbox" name="more" id="more"><label for="more">Continuer l'ajout</label>
+				</div>
+				<button type="submit" class="btn w-full btn-md rounded-md" formnovalidate>Valider</button>
+				{{ form_end(form) }}
+					{% if success is defined and success %}
+						<div>La requête a bien été traitée</div>
+					{% endif %}
+				{% endblock %}
+			</div>
+		{% endblock %}
+	</section>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{# <script>
+	document.addEventListener('turbo:load', () => {
+		$('select[multiple]').select2({ 
+			closeOnSelect: false,
+			language: 'fr',
+			selectionCssClass: '',
+			allowClear: true
+		});
+	});
+</script> #}
+{% endblock %}

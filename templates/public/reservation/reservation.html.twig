@@ -1,4 +1,4 @@
-{% extends 'public/base.html.twig' %}
+{% extends 'layout/public.html.twig' %}
 
 {% block title %}
 	Ma réservation
@@ -9,14 +9,14 @@
 	<section class="title">
 		<h1>Votre réservation</h1>
 		<p class="text-base font-normal">Statut :
-			<span>
+			<span class="text-success">
 				confirmée
 			</span>
 		</p>
 	</section>
 
 	<main
-		id="reservation-grid" class="mx-[15%] mb-4 space-y-6 [&>section]:grid [&>section]:gap-6 [&>section]:text-center [&>section]:place-content-center [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mb-4 [&_article]:border-2 [&_article]:border-gray-300 [&_article]:p-4">
+		id="reservation-grid" class="mx-[15%] mb-4 space-y-6 [&>section]:grid [&>section]:gap-6 [&>section]:text-center [&>section]:place-content-center [&_h2]:text-2xl [&_h2]:text-black [&_h2]:mb-4 [&_article]:border-2 [&_article]:border-stroke [&_article]:bg-white [&_article]:shadow-default [&_article]:p-4">
 		{# first row #}
 		<section class="grid-cols-1 md:grid-cols-2">
 			<article>
@@ -71,37 +71,56 @@
 		<section class="grid-cols-1 md:grid-cols-3">
 			<article>
 				<h2>Prix de la réservation</h2>
-				<div class="text-[4rem]">185€</div>
+				<div class="text-[3.5rem] py-6">185€</div>
 			</article>
 			<article>
 				<h2>Déjà réglé</h2>
-				<div class="text-[4rem]">85€</div>
+				<div class="text-[3.5rem] py-6 text-success">85€</div>
 			</article>
 			<article>
 				<h2>Reste à payer</h2>
-				<div class="text-[4rem]">100€</div>
+				<div class="text-[3.5rem] py-6 text-danger">100€</div>
 			</article>
 		</section>
 		{# fourth row #}
-		<section class="grid-cols-1 md:grid-cols-1">
-			<article class="">
+		<section class="crud grid-cols-1 md:grid-cols-1">
+			<article class="w-full">
 				<h2>Liste des paiements</h2>
-				<table class="w-full [&_tr]:border-2 [&_tr]:border-gray-300 [&_td]:border-2 [&_td]:border-gray-300">
+				<table class="w-full">
 					<thead>
 						<tr>
-							<td>Paiement N°</td>
-							<td>Date du paiement</td>
-							<td>Mode de paiement</td>
-							<td>Montant</td>
+							<th scope="col">ID</th>
+							<th scope="col">Montant</th>
+							<th scope="col">Méthode</th>
+							<th scope="col">Date du paiement</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for i in 1..3 %}
+						{% for i in 0..5 %}
+							{% set id = i %}
 							<tr>
-								<td>{{i}}</td>
-								<td>xx/xx/xxxx</td>
-								<td>Carte bancaire</td>
-								<td>85€</td>
+								<th scope="row">
+									{{ id }}
+								</th>
+								<td>
+									<div class="flex items-center justify-center">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-euro text-gray-400 mr-2">
+											<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M7 12h5"/><path d="M15 9.4a4 4 0 1 0 0 5.2"/>
+										</svg>
+										50,20€
+									</div>
+								</td>
+								<td>
+									<div class="flex items-center justify-center">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card text-gray-400 mr-2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+										Carte bancaire
+									</div>
+								</td>
+								<td>
+									14/07/2003
+									<br>
+									14h57
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>

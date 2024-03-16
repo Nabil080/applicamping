@@ -9,8 +9,21 @@ export default class extends Controller {
     }
 
     connect() {
-        let options = this.options
-        new ApexCharts(this.divTarget, options).render()
+        // document.addEventListener('turbo:before-fetch-request', () => this.hide());
+        document.addEventListener("turbo:load", this.render());  
+    }
+
+    render() {
+        this.hide()
+        new ApexCharts(this.divTarget, this.options).render()
+    }
+
+    hide() {
+        this.divTarget.innerHTML = ""
+    }
+
+    disconnect() {
+        console.log('bye to pie');
     }
 
     get options() {
